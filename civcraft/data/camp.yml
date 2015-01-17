@@ -22,8 +22,8 @@ camp:
     cost: 2500.0
 
     # Sifter Settings
-    sifter_gold_nugget_chance: 0.10
-    sifter_iron_ingot_chance: 0.025
+    sifter_gold_nugget_chance: 0.20
+    sifter_iron_ingot_chance: 0.05
    
     # number of hours to let camp be raidable
     raid_length: 2 

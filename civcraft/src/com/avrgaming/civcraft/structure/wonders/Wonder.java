@@ -194,6 +194,10 @@ public abstract class Wonder extends Buildable {
 		
 		for (Wonder wonder : CivGlobal.getWonders()) {
 			if (wonder.getConfigId().equals(configId)) {
+				if (wonder.getConfigId().equals("w_colosseum"))
+				{
+					return true;
+				}
 				if (wonder.isComplete()) {
 					return false;
 				}
@@ -362,6 +366,13 @@ public abstract class Wonder extends Buildable {
 				wonder = new CouncilOfEight(rs);
 			}
 			break;
+		case "w_colosseum":
+			if (rs == null) {
+				wonder = new Colosseum(center, id, town);
+			} else {
+				wonder = new Colosseum(rs);
+			}
+			break;
 		default:
 			throw new CivException("Unknown wonder type "+id);
 		}
@@ -451,6 +462,16 @@ public abstract class Wonder extends Buildable {
 		this.getCiv().getTreasury().deposit(total);
 		
 		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated "+CivColor.Yellow+total+CivColor.LightGreen+" coins from culture.");
+	}
+	
+	public void processCoinsFromColosseum() {
+		int townCount = this.getCiv().getTowns().size();
+		double coinsPerTown = Double.valueOf(CivSettings.buffs.get("buff_colosseum_coins_from_towns").value);
+		
+		double total = coinsPerTown*townCount;
+		this.getCiv().getTreasury().deposit(total);
+		
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated "+CivColor.Yellow+total+CivColor.LightGreen+" coins from ticket sales.");
 	}
 	
 }

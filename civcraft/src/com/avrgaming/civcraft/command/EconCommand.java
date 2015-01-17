@@ -36,8 +36,9 @@ public class EconCommand extends CommandBase {
 	public void init() {
 		command = "/econ";
 		displayName = "Econ";
-		
+
 		commands.put("add", "[player] [amount] - add money to this player");
+		commands.put("give", "[player] [amount] - give money to this player");
 		commands.put("set", "[player] [amount] - set money for this player");
 		commands.put("sub", "[player] [amount] - subtract money for this player");
 		
@@ -131,6 +132,26 @@ public class EconCommand extends CommandBase {
 	}
 	
 	public void add_cmd() throws CivException {
+		validEcon();
+		
+		if (args.length < 3) {
+			throw new CivException("Provide a name and a amount");
+		}
+		
+		Resident resident = getNamedResident(1);
+
+		try {
+			
+			Double amount = Double.valueOf(args[2]);
+			resident.getTreasury().deposit(amount);
+			CivMessage.sendSuccess(sender, "Added "+args[2]+" to "+args[1]);
+			
+		} catch (NumberFormatException e) {
+			throw new CivException(args[2]+" is not a number.");
+		}
+	}
+	
+	public void give_cmd() throws CivException {
 		validEcon();
 		
 		if (args.length < 3) {
