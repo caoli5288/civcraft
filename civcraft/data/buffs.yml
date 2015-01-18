@@ -289,3 +289,12 @@ buffs:
       value: '100'
       stackable: false
       parent:
+
+
+#Globe Theatre Buffs
+    - id: 'buff_globe_theatre_culture_from_towns'
+      name: 'Globe Theatre Culture From Towns'
+      description: 'Increase culture by 1 for every town in the world.'
+      value: '1'
+      stackable: false
+      parent:

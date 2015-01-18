@@ -35,6 +35,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.NotreDame;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
+import com.avrgaming.civcraft.structure.wonders.Colosseum;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -110,6 +111,14 @@ public class DailyTimer implements Runnable {
 			}
 		}
 		
+		Wonder colosseum = CivGlobal.getWonderByConfigId("w_colosseum");
+		if (colosseum != null) {
+			try {
+				((Colosseum)colosseum).processCoinsFromColosseum();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
 			if (civ.isAdminCiv()) {

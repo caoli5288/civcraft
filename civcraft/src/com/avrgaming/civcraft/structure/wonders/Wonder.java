@@ -373,6 +373,13 @@ public abstract class Wonder extends Buildable {
 				wonder = new Colosseum(rs);
 			}
 			break;
+		case "w_globe_theatre":
+			if (rs == null) {
+				wonder = new GlobeTheatre(center, id, town);
+			} else {
+				wonder = new GlobeTheatre(rs);
+			}
+			break;
 		default:
 			throw new CivException("Unknown wonder type "+id);
 		}
