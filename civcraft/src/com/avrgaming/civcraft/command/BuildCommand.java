@@ -49,7 +49,7 @@ public class BuildCommand extends CommandBase {
 		commands.put("list", "shows all available structures.");
 		commands.put("progress", "Shows progress of currently building structures.");
 		commands.put("repairnearest", "Repairs destroyed structures.");
-		commands.put("undo", "Undo the last structure built.");
+//		commands.put("undo", "Undo the last structure built.");
 		commands.put("demolish", "[location] - destroys the structure at this location.");
 		commands.put("demolishnearest", "- destroys the nearest structure. Requires confirmation.");
 		commands.put("refreshnearest", "Refreshes the nearest structure's blocks. Requires confirmation.");
@@ -169,8 +169,9 @@ public class BuildCommand extends CommandBase {
 	}
 	
 	public void undo_cmd() throws CivException {
-		Town town = getSelectedTown();
-		town.processUndo();
+		return;
+//		Town town = getSelectedTown();
+//		town.processUndo();
 	}
 	
 	public void progress_cmd() throws CivException {
