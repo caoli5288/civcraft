@@ -166,7 +166,7 @@ wonders:
     effect_event:
     update_event:
     onBuild_event:
-    limit: 0
+    limit: 1
     cost: 800000.0
     upkeep: 0.0
     hammer_cost: 550000.0
