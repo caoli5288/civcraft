@@ -31,7 +31,7 @@ import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 
 public class Trommel extends Structure {
-
+	private static final double REDSTONE_CHANCE = CivSettings.getDoubleStructure("trommel.redstone_chance"); //1%
 	private static final double IRON_CHANCE = CivSettings.getDoubleStructure("trommel.iron_chance"); //2%
 	private static final double GOLD_CHANCE = CivSettings.getDoubleStructure("trommel.gold_chance"); //1%
 	private static final double DIAMOND_CHANCE = CivSettings.getDoubleStructure("trommel.diamond_chance"); //0.25%
@@ -46,7 +46,8 @@ public class Trommel extends Structure {
 		DIAMOND,
 		GOLD,
 		IRON,
-		CHROMIUM
+		CHROMIUM,
+		REDSTONE
 	}
 	
 	protected Trommel(Location center, String id, Town town) throws CivException {
@@ -81,6 +82,9 @@ public class Trommel extends Structure {
 			break;
 		case IRON:
 			chance = IRON_CHANCE;
+			break;
+		case REDSTONE:
+			chance = REDSTONE_CHANCE;
 			break;
 		case CHROMIUM:
 			chance = CHROMIUM_CHANCE;

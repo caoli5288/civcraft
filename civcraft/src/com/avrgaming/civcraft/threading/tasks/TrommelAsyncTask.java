@@ -162,10 +162,14 @@ public class TrommelAsyncTask extends CivAsyncTask {
 						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
 	
 					}
+					else if (rand1 < ((int)((trommel.getMineralChance(Mineral.REDSTONE))*10000))) {
+						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, 1);
+	
+					}
 					else if (rand1 < ((int)((trommel.getMineralChance(Mineral.IRON))*10000))) {
 						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
 	
-					} else {
+					}  else {
 						newItem = ItemManager.createItemStack(CivData.GRAVEL, (Integer)GRAVEL_RATE);
 					}
 					
