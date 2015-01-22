@@ -179,6 +179,14 @@ public class PlayerLoginAsyncTask implements Runnable {
 						resident.giveAllFreePerks();
 					}
 				}
+				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
+				{
+					resident.giveAllElvenPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
+				{
+					resident.giveAllCultistPerks();
+				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
 			}

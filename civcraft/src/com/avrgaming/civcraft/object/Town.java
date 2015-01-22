@@ -584,7 +584,11 @@ public class Town extends SQLObject {
 		double additional = this.getBuffManager().getEffectiveDouble(Buff.FINE_ART);
 		
 		if (this.getBuffManager().hasBuff("buff_globe_theatre_culture_from_towns")) {
-			int townCount = this.getCiv().getTowns().size();
+			int townCount = 0;
+			for (Civilization civ : CivGlobal.getCivs())
+			{
+				townCount += civ.getTownCount();
+			}
 			double culturePerTown = Double.valueOf(CivSettings.buffs.get("buff_globe_theatre_culture_from_towns").value);
 			
 			double bonus = culturePerTown*townCount;

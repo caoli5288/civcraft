@@ -32,6 +32,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -168,7 +169,7 @@ public class Resident extends SQLObject {
 	private boolean isProtected = false;
 	
 	public HashMap<BlockCoord, SimpleBlock> previewUndo = null;
-	public HashMap<String, Perk> perks = new HashMap<String, Perk>();
+	public LinkedHashMap<String, Perk> perks = new LinkedHashMap<String, Perk>();
 	private Date lastKilledTime = null;
 	private String lastIP = "";
 	private UUID uid;
@@ -1117,6 +1118,51 @@ public class Resident extends SQLObject {
 	public void setOnRoad(boolean onRoad) {
 		this.onRoad = onRoad;
 	}
+	
+	public void giveAllElvenPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_elven"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllCultistPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_cultist"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Cultist Templates! Use /resident perks to a them.");
+	}
+
 
 	public void giveAllFreePerks() {
 		int perkCount;
@@ -1129,8 +1175,12 @@ public class Resident extends SQLObject {
 		
 		for (ConfigPerk p : CivSettings.perks.values()) {
 			Perk perk = new Perk(p);
-			perk.count = perkCount;
-			this.perks.put(perk.getIdent(), perk);
+			
+			if (!perk.getIdent().startsWith("prem_tpl"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
 		}
 		
 		CivMessage.send(this, CivColor.LightGreen+"You've got free perks! Use /resident perks to see them.");

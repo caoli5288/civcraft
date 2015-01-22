@@ -41,12 +41,12 @@ system:
 
 perks:
 ########### Personal Perks
-    - id: 'perk_rename_civ_town'
-      display_name: 'Rename Civ or Town'
-      item_id: 421
-      data: 0
-      components:
-         - name: 'RenameCivOrTown'
+#    - id: 'perk_rename_civ_town'
+#      display_name: 'Rename Civ or Town'
+#      item_id: 421
+#      data: 0
+#      components:
+#         - name: 'RenameCivOrTown'
 
     - id: 'perk_sunny_weather'
       display_name: 'Sunny Weather!'
@@ -1118,7 +1118,7 @@ perks:
 
 # ===== Elven TEMPLATES
 
-    - id: 'tpl_elven_camp'
+    - id: 'prem_tpl_elven_camp'
       display_name: 'Elven Camp'
       item_id: 18
       data: 3
@@ -1128,7 +1128,7 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'tpl_elven_arrow_tower'
+    - id: 'prem_tpl_elven_arrow_tower'
       display_name: 'Elven Arrow Tower Template'
       item_id: 18
       data: 3
@@ -1137,7 +1137,7 @@ perks:
             theme: 'elven'
             template: 'arrow_tower'
 
-    - id: 'tpl_elven_bank'
+    - id: 'prem_tpl_elven_bank'
       display_name: 'Elven Bank Template'
       item_id: 18
       data: 3
@@ -1146,7 +1146,7 @@ perks:
             theme: 'elven'
             template: 'bank'
 
-    - id: 'tpl_elven_barracks'
+    - id: 'prem_tpl_elven_barracks'
       display_name: 'Elven Barracks Template'
       item_id: 18
       data: 3
@@ -1155,7 +1155,7 @@ perks:
             theme: 'elven'
             template: 'barracks'
 
-    - id: 'tpl_elven_cannon_tower'
+    - id: 'prem_tpl_elven_cannon_tower'
       display_name: 'Elven Cannon Tower Template'
       item_id: 18
       data: 3
@@ -1164,7 +1164,7 @@ perks:
             theme: 'elven'
             template: 'cannon_tower'
 
-    - id: 'tpl_elven_capitol'
+    - id: 'prem_tpl_elven_capitol'
       display_name: 'Elven Capitol Template'
       item_id: 18
       data: 3
@@ -1174,7 +1174,7 @@ perks:
             template: 'capital' #misspelt on purpose, easier to leave as is.
             id: 's_capitol'
 
-    - id: 'tpl_elven_cottage'
+    - id: 'prem_tpl_elven_cottage'
       display_name: 'Elven Cottage Template'
       item_id: 18
       data: 3
@@ -1183,7 +1183,7 @@ perks:
             theme: 'elven'
             template: 'cottage'
 
-    - id: 'tpl_elven_granary'
+    - id: 'prem_tpl_elven_granary'
       display_name: 'Elven Granary Template'
       item_id: 18
       data: 3
@@ -1192,7 +1192,7 @@ perks:
             theme: 'elven'
             template: 'granary'
 
-    - id: 'tpl_elven_grocer'
+    - id: 'prem_tpl_elven_grocer'
       display_name: 'Elven Grocer Template'
       item_id: 18
       data: 3
@@ -1201,7 +1201,7 @@ perks:
             theme: 'elven'
             template: 'grocer'
 
-    - id: 'tpl_elven_library'
+    - id: 'prem_tpl_elven_library'
       display_name: 'Elven Library Template'
       item_id: 18
       data: 3
@@ -1210,7 +1210,7 @@ perks:
             theme: 'elven'
             template: 'library'
 
-    - id: 'tpl_elven_market'
+    - id: 'prem_tpl_elven_market'
       display_name: 'Elven Market Template'
       item_id: 18
       data: 3
@@ -1219,7 +1219,7 @@ perks:
             theme: 'elven'
             template: 'market'
 
-    - id: 'tpl_elven_mine'
+    - id: 'prem_tpl_elven_mine'
       display_name: 'Elven Mine Template'
       item_id: 18
       data: 3
@@ -1228,7 +1228,7 @@ perks:
             theme: 'elven'
             template: 'mine'
 
-    - id: 'tpl_elven_monument'
+    - id: 'prem_tpl_elven_monument'
       display_name: 'Elven Monument Template'
       item_id: 18
       data: 3
@@ -1237,7 +1237,7 @@ perks:
             theme: 'elven'
             template: 'monument'
 
-    - id: 'tpl_elven_pasture'
+    - id: 'prem_tpl_elven_pasture'
       display_name: 'Elven Pasture Template'
       item_id: 18
       data: 3
@@ -1246,7 +1246,7 @@ perks:
             theme: 'elven'
             template: 'pasture'
 
-    - id: 'tpl_elven_scout_tower'
+    - id: 'prem_tpl_elven_scout_tower'
       display_name: 'Elven Scout Tower Template'
       item_id: 18
       data: 3
@@ -1255,7 +1255,7 @@ perks:
             theme: 'elven'
             template: 'scout_tower'
 
-    - id: 'tpl_elven_shipyard'
+    - id: 'prem_tpl_elven_shipyard'
       display_name: 'Elven Shipyard Template'
       item_id: 18
       data: 3
@@ -1264,7 +1264,7 @@ perks:
             theme: 'elven'
             template: 'shipyard'
 
-    - id: 'tpl_elven_stable'
+    - id: 'prem_tpl_elven_stable'
       display_name: 'Elven Stable Template'
       item_id: 18
       data: 3
@@ -1273,7 +1273,7 @@ perks:
             theme: 'elven'
             template: 'stable'
 
-    - id: 'tpl_elven_temple'
+    - id: 'prem_tpl_elven_temple'
       display_name: 'Elven Temple Template'
       item_id: 18
       data: 3
@@ -1282,7 +1282,7 @@ perks:
             theme: 'elven'
             template: 'temple'
 
-    - id: 'tpl_elven_trommel'
+    - id: 'prem_tpl_elven_trommel'
       display_name: 'Elven Trommel Template'
       item_id: 18
       data: 3
@@ -1291,7 +1291,7 @@ perks:
             theme: 'elven'
             template: 'trommel'
 
-    - id: 'tpl_elven_town_hall'
+    - id: 'prem_tpl_elven_town_hall'
       display_name: 'Elven Town Hall Template'
       item_id: 18
       data: 3
@@ -1301,7 +1301,7 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-    - id: 'tpl_elven_windmill'
+    - id: 'prem_tpl_elven_windmill'
       display_name: 'Elven Windmill Template'
       item_id: 18
       data: 3
@@ -1310,7 +1310,7 @@ perks:
             theme: 'elven'
             template: 'windmill'
 
-    - id: 'tpl_elven_blacksmith'
+    - id: 'prem_tpl_elven_blacksmith'
       display_name: 'Elven Blacksmith Template'
       item_id: 18
       data: 3
@@ -1319,7 +1319,7 @@ perks:
             theme: 'elven'
             template: 'blacksmith'
 
-    - id: 'tpl_elven_store'
+    - id: 'prem_tpl_elven_store'
       display_name: 'Elven Store Template'
       item_id: 18
       data: 3
@@ -1328,7 +1328,7 @@ perks:
             theme: 'elven'
             template: 'store'
 
-    - id: 'tpl_elven_trade_outpost'
+    - id: 'prem_tpl_elven_trade_outpost'
       display_name: 'Elven Trade Outpost Template'
       item_id: 18
       data: 3

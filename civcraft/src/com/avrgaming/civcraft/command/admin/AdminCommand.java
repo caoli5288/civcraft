@@ -18,6 +18,8 @@
  */
 package com.avrgaming.civcraft.command.admin;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ import java.util.LinkedList;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -34,11 +37,13 @@ import com.avrgaming.civcraft.command.CommandBase;
 import com.avrgaming.civcraft.command.ReportChestsTask;
 import com.avrgaming.civcraft.command.ReportPlayerInventoryTask;
 import com.avrgaming.civcraft.config.CivSettings;
+import com.avrgaming.civcraft.config.ConfigGovernment;
 import com.avrgaming.civcraft.config.ConfigMaterial;
 import com.avrgaming.civcraft.config.ConfigMaterialCategory;
 import com.avrgaming.civcraft.config.ConfigUnit;
 import com.avrgaming.civcraft.endgame.EndGameCondition;
 import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItemListener;
@@ -90,6 +95,18 @@ public class AdminCommand extends CommandBase {
 		commands.put("arena", "Arena management commands.");
 		commands.put("perk", "Admin perk management.");
 		commands.put("mob", "Mob management commands");
+		commands.put("reloadgov", "Reload Government data configs");
+	}
+	
+	public void reloadgov_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
+		CivSettings.reloadGovConfigFiles();
+		for (Civilization civ : CivGlobal.getCivs())
+		{
+			ConfigGovernment gov = civ.getGovernment();
+			
+			civ.setGovernment(gov.id);
+		}
+		CivMessage.send(sender, CivColor.Gold+"Reloaded Governments");
 	}
 	
 	public void mob_cmd() {

@@ -472,7 +472,11 @@ public abstract class Wonder extends Buildable {
 	}
 	
 	public void processCoinsFromColosseum() {
-		int townCount = this.getCiv().getTowns().size();
+		int townCount = 0;
+		for (Civilization civ : CivGlobal.getCivs())
+		{
+			townCount += civ.getTownCount();
+		}
 		double coinsPerTown = Double.valueOf(CivSettings.buffs.get("buff_colosseum_coins_from_towns").value);
 		
 		double total = coinsPerTown*townCount;
