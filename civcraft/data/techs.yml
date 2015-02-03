@@ -451,4 +451,4 @@ techs:
      beaker_cost: 100000.0
      cost: 100000.0
      points: 40000
-     require_techs: 'tech_machinery:tech_global_trade:tech_economics,tech_nationalism'
+     require_techs: 'tech_machinery:tech_global_trade:tech_economics:tech_nationalism'

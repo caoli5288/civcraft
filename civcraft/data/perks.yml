@@ -1337,6 +1337,7 @@ perks:
             theme: 'elven'
             template: 'trade_outpost'
 
+# ===== CoreEmpire TEMPLATES
     - id: 'tpl_ce_monument'
       display_name: 'CoreEmpire Monument Template'
       item_id: 314
@@ -1346,14 +1347,224 @@ perks:
             theme: 'coreempire'
             template: 'monument'
 
-#    - id: 'tpl_cultist_capitol'
-#      display_name: 'Cultist Capitol Template'
+# ===== Cultist TEMPLATES
+    - id: 'prem_tpl_cultist_camp'
+      display_name: 'Cultist Camp'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'cultist'
+            template: 'camp'
+            id: 'camp'
+
+    - id: 'prem_tpl_cultist_arrow_tower'
+      display_name: 'Cultist Arrow Tower Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'arrow_tower'
+
+    - id: 'prem_tpl_cultist_bank'
+      display_name: 'Cultist Bank Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'bank'
+
+    - id: 'prem_tpl_cultist_barracks'
+      display_name: 'Cultist Barracks Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'barracks'
+
+    - id: 'prem_tpl_cultist_cannon_tower'
+      display_name: 'Cultist Cannon Tower Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'cannon_tower'
+
+    - id: 'prem_tpl_cultist_capitol'
+      display_name: 'Cultist Capitol Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'cultist'
+            template: 'capital' #misspelt on purpose, easier to leave as is.
+            id: 's_capitol'
+
+    - id: 'prem_tpl_cultist_cottage'
+      display_name: 'Cultist Cottage Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'cottage'
+
+    - id: 'prem_tpl_cultist_granary'
+      display_name: 'Cultist Granary Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'granary'
+
+    - id: 'prem_tpl_cultist_grocer'
+      display_name: 'Cultist Grocer Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'grocer'
+
+    - id: 'prem_tpl_cultist_library'
+      display_name: 'Cultist Library Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'library'
+
+    - id: 'prem_tpl_cultist_market'
+      display_name: 'Cultist Market Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'market'
+
+    - id: 'prem_tpl_cultist_mine'
+      display_name: 'Cultist Mine Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'mine'
+
+    - id: 'prem_tpl_cultist_monument'
+      display_name: 'Cultist Monument Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'monument'
+
+    - id: 'prem_tpl_cultist_pasture'
+      display_name: 'Cultist Pasture Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'pasture'
+
+    - id: 'prem_tpl_cultist_scout_tower'
+      display_name: 'Cultist Scout Tower Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'scout_tower'
+
+#    - id: 'prem_tpl_cultist_shipyard'
+#      display_name: 'Cultist Shipyard Template'
 #      item_id: 397
-#      data: 0
+#      data: 3
 #      components:
-#          - name: 'CustomPersonalTemplate'
+#          - name: 'CustomTemplate'
 #            theme: 'cultist'
-#            template: 'capital'
-#            id: 's_capitol'
+#            template: 'shipyard'
+
+    - id: 'prem_tpl_cultist_stable'
+      display_name: 'Cultist Stable Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'stable'
+
+    - id: 'prem_tpl_cultist_temple'
+      display_name: 'Cultist Temple Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'temple'
+
+    - id: 'prem_tpl_cultist_trommel'
+      display_name: 'Cultist Trommel Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'trommel'
+
+    - id: 'prem_tpl_cultist_town_hall'
+      display_name: 'Cultist Town Hall Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'cultist'
+            template: 'town_hall'
+            id: 's_townhall'
+
+#    - id: 'prem_tpl_cultist_windmill'
+#      display_name: 'Cultist Windmill Template'
+#      item_id: 397
+#      data: 3
+#      components:
+#          - name: 'CustomTemplate'
+#            theme: 'cultist'
+#            template: 'windmill'
+
+    - id: 'prem_tpl_cultist_blacksmith'
+      display_name: 'Cultist Blacksmith Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'blacksmith'
+
+    - id: 'prem_tpl_cultist_store'
+      display_name: 'Cultist Store Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'store'
+
+    - id: 'prem_tpl_cultist_trade_outpost'
+      display_name: 'Cultist Trade Outpost Template'
+      item_id: 397
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'trade_outpost'
 
 
