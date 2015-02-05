@@ -223,9 +223,9 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 				e.printStackTrace();
 				return;
 			}
-			//if (facingDirection != BlockFace.EAST) {
-				//itemStore.setFacingDirection(facingDirection);
-			//}
+			if (facingDirection != BlockFace.EAST) {
+				itemStore.setFacingDirection(facingDirection);
+			}
 		}
 		
 		itemStore.setBuildable(this);

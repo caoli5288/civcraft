@@ -65,7 +65,6 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 	
 	private void loadMembers(String memberList) {
 		
-		if (CivGlobal.useUUID) {
 			String[] members = memberList.split(",");
 			for (String uuid : members) {
 				Resident resident = CivGlobal.getResidentViaUUID(UUID.fromString(uuid));
@@ -73,29 +72,14 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 					teamMembers.add(resident);
 				}
 			}
-		} else {
-			String[] members = memberList.split(",");
-			for (String name : members) {
-				Resident resident = CivGlobal.getResident(name);
-				if (resident != null) {
-					teamMembers.add(resident);
-				}
-			}
-		}
 	}
 	
 	public String getMemberListSaveString() {
 		String out = "";
 
-		if (CivGlobal.useUUID) {
 			for (Resident resident : teamMembers) {
 				out += resident.getUUIDString()+",";
-			}			
-		} else {
-			for (Resident resident : teamMembers) {
-				out += resident.getName()+",";
-			}
-		}
+			}	
 		
 		return out;
 	}
@@ -106,11 +90,7 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 		this.setId(rs.getInt("id"));
 		this.setName(rs.getString("name"));
 		
-		if (CivGlobal.useUUID) {
 			this.leader = CivGlobal.getResidentViaUUID(UUID.fromString(rs.getString("leader")));
-		} else {
-			this.leader = CivGlobal.getResident(rs.getString("leader"));
-		}
 		if (leader == null) {
 			CivLog.error("Couldn't load leader for team:"+this.getName()+"("+this.getId()+")");
 			return;
@@ -132,11 +112,7 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 	public void saveNow() throws SQLException {
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		hashmap.put("name", this.getName());
-		if (CivGlobal.useUUID) {
 			hashmap.put("leader", this.leader.getUUIDString());
-		} else {
-			hashmap.put("leader", this.leader.getName());		
-		}
 		hashmap.put("ladderPoints", this.getLadderPoints());
 		hashmap.put("members", this.getMemberListSaveString());
 

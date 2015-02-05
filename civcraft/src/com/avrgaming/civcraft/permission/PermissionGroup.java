@@ -61,27 +61,15 @@ public class PermissionGroup extends SQLObject {
 	}
 
 	public void addMember(Resident res) {
-		if (CivGlobal.useUUID) {
 			members.put(res.getUUIDString(), res);
-		} else {
-			members.put(res.getName(), res);
-		}
 	}
 	
 	public void removeMember(Resident res) {
-		if (CivGlobal.useUUID) {
 			members.remove(res.getUUIDString());
-		} else {		
-			members.remove(res.getName());
-		}
 	}
 
 	public boolean hasMember(Resident res) {		
-		if (CivGlobal.useUUID) {
 			return members.containsKey(res.getUUIDString());
-		} else {
-			return members.containsKey(res.getName());	
-		}
 	}
 	
 	public void clearMembers() {
@@ -170,14 +158,14 @@ public class PermissionGroup extends SQLObject {
 		
 		for (String n : names) {
 			Resident res;
-			if (CivGlobal.useUUID) {
+
+			if (n.length() >= 1)
+			{
 				res = CivGlobal.getResidentViaUUID(UUID.fromString(n));
-			} else {
-				res = CivGlobal.getResident(n);		
-			}
-			
-			if (res != null) {
-				members.put(n, res);
+				
+				if (res != null) {
+					members.put(n, res);
+				}
 			}
 		}
 	}
@@ -244,16 +232,10 @@ public class PermissionGroup extends SQLObject {
 	public String getMembersString() {
 		String out = "";
 		
-		if (CivGlobal.useUUID) {
 			for (String uuid : members.keySet()) {
 				Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(uuid));
 				out += res.getName()+", ";
 			}
-		} else {
-			for (String name : members.keySet()) {
-				out += name+", ";
-			}
-		}
 		return out;
 	}
 

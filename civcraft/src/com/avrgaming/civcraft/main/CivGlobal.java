@@ -205,10 +205,10 @@ public class CivGlobal {
 			
 		sdb = new SessionDatabase();
 		loadCamps();
+		loadResidents();
 		loadCivs();
 		loadRelations();
 		loadTowns();
-		loadResidents();
 		loadPermissionGroups();
 		loadTownChunks();
 		loadStructures();

@@ -269,11 +269,8 @@ public class Camp extends Buildable {
 			InvalidObjectException, CivException {
 		this.setId(rs.getInt("id"));
 		this.setName(rs.getString("name"));
-		if (CivGlobal.useUUID) {
 			this.ownerName = CivGlobal.getResidentViaUUID(UUID.fromString(rs.getString("owner_name"))).getName();		
-		} else {
-			this.ownerName = rs.getString("owner_name");
-		}
+		
 		this.corner = new BlockCoord(rs.getString("corner"));
 		this.nextRaidDate = new Date(rs.getLong("next_raid_date"));
 		this.setTemplateName(rs.getString("template_name"));
@@ -305,11 +302,8 @@ public class Camp extends Buildable {
 	public void saveNow() throws SQLException {
 		HashMap<String, Object> hashmap = new HashMap<String, Object>();
 		hashmap.put("name", this.getName());
-		if (CivGlobal.useUUID) {
 			hashmap.put("owner_name", this.getOwner().getUUIDString());		
-		} else {
-			hashmap.put("owner_name", this.getOwner().getName());
-		}
+		
 		hashmap.put("firepoints", this.firepoints);
 		hashmap.put("corner", this.corner.toString());
 		hashmap.put("next_raid_date", this.nextRaidDate.getTime());
