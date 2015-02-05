@@ -17,6 +17,9 @@ AvRGaming LLC
 - Precurssor (Fletcher Almond) Template Artist
 - DrDibble (Eli Osness) Template Artist
 
+MineTexas.com
+- Ataranlen (Nathan Stoltenberg) Plugin Programmer
+
 Additional Contributors
 ========================
 The community at http://civcraft.net/

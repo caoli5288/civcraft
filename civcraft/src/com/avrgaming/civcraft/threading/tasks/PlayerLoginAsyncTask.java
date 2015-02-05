@@ -60,7 +60,15 @@ public class PlayerLoginAsyncTask implements Runnable {
 	public void run() {
 		try {
 			CivLog.info("Running PlayerLoginAsyncTask for "+getPlayer().getName()+" UUID("+playerUUID+")");
-			Resident resident = CivGlobal.getResident(getPlayer().getName());
+			//Resident resident = CivGlobal.getResident(getPlayer().getName());
+			Resident resident = CivGlobal.getResidentViaUUID(playerUUID);
+			if (resident != null && !resident.getName().toLowerCase().equals(getPlayer().getName().toLowerCase()))
+			{
+				CivGlobal.removeResident(resident);
+				resident.setName(getPlayer().getName().toLowerCase());
+				resident.save();
+				CivGlobal.addResident(resident);
+			}
 			
 			/* 
 			 * Test to see if player has changed their name. If they have, these residents
@@ -179,13 +187,33 @@ public class PlayerLoginAsyncTask implements Runnable {
 						resident.giveAllFreePerks();
 					}
 				}
-				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
+				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
 				{
-					resident.giveAllElvenPerks();
+					resident.giveAllArcticPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.AZTEC_PERKS))
+				{
+					resident.giveAllAztecPerks();
 				}
 				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
 				{
 					resident.giveAllCultistPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
+				{
+					resident.giveAllEgyptianPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
+				{
+					resident.giveAllElvenPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
+				{
+					resident.giveAllRomanPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
+				{
+					resident.giveAllHellPerks();
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
@@ -258,6 +286,9 @@ public class PlayerLoginAsyncTask implements Runnable {
 			}
 		} catch (CivException playerNotFound) {
 			// Player logged out while async task was running.
+		} catch (InvalidNameException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 	

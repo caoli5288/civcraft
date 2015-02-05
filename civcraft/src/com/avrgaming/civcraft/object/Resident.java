@@ -1118,6 +1118,116 @@ public class Resident extends SQLObject {
 	public void setOnRoad(boolean onRoad) {
 		this.onRoad = onRoad;
 	}
+
+	public void giveAllArcticPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("tpl_arctic"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllAztecPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("tpl_aztec"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllEgyptianPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("tpl_egyptian"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllRomanPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("tpl_roman"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllHellPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("tpl_hell"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+	}
 	
 	public void giveAllElvenPerks() {
 		int perkCount;
@@ -1176,7 +1286,7 @@ public class Resident extends SQLObject {
 		for (ConfigPerk p : CivSettings.perks.values()) {
 			Perk perk = new Perk(p);
 			
-			if (!perk.getIdent().startsWith("prem_tpl"))
+			if (perk.getIdent().startsWith("perk_"))
 			{
 				perk.count = perkCount;
 				this.perks.put(perk.getIdent(), perk);

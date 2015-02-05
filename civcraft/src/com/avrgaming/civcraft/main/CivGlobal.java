@@ -158,7 +158,7 @@ public class CivGlobal {
 	public static HashSet<String> researchedTechs = new HashSet<String>();
 	
 	/* TODO change this to true for MC 1.8 */
-	public static boolean useUUID = false;
+	public static boolean useUUID = true;
 	
 	public static Map<Integer, Boolean> CivColorInUse = new ConcurrentHashMap<Integer, Boolean>();
 	public static TradeGoodPreGenerate preGenerator = new TradeGoodPreGenerate();
