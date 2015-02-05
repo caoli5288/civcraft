@@ -1138,7 +1138,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+		CivMessage.send(this, CivColor.LightGreen+"You have the Arctic Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllAztecPerks() {
@@ -1160,7 +1160,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+		CivMessage.send(this, CivColor.LightGreen+"You have the Aztec Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllEgyptianPerks() {
@@ -1182,7 +1182,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+		CivMessage.send(this, CivColor.LightGreen+"You have the Egyptian Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllRomanPerks() {
@@ -1204,7 +1204,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+		CivMessage.send(this, CivColor.LightGreen+"You have the Roman Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllHellPerks() {
@@ -1226,7 +1226,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
+		CivMessage.send(this, CivColor.LightGreen+"You have the Hell Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllElvenPerks() {
@@ -1293,7 +1293,7 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You've got free perks! Use /resident perks to see them.");
+		CivMessage.send(this, CivColor.LightGreen+"You've the weather perk! Use /resident perks to access it.");
 	}
 	
 	public void loadPerks() {
