@@ -1351,7 +1351,7 @@ perks:
     - id: 'prem_tpl_cultist_camp'
       display_name: 'Cultist Camp'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'cultist'
@@ -1361,7 +1361,7 @@ perks:
     - id: 'prem_tpl_cultist_arrow_tower'
       display_name: 'Cultist Arrow Tower Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1370,7 +1370,7 @@ perks:
     - id: 'prem_tpl_cultist_bank'
       display_name: 'Cultist Bank Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1379,7 +1379,7 @@ perks:
     - id: 'prem_tpl_cultist_barracks'
       display_name: 'Cultist Barracks Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1388,7 +1388,7 @@ perks:
     - id: 'prem_tpl_cultist_cannon_tower'
       display_name: 'Cultist Cannon Tower Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1397,7 +1397,7 @@ perks:
     - id: 'prem_tpl_cultist_capitol'
       display_name: 'Cultist Capitol Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'cultist'
@@ -1407,7 +1407,7 @@ perks:
     - id: 'prem_tpl_cultist_cottage'
       display_name: 'Cultist Cottage Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1416,7 +1416,7 @@ perks:
     - id: 'prem_tpl_cultist_granary'
       display_name: 'Cultist Granary Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1425,7 +1425,7 @@ perks:
     - id: 'prem_tpl_cultist_grocer'
       display_name: 'Cultist Grocer Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1434,7 +1434,7 @@ perks:
     - id: 'prem_tpl_cultist_library'
       display_name: 'Cultist Library Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1443,7 +1443,7 @@ perks:
     - id: 'prem_tpl_cultist_market'
       display_name: 'Cultist Market Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1452,7 +1452,7 @@ perks:
     - id: 'prem_tpl_cultist_mine'
       display_name: 'Cultist Mine Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1461,7 +1461,7 @@ perks:
     - id: 'prem_tpl_cultist_monument'
       display_name: 'Cultist Monument Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1470,7 +1470,7 @@ perks:
     - id: 'prem_tpl_cultist_pasture'
       display_name: 'Cultist Pasture Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1479,7 +1479,7 @@ perks:
     - id: 'prem_tpl_cultist_scout_tower'
       display_name: 'Cultist Scout Tower Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1497,7 +1497,7 @@ perks:
     - id: 'prem_tpl_cultist_stable'
       display_name: 'Cultist Stable Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1506,7 +1506,7 @@ perks:
     - id: 'prem_tpl_cultist_temple'
       display_name: 'Cultist Temple Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1515,7 +1515,7 @@ perks:
     - id: 'prem_tpl_cultist_trommel'
       display_name: 'Cultist Trommel Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1524,7 +1524,7 @@ perks:
     - id: 'prem_tpl_cultist_town_hall'
       display_name: 'Cultist Town Hall Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'cultist'
@@ -1543,7 +1543,7 @@ perks:
     - id: 'prem_tpl_cultist_blacksmith'
       display_name: 'Cultist Blacksmith Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1552,7 +1552,7 @@ perks:
     - id: 'prem_tpl_cultist_store'
       display_name: 'Cultist Store Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'
@@ -1561,7 +1561,7 @@ perks:
     - id: 'prem_tpl_cultist_trade_outpost'
       display_name: 'Cultist Trade Outpost Template'
       item_id: 397
-      data: 3
+      data: 1
       components:
           - name: 'CustomTemplate'
             theme: 'cultist'

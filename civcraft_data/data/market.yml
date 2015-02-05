@@ -7,10 +7,10 @@
 step: 1
 
 # The number of items that need to be sold to initialize a market 'tick'
-step_count: 512
+step_count: 256
 
 # the percentage at which the buy price is above the sell price
-rate: 0.15
+rate: 0.3
 
 # Shelf 1 left side, front id:0-4 back id:15-19
 
@@ -176,3 +176,9 @@ items:
       type_id: 365
       data: 0
       value: 5
+ 
+    - id: 132
+      name: 'Gunpowder'
+      type_id: 289
+      data: 0
+      value: 100

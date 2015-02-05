@@ -438,3 +438,17 @@ techs:
      cost: 175000.0
      points: 43750
      require_techs: 'tech_alchemy:tech_global_trade:tech_scientific_method:tech_advanced_efficiency' 
+
+   - id: 'tech_colosseum'
+     name: 'Colosseum'
+     beaker_cost: 25000.0
+     cost: 50000.0
+     points: 10000
+     require_techs: 'tech_writing:tech_trade:tech_advanced_masonry:tech_automation' 
+
+   - id: 'tech_globe_theatre'
+     name: 'Globe Theatre'
+     beaker_cost: 100000.0
+     cost: 100000.0
+     points: 40000
+     require_techs: 'tech_machinery:tech_global_trade:tech_economics:tech_nationalism'

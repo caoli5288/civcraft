@@ -282,3 +282,19 @@ buffs:
       value: '10'
       stackable: false
       parent:
+#Colosseum Buffs
+    - id: 'buff_colosseum_coins_from_towns'
+      name: 'Colosseum Coins From Towns'
+      description: 'Grants 100 coins per day to the civilization for every town in the world.'
+      value: '100'
+      stackable: false
+      parent:
+
+
+#Globe Theatre Buffs
+    - id: 'buff_globe_theatre_culture_from_towns'
+      name: 'Globe Theatre Culture From Towns'
+      description: 'Increase culture by 1 for every town in the world.'
+      value: '1'
+      stackable: false
+      parent:
