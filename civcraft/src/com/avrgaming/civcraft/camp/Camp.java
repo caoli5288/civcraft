@@ -182,7 +182,7 @@ public class Camp extends Buildable {
 	}
 	
 	public Camp(Resident owner, String name, Location corner) throws CivException {
-		this.ownerName = owner.getName();
+		this.ownerName = owner.getUUID().toString();
 		this.corner = new BlockCoord(corner);
 		try {
 			this.setName(name);
@@ -269,7 +269,7 @@ public class Camp extends Buildable {
 			InvalidObjectException, CivException {
 		this.setId(rs.getInt("id"));
 		this.setName(rs.getString("name"));
-			this.ownerName = CivGlobal.getResidentViaUUID(UUID.fromString(rs.getString("owner_name"))).getName();		
+			this.ownerName = rs.getString("owner_name");		
 		
 		this.corner = new BlockCoord(rs.getString("corner"));
 		this.nextRaidDate = new Date(rs.getLong("next_raid_date"));
@@ -738,10 +738,12 @@ public class Camp extends Buildable {
 			ItemStack token = LoreCraftableMaterial.spawn(craftMat);
 			
 			Tagged tag = (Tagged) craftMat.getComponent("Tagged");
-			token = tag.addTag(token, this.getOwnerName());
+			Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(this.getOwnerName()));
+			
+			token = tag.addTag(token, res.getName());
 	
 			AttributeUtil attrs = new AttributeUtil(token);
-			attrs.addLore(CivColor.LightGray+this.getOwnerName());
+			attrs.addLore(CivColor.LightGray+res.getName());
 			token = attrs.getStack();
 			
 			mInv.addItem(token);
@@ -1007,12 +1009,12 @@ public class Camp extends Buildable {
 	}
 
 	public Resident getOwner() {
-		return CivGlobal.getResident(ownerName);
+		return CivGlobal.getResidentViaUUID(UUID.fromString(ownerName));
 	}
 
 
 	public void setOwner(Resident owner) {
-		this.ownerName = owner.getName();
+		this.ownerName = owner.getUUID().toString();
 	}
 
 
@@ -1207,7 +1209,8 @@ public class Camp extends Buildable {
 	}
 
 	public String getOwnerName() {
-		return ownerName;
+		Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(ownerName));
+		return res.getName();
 	}
 
 	public void setOwnerName(String ownerName) {

@@ -120,7 +120,7 @@ public class Civilization extends SQLObject {
 	
 	public Civilization(String name, String capitolName, Resident leader) throws InvalidNameException {
 		this.setName(name);
-		this.leaderName = leader.getName();
+		this.leaderName = leader.getUUID().toString();
 		this.setCapitolName(capitolName);
 		
 		this.government = CivSettings.governments.get("gov_tribalism");		
@@ -189,8 +189,8 @@ public class Civilization extends SQLObject {
 		this.setId(rs.getInt("id"));
 		this.setName(rs.getString("name"));		
 		String resUUID = rs.getString("leaderName");
-		Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(resUUID));
-		leaderName = res.getName();
+//		Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(resUUID));
+		leaderName = resUUID;
 		
 		
 		capitolName = rs.getString("capitolName");
@@ -399,11 +399,11 @@ public class Civilization extends SQLObject {
 	}
 
 	public Resident getLeader() {
-		return CivGlobal.getResident(leaderName);
+		return CivGlobal.getResidentViaUUID(UUID.fromString(leaderName));
 	}
 
 	public void setLeader(Resident leader) {
-		this.leaderName = leader.getName();
+		this.leaderName = leader.getUUID().toString();
 	}
 
 	@Override
