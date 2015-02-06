@@ -223,7 +223,7 @@ public abstract class Wonder extends Buildable {
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded "+refund+" coins.");
+		CivMessage.sendTown(getTown(), "Town refunded "+refund+" Redbacks.");
 		
 		this.unbindStructureBlocks();
 		
@@ -468,7 +468,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerCulture*cultureCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated "+CivColor.Yellow+total+CivColor.LightGreen+" coins from culture.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated "+CivColor.Yellow+total+CivColor.LightGreen+" Redbacks from culture.");
 	}
 	
 	public void processCoinsFromColosseum() {
@@ -482,7 +482,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerTown*townCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated "+CivColor.Yellow+total+CivColor.LightGreen+" coins from ticket sales.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated "+CivColor.Yellow+total+CivColor.LightGreen+" Redbacks from ticket sales.");
 	}
 	
 }

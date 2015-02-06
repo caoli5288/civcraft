@@ -140,7 +140,7 @@ public class Bank extends Structure {
 		
 		String out = "1 = ";
 		out += (int)(itemPrice*getBankExchangeRate());
-		out += " Coins";
+		out += " Redbacks";
 		return out;
 	}
 	
@@ -171,7 +171,7 @@ public class Bank extends Structure {
 			DecimalFormat df = new DecimalFormat();
 			resident.getTreasury().deposit((double)((int)(coins*exchange_rate)));
 			CivMessage.send(player,
-					CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ df.format(coins*exchange_rate)+ " coins.");	
+					CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ df.format(coins*exchange_rate)+ " Redbacks.");	
 			return;
 		}
 		
@@ -186,7 +186,7 @@ public class Bank extends Structure {
 			this.getTown().depositDirect(giveToTown);
 			resident.getTreasury().deposit(giveToPlayer);
 		
-		CivMessage.send(player, CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ giveToPlayer+ " coins.");
+		CivMessage.send(player, CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ giveToPlayer+ " Redbacks.");
 		CivMessage.send(player,CivColor.Yellow+" Paid "+giveToTown+" coins in non-resident taxes.");
 		return;
 		
@@ -334,7 +334,7 @@ public class Bank extends Structure {
 		newCoins = Math.floor(newCoins);
 		
 		if (newCoins != 0) {
-			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town earned "+newCoins+" coins from interest on a principal of "+principal+" coins.");
+			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town earned "+newCoins+" Redbacks from interest on a principal of "+principal+" Redbacks.");
 			this.getTown().getTreasury().deposit(newCoins);
 			
 		}

@@ -257,7 +257,7 @@ public class ResidentCommand extends CommandBase {
 		double coins = amount*rate*exchangeRate;
 		
 		resident.getTreasury().deposit(coins);
-		CivMessage.sendSuccess(player, "Exchanged "+amount+" "+type+" for "+coins+" coins.");
+		CivMessage.sendSuccess(player, "Exchanged "+amount+" "+type+" for "+coins+" Redbacks.");
 		
 	}
 	
@@ -292,11 +292,11 @@ public class ResidentCommand extends CommandBase {
 		Resident resident = getResident();
 	
 		if (!resident.getTreasury().hasEnough(resident.getTreasury().getDebt())) {
-			throw new CivException("You do not have the required "+resident.getTreasury().getDebt()+" coins to pay off your debt.");
+			throw new CivException("You do not have the required "+resident.getTreasury().getDebt()+" Redbacks to pay off your debt.");
 		}
 		
 
-		CivMessage.sendSuccess(sender, "Paid "+resident.getTreasury().getDebt()+" coins of debt.");
+		CivMessage.sendSuccess(sender, "Paid "+resident.getTreasury().getDebt()+" Redbacks of debt.");
 		resident.payOffDebt();
 	}
 	
@@ -326,7 +326,7 @@ public class ResidentCommand extends CommandBase {
 		}
 		
 		if (resident.getTreasury().inDebt()) {
-			CivMessage.send(resident, CivColor.Yellow+"In Debt "+resident.getTreasury().getDebt()+" coins!");
+			CivMessage.send(resident, CivColor.Yellow+"In Debt "+resident.getTreasury().getDebt()+" Redbacks!");
 		}
 		
 		if (resident.getDaysTilEvict() > 0) {

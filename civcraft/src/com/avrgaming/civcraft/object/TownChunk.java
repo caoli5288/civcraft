@@ -236,7 +236,7 @@ public class TownChunk extends SQLObject {
 		cost = getNextPlotCost(town);
 		
 		if (!town.hasEnough(cost)) {
-			throw new CivException("The town does not have the required "+cost+" coins to claim this plot.");
+			throw new CivException("The town does not have the required "+cost+" Redbacks to claim this plot.");
 		}
 		
 		CultureChunk cultureChunk = CivGlobal.getCultureChunk(coord);
@@ -321,7 +321,7 @@ public class TownChunk extends SQLObject {
 	public static TownChunk claim(Town town, Player player, boolean outpost) throws CivException {
 		double cost = getNextPlotCost(town);
 		TownChunk tc = claim(town, new ChunkCoord(player.getLocation()), outpost);
-		CivMessage.sendSuccess(player, "Claimed chunk at "+tc.getChunkCoord()+" for "+CivColor.Yellow+cost+CivColor.LightGreen+" coins.");
+		CivMessage.sendSuccess(player, "Claimed chunk at "+tc.getChunkCoord()+" for "+CivColor.Yellow+cost+CivColor.LightGreen+" Redbacks.");
 		return tc;
 	}
 	
@@ -454,7 +454,7 @@ public class TownChunk extends SQLObject {
 		}
 		
 		if (this.isForSale()) {
-			out += CivColor.Yellow+"[For Sale: "+this.price+" coins]";
+			out += CivColor.Yellow+"[For Sale: "+this.price+" Redbacks]";
 		}
 		
 		return out;
@@ -463,7 +463,7 @@ public class TownChunk extends SQLObject {
 	public void purchase(Resident resident) throws CivException {
 
 		if (!resident.getTreasury().hasEnough(this.price)) {
-			throw new CivException("You do not have the required "+this.price+" coins to purchase this plot.");
+			throw new CivException("You do not have the required "+this.price+" Redbacks to purchase this plot.");
 		}
 		
 		if (this.perms.getOwner() == null) {

@@ -539,7 +539,7 @@ public class Resident extends SQLObject {
 		Player player;
 		try {
 			player = CivGlobal.getPlayer(this);
-			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" coins of debt!");
+			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" Redbacks of debt!");
 			CivMessage.send(player, CivColor.LightGray+"If you do not pay your debt within "+this.daysTilEvict+" days you will be evicted from town.");
 		} catch (CivException e) {
 			//Player is not online.
@@ -820,7 +820,7 @@ public class Resident extends SQLObject {
 	public boolean buyItem(String itemName, int id, byte data, double price, int amount) throws CivException {
 		
 		if (!this.getTreasury().hasEnough(price)) {
-			throw new CivException("Not enough coins.");
+			throw new CivException("Not enough Redbacks.");
 		}
 		
 		boolean completed = true;
@@ -1516,9 +1516,9 @@ public class Resident extends SQLObject {
 							CivColor.LightGray+"to confirm this trade.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build("Redbacks Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 Redbacks");
 					inv.setItem(i, guiStack);
 				} else {
 					inv.setItem(i, signStack);
@@ -1534,21 +1534,21 @@ public class Resident extends SQLObject {
 					inv.setItem(i, guiStack);
 					
 				} else if ((i-start) == 0){ 
-					ItemStack guiStack = LoreGuiItem.build("Remove Coins", 
+					ItemStack guiStack = LoreGuiItem.build("Remove Redbacks", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Gold+"Click to Remove 100 coins.",
-							CivColor.Gold+"Shift-Click to Remove 1000 coins.");
+							CivColor.Gold+"Click to Remove 100 Redbacks.",
+							CivColor.Gold+"Shift-Click to Remove 1000 Redbacks.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 1) {
-					ItemStack guiStack = LoreGuiItem.build("Add Coins", 
+					ItemStack guiStack = LoreGuiItem.build("Add Redbacks", 
 							ItemManager.getId(Material.GOLD_INGOT), 0, 
-							CivColor.Gold+"Click to Add 100 coins.",
-							CivColor.Gold+"Shift-Click to Add 1000 coins.");
+							CivColor.Gold+"Click to Add 100 Redbacks.",
+							CivColor.Gold+"Shift-Click to Add 1000 Redbacks.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build("Redbacks Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 Redbacks");
 					inv.setItem(i, guiStack);
 				}
 				else {

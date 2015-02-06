@@ -43,10 +43,10 @@ public class SyncTradeTimer implements Runnable {
 			
 			double taxesPaid = payment*town.getDepositCiv().getIncomeTaxRate();
 			if (taxesPaid > 0) {
-				CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" coins from trade."+
+				CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" Redbacks from trade."+
 					CivColor.Yellow+" (Paid "+df.format(taxesPaid)+" in taxes to "+town.getDepositCiv().getName()+")");
 			} else {
-				CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" coins from trade.");
+				CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" Redbacks from trade.");
 			}
 			
 			town.getTreasury().deposit(payment - taxesPaid);

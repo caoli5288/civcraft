@@ -20,7 +20,7 @@ public class PayPlayer extends RandomEventComponent {
 		Resident resident = CivGlobal.getResident(playerName);
 		double coins = this.getDouble("amount");
 		resident.getTreasury().deposit(coins);
-		CivMessage.send(resident, "You've recieved "+coins+" coins!");	
+		CivMessage.send(resident, "You've recieved "+coins+" Redbacks!");	
 	}
 
 }

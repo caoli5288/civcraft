@@ -200,7 +200,7 @@ public class PlotCommand extends CommandBase {
 		}
 		
 		tc.purchase(resident);
-		CivMessage.sendSuccess(sender, "Purchased plot "+tc.getChunkCoord()+" for "+tc.getValue()+" coins.");
+		CivMessage.sendSuccess(sender, "Purchased plot "+tc.getChunkCoord()+" for "+tc.getValue()+" Redbacks.");
 	}
 	
 	public void fs_cmd() throws CivException {
@@ -224,7 +224,7 @@ public class PlotCommand extends CommandBase {
 			throw new CivException(args[1]+" could not be read as a number.");
 		}
 		
-		CivMessage.sendTown(tc.getTown(), "Placed plot "+tc.getCenterString()+" up for sale at "+args[1]+" coins.");
+		CivMessage.sendTown(tc.getTown(), "Placed plot "+tc.getCenterString()+" up for sale at "+args[1]+" Redbacks.");
 	}
 	
 	
@@ -333,7 +333,7 @@ public class PlotCommand extends CommandBase {
 	private void showPriceInfo(TownChunk tc) {
 		String out = "";
 		if (tc.isForSale()) {
-			out += CivColor.Yellow+" [For Sale at "+tc.getPrice()+" coins] ";
+			out += CivColor.Yellow+" [For Sale at "+tc.getPrice()+" Redbacks] ";
 		}
 		CivMessage.send(sender, CivColor.Green+"Value: "+CivColor.LightGreen+tc.getValue()+out);
 	}

@@ -459,16 +459,16 @@ public class TradeInventoryListener implements Listener {
 			}
 			
 			if (!pair.resident.getTreasury().hasEnough(pair.coins)) {
-				CivMessage.sendError(us, pair.resident.getName()+" doesnt have enough coins!");
-				CivMessage.sendError(them, pair.resident.getName()+" doesnt have enough coins!");
+				CivMessage.sendError(us, pair.resident.getName()+" doesnt have enough Redbacks!");
+				CivMessage.sendError(them, pair.resident.getName()+" doesnt have enough Redbacks!");
 				us.closeInventory();
 				them.closeInventory();
 				return;
 			}
 			
 			if (!pair.otherResident.getTreasury().hasEnough(pair.otherCoins)) {
-				CivMessage.sendError(us, pair.otherResident.getName()+" doesnt have enough coins!");
-				CivMessage.sendError(them, pair.otherResident.getName()+" doesnt have enough coins!");
+				CivMessage.sendError(us, pair.otherResident.getName()+" doesnt have enough Redbacks!");
+				CivMessage.sendError(them, pair.otherResident.getName()+" doesnt have enough Redbacks!");
 				us.closeInventory();
 				them.closeInventory();
 				return;

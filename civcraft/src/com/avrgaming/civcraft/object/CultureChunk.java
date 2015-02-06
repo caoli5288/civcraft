@@ -188,14 +188,14 @@ public class CultureChunk {
 		
 		if (cc == null) {
 			CivMessage.send(player, CivColor.LightPurple+biome.name()+
-					CivColor.Green+" Coins: "+CivColor.LightGreen+info.coins+
+					CivColor.Green+" Redbacks: "+CivColor.LightGreen+info.coins+
 					CivColor.Green+" Happiness:"+CivColor.LightGreen+info.happiness+
 					CivColor.Green+" Hammers:"+CivColor.LightGreen+info.hammers+
 					CivColor.Green+" Growth:"+CivColor.LightGreen+info.growth+				
 					CivColor.Green+" Beakers:"+CivColor.LightGreen+info.beakers);
 		} else {
 			CivMessage.send(player, CivColor.LightPurple+biome.name()+
-					CivColor.Green+" Coins: "+CivColor.LightGreen+cc.getCoins()+
+					CivColor.Green+" Redbacks: "+CivColor.LightGreen+cc.getCoins()+
 					CivColor.Green+" Happiness:"+CivColor.LightGreen+cc.getHappiness()+
 					CivColor.Green+" Hammers:"+CivColor.LightGreen+cc.getHammers()+
 					CivColor.Green+" Growth:"+CivColor.LightGreen+cc.getGrowth()+				

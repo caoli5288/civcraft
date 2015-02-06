@@ -61,7 +61,7 @@ public class CivResearchCommand extends CommandBase {
 		}
 		
 		if (!civ.getTreasury().hasEnough(tech.cost)) {
-			throw new CivException("You do not have enough coins to research "+tech.name);
+			throw new CivException("You do not have enough Redbacks to research "+tech.name);
 		}
 		
 		if(!tech.isAvailable(civ)) {

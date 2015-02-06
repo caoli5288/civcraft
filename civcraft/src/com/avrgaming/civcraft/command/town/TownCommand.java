@@ -555,7 +555,7 @@ public class TownCommand extends CommandBase {
 							
 							CivMessage.send(player, CivColor.Yellow+"Your civilization would pay "+potentialDistanceLow+" if it or owned it."); 
 							CivMessage.send(player, CivColor.Yellow+"Your civilization would pay 0 upkeep if you conquered it and it remains uncapitulated"); 
-							CivMessage.send(player, CivColor.Yellow+"If this town's culture is not connected to your captial's culture and it was owned fully by your civ, you would pay "+potentialDistanceHigh+" coins in distance upkeep if you owned it.");
+							CivMessage.send(player, CivColor.Yellow+"If this town's culture is not connected to your captial's culture and it was owned fully by your civ, you would pay "+potentialDistanceHigh+" Redbacks in distance upkeep if you owned it.");
 						} else {
 							CivMessage.send(player, CivColor.Yellow+"This town has no town hall! Cannot calculate distance upkeep to it.");
 						}
@@ -644,7 +644,7 @@ public class TownCommand extends CommandBase {
 			throw new CivException(args[1]+" is not a valid number.");
 		}
 		
-		CivMessage.sendSuccess(sender, "Withdrew "+args[1]+" coins.");
+		CivMessage.sendSuccess(sender, "Withdrew "+args[1]+" Redbacks.");
 	}
 	
 	public void deposit_cmd() throws CivException {
@@ -667,7 +667,7 @@ public class TownCommand extends CommandBase {
 			throw new CivException(args[1]+" is not a valid number.");
 		}
 		
-		CivMessage.sendSuccess(sender, "Deposited "+args[1]+" coins.");
+		CivMessage.sendSuccess(sender, "Deposited "+args[1]+" Redbacks.");
 	}
 	
 	public void add_cmd() throws CivException {

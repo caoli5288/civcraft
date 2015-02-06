@@ -39,9 +39,9 @@ public class DiplomacyGiftResponse implements QuestionResponseInterface {
 				Town town = (Town)giftedObject;
 				
 				if (!toCiv.getTreasury().hasEnough(town.getGiftCost())) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+" We cannot accept the town of "+town.getName()+" as a gift because we do not have the required "+town.getGiftCost()+" coins.");
+					CivMessage.sendCiv(toCiv, CivColor.Rose+" We cannot accept the town of "+town.getName()+" as a gift because we do not have the required "+town.getGiftCost()+" Redbacks.");
 					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" cannot accept the town of "+town.getName()+" as a gift because they did not have the required "+
-							town.getGiftCost()+" coins.");
+							town.getGiftCost()+" Redbacks.");
 					return;
 				}
 				
@@ -53,8 +53,8 @@ public class DiplomacyGiftResponse implements QuestionResponseInterface {
 				int coins = fromCiv.getMergeCost();
 				
 				if (!toCiv.getTreasury().hasEnough(coins)) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+" We cannot accept the merge of "+fromCiv.getName()+" because we do not have the required "+coins+" coins.");
-					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" cannot accept the merge of "+fromCiv.getName()+" because they do not have the required "+coins+" coins.");
+					CivMessage.sendCiv(toCiv, CivColor.Rose+" We cannot accept the merge of "+fromCiv.getName()+" because we do not have the required "+coins+" Redbacks.");
+					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" cannot accept the merge of "+fromCiv.getName()+" because they do not have the required "+coins+" Redbacks.");
 					return;
 				}
 				

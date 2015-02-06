@@ -59,7 +59,7 @@ public class AdminCivCommand extends CommandBase {
 		commands.put("info", "[civ] - Processes /civ info command as if you were a member of this civilization.");
 		commands.put("merge", "[oldciv] [newciv] - Merges oldciv into newciv. oldciv is then destroyed");
 		commands.put("setgov", "[civ] [government] - Changes this civilization's government immediatly. Removes any anarchy timers.");
-		commands.put("bankrupt", "[civ] Clear the coins of all towns, and all members of this civ. requires confirmation.");
+		commands.put("bankrupt", "[civ] Clear the Redbacks of all towns, and all members of this civ. requires confirmation.");
 		commands.put("setgov", "[civ] [gov_id] - sets this civ to this government, no anarchy");
 		commands.put("conquered", "[civ] - Marks this civ as a conquered civ");
 		commands.put("unconquer", "[civ] - Unmarks this civ as a conquered civ");
@@ -141,7 +141,7 @@ public class AdminCivCommand extends CommandBase {
 		Civilization civ = getNamedCiv(1);
 		
 		if (args.length < 3) {
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Are you absolutely sure you want to wipe ALL COINS from ALL RESIDENTS and ALL TOWNS of this civ?");
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Are you absolutely sure you want to wipe ALL Redbacks from ALL RESIDENTS and ALL TOWNS of this civ?");
 			CivMessage.send(sender, "use /civ bankrupt yes if you do.");
 		}
 		

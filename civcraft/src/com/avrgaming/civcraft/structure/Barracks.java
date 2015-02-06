@@ -90,7 +90,7 @@ public class Barracks extends Structure {
 		String out = "\n";
 		out += CivColor.LightPurple+unit.name+"\n";
 		out += CivColor.Yellow+unit.cost+"\n";
-		out += CivColor.Yellow+"coins";
+		out += CivColor.Yellow+"Redbacks";
 		
 		return out;
 	}
@@ -124,7 +124,7 @@ public class Barracks extends Structure {
 		}
 		
 		if (!getTown().getTreasury().hasEnough(unit.cost)) {
-			throw new CivException("Not enough coins to train unit. We require "+unit.cost+" coins.");
+			throw new CivException("Not enough Redbacks to train unit. We require "+unit.cost+" Redbacks.");
 		}
 		
 		if (!unit.isAvailable(getTown())) {
@@ -249,7 +249,7 @@ public class Barracks extends Structure {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (!resident.getTreasury().hasEnough(cost)) {
-			CivMessage.sendError(player, "Sorry, but you don't have the required "+cost+" coins.");
+			CivMessage.sendError(player, "Sorry, but you don't have the required "+cost+" Redbacks.");
 			return;
 		}
 		
@@ -263,7 +263,7 @@ public class Barracks extends Structure {
 		resident.getTreasury().withdraw(cost);
 		player.getItemInHand().setDurability((short)0);
 		
-		CivMessage.sendSuccess(player, "Repaired "+craftMat.getName()+" for "+cost+" coins.");
+		CivMessage.sendSuccess(player, "Repaired "+craftMat.getName()+" for "+cost+" Redbacks.");
 		
 	}
 	

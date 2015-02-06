@@ -113,7 +113,7 @@ public class MissionBook extends UnitItemMaterial {
 		for (String str : mission.description) {
 			this.addLore(str);
 		}
-		this.addLore(CivColor.Yellow+mission.cost+" Coins.");
+		this.addLore(CivColor.Yellow+mission.cost+" Redbacks.");
 		this.addLore(CivColor.Gold+"Soulbound");
 	}
 	
@@ -206,7 +206,7 @@ public class MissionBook extends UnitItemMaterial {
 		try {
 			Resident resident = CivGlobal.getResident(playerName);
 			if (!resident.getTown().getTreasury().hasEnough(mission.cost)) {
-				throw new CivException("Your town requires "+mission.cost+" coins to perform this mission.");
+				throw new CivException("Your town requires "+mission.cost+" Redbacks to perform this mission.");
 			}
 			
 			switch (mission.id) {
@@ -504,7 +504,7 @@ public class MissionBook extends UnitItemMaterial {
 				resident.getTown().getTreasury().deposit(amount);
 			}
 			
-			CivMessage.sendSuccess(player, "Success! Stole "+amount+" coins from "+tc.getTown().getName());
+			CivMessage.sendSuccess(player, "Success! Stole "+amount+" Redbacks from "+tc.getTown().getName());
 		}
 	}
 	

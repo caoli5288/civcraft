@@ -308,7 +308,7 @@ public class ConfigMarketItem {
 			player.getWorld().dropItem(player.getLocation(), stack);
 		}
 		
-		CivMessage.sendSuccess(player, "Bought "+total_items+" "+this.name+" for "+cost+" coins.");
+		CivMessage.sendSuccess(player, "Bought "+total_items+" "+this.name+" for "+cost+" Redbacks.");
 		player.updateInventory();
 	}
 	
@@ -336,7 +336,7 @@ public class ConfigMarketItem {
 		}
 		
 		resident.getTreasury().deposit(total_coins);	
-		CivMessage.sendSuccess(player, "Sold "+total_items+" "+this.name+" for "+total_coins);
+		CivMessage.sendSuccess(player, "Sold "+total_items+" "+this.name+" for "+total_coins+" Redbacks");
 		player.updateInventory();
 	}
 	

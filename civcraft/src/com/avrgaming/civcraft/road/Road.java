@@ -132,7 +132,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		this.getTown().getTreasury().deposit(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+totalCost+" coins from road construction.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+totalCost+" Redbacks from road construction.");
 		
 		try {
 			this.delete();
@@ -253,7 +253,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		if (!this.getTown().getTreasury().hasEnough(totalCost)) {
-			throw new CivException("You do not have the required "+totalCost+" coins in the town treasury to build this road.");
+			throw new CivException("You do not have the required "+totalCost+" Redbacks in the town treasury to build this road.");
 		}
 		
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -296,7 +296,7 @@ public class Road extends Structure {
 		
 		/* Register structure in global tables. */
 		this.getTown().getTreasury().withdraw(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town spent "+CivColor.Yellow+totalCost+CivColor.LightGreen+" coins constructing a road.");
+		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town spent "+CivColor.Yellow+totalCost+CivColor.LightGreen+" Redbacks constructing a road.");
 		this.getTown().addStructure(this);
 		CivGlobal.addStructure(this);
 		this.getTown().lastBuildableBuilt = this;
