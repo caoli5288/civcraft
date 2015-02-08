@@ -738,9 +738,9 @@ public class Camp extends Buildable {
 			ItemStack token = LoreCraftableMaterial.spawn(craftMat);
 			
 			Tagged tag = (Tagged) craftMat.getComponent("Tagged");
-			Resident res = CivGlobal.getResidentViaUUID(UUID.fromString(this.getOwnerName()));
+			Resident res = CivGlobal.getResident(this.getOwnerName());
 			
-			token = tag.addTag(token, res.getName());
+			token = tag.addTag(token, res.getUUIDString());
 	
 			AttributeUtil attrs = new AttributeUtil(token);
 			attrs.addLore(CivColor.LightGray+res.getName());

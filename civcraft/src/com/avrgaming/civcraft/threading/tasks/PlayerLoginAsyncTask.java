@@ -62,10 +62,10 @@ public class PlayerLoginAsyncTask implements Runnable {
 			CivLog.info("Running PlayerLoginAsyncTask for "+getPlayer().getName()+" UUID("+playerUUID+")");
 			//Resident resident = CivGlobal.getResident(getPlayer().getName());
 			Resident resident = CivGlobal.getResidentViaUUID(playerUUID);
-			if (resident != null && !resident.getName().toLowerCase().equals(getPlayer().getName().toLowerCase()))
+			if (resident != null && !resident.getName().equals(getPlayer().getName()))
 			{
 				CivGlobal.removeResident(resident);
-				resident.setName(getPlayer().getName().toLowerCase());
+				resident.setName(getPlayer().getName());
 				resident.save();
 				CivGlobal.addResident(resident);
 			}
@@ -207,13 +207,13 @@ public class PlayerLoginAsyncTask implements Runnable {
 				{
 					resident.giveAllElvenPerks();
 				}
-				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
-				{
-					resident.giveAllRomanPerks();
-				}
 				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
 				{
 					resident.giveAllHellPerks();
+				}
+				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
+				{
+					resident.giveAllRomanPerks();
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();

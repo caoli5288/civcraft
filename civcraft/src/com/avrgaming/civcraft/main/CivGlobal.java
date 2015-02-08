@@ -717,29 +717,29 @@ public class CivGlobal {
 	}
 	
 	public static Resident getResident(Player player) {
-		return residents.get(player.getName().toLowerCase());
+		return residents.get(player.getName());
 	}
 	
 	public static Resident getResident(Resident resident) {
-		return residents.get(resident.getName().toLowerCase());
+		return residents.get(resident.getName());
 	}
 
 	public static boolean hasResident(String name) {
-		return residents.containsKey(name.toLowerCase());
+		return residents.containsKey(name);
 	}
 
 	public static void addResident(Resident res) {
-		residents.put(res.getName().toLowerCase(), res);
+		residents.put(res.getName(), res);
 		residentsViaUUID.put(res.getUUID(), res);
 	}
 	
 	public static void removeResident(Resident res) {
-		residents.remove(res.getName().toLowerCase());
+		residents.remove(res.getName());
 		residentsViaUUID.remove(res.getUUID());
 	}
 
 	public static Resident getResident(String name) {
-		return residents.get(name.toLowerCase());
+		return residents.get(name);
 	}
 	
 	public static Resident getResidentViaUUID(UUID uuid) {
@@ -914,6 +914,8 @@ public class CivGlobal {
 	
 	public static Player getPlayer(String name) throws CivException {
 		Resident res = CivGlobal.getResident(name);
+		if (res == null)
+			throw new CivException("No resident named"+name);
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player == null)
 			throw new CivException("No player named "+name);
