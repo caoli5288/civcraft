@@ -1422,6 +1422,9 @@ public class Resident extends SQLObject {
 	public ArrayList<Perk> getUnboundTemplatePerks(ArrayList<Perk> alreadyBoundPerkList, ConfigBuildableInfo info) {
 		ArrayList<Perk> unboundPerks = new ArrayList<Perk>();
 		for (Perk ourPerk : perks.values()) {
+
+			if (!ourPerk.getIdent().contains("template"))
+			{
 			CustomTemplate customTemplate = (CustomTemplate) ourPerk.getComponent("CustomTemplate");
 			if (customTemplate == null) {
 				continue;
@@ -1440,6 +1443,7 @@ public class Resident extends SQLObject {
 			}
 			
 			unboundPerks.add(ourPerk);
+			}
 		}
 		
 		return unboundPerks;
@@ -1831,8 +1835,8 @@ public class Resident extends SQLObject {
 			{
 				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
 						p.configPerk.type_id, 
-						p.configPerk.data, CivColor.Gold+"<Click To Activate>",
-						CivColor.LightBlue+"Count: "+p.count);
+						p.configPerk.data, CivColor.LightBlue+"Click To View",
+						CivColor.LightBlue+"These Templates");
 				stack = LoreGuiItem.setAction(stack, "ShowTemplateType");
 				stack = LoreGuiItem.setActionData(stack, "perk", p.configPerk.id);
 

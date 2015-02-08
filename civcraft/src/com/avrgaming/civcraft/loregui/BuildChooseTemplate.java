@@ -54,6 +54,8 @@ public class BuildChooseTemplate implements GuiAction {
 		inv.addItem(infoRec);
 		
 		for (Perk perk : perkList) {
+			if (!perk.getIdent().contains("template"))
+			{
 			infoRec = LoreGuiItem.build(perk.getDisplayName(), 
 					perk.configPerk.type_id, 
 					perk.configPerk.data, CivColor.Gold+"<Click To Build>",
@@ -61,9 +63,12 @@ public class BuildChooseTemplate implements GuiAction {
 			infoRec = LoreGuiItem.setAction(infoRec, "BuildWithTemplate");
 			infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
 			inv.addItem(infoRec);
+			}
 		}
 		
 		for (Perk perk : personalUnboundPerks) {
+			if (!perk.getIdent().contains("template"))
+			{
 			infoRec = LoreGuiItem.build(perk.getDisplayName(), 
 					CivData.BEDROCK, 
 					perk.configPerk.data, CivColor.Gold+"<Click To Bind>",
@@ -74,7 +79,7 @@ public class BuildChooseTemplate implements GuiAction {
 					CivColor.Gray+"Then build again.");				
 			infoRec = LoreGuiItem.setAction(infoRec, "ActivatePerk");
 			infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
-			
+			}
 		}
 		
 		TaskMaster.syncTask(new OpenInventoryTask(player, inv));
