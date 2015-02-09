@@ -126,8 +126,9 @@ public class PlayerLoginAsyncTask implements Runnable {
 				TaskMaster.syncTask(new GivePlayerStartingKit(resident.getName()));
 			}
 			
-			if (!resident.isUsesAntiCheat() && getPlayer().hasPermission(CivSettings.HACKER))
-			{
+			if (getPlayer().isOp() || getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
+				
+			} else if (!resident.isUsesAntiCheat() && getPlayer().hasPermission(CivSettings.HACKER)) {
 				TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, "You must use AntiCheat to join this server."+
 						"Visit https://www.minetexas.com/ to get it."));
 				return;
