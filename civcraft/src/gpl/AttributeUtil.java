@@ -10,14 +10,14 @@ import java.util.concurrent.ConcurrentMap;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-import net.minecraft.server.v1_7_R4.NBTBase;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.NBTTagInt;
-import net.minecraft.server.v1_7_R4.NBTTagList;
-import net.minecraft.server.v1_7_R4.NBTTagString;
+import net.minecraft.server.v1_8_R1.NBTBase;
+import net.minecraft.server.v1_8_R1.NBTTagCompound;
+import net.minecraft.server.v1_8_R1.NBTTagInt;
+import net.minecraft.server.v1_8_R1.NBTTagList;
+import net.minecraft.server.v1_8_R1.NBTTagString;
 
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_7_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R1.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
@@ -222,7 +222,7 @@ public class AttributeUtil {
     }
     
     // This may be modified
-    public net.minecraft.server.v1_7_R4.ItemStack nmsStack;
+    public net.minecraft.server.v1_8_R1.ItemStack nmsStack;
     
     private NBTTagCompound parent;
     private NBTTagList attributes;
@@ -244,10 +244,12 @@ public class AttributeUtil {
       //  }
         
         // Load NBT
-        if (nmsStack.tag == null) {
-            parent = (nmsStack.tag = new NBTTagCompound());
+        if (nmsStack.getTag() == null) {
+        	NBTTagCompound newTag = new NBTTagCompound();
+        	nmsStack.setTag(newTag);
+            parent = nmsStack.getTag();
         } else {
-            parent = nmsStack.tag;
+            parent = nmsStack.getTag();
         }
         
         // Load attribute list
@@ -269,7 +271,7 @@ public class AttributeUtil {
     		return ItemManager.createItemStack(CivData.WOOL, 0);
     	}
     	
-    	if (nmsStack.tag != null) {
+    	if (nmsStack.getTag() != null) {
     		if (attributes.size() == 0) {
     			parent.remove("AttributeModifiers");
     		}
@@ -369,11 +371,12 @@ public class AttributeUtil {
     		return;
     	}
     	
-    	if (nmsStack.tag == null) {
-    		nmsStack.tag = new NBTTagCompound();
+    	if (nmsStack.getTag() == null) {
+    		NBTTagCompound newTag = new NBTTagCompound();
+        	nmsStack.setTag(newTag);
     	}
     	//this.lore.add(str);
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     
     	if (displayCompound == null) {
     		displayCompound = new NBTTagCompound();
@@ -386,7 +389,7 @@ public class AttributeUtil {
     	
     	loreList.add(new NBTTagString(str));
     	displayCompound.set("Lore", loreList);
-    	nmsStack.tag.set("display", displayCompound);    	 
+    	nmsStack.getTag().set("display", displayCompound);    	 
     }
     
     public String[] getLore() {
@@ -394,11 +397,11 @@ public class AttributeUtil {
     		return null;
     	}
     	
-    	if (nmsStack.tag == null) {
+    	if (nmsStack.getTag() == null) {
     		return null;
     	}
     	
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	
     	if (displayCompound == null) {
     		return null;
@@ -429,7 +432,7 @@ public class AttributeUtil {
     
     public void setLore(String[] strings) {
     	//this.lore.add(str);
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     
     	if (displayCompound == null) {
     		displayCompound = new NBTTagCompound();
@@ -442,7 +445,7 @@ public class AttributeUtil {
     	}
     	
     	displayCompound.set("Lore", loreList);
-    	nmsStack.tag.set("display", displayCompound);    	 
+    	nmsStack.getTag().set("display", displayCompound);    	 
     }
     
     public void addEnhancement(String enhancementName, String key, String value) {
@@ -450,7 +453,7 @@ public class AttributeUtil {
     		throw new IllegalArgumentException();
     	}
     	
-    	NBTTagCompound compound = nmsStack.tag.getCompound("item_enhancements");
+    	NBTTagCompound compound = nmsStack.getTag().getCompound("item_enhancements");
     	
     	if (compound == null) {
     		compound = new NBTTagCompound();
@@ -467,7 +470,7 @@ public class AttributeUtil {
     	enhCompound.set("name", new NBTTagString(enhancementName));
     	
     	compound.set(enhancementName, enhCompound);
-    	nmsStack.tag.set("item_enhancements", compound);
+    	nmsStack.getTag().set("item_enhancements", compound);
     }
     
 //	not used yet...
@@ -507,7 +510,7 @@ public class AttributeUtil {
 			return null;
 		}
     	
-		NBTTagCompound compound = nmsStack.tag.getCompound("item_enhancements");
+		NBTTagCompound compound = nmsStack.getTag().getCompound("item_enhancements");
 		NBTTagCompound enhCompound = compound.getCompound(enhName);
 		
 		if (!enhCompound.hasKey(key)) {
@@ -524,7 +527,7 @@ public class AttributeUtil {
 			return returnList;
 		}
 		
-    	NBTTagCompound compound = nmsStack.tag.getCompound("item_enhancements");
+    	NBTTagCompound compound = nmsStack.getTag().getCompound("item_enhancements");
 
     	for (Object keyObj : compound.c()) {
     		if (!(keyObj instanceof String)) {
@@ -551,7 +554,7 @@ public class AttributeUtil {
 	}
 	
     public boolean hasEnhancement(String enhName) {
-    	NBTTagCompound compound = nmsStack.tag.getCompound("item_enhancements");
+    	NBTTagCompound compound = nmsStack.getTag().getCompound("item_enhancements");
     	if (compound == null) {
     		return false;
     	}
@@ -564,11 +567,11 @@ public class AttributeUtil {
 			return false;
 		}
 		
-		if (nmsStack.tag == null) {
+		if (nmsStack.getTag() == null) {
 			return false;
 		}
 		
-		return nmsStack.tag.hasKey("item_enhancements");
+		return nmsStack.getTag().hasKey("item_enhancements");
 	}
     
     public void setCivCraftProperty(String key, String value) {
@@ -577,25 +580,25 @@ public class AttributeUtil {
     		return;
     	}
     	
-    	if (nmsStack.tag == null) {
-    		nmsStack.tag = new NBTTagCompound();
+    	if (nmsStack.getTag() == null) {
+    		nmsStack.setTag(new NBTTagCompound());
     	}
     	
-    	NBTTagCompound civcraftCompound = nmsStack.tag.getCompound("civcraft");
+    	NBTTagCompound civcraftCompound = nmsStack.getTag().getCompound("civcraft");
     	
     	if (civcraftCompound == null) {
     		civcraftCompound = new NBTTagCompound();
     	}
     	
     	civcraftCompound.set(key, new NBTTagString(value));
-    	nmsStack.tag.set("civcraft", civcraftCompound);
+    	nmsStack.getTag().set("civcraft", civcraftCompound);
     }
     
     public String getCivCraftProperty(String key) {
     	if (nmsStack == null) {
     		return null;
     	}
-    	NBTTagCompound civcraftCompound = nmsStack.tag.getCompound("civcraft");
+    	NBTTagCompound civcraftCompound = nmsStack.getTag().getCompound("civcraft");
     	
     	if (civcraftCompound == null) {
     		return null;
@@ -614,7 +617,7 @@ public class AttributeUtil {
     		return;
     	}
     
-		NBTTagCompound civcraftCompound = nmsStack.tag.getCompound("civcraft");
+		NBTTagCompound civcraftCompound = nmsStack.getTag().getCompound("civcraft");
     	if (civcraftCompound == null) {
     		return;
     	}
@@ -631,22 +634,23 @@ public class AttributeUtil {
     		return;
     	}
     	
-    	if (nmsStack.tag == null) {
-    		nmsStack.tag = new NBTTagCompound();
+    	if (nmsStack.getTag() == null) {
+    		NBTTagCompound newTag = new NBTTagCompound();
+        	nmsStack.setTag(newTag);
     	}
 		
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	
 		if (displayCompound == null) {
     		displayCompound = new NBTTagCompound();
     	}
 		
 		displayCompound.set("Name", new NBTTagString(ChatColor.RESET+name));
-    	nmsStack.tag.set("display", displayCompound);    	 
+    	nmsStack.getTag().set("display", displayCompound);    	 
 	}
 	
 	public String getName() {
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	
 		if (displayCompound == null) {
     		displayCompound = new NBTTagCompound();
@@ -659,18 +663,18 @@ public class AttributeUtil {
 
 
 	public void setColor(Long long1) {
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	
 		if (displayCompound == null) {
     		displayCompound = new NBTTagCompound();
     	}
 				
 		displayCompound.set("color", new NBTTagInt(long1.intValue()));
-    	nmsStack.tag.set("display", displayCompound); 
+    	nmsStack.getTag().set("display", displayCompound); 
 	}
 	
 	public int getColor() {
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	if (displayCompound == null) {
     		return 0;
     	}
@@ -683,11 +687,11 @@ public class AttributeUtil {
 			return false;
 		}
 		
-		if (nmsStack.tag == null) {
+		if (nmsStack.getTag() == null) {
 			return false;
 		}
 		
-    	NBTTagCompound displayCompound = nmsStack.tag.getCompound("display");
+    	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
     	if (displayCompound == null) {
     		return false;
     	}
@@ -710,12 +714,12 @@ public class AttributeUtil {
     		return;
     	}
     
-		NBTTagCompound civcraftCompound = nmsStack.tag.getCompound("civcraft");
+		NBTTagCompound civcraftCompound = nmsStack.getTag().getCompound("civcraft");
     	if (civcraftCompound == null) {
     		return;
     	}
     	
-    	nmsStack.tag.remove("civcraft");		
+    	nmsStack.getTag().remove("civcraft");		
 	}
 
 	public boolean hasLegacyEnhancements() {
@@ -723,11 +727,11 @@ public class AttributeUtil {
 			return false;
 		}
 		
-		if (nmsStack.tag == null) {
+		if (nmsStack.getTag() == null) {
 			return false;
 		}
 		
-        return nmsStack.tag.hasKey("civ_enhancements");
+        return nmsStack.getTag().hasKey("civ_enhancements");
 	}
 
 }

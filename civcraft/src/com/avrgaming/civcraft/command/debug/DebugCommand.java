@@ -875,7 +875,8 @@ public class DebugCommand extends CommandBase {
 		ChunkCoord coord = new ChunkCoord(you.getLocation());
 		
 		for (Player player : Bukkit.getOnlinePlayers()) {
-			player.getWorld().refreshChunk(coord.getX(), coord.getZ());
+			player.getWorld().unloadChunk(coord.getX(), coord.getZ());
+			player.getWorld().loadChunk(coord.getX(), coord.getZ());
 		}
 	}
 	

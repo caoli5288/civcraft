@@ -16,10 +16,10 @@
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/junit-4.11.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/json.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/MobLib-1.7.10.jar"/>
+	<classpathentry kind="lib" path="E:/Minecraft/civcraft1.5/moblib1.5.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TagAPI.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.7.9-R0.2.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.7.9-R0.2-3092.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.7.10-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.8-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.8.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.8.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

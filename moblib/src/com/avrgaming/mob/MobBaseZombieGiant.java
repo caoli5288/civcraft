@@ -3,18 +3,18 @@ package com.avrgaming.mob;
 import java.util.ArrayList;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_7_R4.CraftWorld;
-import org.bukkit.craftbukkit.v1_7_R4.event.CraftEventFactory;
+import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R1.event.CraftEventFactory;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import com.avrgaming.nms.NMSUtil;
 
-import net.minecraft.server.v1_7_R4.DamageSource;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityGiantZombie;
-import net.minecraft.server.v1_7_R4.Item;
-import net.minecraft.server.v1_7_R4.NBTTagCompound;
-import net.minecraft.server.v1_7_R4.World;
+import net.minecraft.server.v1_8_R1.DamageSource;
+import net.minecraft.server.v1_8_R1.Entity;
+import net.minecraft.server.v1_8_R1.EntityGiantZombie;
+import net.minecraft.server.v1_8_R1.Item;
+import net.minecraft.server.v1_8_R1.NBTTagCompound;
+import net.minecraft.server.v1_8_R1.World;
 
 public class MobBaseZombieGiant extends EntityGiantZombie implements ISpawnable {
 	public ICustomMob customMob = null;
@@ -70,7 +70,7 @@ public class MobBaseZombieGiant extends EntityGiantZombie implements ISpawnable 
 	}
 	
 	@Override
-	protected void getRareDrop(int i) {
+	protected void getRareDrop() {
 		return;
 	}
 	
@@ -111,9 +111,9 @@ public class MobBaseZombieGiant extends EntityGiantZombie implements ISpawnable 
 	
 	/* Try to prevent fire ticks.. */
 	@Override
-	public void e() {
+	public void m() {
 		try {
-		super.e();
+		super.m();
 		if (customMob != null) {
 			customMob.onTick();	
 		}

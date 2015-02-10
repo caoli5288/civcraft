@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import net.minecraft.server.v1_7_R4.EntityCreature;
+import net.minecraft.server.v1_8_R1.EntityCreature;
 
 import org.bukkit.Location;
 import org.bukkit.World;

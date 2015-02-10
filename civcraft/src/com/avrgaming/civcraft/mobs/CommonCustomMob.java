@@ -8,21 +8,21 @@ import java.util.LinkedList;
 import java.util.Random;
 import java.util.UUID;
 
-import net.minecraft.server.v1_7_R4.DamageSource;
-import net.minecraft.server.v1_7_R4.Entity;
-import net.minecraft.server.v1_7_R4.EntityCreature;
-import net.minecraft.server.v1_7_R4.EntityInsentient;
-import net.minecraft.server.v1_7_R4.EntityLiving;
-import net.minecraft.server.v1_7_R4.GenericAttributes;
-import net.minecraft.server.v1_7_R4.PathfinderGoalSelector;
+import net.minecraft.server.v1_8_R1.DamageSource;
+import net.minecraft.server.v1_8_R1.Entity;
+import net.minecraft.server.v1_8_R1.EntityCreature;
+import net.minecraft.server.v1_8_R1.EntityInsentient;
+import net.minecraft.server.v1_8_R1.EntityLiving;
+import net.minecraft.server.v1_8_R1.GenericAttributes;
+import net.minecraft.server.v1_8_R1.PathfinderGoalSelector;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Biome;
-import org.bukkit.craftbukkit.v1_7_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_7_R4.util.UnsafeList;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_8_R1.util.UnsafeList;
 import org.bukkit.entity.ExperienceOrb;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -78,7 +78,7 @@ public abstract class CommonCustomMob implements ICustomMob {
 		
 		Field gsa;
 		try {
-			gsa = net.minecraft.server.v1_7_R4.EntityInsentient.class.getDeclaredField("goalSelector");
+			gsa = net.minecraft.server.v1_8_R1.EntityInsentient.class.getDeclaredField("goalSelector");
 			gsa.setAccessible(true);
 			return (PathfinderGoalSelector)gsa.get((EntityInsentient)entity);
 		} catch (NoSuchFieldException e) {
@@ -96,7 +96,7 @@ public abstract class CommonCustomMob implements ICustomMob {
 	public PathfinderGoalSelector getTargetSelector() {
 		Field gsa;
 		try {
-			gsa = net.minecraft.server.v1_7_R4.EntityInsentient.class.getDeclaredField("targetSelector");
+			gsa = net.minecraft.server.v1_8_R1.EntityInsentient.class.getDeclaredField("targetSelector");
 			gsa.setAccessible(true);
 			return (PathfinderGoalSelector)gsa.get((EntityInsentient)entity);
 		} catch (NoSuchFieldException e) {
@@ -137,7 +137,7 @@ public abstract class CommonCustomMob implements ICustomMob {
 		System.out.println("Printing goals:");
 	    Field gsa;
 		try {
-			gsa = net.minecraft.server.v1_7_R4.PathfinderGoalSelector.class.getDeclaredField("b");
+			gsa = net.minecraft.server.v1_8_R1.PathfinderGoalSelector.class.getDeclaredField("b");
 			gsa.setAccessible(true);
 			//PathfinderGoalSelectorItem item;
 			UnsafeList<?> list = (UnsafeList<?>) gsa.get(goals);

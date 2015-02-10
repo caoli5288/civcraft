@@ -3,7 +3,7 @@ package com.avrgaming.civcraft.command.admin;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-import net.minecraft.server.v1_7_R4.EntityCreature;
+import net.minecraft.server.v1_8_R1.EntityCreature;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
