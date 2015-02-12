@@ -3,11 +3,11 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/dhutils.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/Herochat.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/HeroChat 5.6.7.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/Vault.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/VanishNoPacket.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/WorldBorder.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/NoCheatPlus.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/NoCheatPlus (2).jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bonecp-0.8.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/guava-15.0.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/slf4j-simple-1.7.5.jar"/>

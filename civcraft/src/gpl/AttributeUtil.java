@@ -245,9 +245,8 @@ public class AttributeUtil {
         
         // Load NBT
         if (nmsStack.getTag() == null) {
-        	NBTTagCompound newTag = new NBTTagCompound();
-        	nmsStack.setTag(newTag);
-            parent = nmsStack.getTag();
+        	parent = new NBTTagCompound();        	
+            nmsStack.setTag(parent);
         } else {
             parent = nmsStack.getTag();
         }
@@ -317,7 +316,9 @@ public class AttributeUtil {
     
     public void removeAll() {
     	 attributes = new NBTTagList();
-         parent.set("AttributeModifiers", attributes);
+    	 if (parent != null) {
+    		 parent.set("AttributeModifiers", attributes);
+    	 }
     }
     
     
@@ -372,8 +373,7 @@ public class AttributeUtil {
     	}
     	
     	if (nmsStack.getTag() == null) {
-    		NBTTagCompound newTag = new NBTTagCompound();
-        	nmsStack.setTag(newTag);
+    		nmsStack.setTag(new NBTTagCompound());
     	}
     	//this.lore.add(str);
     	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
@@ -635,8 +635,7 @@ public class AttributeUtil {
     	}
     	
     	if (nmsStack.getTag() == null) {
-    		NBTTagCompound newTag = new NBTTagCompound();
-        	nmsStack.setTag(newTag);
+    		nmsStack.setTag(new NBTTagCompound());
     	}
 		
     	NBTTagCompound displayCompound = nmsStack.getTag().getCompound("display");
@@ -671,6 +670,28 @@ public class AttributeUtil {
 				
 		displayCompound.set("color", new NBTTagInt(long1.intValue()));
     	nmsStack.getTag().set("display", displayCompound); 
+	}
+	
+	public void setSkullOwner(String string) {
+		if (nmsStack == null) {
+			return;
+		}
+		
+		NBTTagCompound skullCompound = nmsStack.getTag().getCompound("SkullOwner");
+		if (skullCompound == null) {
+			skullCompound = new NBTTagCompound();
+		}
+		
+		skullCompound.set("Name", new NBTTagString(string));
+		nmsStack.getTag().set("SkullOwner", skullCompound);		
+	}
+	
+	public void setHideFlag(int flags) {
+		if (nmsStack == null) {
+			return;
+		}
+		
+		nmsStack.getTag().setInt("HideFlags", flags);
 	}
 	
 	public int getColor() {
@@ -733,5 +754,4 @@ public class AttributeUtil {
 		
         return nmsStack.getTag().hasKey("civ_enhancements");
 	}
-
 }

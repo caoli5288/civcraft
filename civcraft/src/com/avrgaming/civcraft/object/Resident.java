@@ -1831,6 +1831,11 @@ public class Resident extends SQLObject {
 		
 		for (Object obj : perks.values()) {
 			Perk p = (Perk)obj;
+
+			CivMessage.send(this, CivColor.LightGray+"ident: "+p.getIdent());
+			CivMessage.send(this, CivColor.LightGray+"ident: "+p.configPerk.display_name);
+			CivMessage.send(this, CivColor.LightGray+"type: "+p.configPerk.type_id);
+			CivMessage.send(this, CivColor.LightGray+"data: "+p.configPerk.data);
 			if (p.getIdent().startsWith("temp"))
 			{
 				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
@@ -1844,10 +1849,10 @@ public class Resident extends SQLObject {
 			}
 			else if (p.getIdent().startsWith("perk"))
 			{
-				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
+				ItemStack stack = LoreGuiItem.build(p.getDisplayName(), 
 						p.configPerk.type_id, 
 						p.configPerk.data, CivColor.Gold+"<Click To Activate>",
-						CivColor.LightBlue+"Count: "+p.count);
+						"Unlimted Uses");
 				stack = LoreGuiItem.setAction(stack, "ActivatePerk");
 				stack = LoreGuiItem.setActionData(stack, "perk", p.configPerk.id);
 

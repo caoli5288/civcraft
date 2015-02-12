@@ -121,8 +121,8 @@ public class Template {
 		attachableTypes.add(ItemManager.getId(Material.TORCH));
 		attachableTypes.add(ItemManager.getId(Material.REDSTONE_WIRE));
 		attachableTypes.add(ItemManager.getId(Material.WHEAT));
-		attachableTypes.add(ItemManager.getId(Material.SIGN_POST));
-		attachableTypes.add(ItemManager.getId(Material.WALL_SIGN));
+//		attachableTypes.add(ItemManager.getId(Material.SIGN_POST));
+//		attachableTypes.add(ItemManager.getId(Material.WALL_SIGN));
 		attachableTypes.add(ItemManager.getId(Material.LADDER));
 		attachableTypes.add(ItemManager.getId(Material.RAILS));
 		attachableTypes.add(ItemManager.getId(Material.LEVER));
@@ -155,6 +155,15 @@ public class Template {
 		attachableTypes.add(ItemManager.getId(Material.REDSTONE_COMPARATOR_OFF));
 		attachableTypes.add(ItemManager.getId(Material.DAYLIGHT_DETECTOR));
 		attachableTypes.add(ItemManager.getId(Material.ACTIVATOR_RAIL));
+	}
+	
+	public static boolean isAttachable(int blockID)
+	{
+		if (attachableTypes.contains(blockID))
+		{
+			return true;
+		}
+		return false;
 	}
 	
 	
@@ -641,6 +650,10 @@ public class Template {
 						}
 					}
 				}
+			}
+			
+			if (isAttachable(blockId)) {
+				this.attachableLocations.add(new BlockCoord("", blockX, blockY, blockZ));
 			}
 			
 			blocks[blockX][blockY][blockZ] = block;
