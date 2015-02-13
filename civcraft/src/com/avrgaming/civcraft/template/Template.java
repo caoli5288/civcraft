@@ -157,6 +157,14 @@ public class Template {
 		attachableTypes.add(ItemManager.getId(Material.ACTIVATOR_RAIL));
 	}
 	
+	public static boolean isAttachable(int blockID)
+	{
+		if (attachableTypes.contains(blockID))
+		{
+			return true;
+		}
+		return false;
+	}
 	
 	public Template() 
 	{
@@ -641,6 +649,10 @@ public class Template {
 						}
 					}
 				}
+			}
+			
+			if (isAttachable(blockId)) {
+				this.attachableLocations.add(new BlockCoord("", blockX, blockY, blockZ));
 			}
 			
 			blocks[blockX][blockY][blockZ] = block;
