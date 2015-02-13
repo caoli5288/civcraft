@@ -126,14 +126,6 @@ public class PlayerLoginAsyncTask implements Runnable {
 				TaskMaster.syncTask(new GivePlayerStartingKit(resident.getName()));
 			}
 			
-			if (getPlayer().isOp() || getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
-				
-			} else if (!resident.isUsesAntiCheat() && getPlayer().hasPermission(CivSettings.HACKER)) {
-				TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, "You must use AntiCheat to join this server."+
-						"Visit https://www.minetexas.com/ to get it."));
-				return;
-			}
-			
 			if (War.isWarTime() && War.isOnlyWarriors()) {
 				if (getPlayer().isOp() || getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
 					//Allowed to connect since player is OP or mini admin.

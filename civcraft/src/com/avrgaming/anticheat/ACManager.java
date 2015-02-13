@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.threading.TaskMaster;
+import com.avrgaming.civcraft.threading.tasks.PlayerKickBan;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.TimeTools;
 import com.avrgaming.civcraft.war.War;
@@ -231,6 +232,13 @@ public class ACManager implements PluginMessageListener {
 			CivMessage.sendError(player, e.getMessage());
 			CivLog.info("Failed to validate player:"+player.getName()+" Message:"+e.getMessage());
 			//e.printStackTrace();
+			
+			if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
+				
+			} else if (player.hasPermission(CivSettings.HACKER)) {
+				TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
+						"Visit https://www.minetexas.com/ to get it."));
+			}
 			return;
 		}
 		
