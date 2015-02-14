@@ -1394,6 +1394,31 @@ materials:
               - " p "
               - " s "
 
+        - id: 'mat_wood_axe'
+          item_id: 271
+          item_data: 0
+          name: 'Training Axe'
+          craftable: true
+          shaped: true
+          category: '<lightgreen>Gear Tier 1'
+          components:
+              - name: 'Attack'
+                value: '5'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 5
+                data: -1
+                letter: 'p'
+              - type_id: 280
+                data: 0
+                letter: 's'
+          shape:
+              - "ppp"
+              - "psp"
+              - " s "
+
         # Checked 10/8/13
         - id: 'mat_leather_helmet'
           item_id: 298
@@ -1972,6 +1997,31 @@ materials:
               - " c "
               - " s "
 
+        - id: 'mat_stone_axe'
+          item_id: 275
+          item_data: 0
+          name: 'Stone Slicer'
+          craftable: true
+          shaped: true
+          category: '<lightgreen>Gear Tier 1'
+          components:
+              - name: 'Attack'
+                value: '6'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 4
+                data: 0
+                letter: 'c'
+              - type_id: 280
+                data: 0
+                letter: 's'
+          shape:
+              - "ccc"
+              - "csc"
+              - " s "
+
 # Iron Gear recipes -------------------------------------------------
 
         # Checked 10/8/13
@@ -1999,6 +2049,33 @@ materials:
           shape:
               - " i "
               - " i "
+              - " s "
+
+              # Checked 10/8/13
+        - id: 'mat_iron_axe'
+          item_id: 258
+          item_data: 0
+          name: 'Iron Cleaver'
+          craftable: true
+          required_techs: 'tech_metal_casting'
+          shaped: true
+          category: '<lightgreen>Gear Tier 1'
+          components:
+              - name: 'Attack'
+                value: '14'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 265
+                data: 0
+                letter: 'i'
+              - type_id: 280
+                data: 0
+                letter: 's'
+          shape:
+              - "iii"
+              - "isi"
               - " s "
 
         # Checked 10/8/13
@@ -2230,6 +2307,34 @@ materials:
               - " b "
               - " h "
 
+        # Checked 10/8/13
+        - id: 'mat_steel_axe'
+          item_id: 258
+          item_data: 0
+          name: 'Steel Double Axe'
+          craftable: true
+          required_techs: 'tech_sword_smithing'
+          shaped: true
+          category: '<lightblue>Gear Tier 2'
+          components:
+              - name: 'Attack'
+                value: '22'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_steel_sword_blade'
+                letter: 'b'
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_steel_sword_hilt'
+                letter: 'h'
+          shape:
+              - "bbb"
+              - "bhb"
+              - " h "
 
 ## Carbide steel - -- -                  -----------------------------------------
 
@@ -2262,6 +2367,34 @@ materials:
               - " b "
               - " h "
 
+        # Checked 10/8/13
+        - id: 'mat_carbide_steel_axe'
+          item_id: 283
+          item_data: 0
+          name: 'Carbide Steel Axe'
+          craftable: true
+          required_techs: 'tech_folded_steel'
+          shaped: true
+          category: '<lightpurple>Gear Tier 3'
+          components:
+              - name: 'Attack'
+                value: '28'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_carbide_steel_sword_blade'
+                letter: 'b'
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_carbide_steel_sword_hilt'
+                letter: 'h'
+          shape:
+              - "bbb"
+              - "bhb"
+              - " h "
 
         # Checked 10/8/13
         - id: 'mat_carbide_steel_helmet'
@@ -2394,6 +2527,34 @@ materials:
               - " b "
               - " b "
               - " h "
+          # Checked 10/8/13
+        - id: 'mat_tungsten_axe'
+          item_id: 276
+          item_data: 0
+          name: 'Tungsten Broadaxe'
+          craftable: true
+          required_techs: 'tech_tempering'
+          shaped: true
+          category: '<gold>Gear Tier 4'
+          components:
+              - name: 'Attack'
+                value: '36'
+              - name: 'NoVanillaDurability'
+              - name: 'DurabilityOnDeath'
+                value: '0.1'
+          ingredients:
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_tungsten_sword_blade'
+                letter: 'b'
+              - type_id: 0
+                data: 0
+                custom_id: 'mat_tungsten_sword_hilt'
+                letter: 'h'
+          shape:
+              - "bbb"
+              - "bhb"
+              - " h "
 
         # Checked 10/8/13
         - id: 'mat_tungsten_boots'
@@ -2501,8 +2662,16 @@ materials:
           item_data: 0
           name: 'Common Metallic Crystal Fragment'
           shaped: false
-          craftable: false
+          craftable: true
           category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_chromium_ore'
+                data: 0
+                count: 2
+              - type_id: 265
+                data: 0
+                count: 2
         
         - id: 'mat_metallic_crystal_1'
           item_id: 399
@@ -2518,16 +2687,117 @@ materials:
                 custom_id: 'mat_metallic_crystal_fragment_1'
                 data: 0
                 count: 9
-          
+
+        - id: 'mat_metallic_crystal_fragment_2'
+          item_id: 370
+          item_data: 0
+          name: 'Uncommon Metallic Crystal Fragment'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_chromium'
+                data: 0
+                count: 1
+              - type_id: 42
+                data: 0
+                count: 1
+
+        - id: 'mat_metallic_crystal_2'
+          item_id: 399
+          item_data: 0
+          name: 'T2 Uncommon Metallic Crystal'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          components:
+              - name: 'NoRightClick'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_2'
+                data: 0
+                count: 9
+
+        - id: 'mat_metallic_crystal_fragment_3'
+          item_id: 370
+          item_data: 0
+          name: 'Rare Metallic Crystal Fragment'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_chromium'
+                data: 0
+                count: 2
+              - type_id: 42
+                data: 0
+                count: 2
+
+        - id: 'mat_metallic_crystal_3'
+          item_id: 399
+          item_data: 0
+          name: 'T3 Rare Metallic Crystal'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          components:
+              - name: 'NoRightClick'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_3'
+                data: 0
+                count: 9
+
+        - id: 'mat_metallic_crystal_fragment_4'
+          item_id: 370
+          item_data: 0
+          name: 'Legendary Metallic Crystal Fragment'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_chromium'
+                data: 0
+                count: 3
+              - type_id: 42
+                data: 0
+                count: 6
+
+        - id: 'mat_metallic_crystal_4'
+          item_id: 399
+          item_data: 0
+          name: 'T4 Legendary Metallic Crystal'
+          shaped: false
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          components:
+              - name: 'NoRightClick'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_4'
+                data: 0
+                count: 9
+
         - id: 'mat_ionic_crystal_fragment_1'
           item_id: 377
           item_data: 0
           name: 'Common Ionic Crystal Fragment'
           shaped: false
-          craftable: false
+          craftable: true
           components:
               - name: 'NoRightClick'
           category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_tungsten_ore'
+                data: 0
+                count: 2
+              - type_id: 266
+                data: 0
+                count: 2
         
         - id: 'mat_ionic_crystal_1'
           item_id: 378
@@ -2544,38 +2814,24 @@ materials:
                 data: 0
                 count: 9
         
-        - id: 'mat_metallic_crystal_fragment_2'
-          item_id: 370
-          item_data: 0
-          name: 'Uncommon Metallic Crystal Fragment'
-          shaped: false
-          craftable: false
-          category: '<lightgreen>Tier 2 Materials'
-        
-        - id: 'mat_metallic_crystal_2'
-          item_id: 399
-          item_data: 0
-          name: 'T2 Uncommon Metallic Crystal'
-          shaped: false
-          craftable: true
-          category: '<lightgreen>Tier 2 Materials'
-          components:
-              - name: 'NoRightClick'
-          ingredients:
-              - type_id: 0
-                custom_id: 'mat_metallic_crystal_fragment_2'
-                data: 0
-                count: 9
           
         - id: 'mat_ionic_crystal_fragment_2'
           item_id: 377
           item_data: 0
           name: 'Uncommon Ionic Crystal Fragment'
           shaped: false
-          craftable: false
+          craftable: true
           components:
               - name: 'NoRightClick'
           category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_tungsten'
+                data: 0
+                count: 1
+              - type_id: 41
+                data: 0
+                count: 1
         
         - id: 'mat_ionic_crystal_2'
           item_id: 378
@@ -2591,39 +2847,24 @@ materials:
                 custom_id: 'mat_ionic_crystal_fragment_2'
                 data: 0
                 count: 9
-        
-        - id: 'mat_metallic_crystal_fragment_3'
-          item_id: 370
-          item_data: 0
-          name: 'Rare Metallic Crystal Fragment'
-          shaped: false
-          craftable: false
-          category: '<lightgreen>Tier 3 Materials'
-        
-        - id: 'mat_metallic_crystal_3'
-          item_id: 399
-          item_data: 0
-          name: 'T3 Rare Metallic Crystal'
-          shaped: false
-          craftable: true
-          category: '<lightgreen>Tier 3 Materials'
-          components:
-              - name: 'NoRightClick'
-          ingredients:
-              - type_id: 0
-                custom_id: 'mat_metallic_crystal_fragment_3'
-                data: 0
-                count: 9
           
         - id: 'mat_ionic_crystal_fragment_3'
           item_id: 377
           item_data: 0
           name: 'Rare Ionic Crystal Fragment'
           shaped: false
-          craftable: false
+          craftable: true
           components:
               - name: 'NoRightClick'
           category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_tungsten'
+                data: 0
+                count: 2
+              - type_id: 41
+                data: 0
+                count: 2
         
         - id: 'mat_ionic_crystal_3'
           item_id: 378
@@ -2639,39 +2880,24 @@ materials:
                 custom_id: 'mat_ionic_crystal_fragment_3'
                 data: 0
                 count: 9
-        
-        - id: 'mat_metallic_crystal_fragment_4'
-          item_id: 370
-          item_data: 0
-          name: 'Legendary Metallic Crystal Fragment'
-          shaped: false
-          craftable: false
-          category: '<lightgreen>Tier 4 Materials'
-        
-        - id: 'mat_metallic_crystal_4'
-          item_id: 399
-          item_data: 0
-          name: 'T4 Legendary Metallic Crystal'
-          shaped: false
-          craftable: true
-          category: '<lightgreen>Tier 4 Materials'
-          components:
-              - name: 'NoRightClick'
-          ingredients:
-              - type_id: 0
-                custom_id: 'mat_metallic_crystal_fragment_4'
-                data: 0
-                count: 9
-          
+
         - id: 'mat_ionic_crystal_fragment_4'
           item_id: 377
           item_data: 0
           name: 'Legendary Ionic Crystal Fragment'
           shaped: false
-          craftable: false
+          craftable: true
           components:
               - name: 'NoRightClick'
           category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_forged_tungsten'
+                data: 0
+                count: 3
+              - type_id: 41
+                data: 0
+                count: 3
         
         - id: 'mat_ionic_crystal_4'
           item_id: 378
@@ -2721,8 +2947,11 @@ materials:
           craftable: true
           category: '<lightgreen>Tier 1 Materials'
           ingredients:
-              - type_id: 349
-                data: 3 #pufferfish
+              - type_id: 41
+                data: 0
+                count: 1
+              - type_id: 42
+                data: 0
                 count: 1
 
         - id: 'mat_mercury_bath'

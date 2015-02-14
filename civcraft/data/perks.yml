@@ -50,7 +50,7 @@ perks:
 
     - id: 'perk_sunny_weather'
       display_name: 'Sunny Weather!'
-      item_id: 8
+      item_id: 347
       data: 0
       components:
          - name: 'ChangeWeather'

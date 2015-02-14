@@ -30,6 +30,7 @@ import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.TrommelAsyncTask;
+import com.avrgaming.civcraft.threading.tasks.MobGrinderAsyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 
 public class UpdateEventTimer extends CivAsyncTask {
@@ -64,6 +65,13 @@ public class UpdateEventTimer extends CivAsyncTask {
 							}
 							
 							TaskMaster.asyncTask("trommel-"+struct.getCorner().toString(), new TrommelAsyncTask(struct), 0);
+						}
+						if (struct.getUpdateEvent().equals("mobGrinder_process")) {
+							if (!CivGlobal.mobGrinderEnabled) {
+								continue;
+							}
+							
+							TaskMaster.asyncTask("mobGrinder-"+struct.getCorner().toString(), new MobGrinderAsyncTask(struct), 0);
 						}
 					}
 					

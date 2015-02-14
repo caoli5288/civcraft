@@ -73,12 +73,10 @@ import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.mobs.components.MobComponent;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
-import com.avrgaming.moblib.MobLib;
 
 public class CustomItemManager implements Listener {
 	
@@ -305,11 +303,11 @@ public class CustomItemManager implements Listener {
 		}
 		
 		if (defendingPlayer == null) {
-			if (event.getEntity() instanceof LivingEntity) {
-				if (MobLib.isMobLibEntity((LivingEntity) event.getEntity())) {
-					MobComponent.onDefense(event.getEntity(), event);
-				}	
-			}
+//			if (event.getEntity() instanceof LivingEntity) {
+//				if (MobLib.isMobLibEntity((LivingEntity) event.getEntity())) {
+//					MobComponent.onDefense(event.getEntity(), event);
+//				}	
+//			}
 			return;
 		} else {
 			/* Search equipt items for defense event. */

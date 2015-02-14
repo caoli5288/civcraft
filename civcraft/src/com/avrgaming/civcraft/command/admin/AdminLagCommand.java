@@ -32,6 +32,7 @@ public class AdminLagCommand extends CommandBase {
 		displayName = "Admin Lag";
 		
 		commands.put("trommels", "Toggles trommels globally.");
+		commands.put("grinders", "Toggles Mob Grinders globally.");
 		commands.put("towers", "Toggles towers globally.");
 		commands.put("growth", "Toggles farm growth.");
 		commands.put("trade", "Toggles farm growth.");
@@ -58,6 +59,16 @@ public class AdminLagCommand extends CommandBase {
 		}
 	}
 
+	public void grinders_cmd() {
+		CivGlobal.mobGrinderEnabled = !CivGlobal.mobGrinderEnabled;
+		
+		if (CivGlobal.mobGrinderEnabled) {
+			CivMessage.sendSuccess(sender, "Mob Grinders enabled.");
+		} else {
+			CivMessage.sendError(sender, "Mob Grinders disabled");
+		}
+	}
+	
 	public void trommels_cmd() {
 		CivGlobal.trommelsEnabled = !CivGlobal.trommelsEnabled;
 		

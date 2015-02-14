@@ -18,6 +18,18 @@ trommel:
     despotism_rate: 2.0
     penalty_rate: 0.8
 
+################# Mob Grinder Settings #############
+mobGrinder:
+    redstone_chance: 0.03
+    iron_chance: 0.04
+    gold_chance: 0.02
+    diamond_chance: 0.0050
+    emerald_chance: 0.0020
+    chromium_chance: 0.0008
+    gravel_rate: 1
+    tribalism_rate: 1.5
+    penalty_rate: 0.8
+
 ################ Grocer Settings ###############
 grocer_levels:
     - level: 1
@@ -385,6 +397,24 @@ structures:
     upkeep: 1000.0
     hammer_cost: 800.0
     points: 1500
+    max_hitpoints: 200
+
+  - id: s_mob_grinder
+    template: mob_grinder
+    template_y_shift: -1
+    displayName: Mob Grinder
+    require_upgrade:
+    require_tech: 'tech_advanced_hunting'
+    effect_event: 
+    check_event: 
+    update_event: mobGrinder_process
+    onBuild_event:
+    limit: 1
+    allow_outside_town: false
+    cost: 10000.0
+    upkeep: 1500.0
+    hammer_cost: 7500.0
+    points: 3000
     max_hitpoints: 200
 
   - id: s_store

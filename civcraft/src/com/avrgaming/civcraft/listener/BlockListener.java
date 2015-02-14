@@ -120,9 +120,6 @@ import com.avrgaming.civcraft.util.ItemFrameStorage;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.war.War;
 import com.avrgaming.civcraft.war.WarRegen;
-import com.avrgaming.moblib.MobLib;
-
-
 
 public class BlockListener implements Listener {
 
@@ -1471,30 +1468,26 @@ public class BlockListener implements Listener {
 				return;
 		}
 
-		if (MobLib.isMobLibEntity(event.getEntity())) {
-			return;
-		}
+//		if (event.getEntity().getType().equals(EntityType.ZOMBIE) ||
+//			event.getEntity().getType().equals(EntityType.SKELETON) ||
+//			event.getEntity().getType().equals(EntityType.BAT) ||
+//			event.getEntity().getType().equals(EntityType.CAVE_SPIDER) ||
+//			event.getEntity().getType().equals(EntityType.SPIDER) ||
+//			event.getEntity().getType().equals(EntityType.CREEPER) ||
+//			event.getEntity().getType().equals(EntityType.WOLF) ||
+//			event.getEntity().getType().equals(EntityType.SILVERFISH) ||
+//			event.getEntity().getType().equals(EntityType.OCELOT) ||
+//			event.getEntity().getType().equals(EntityType.WITCH) ||
+//			event.getEntity().getType().equals(EntityType.ENDERMAN)) {
+//
+//			event.setCancelled(true);
+//			return;
+//		}
 
-		if (event.getEntity().getType().equals(EntityType.ZOMBIE) ||
-			event.getEntity().getType().equals(EntityType.SKELETON) ||
-			event.getEntity().getType().equals(EntityType.BAT) ||
-			event.getEntity().getType().equals(EntityType.CAVE_SPIDER) ||
-			event.getEntity().getType().equals(EntityType.SPIDER) ||
-			event.getEntity().getType().equals(EntityType.CREEPER) ||
-			event.getEntity().getType().equals(EntityType.WOLF) ||
-			event.getEntity().getType().equals(EntityType.SILVERFISH) ||
-			event.getEntity().getType().equals(EntityType.OCELOT) ||
-			event.getEntity().getType().equals(EntityType.WITCH) ||
-			event.getEntity().getType().equals(EntityType.ENDERMAN)) {
-
-			event.setCancelled(true);
-			return;
-		}
-
-		if (event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
-			event.setCancelled(true);
-			return;
-		}
+//		if (event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
+//			event.setCancelled(true);
+//			return;
+//		}
 	}
 
 	public boolean allowPistonAction(Location loc) {

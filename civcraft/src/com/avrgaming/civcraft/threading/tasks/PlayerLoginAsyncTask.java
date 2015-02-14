@@ -219,11 +219,13 @@ public class PlayerLoginAsyncTask implements Runnable {
 				e.printStackTrace();
 			}
 			
-			
+			CivLog.warning("Before Checking Player");
 			/* Send Anti-Cheat challenge to player. */
 			if (!getPlayer().hasPermission("civ.ac_valid")) {
+				CivLog.warning("Checking Player");
 				resident.setUsesAntiCheat(false);
 				ACManager.sendChallenge(getPlayer());
+				
 			} else {
 				resident.setUsesAntiCheat(true);
 			}

@@ -76,12 +76,8 @@ import com.avrgaming.civcraft.listener.TagAPIListener;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementArenaItem;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterialListener;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItemListener;
-import com.avrgaming.civcraft.mobs.MobSpawner;
-import com.avrgaming.civcraft.mobs.listeners.MobListener;
-import com.avrgaming.civcraft.mobs.timers.MobSpawnerTimer;
 import com.avrgaming.civcraft.nocheat.NoCheatPlusSurvialFlyHandler;
 import com.avrgaming.civcraft.populators.TradeGoodPopulator;
-import com.avrgaming.civcraft.pvplogger.PvPLogger;
 import com.avrgaming.civcraft.randomevents.RandomEventSweeper;
 import com.avrgaming.civcraft.sessiondb.SessionDBAsyncTimer;
 import com.avrgaming.civcraft.siege.CannonListener;
@@ -117,7 +113,6 @@ import com.avrgaming.civcraft.util.TimeTools;
 import com.avrgaming.civcraft.war.WarListener;
 import com.avrgaming.global.perks.PlatinumManager;
 import com.avrgaming.global.scores.CalculateScoreTimer;
-import com.avrgaming.moblib.MobLib;
 import com.avrgaming.sls.SLSManager;
 
 public final class CivCraft extends JavaPlugin {
@@ -192,7 +187,6 @@ public final class CivCraft extends JavaPlugin {
 			TaskMaster.asyncTimer(PlatinumManager.class.getName(), new PlatinumManager(), TimeTools.toTicks(5));
 		}
 		
-		TaskMaster.syncTimer("PvPLogger", new PvPLogger(), TimeTools.toTicks(5));
 		TaskMaster.syncTimer("WindmillTimer", new WindmillTimer(), TimeTools.toTicks(60));
 		TaskMaster.asyncTimer("EndGameNotification", new EndConditionNotificationTask(), TimeTools.toTicks(3600));
 				
@@ -201,7 +195,6 @@ public final class CivCraft extends JavaPlugin {
 		TaskMaster.asyncTimer("SessionDBAsyncTimer", new SessionDBAsyncTimer(), 10);
 		TaskMaster.asyncTimer("pvptimer", new PvPTimer(), TimeTools.toTicks(30));
 		
-		TaskMaster.syncTimer("MobSpawner", new MobSpawnerTimer(), TimeTools.toTicks(2));
 		TaskMaster.syncTimer("ArenaTimer", new ArenaManager(), TimeTools.toTicks(30));
 		TaskMaster.syncTimer("ArenaTimeoutTimer", new ArenaTimer(), TimeTools.toTicks(1));
 
@@ -219,9 +212,7 @@ public final class CivCraft extends JavaPlugin {
 		pluginManager.registerEvents(new LoreCraftableMaterialListener(), this);
 		pluginManager.registerEvents(new LoreGuiItemListener(), this);
 		pluginManager.registerEvents(new DisableXPListener(), this);
-		pluginManager.registerEvents(new PvPLogger(), this);
 		pluginManager.registerEvents(new TradeInventoryListener(), this);
-		pluginManager.registerEvents(new MobListener(), this);
 		pluginManager.registerEvents(new ArenaListener(), this);
 		pluginManager.registerEvents(new CannonListener(), this);
 		pluginManager.registerEvents(new WarListener(), this);
@@ -310,9 +301,7 @@ public final class CivCraft extends JavaPlugin {
 		} else {
 			CivLog.warning("NoCheatPlus not found, not registering NCP hooks. This is fine if you're not using NCP.");
 		}
-		MobLib.registerAllEntities();
 		startTimers();
-		MobSpawner.register();
 				
 		//creativeInvPacketManager.init(this);		
 	}
@@ -321,11 +310,6 @@ public final class CivCraft extends JavaPlugin {
 		Plugin p;
 		p = getServer().getPluginManager().getPlugin(name);
 		return (p != null);
-	}
-	
-	@Override
-	public void onDisable() {
-		MobSpawner.despawnAll();
 	}
 
 	public boolean isError() {
