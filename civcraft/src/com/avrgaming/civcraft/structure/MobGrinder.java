@@ -13,23 +13,25 @@ import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 
 public class MobGrinder extends Structure {
-	private static final double REDSTONE_CHANCE = CivSettings.getDoubleStructure("mobGrinder.redstone_chance"); //1%
-	private static final double IRON_CHANCE = CivSettings.getDoubleStructure("mobGrinder.iron_chance"); //2%
-	private static final double GOLD_CHANCE = CivSettings.getDoubleStructure("mobGrinder.gold_chance"); //1%
-	private static final double DIAMOND_CHANCE = CivSettings.getDoubleStructure("mobGrinder.diamond_chance"); //0.25%
-	private static final double EMERALD_CHANCE = CivSettings.getDoubleStructure("mobGrinder.emerald_chance"); //0.10%
-	private static final double CHROMIUM_CHANCE = CivSettings.getDoubleStructure("mobGrinder.chromium_chance");
+	private static final double T1_CHANCE = CivSettings.getDoubleStructure("mobGrinder.t1_chance"); //1%
+	private static final double T2_CHANCE = CivSettings.getDoubleStructure("mobGrinder.t2_chance"); //2%
+	private static final double T3_CHANCE = CivSettings.getDoubleStructure("mobGrinder.t3_chance"); //1%
+	private static final double T4_CHANCE = CivSettings.getDoubleStructure("mobGrinder.t4_chance"); //0.25%
+	private static final double PACK_CHANCE = CivSettings.getDoubleStructure("mobGrinder.pack_chance"); //0.10%
+	private static final double BIGPACK_CHANCE = CivSettings.getDoubleStructure("mobGrinder.bigpack_chance");
+	private static final double HUGEPACK_CHANCE = CivSettings.getDoubleStructure("mobGrinder.hugepack_chance");
 	
 	public int skippedCounter = 0;
 	public ReentrantLock lock = new ReentrantLock();
 	
-	public enum Mineral {
-		EMERALD,
-		DIAMOND,
-		GOLD,
-		IRON,
-		CHROMIUM,
-		REDSTONE
+	public enum Crystal {
+		T1,
+		T2,
+		T3,
+		T4,
+		PACK,
+		BIGPACK,
+		HUGEPACK
 	}
 	
 	protected MobGrinder(Location center, String id, Town town) throws CivException {
@@ -50,26 +52,29 @@ public class MobGrinder extends Structure {
 		return "minecart";
 	}
 	
-	public double getMineralChance(Mineral mineral) {
+	public double getMineralChance(Crystal crystal) {
 		double chance = 0;
-		switch (mineral) {
-		case EMERALD:
-			chance = EMERALD_CHANCE;
+		switch (crystal) {
+		case T1:
+			chance = T1_CHANCE;
 			break;
-		case DIAMOND:
-			chance = DIAMOND_CHANCE;
+		case T2:
+			chance = T2_CHANCE;
 			break;
-		case GOLD:
-			chance = GOLD_CHANCE;
+		case T3:
+			chance = T3_CHANCE;
 			break;
-		case IRON:
-			chance = IRON_CHANCE;
+		case T4:
+			chance = T4_CHANCE;
 			break;
-		case REDSTONE:
-			chance = REDSTONE_CHANCE;
+		case PACK:
+			chance = PACK_CHANCE;
 			break;
-		case CHROMIUM:
-			chance = CHROMIUM_CHANCE;
+		case BIGPACK:
+			chance = BIGPACK_CHANCE;
+			break;
+		case HUGEPACK:
+			chance = HUGEPACK_CHANCE;
 		}
 		
 		double increase = chance*this.getTown().getBuffManager().getEffectiveDouble(Buff.EXTRACTION);

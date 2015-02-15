@@ -150,7 +150,7 @@ materials:
               - type_id: 341 
                 custom_id: 'mat_vanilla_slime'
                 data: 0
-                count: 9
+                count: 8
 
 # Replaced with block of iron
 #        - id: 'mat_forged_iron_ingot'
@@ -2529,7 +2529,7 @@ materials:
               - " h "
           # Checked 10/8/13
         - id: 'mat_tungsten_axe'
-          item_id: 276
+          item_id: 279
           item_data: 0
           name: 'Tungsten Broadaxe'
           craftable: true
@@ -2655,6 +2655,422 @@ materials:
               - "ttt"
               - "t t"
               - "   "
+
+# Mob Egg Crafting
+        - id: 'mat_creeper_egg'
+          item_id: 383
+          item_data: 50
+          name: 'Creeper Egg'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 289
+                data: 0
+                letter: 't'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_fragment_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - "ttt"
+              - "tct"
+              - "ttt"
+
+        - id: 'mat_creeper_egg_2'
+          item_id: 383
+          item_data: 50
+          name: 'Creeper Egg 2'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_creeper_egg'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_creeper_egg_3'
+          item_id: 383
+          item_data: 50
+          name: 'Creeper Egg 3'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_creeper_egg_2'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_2'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_creeper_egg_4'
+          item_id: 383
+          item_data: 50
+          name: 'Creeper Egg 4'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_creeper_egg_3'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_4'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_skeleton_egg'
+          item_id: 383
+          item_data: 51
+          name: 'Skeleton Egg'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 352
+                data: 0
+                letter: 't'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_fragment_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - "ttt"
+              - "tct"
+              - "ttt"
+
+        - id: 'mat_skeleton_egg_2'
+          item_id: 383
+          item_data: 51
+          name: 'Skeleton Egg 2'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_skeleton_egg'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_skeleton_egg_3'
+          item_id: 383
+          item_data: 51
+          name: 'Skeleton Egg 3'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_skeleton_egg_2'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_2'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_skeleton_egg_4'
+          item_id: 383
+          item_data: 51
+          name: 'Skeleton Egg 4'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_skeleton_egg_3'
+                data: 0
+                letter: 'e'
+              - type_id: 0
+                custom_id: 'mat_ionic_crystal_3'
+                data: 0
+                letter: 'c'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_spider_egg'
+          item_id: 383
+          item_data: 52
+          name: 'Spider Egg'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 375
+                data: 0
+                letter: 't'
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - "ttt"
+              - "tct"
+              - "ttt"
+
+        - id: 'mat_spider_egg_2'
+          item_id: 383
+          item_data: 52
+          name: 'Spider Egg 2'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_1'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_spider_egg'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_spider_egg_3'
+          item_id: 383
+          item_data: 52
+          name: 'Spider Egg 3'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_2'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_spider_egg_2'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_spider_egg_4'
+          item_id: 383
+          item_data: 52
+          name: 'Spider Egg 4'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_3'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_spider_egg_3'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_zombie_egg'
+          item_id: 383
+          item_data: 54
+          name: 'Zombie Egg'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 367
+                data: 0
+                letter: 't'
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - "ttt"
+              - "tct"
+              - "ttt"
+
+        - id: 'mat_zombie_egg_2'
+          item_id: 383
+          item_data: 54
+          name: 'Zombie Egg 2'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_1'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_zombie_egg'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_zombie_egg_3'
+          item_id: 383
+          item_data: 54
+          name: 'Zombie Egg 3'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_2'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_zombie_egg_2'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_zombie_egg_4'
+          item_id: 383
+          item_data: 54
+          name: 'Zombie Egg 4'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_3'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_zombie_egg_3'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_slime_egg'
+          item_id: 383
+          item_data: 55
+          name: 'Slime Egg'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 367
+                data: 0
+                letter: 't'
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_fragment_1'
+                data: 0
+                letter: 'c'
+          shape:
+              - "ttt"
+              - "tct"
+              - "ttt"
+
+        - id: 'mat_slime_egg_2'
+          item_id: 383
+          item_data: 55
+          name: 'Slime Egg 2'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 2 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_1'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_slime_egg'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_slime_egg_3'
+          item_id: 383
+          item_data: 55
+          name: 'Slime Egg 3'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 3 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_2'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_slime_egg_2'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
+
+        - id: 'mat_slime_egg_4'
+          item_id: 383
+          item_data: 55
+          name: 'Slime Egg 4'
+          shaped: true
+          craftable: true
+          category: '<lightgreen>Tier 4 Materials'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_metallic_crystal_3'
+                data: 0
+                letter: 'c'
+              - type_id: 0
+                custom_id: 'mat_slime_egg_3'
+                data: 0
+                letter: 'e'
+          shape:
+              - " c "
+              - "cec"
+              - " c "
 
 # Catalyst/Crystal ingredients
         - id: 'mat_metallic_crystal_fragment_1'
@@ -3825,6 +4241,10 @@ removed_recipes:
     # ender pearl
     - type_id: 368
       data: 0
+
+    # Eye of ender
+    - type_id: 381
+      data: 0
     
     # Hopper
     - type_id: 154
@@ -3875,6 +4295,15 @@ removed_recipes:
     # Ender Chest
     - type_id: 130
       data: 0
+    # Slime Block
+    - type_id: 165
+      data: 0
+
+    # Armor stand
+    - type_id: 416
+      data: 0
+
+
 
       
 # Amount of tungston to drop

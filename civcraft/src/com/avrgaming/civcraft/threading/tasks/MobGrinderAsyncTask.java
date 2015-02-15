@@ -7,27 +7,22 @@ import java.util.Random;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
-import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.object.StructureChest;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.MobGrinder;
-import com.avrgaming.civcraft.structure.MobGrinder.Mineral;
+import com.avrgaming.civcraft.structure.MobGrinder.Crystal;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.threading.sync.request.UpdateInventoryRequest.Action;
-import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.MultiInventory;
 
 public class MobGrinderAsyncTask extends CivAsyncTask {
 
 	MobGrinder mobGrinder;
-	private static final int GRAVEL_RATE = CivSettings.getIntegerStructure("mobGrinder.gravel_rate"); //0.10%
 	
 	public static HashSet<String> debugTowns = new HashSet<String>();
-
 	public static void debug(MobGrinder mobGrinder, String msg) {
 		if (debugTowns.contains(mobGrinder.getTown().getName())) {
 			CivLog.warning("GrinderDebug:"+mobGrinder.getTown().getName()+":"+msg);
@@ -119,9 +114,84 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 					continue;
 				}
 				
-				if (ItemManager.getId(stack) == CivData.COBBLESTONE) {
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_creeper_egg")) {
 					try {
-						this.updateInventory(Action.REMOVE, source_inv, ItemManager.createItemStack(CivData.COBBLESTONE, 1));
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_creeper_egg_2")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_2"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
 					} catch (InterruptedException e) {
 						return;
 					}
@@ -129,36 +199,1636 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 					// Attempt to get special resources
 					Random rand = new Random();
 					int rand1 = rand.nextInt(10000);
-					ItemStack newItem;
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
 									
-					if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.CHROMIUM))*10000))) {
-						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_chromium_ore"));
-					} else if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.EMERALD))*10000))) {
-						newItem = ItemManager.createItemStack(CivData.EMERALD, 1);
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_3")));
+						
 					}
-					else if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.DIAMOND))*10000))) {
-						newItem = ItemManager.createItemStack(CivData.DIAMOND, 1);
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
 	
 					}
-					else if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.GOLD))*10000))) {
-						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
 	
 					}
-					else if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.REDSTONE))*10000))) {
-						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, 1);
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
 	
 					}
-					else if (rand1 < ((int)((mobGrinder.getMineralChance(Mineral.IRON))*10000))) {
-						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
 	
 					}  else {
-						newItem = ItemManager.createItemStack(CivData.GRAVEL, (Integer)GRAVEL_RATE);
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
 					try {
-						debug(mobGrinder, "Updating inventory:"+newItem);
-						this.updateInventory(Action.ADD, dest_inv, newItem);
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_creeper_egg_3")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_3"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_creeper_egg_4")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_creeper_egg_4"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+						
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_skeleton_egg")) {
+					try {
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_skeleton_egg_2")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_2"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_3")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_skeleton_egg_3")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_3"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_skeleton_egg_4")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_skeleton_egg_4"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+						
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_spider_egg")) {
+					try {
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_spider_egg_2")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_2"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_3")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_spider_egg_3")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_3"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_spider_egg_4")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_spider_egg_4"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+						
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_zombie_egg")) {
+					try {
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_zombie_egg_2")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_2"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_3")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_zombie_egg_3")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_3"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_zombie_egg_4")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_zombie_egg_4"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+						
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_slime_egg")) {
+					try {
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_slime_egg_2")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_2"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_3")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_slime_egg_3")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_3"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
+					} catch (InterruptedException e) {
+						return;
+					}
+					break;
+				}
+				
+				if (LoreMaterial.getMaterial(stack) == LoreMaterial.materialMap.get("mat_slime_egg_4")) {
+					try {
+
+						ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_slime_egg_4"));
+						this.updateInventory(Action.REMOVE, source_inv, newItem);
+					} catch (InterruptedException e) {
+						return;
+					}
+					
+					// Attempt to get special resources
+					Random rand = new Random();
+					int rand1 = rand.nextInt(10000);
+					ArrayList<ItemStack> newItems = new ArrayList<ItemStack>();
+									
+					if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.HUGEPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.BIGPACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+						
+						
+					} 
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.PACK))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T4))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T3))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T2))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}
+					else if (rand1 < ((int)((mobGrinder.getMineralChance(Crystal.T1))*10000))) {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+	
+					}  else {
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_4")));
+					}
+					
+					//Try to add the new item to the dest chest, if we cant, oh well.
+					try {
+						for (ItemStack item : newItems)
+						{
+							debug(mobGrinder, "Updating inventory:"+item);
+							this.updateInventory(Action.ADD, dest_inv, item);
+						}
 					} catch (InterruptedException e) {
 						return;
 					}

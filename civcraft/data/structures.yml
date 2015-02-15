@@ -20,13 +20,13 @@ trommel:
 
 ################# Mob Grinder Settings #############
 mobGrinder:
-    redstone_chance: 0.03
-    iron_chance: 0.04
-    gold_chance: 0.02
-    diamond_chance: 0.0050
-    emerald_chance: 0.0020
-    chromium_chance: 0.0008
-    gravel_rate: 1
+    t1_chance: 0.5
+    t2_chance: 0.1
+    t3_chance: 0.05
+    t4_chance: 0.01
+    pack_chance: 0.005
+    bigpack_chance: 0.001
+    hugepack_chance: 0.0005
     tribalism_rate: 1.5
     penalty_rate: 0.8
 
