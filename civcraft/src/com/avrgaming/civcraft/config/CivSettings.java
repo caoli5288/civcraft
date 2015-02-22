@@ -377,6 +377,12 @@ public class CivSettings {
 		arenaConfig = loadCivConfig("arena.yml");
 		fishingConfig = loadCivConfig("fishing.yml");
 	}
+	
+	public static void reloadNoCheat() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
+
+		nocheatConfig = loadCivConfig("nocheat.yml");
+		ConfigValidMod.loadConfig(nocheatConfig, validMods);
+	}
 
 	private static void loadConfigObjects() throws InvalidConfiguration {
 		ConfigTownLevel.loadConfig(townConfig, townLevels);

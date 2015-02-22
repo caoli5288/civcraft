@@ -95,6 +95,7 @@ public class AdminCommand extends CommandBase {
 		commands.put("arena", "Arena management commands.");
 		commands.put("perk", "Admin perk management.");
 		commands.put("reloadgov", "Reload Government data configs");
+		commands.put("reloadac", "Reload NoCheat data config");
 	}
 	
 	public void reloadgov_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
@@ -107,6 +108,12 @@ public class AdminCommand extends CommandBase {
 		}
 		CivMessage.send(sender, CivColor.Gold+"Reloaded Governments");
 	}
+	
+	public void reloadac_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
+		CivSettings.reloadNoCheat();
+		CivMessage.send(sender, CivColor.Gold+"Reloaded NoCheat Config");
+	}
+	
 	
 	public void perk_cmd() {
 		AdminPerkCommand cmd = new AdminPerkCommand();	

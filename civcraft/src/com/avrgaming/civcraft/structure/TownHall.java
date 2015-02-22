@@ -185,19 +185,19 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 
 		switch (direction) {
 		case CivData.DATA_SIGN_EAST:
-			attachedBlock = absCoord.getBlock().getRelative(BlockFace.WEST);
+			attachedBlock = absCoord.getBlock();
 			facingDirection = BlockFace.EAST;
 			break;
 		case CivData.DATA_SIGN_WEST:
-			attachedBlock = absCoord.getBlock().getRelative(BlockFace.EAST);
+			attachedBlock = absCoord.getBlock();
 			facingDirection = BlockFace.WEST;
 			break;
 		case CivData.DATA_SIGN_NORTH:
-			attachedBlock = absCoord.getBlock().getRelative(BlockFace.SOUTH);
+			attachedBlock = absCoord.getBlock();
 			facingDirection = BlockFace.NORTH;
 			break;
 		case CivData.DATA_SIGN_SOUTH:
-			attachedBlock = absCoord.getBlock().getRelative(BlockFace.NORTH);
+			attachedBlock = absCoord.getBlock();
 			facingDirection = BlockFace.SOUTH;
 			break;
 		default:

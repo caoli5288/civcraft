@@ -1484,10 +1484,10 @@ public class BlockListener implements Listener {
 //			return;
 //		}
 
-//		if (event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
-//			event.setCancelled(true);
-//			return;
-//		}
+		if (event.getSpawnReason().equals(SpawnReason.SPAWNER)) {
+			event.setCancelled(true);
+			return;
+		}
 	}
 
 	public boolean allowPistonAction(Location loc) {
