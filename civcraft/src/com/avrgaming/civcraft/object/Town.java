@@ -2383,7 +2383,7 @@ public class Town extends SQLObject {
 		TaskMaster.syncTask(new SyncUpdateTags(res.getUUIDString(), this.residents.values()));
 	}
 	
-	public void changeCiv(Civilization newCiv) {
+public void changeCiv(Civilization newCiv) {
 		
 		/* Remove this town from its old civ. */
 		Civilization oldCiv = this.civ;
@@ -2397,9 +2397,11 @@ public class Town extends SQLObject {
 		/* Remove any outlaws which are in our new civ. */
 		LinkedList<String> removeUs = new LinkedList<String>();
 		for (String outlaw : this.outlaws) {
+			if (outlaw.length() >= 2){
 			Resident resident = CivGlobal.getResidentViaUUID(UUID.fromString(outlaw));
 			if (newCiv.hasResident(resident)) {
 				removeUs.add(outlaw);
+			}
 			}
 		}
 		
