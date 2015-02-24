@@ -313,7 +313,7 @@ materials:
         - id: 'mat_refined_wood2'
           item_id: 126
           item_data: 0
-          name: 'Refined Wood'
+          name: 'T1 Refined Wood'
           craftable: true
           shaped: false
           category: '<lightgreen>Tier 1 Materials'

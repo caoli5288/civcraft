@@ -822,9 +822,10 @@ public abstract class Buildable extends SQLObject {
 			for (int y = 0; y < regionY; y++) {
 				for (int z = 0; z < regionZ; z++) {
 					Block b = centerBlock.getRelative(x, y, z);
+					String coordinateString = " x: "+x+" y: "+y+" z: "+z;
 					
 					if (ItemManager.getId(b) == CivData.CHEST) {
-						throw new CivException("Cannot build here, would destroy chest.");
+						throw new CivException("Cannot build here, would destroy chest."+coordinateString);
 					}
 										
 					TownChunk tc = CivGlobal.getTownChunk(b.getLocation());
@@ -843,7 +844,7 @@ public abstract class Buildable extends SQLObject {
 					if (tradeOutpost == null) {
 						//not building a trade outpost, prevent protected blocks from being destroyed.
 						if (CivGlobal.getProtectedBlock(coord) != null) {
-							throw new CivException("Cannot build here, protected blocks in the way.");
+							throw new CivException("Cannot build here, protected blocks in the way."+coordinateString);
 						}
 					} else {
 						if (CivGlobal.getTradeGood(coord) != null) {
@@ -856,23 +857,23 @@ public abstract class Buildable extends SQLObject {
 					}
 					
 					if (CivGlobal.getStructureBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way.");
+						throw new CivException("Cannot build here, structure blocks in the way."+coordinateString);
 					}
 				
 					if (CivGlobal.getFarmChunk(new ChunkCoord(coord.getLocation())) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
+						throw new CivException("Cannot build here, in the same chunk as a farm improvement.+coordinateString");
 					}
 		
 					if (CivGlobal.getWallChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a wall improvement.");
+						throw new CivException("Cannot build here, in the same chunk as a wall improvement.+coordinateString");
 					}
 					
 					if (CivGlobal.getCampBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way.");
+						throw new CivException("Cannot build here, structure blocks in the way.+coordinateString");
 					}
 					
 					if (CivGlobal.getBuildablesAt(coord) != null) {
-						throw new CivException("Cannot build here, there is already a structure here.");
+						throw new CivException("Cannot build here, there is already a structure here.+coordinateString");
 					}
 					
 					RoadBlock rb = CivGlobal.getRoadBlock(coord);
@@ -883,7 +884,7 @@ public abstract class Buildable extends SQLObject {
 					BorderData border = Config.Border(b.getWorld().getName());
 					if (border != null) {
 						if(!border.insideBorder(b.getLocation().getX(), b.getLocation().getZ(), Config.ShapeRound())) {
-							throw new CivException("Cannot build here. Part of the structure would sit beyond the world border.");
+							throw new CivException("Cannot build here. Part of the structure would sit beyond the world border."+coordinateString);
 						}
 					}
 				}
