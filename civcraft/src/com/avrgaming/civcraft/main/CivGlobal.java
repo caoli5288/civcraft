@@ -103,7 +103,6 @@ import com.avrgaming.civcraft.threading.tasks.CivLeaderQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CivQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CultureProcessAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.PlayerQuestionTask;
-import com.avrgaming.civcraft.threading.tasks.UpdateTagBetweenCivsTask;
 import com.avrgaming.civcraft.threading.tasks.onLoadTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.BukkitObjects;
@@ -1470,11 +1469,6 @@ public class CivGlobal {
 		}
 		out += otherCiv.getName();
 		CivMessage.global(out);
-		CivGlobal.updateTagsBetween(civ, otherCiv);
-	}
-	
-	private static void updateTagsBetween(Civilization civ, Civilization otherCiv) {
-		TaskMaster.asyncTask(new UpdateTagBetweenCivsTask(civ, otherCiv), 0);
 	}
 
 	public static void requestRelation(Civilization fromCiv, Civilization toCiv, String question, 
