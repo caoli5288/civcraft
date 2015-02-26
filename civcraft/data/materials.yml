@@ -150,7 +150,7 @@ materials:
               - type_id: 341 
                 custom_id: 'mat_vanilla_slime'
                 data: 0
-                count: 8
+                count: 9
 
 # Replaced with block of iron
 #        - id: 'mat_forged_iron_ingot'
