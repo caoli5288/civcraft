@@ -108,8 +108,8 @@ public class CivSettings {
 	public static Map<String, ConfigBuildableInfo> structures = new HashMap<String, ConfigBuildableInfo>();
 	public static Map<Integer, ConfigGrocerLevel> grocerLevels = new HashMap<Integer, ConfigGrocerLevel>();
 	public static Map<Integer, ConfigCottageLevel> cottageLevels = new HashMap<Integer, ConfigCottageLevel>();
-	public static ArrayList<ConfigTempleSacrifice> templeSacrifices = new ArrayList<ConfigTempleSacrifice>();
 	public static Map<Integer, ConfigMineLevel> mineLevels = new HashMap<Integer, ConfigMineLevel>();
+	public static Map<Integer, ConfigTempleLevel> templeLevels = new HashMap<Integer, ConfigTempleLevel>();
 	
 	public static FileConfiguration wonderConfig; /* wonders.yml */
 	public static Map<String, ConfigBuildableInfo> wonders = new HashMap<String, ConfigBuildableInfo>();
@@ -399,7 +399,7 @@ public class CivSettings {
 		ConfigTradeGood.loadConfig(goodsConfig, goods, landGoods, waterGoods);
 		ConfigGrocerLevel.loadConfig(structureConfig, grocerLevels);
 		ConfigCottageLevel.loadConfig(structureConfig, cottageLevels);
-		ConfigTempleSacrifice.loadConfig(structureConfig, templeSacrifices);
+		ConfigTempleLevel.loadConfig(structureConfig, templeLevels);
 		ConfigMineLevel.loadConfig(structureConfig, mineLevels);
 		ConfigGovernment.loadConfig(governmentConfig, governments);
 		ConfigEnchant.loadConfig(enchantConfig, enchants);
@@ -730,6 +730,16 @@ public class CivSettings {
 			}
 		}
 		
+		return returnLevel;
+	}
+	
+	public static int getTempleMaxLevel() {
+		int returnLevel = 0;
+		for (Integer level : templeLevels.keySet()) {
+			if (returnLevel < level) {
+				returnLevel = level;
+			}
+		}
 		return returnLevel;
 	}
 

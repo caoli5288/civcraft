@@ -20,25 +20,38 @@ package com.avrgaming.civcraft.structure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import org.bukkit.Location;
-import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.Inventory;
 
+import com.avrgaming.civcraft.components.ConsumeLevelComponent;
+import com.avrgaming.civcraft.components.ConsumeLevelComponent.Result;
 import com.avrgaming.civcraft.config.CivSettings;
-import com.avrgaming.civcraft.config.ConfigTempleSacrifice;
+import com.avrgaming.civcraft.config.ConfigTempleLevel;
 import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.StructureChest;
 import com.avrgaming.civcraft.object.Town;
+import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.util.CivColor;
+import com.avrgaming.civcraft.util.MultiInventory;
 
 public class Temple extends Structure {
 
+	private ConsumeLevelComponent consumeComp = null;
+	
 	protected Temple(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
 	}
 
 	public Temple(ResultSet rs) throws SQLException, CivException {
 		super(rs);
+	}
+
+	public String getkey() {
+		return getTown().getName()+"_"+this.getConfigId()+"_"+this.getCorner().toString(); 
 	}
 	
 	@Override
@@ -51,25 +64,113 @@ public class Temple extends Structure {
 		return "church";
 	}
 	
+	public ConsumeLevelComponent getConsumeComponent() {
+		if (consumeComp == null) {
+			consumeComp = (ConsumeLevelComponent) this.getComponent(ConsumeLevelComponent.class.getSimpleName());
+		}
+		return consumeComp;
+	}
 
-	public void onEntitySacrifice(EntityType entityType) {
-		ConfigTempleSacrifice sac = null;
-		for (ConfigTempleSacrifice s : CivSettings.templeSacrifices) {
-			for (String str : s.entites) {				
-				if (str.equalsIgnoreCase(entityType.toString())) {
-					sac = s;
-					break;
-				}
+	public Result consume(CivAsyncTask task) throws InterruptedException {
+		
+		//Look for the temple's chest.
+		if (this.getChests().size() == 0)
+			return Result.STAGNATE;	
+
+		MultiInventory multiInv = new MultiInventory();
+		
+		ArrayList<StructureChest> chests = this.getAllChestsById(1);
+		
+		// Make sure the chest is loaded and add it to the multi inv.
+		for (StructureChest c : chests) {
+			task.syncLoadChunk(c.getCoord().getWorldname(), c.getCoord().getX(), c.getCoord().getZ());
+			Inventory tmp;
+			try {
+				tmp = task.getChestInventory(c.getCoord().getWorldname(), c.getCoord().getX(), c.getCoord().getY(), c.getCoord().getZ(), true);
+			} catch (CivTaskAbortException e) {
+				return Result.STAGNATE;
 			}
+			multiInv.addInventory(tmp);
+		}
+		getConsumeComponent().setSource(multiInv);
+		getConsumeComponent().setConsumeRate(1.0);
+		Result result = getConsumeComponent().processConsumption();
+		getConsumeComponent().onSave();		
+		return result;
+	}
+	
+	public void generateCulture(CivAsyncTask task) throws InterruptedException {	
+		Result result = this.consume(task);
+		switch (result) {
+		case STARVE:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
+					CivColor.Rose+"fell. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			break;
+		case LEVELDOWN:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple's Altar ran out of mutton and "+
+					CivColor.Rose+"lost"+CivColor.LightGreen+" a level. It is now level "+getConsumeComponent().getLevel());
+			break;
+		case STAGNATE:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+
+					getConsumeComponent().getLevel()+" temple "+CivColor.Yellow+"stagnated "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			break;
+		case GROW:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
+					CivColor.Green+"rose. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			break;
+		case LEVELUP:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple "+CivColor.Green+"gained"+CivColor.LightGreen+
+					" a level. It is now level "+getConsumeComponent().getLevel());
+			break;
+		case MAXED:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple is "+
+					CivColor.Green+"maxed. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			break;
+		default:
+			break;
 		}
 		
-		if (sac == null) {
-			return;
+		ConfigTempleLevel lvl = null;
+		if (result == Result.LEVELUP) {
+			lvl = CivSettings.templeLevels.get(getConsumeComponent().getLevel()-1);	
+		} else {
+			lvl = CivSettings.templeLevels.get(getConsumeComponent().getLevel());
 		}
+				
+		int total_culture = (int)Math.round(lvl.culture*this.getTown().getCottageRate());
+//		if (this.getTown().getBuffManager().hasBuff("buff_pyramid_cottage_bonus")) {
+//			total_coins *= this.getTown().getBuffManager().getEffectiveDouble("buff_pyramid_cottage_bonus");
+//		}
+		this.getTown().addAccumulatedCulture(total_culture);
+	}
+
+	public int getLevel() {
+		return this.getConsumeComponent().getLevel();
+	}
+
+	public int getCount() {
+		return this.getConsumeComponent().getCount();
+	}
+
+	public int getMaxCount() {
+		int level = getLevel();
 		
-		this.getTown().addAccumulatedCulture(sac.reward);
-		CivMessage.sendTown(this.getTown(), "Our Sacrifice has awarded our town "+CivColor.LightPurple+sac.reward+CivColor.White+" culture.");
-		this.getTown().save();
+		ConfigTempleLevel lvl = CivSettings.templeLevels.get(level);
+		return lvl.count;	
+	}
+
+	public Result getLastResult() {
+		return this.getConsumeComponent().getLastResult();
+	}
+	
+	public double getCultureGenerated() {
+		int level = getLevel();
+		
+		ConfigTempleLevel lvl = CivSettings.templeLevels.get(level);
+		if (lvl == null) {
+			return 0;
+		}
+		return lvl.culture;
 	}
 
 

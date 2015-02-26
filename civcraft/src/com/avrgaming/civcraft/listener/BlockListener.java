@@ -86,7 +86,6 @@ import com.avrgaming.civcraft.cache.CivCache;
 import com.avrgaming.civcraft.camp.Camp;
 import com.avrgaming.civcraft.camp.CampBlock;
 import com.avrgaming.civcraft.config.CivSettings;
-import com.avrgaming.civcraft.config.ConfigTempleSacrifice;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -106,7 +105,7 @@ import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.BuildableLayer;
 import com.avrgaming.civcraft.structure.Farm;
 import com.avrgaming.civcraft.structure.Pasture;
-import com.avrgaming.civcraft.structure.Temple;
+//import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.Wall;
 import com.avrgaming.civcraft.structure.farm.FarmChunk;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
@@ -1389,27 +1388,28 @@ public class BlockListener implements Listener {
 		if (pasture != null) {
 			pasture.onEntityDeath(event.getEntity());
 		}
+		return;
 
 
-		if (!ConfigTempleSacrifice.isValidEntity(event.getEntityType())) {
-			return;
-		}
+//		if (!ConfigTempleSacrifice.isValidEntity(event.getEntityType())) {
+//			return;
+//		}
+//
+//		/* Check if we're 'inside' a temple. */
+//		bcoord.setFromLocation(event.getEntity().getLocation());
+//		HashSet<Buildable> buildables = CivGlobal.getBuildablesAt(bcoord);
+//		if (buildables == null) {
+//			return;
+//		}
 
-		/* Check if we're 'inside' a temple. */
-		bcoord.setFromLocation(event.getEntity().getLocation());
-		HashSet<Buildable> buildables = CivGlobal.getBuildablesAt(bcoord);
-		if (buildables == null) {
-			return;
-		}
-
-		for (Buildable buildable : buildables) {
-			if (buildable instanceof Temple) {
-				if (buildable.getCorner().getY() <= event.getEntity().getLocation().getBlockY()) {
-					/* We're 'above' the temple. Good enough. */
-					((Temple)buildable).onEntitySacrifice(event.getEntityType());
-				}
-			}
-		}
+//		for (Buildable buildable : buildables) {
+//			if (buildable instanceof Temple) {
+//				if (buildable.getCorner().getY() <= event.getEntity().getLocation().getBlockY()) {
+//					/* We're 'above' the temple. Good enough. */
+//					((Temple)buildable).onEntitySacrifice(event.getEntityType());
+//				}
+//			}
+//		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)

@@ -1897,6 +1897,11 @@ public class Town extends SQLObject {
 		rate *= this.getHappinessState().coin_rate;
 		return rate;
 	}
+	
+	public double getTempleRate() {
+		double rate = 1.0;
+		return rate;
+	}
 
 	public double getSpreadUpkeep() throws InvalidConfiguration {
 		double total = 0.0;

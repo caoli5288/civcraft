@@ -50,6 +50,7 @@ import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Cottage;
 import com.avrgaming.civcraft.structure.Mine;
 import com.avrgaming.civcraft.structure.Structure;
+import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.util.CivColor;
@@ -63,6 +64,7 @@ public class TownInfoCommand extends CommandBase {
 		
 		commands.put("upkeep", "Shows town upkeep information.");
 		commands.put("cottage", "Shows cottage information for town.");
+		commands.put("temple", "Shows temple information for town.");
 		commands.put("structures", "Shows upkeep information related to structures.");
 		commands.put("culture", "Shows culture information for town.");
 		commands.put("trade", "Shows town trade good information.");
@@ -279,6 +281,7 @@ public class TownInfoCommand extends CommandBase {
 				CivColor.Green+"Growth: "+CivColor.LightGreen+(town.getGrowthRate().total*100)+
 				CivColor.Green+" Culture: "+CivColor.LightGreen+(town.getCulture().total*100)+
 				CivColor.Green+" Cottage: "+CivColor.LightGreen+(town.getCottageRate()*100)+
+				CivColor.Green+" Temple: "+CivColor.LightGreen+(town.getTempleRate()*100)+
 				CivColor.Green+" Trade: "+CivColor.LightGreen+(town.getTradeRate()*100)+		
 				CivColor.Green+" Beakers: "+CivColor.LightGreen+(town.getBeakerRate().total*100)			
 				);
@@ -432,6 +435,52 @@ public class TownInfoCommand extends CommandBase {
 		out.add(CivColor.Green+"Cottage Rate: "+CivColor.Yellow+df.format(town.getCottageRate()*100)+"%");
 		total *= town.getCottageRate();
 		out.add(CivColor.Green+"Total: "+CivColor.Yellow+df.format(total)+" Redbacks.");
+		
+		CivMessage.send(sender, out);
+	}
+	
+	public void temple_cmd() throws CivException {
+		Town town = getSelectedTown();
+		ArrayList<String> out = new ArrayList<String>();	
+		
+		CivMessage.sendHeading(sender, town.getName()+" Temple Info");
+		double total = 0;
+		
+		for (Structure struct : town.getStructures()) {
+			if (!struct.getConfigId().equals("s_temple")) {
+				continue;
+			}
+			
+			Temple temple = (Temple)struct;
+			
+			String color;
+			if (struct.isActive()) {
+				color = CivColor.LightGreen;
+			} else {
+				color = CivColor.Rose;
+			}
+						
+			double culture = temple.getCultureGenerated();
+			
+			if (!struct.isDestroyed()) {
+				out.add(color+"Cottage ("+struct.getCorner()+")");
+				out.add(CivColor.Green+"    level: "+CivColor.Yellow+temple.getLevel()+
+						CivColor.Green+" count: "+CivColor.Yellow+"("+temple.getCount()+"/"+temple.getMaxCount()+")");
+				out.add(CivColor.Green+"    base Culture: "+CivColor.Yellow+culture+
+						CivColor.Green+" Last Result: "+CivColor.Yellow+temple.getLastResult().name());
+			} else {
+				out.add(color+"Cottage ("+struct.getCorner()+")");
+				out.add(CivColor.Rose+"    DESTROYED ");
+			}
+			
+			total += culture;
+			
+		}
+		out.add(CivColor.Green+"----------------------------");
+		out.add(CivColor.Green+"Sub Total: "+CivColor.Yellow+total);
+		out.add(CivColor.Green+"Temple Rate: "+CivColor.Yellow+df.format(town.getTempleRate()*100)+"%");
+		total *= town.getTempleRate();
+		out.add(CivColor.Green+"Total: "+CivColor.Yellow+df.format(total)+" Culture.");
 		
 		CivMessage.send(sender, out);
 	}

@@ -122,10 +122,37 @@ temple:
     # timeout for sacrifices. How long do they have to kill all the things?(in seconds)
     sacrifice_timeout: 30
 
-    sacrifices:
-        - entities:
-              - 'sheep'
-          reward: 50
+temple_levels:
+    - level: 1
+      culture: 100.00
+      consumes:
+         - 423,2
+      count: 24
+
+    - level: 2
+      culture: 200.00
+      consumes:
+         - 423,4
+      count: 48
+
+    - level: 3
+      culture: 300.00
+      consumes:
+         - 423,6
+      count: 96
+
+    - level: 4
+      culture: 400.00
+      consumes:
+         - 423,8
+      count: 120
+
+    - level: 5
+      culture: 500.00
+      consumes:
+         - 423,10
+      count: 144
+
 ############################### Mine Settings #################
 mine_levels:
     - level: 1
@@ -585,7 +612,7 @@ structures:
     displayName: Temple
     require_upgrade:
     require_tech: 'tech_priesthood'
-    effect_event: generate_culture:250
+    effect_event: generate_Culture
     check_event: 
     update_event: check_sacrifice 
     onBuild_event:

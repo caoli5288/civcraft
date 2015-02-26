@@ -34,6 +34,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Cottage;
 import com.avrgaming.civcraft.structure.Mine;
 import com.avrgaming.civcraft.structure.Structure;
+import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -89,6 +90,16 @@ public class EffectEventTimer extends CivAsyncTask {
 					Mine mine = (Mine)struct;
 					try {
 						mine.process_mine(this);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				break;
+			case "generate_Culture":
+				if (struct instanceof Temple) {
+					Temple temple = (Temple)struct;
+					try {
+						temple.generateCulture(this);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}
