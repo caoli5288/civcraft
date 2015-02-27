@@ -118,6 +118,9 @@ public class CivGlobal {
 
 	public static final double MIN_FRAME_DISTANCE = 3.0;
 	
+	public static double LIGHTHOUSE_WATER_PLAYER_SPEED = 1.5;
+	public static double LIGHTHOUSE_WATER_BOAT_SPEED = 1.1;
+	
 	public static Economy econ;
 	
 	private static Map<String, QuestionBaseTask> questions = new ConcurrentHashMap<String, QuestionBaseTask>();

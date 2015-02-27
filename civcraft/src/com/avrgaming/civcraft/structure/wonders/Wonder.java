@@ -380,6 +380,20 @@ public abstract class Wonder extends Buildable {
 				wonder = new GlobeTheatre(rs);
 			}
 			break;
+		case "w_great_lighthouse":
+			if (rs == null) {
+				wonder = new GreatLighthouse(center, id, town);
+			} else {
+				wonder = new GreatLighthouse(rs);
+			}
+			break;
+		case "w_mother_tree":
+			if (rs == null) {
+				wonder = new MotherTree(center, id, town);
+			} else {
+				wonder = new MotherTree(rs);
+			}
+			break;
 		default:
 			throw new CivException("Unknown wonder type "+id);
 		}

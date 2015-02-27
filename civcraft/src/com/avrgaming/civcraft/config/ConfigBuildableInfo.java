@@ -75,7 +75,7 @@ public class ConfigBuildableInfo {
 						}
 						if (id.equals("w_colosseum"))
 						{
-							if (!capitol || town.hasStructure(id)) {
+							if (!capitol || town.getStructureTypeCount(id) > 0) {
 								return false;
 							}
 						}

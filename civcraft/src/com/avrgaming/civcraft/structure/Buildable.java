@@ -198,6 +198,10 @@ public abstract class Buildable extends SQLObject {
 		if (this.getTown().getBuffManager().hasBuff(Buff.RUSH)) {
 			rate -= this.getTown().getBuffManager().getEffectiveDouble(Buff.RUSH);
 		}
+		if (this.isTileImprovement() && this.getTown().getBuffManager().hasBuff("buff_mother_tree_tile_improvement_cost")) {
+
+			rate -= this.getTown().getBuffManager().getEffectiveDouble("buff_mother_tree_tile_improvement_cost");
+		}
 		return rate*info.hammer_cost;
 	}
 	
@@ -764,8 +768,13 @@ public abstract class Buildable extends SQLObject {
 		if (this.isTileImprovement()) {
 			ignoreBorders = true;
 			ConfigTownLevel level = CivSettings.townLevels.get(getTown().getLevel());
-			
-			if (getTown().getTileImprovementCount() >= level.tile_improvements) {
+
+			Integer maxTileImprovements  = level.tile_improvements;
+			if (town.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
+			{
+				maxTileImprovements *= 2;
+			}
+			if (getTown().getTileImprovementCount() >= maxTileImprovements) {
 				throw new CivException("Cannot build tile improvement. Already at tile improvement limit.");
 			}
 			
@@ -1253,16 +1262,24 @@ public abstract class Buildable extends SQLObject {
 					}
 								
 					Random rand = new Random();
-					
-					// Each block has a 10% chance to turn into gravel
-					if (rand.nextInt(100) <= 10) {
-						ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
+
+					// Each block has a 70% chance to turn into Air
+					if (rand.nextInt(100) <= 70) {
+						ItemManager.setTypeId(coord.getBlock(), CivData.AIR);
 						ItemManager.setData(coord.getBlock(), 0, true);
 						continue;
 					}
 					
-					// Each block has a 50% chance of starting a fire
-					if (rand.nextInt(100) <= 50) {
+					// Each block has a 30% chance to turn into gravel
+					if (rand.nextInt(100) <= 30) {
+						ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
+						ItemManager.setData(coord.getBlock(), 0, true);
+						continue;
+					}
+
+					
+					// Each block has a 10% chance of starting a fire
+					if (rand.nextInt(100) <= 10) {
 						ItemManager.setTypeId(coord.getBlock(), CivData.FIRE);
 						ItemManager.setData(coord.getBlock(), 0, true);
 						continue;

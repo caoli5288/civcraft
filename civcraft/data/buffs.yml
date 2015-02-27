@@ -275,13 +275,14 @@ buffs:
       value: '2'
       stackable: false
       parent:
-      
+
     - id: 'buff_chichen_itza_cp_bonus_hp'
       name: 'Chichen Itza Control Point Bonus HP'
       description: 'Increase the hitpoints of all Control Points of a town by 10 HP.'
       value: '10'
       stackable: false
       parent:
+
 #Colosseum Buffs
     - id: 'buff_colosseum_coins_from_towns'
       name: 'Colosseum Coins From Towns'
@@ -290,11 +291,40 @@ buffs:
       stackable: false
       parent:
 
-
 #Globe Theatre Buffs
     - id: 'buff_globe_theatre_culture_from_towns'
       name: 'Globe Theatre Culture From Towns'
       description: 'Increase culture by 1 for every town in the world.'
       value: '1'
+      stackable: false
+      parent:
+
+#Great Lighthouse Buffs
+    - id: 'buff_great_lighthouse_water_speed'
+      name: 'Great Lighthouse Increse Embarked Movement'
+      description: 'Increase Boat movement speed in water for all town residents.'
+      value: '1'
+      stackable: false
+      parent:
+
+# Mother Tree buffs
+    - id: 'buff_mother_tree_growth'
+      name: 'Mother Tree Growth Bonus'
+      description: 'Grants a 50% bonus to farm growth rates across the civilization.'
+      value: '0.50'
+      stackable: false
+      parent:
+
+    - id: 'buff_mother_tree_tile_improvement_cost'
+      name: 'Mother Tree Tile Improvment Cost'
+      description: 'Tile Improvements cost 20% less across the civilization.'
+      value: '0.20'
+      stackable: false
+      parent:
+
+    - id: 'buff_mother_tree_tile_improvement_bonus'
+      name: 'Mother Tree Tile Improvment Bonus'
+      description: 'Can build twice as many tile improvments in this town.'
+      value: '0.20'
       stackable: false
       parent:

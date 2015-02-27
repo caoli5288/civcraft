@@ -148,7 +148,7 @@ wonders:
     effect_event:
     update_event:
     onBuild_event:
-    limit: 0
+    limit: 1
     cost: 100000.0
     upkeep: 0.0
     hammer_cost: 80000.0
@@ -161,6 +161,42 @@ wonders:
     template_y_shift: -1
     displayName: Globe Theatre
     require_tech: 'tech_globe_theatre'
+    require_upgrade:
+    check_event:
+    effect_event:
+    update_event:
+    onBuild_event:
+    limit: 1
+    cost: 800000.0
+    upkeep: 0.0
+    hammer_cost: 550000.0
+    points: 250000
+    max_hitpoints: 5000
+    regen_rate: 6
+
+  - id: w_great_lighthouse
+    template: great_lighthouse
+    template_y_shift: 0
+    displayName: Great Lighthouse
+    require_tech: 'tech_great_lighthouse'
+    require_upgrade:
+    check_event:
+    effect_event:
+    update_event:
+    onBuild_event:
+    limit: 1
+    cost: 800000.0
+    upkeep: 0.0
+    hammer_cost: 550000.0
+    points: 250000
+    max_hitpoints: 5000
+    regen_rate: 6
+
+  - id: w_mother_tree
+    template: mother_tree
+    template_y_shift: 0
+    displayName: Mother Tree
+    require_tech: 'tech_mother_tree'
     require_upgrade:
     check_event:
     effect_event:
@@ -224,3 +260,13 @@ wonder_buffs:
    - id: w_globe_theatre
      buffs:
          - buff_globe_theatre_culture_from_towns
+
+   - id: w_great_lighthouse
+     buffs:
+         - buff_great_lighthouse_water_speed
+
+   - id: w_mother_tree
+     buffs:
+         - buff_mother_tree_growth
+         - buff_mother_tree_tile_improvement_cost
+         - buff_mother_tree_tile_improvement_bonus

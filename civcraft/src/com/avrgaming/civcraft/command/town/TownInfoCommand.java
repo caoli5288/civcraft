@@ -590,12 +590,18 @@ public class TownInfoCommand extends CommandBase {
 		if (resident == null || civ.hasResident(resident) || isAdmin) {
 		
 			String color = CivColor.LightGreen;
-			if (town.getTileImprovementCount() > level.tile_improvements) {
+			Integer maxTileImprovements  = level.tile_improvements;
+			if (town.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
+			{
+				maxTileImprovements *= 2;
+			}
+			
+			if (town.getTileImprovementCount() > maxTileImprovements) {
 				color = CivColor.Rose;
 			}
 			
 			CivMessage.send(sender, CivColor.Green+"Plots: "+CivColor.LightGreen+"("+town.getTownChunks().size()+"/"+town.getMaxPlots()+") "+
-									CivColor.Green+" Tile Improvements: "+CivColor.LightGreen+"("+color+town.getTileImprovementCount()+CivColor.LightGreen+"/"+level.tile_improvements+")");
+									CivColor.Green+" Tile Improvements: "+CivColor.LightGreen+"("+color+town.getTileImprovementCount()+CivColor.LightGreen+"/"+maxTileImprovements+")");
 			
 			
 			

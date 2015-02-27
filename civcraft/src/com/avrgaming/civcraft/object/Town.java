@@ -1692,7 +1692,12 @@ public class Town extends SQLObject {
 
 		if (struct.isTileImprovement()) {
 			ConfigTownLevel level = CivSettings.townLevels.get(this.getLevel());
-			if (this.getTileImprovementCount() > level.tile_improvements) {
+			Integer maxTileImprovements  = level.tile_improvements;
+			if (this.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
+			{
+				maxTileImprovements *= 2;
+			}
+			if (this.getTileImprovementCount() > maxTileImprovements) {
 				return false;
 			}
 		} else if ((struct.getLimit() != 0) && (count > struct.getLimit())) {
@@ -1812,6 +1817,8 @@ public class Town extends SQLObject {
 		/* Wonders and Goodies. */
 		double additional = this.getBuffManager().getEffectiveDouble(Buff.GROWTH_RATE);
 		additional += this.getBuffManager().getEffectiveDouble("buff_hanging_gardens_growth");
+
+		additional += this.getBuffManager().getEffectiveDouble("buff_mother_tree_growth");
 		
 		double additionalGrapes = this.getBuffManager().getEffectiveDouble("buff_hanging_gardens_additional_growth");
 		int grapeCount = 0;
