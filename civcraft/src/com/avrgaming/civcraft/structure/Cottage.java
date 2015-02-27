@@ -48,8 +48,7 @@ public class Cottage extends Structure {
 
 	private ConsumeLevelComponent consumeComp = null;
 	
-	protected Cottage(Location center, String id, Town town)
-			throws CivException {
+	protected Cottage(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
 	}
 
@@ -75,7 +74,6 @@ public class Cottage extends Structure {
 //		attrComp.setSource("Cottage("+this.getCorner().toString()+")");
 //		attrComp.registerComponent();
 	}
-
 	
 	@Override
 	public String getDynmapDescription() {

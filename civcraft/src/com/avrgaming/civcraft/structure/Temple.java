@@ -49,14 +49,35 @@ public class Temple extends Structure {
 	public Temple(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 	}
-
-	public String getkey() {
-		return getTown().getName()+"_"+this.getConfigId()+"_"+this.getCorner().toString(); 
+	
+	public ConsumeLevelComponent getConsumeComponent() {
+		if (consumeComp == null) {
+			consumeComp = (ConsumeLevelComponent) this.getComponent(ConsumeLevelComponent.class.getSimpleName());
+		}
+		return consumeComp;
+	}
+	
+	@Override
+	public void loadSettings() {
+		super.loadSettings();
+		
+//		attrComp = new AttributeComponent();
+//		attrComp.setType(AttributeType.DIRECT);
+//		attrComp.setOwnerKey(this.getTown().getName());
+//		attrComp.setAttrKey(Attribute.TypeKeys.COINS.name());
+//		attrComp.setSource("Cottage("+this.getCorner().toString()+")");
+//		attrComp.registerComponent();
 	}
 	
 	@Override
 	public String getDynmapDescription() {
-		return null;
+		if (getConsumeComponent() == null) {
+			return "";
+		}
+		
+		String out = "";
+		out += "Level: "+getConsumeComponent().getLevel()+" "+getConsumeComponent().getCountString();
+		return out;
 	}
 	
 	@Override
@@ -64,11 +85,8 @@ public class Temple extends Structure {
 		return "church";
 	}
 	
-	public ConsumeLevelComponent getConsumeComponent() {
-		if (consumeComp == null) {
-			consumeComp = (ConsumeLevelComponent) this.getComponent(ConsumeLevelComponent.class.getSimpleName());
-		}
-		return consumeComp;
+	public String getkey() {
+		return this.getTown().getName()+"_"+this.getConfigId()+"_"+this.getCorner().toString(); 
 	}
 
 	public Result consume(CivAsyncTask task) throws InterruptedException {
@@ -99,21 +117,21 @@ public class Temple extends Structure {
 		return result;
 	}
 	
-	public void generateCulture(CivAsyncTask task) throws InterruptedException {	
+	public void templeCulture(CivAsyncTask task) throws InterruptedException {
 		Result result = this.consume(task);
 		switch (result) {
 		case STARVE:
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
 					CivColor.Rose+"fell. "+CivColor.LightGreen+getConsumeComponent().getCountString());
-			break;
+			return;
 		case LEVELDOWN:
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple's Altar ran out of mutton and "+
 					CivColor.Rose+"lost"+CivColor.LightGreen+" a level. It is now level "+getConsumeComponent().getLevel());
-			break;
+			return;
 		case STAGNATE:
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+
 					getConsumeComponent().getLevel()+" temple "+CivColor.Yellow+"stagnated "+CivColor.LightGreen+getConsumeComponent().getCountString());
-			break;
+			return;
 		case GROW:
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
 					CivColor.Green+"rose. "+CivColor.LightGreen+getConsumeComponent().getCountString());
@@ -126,6 +144,9 @@ public class Temple extends Structure {
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple is "+
 					CivColor.Green+"maxed. "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
+		case UNKNOWN:
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivColor.LightGreen+"Something "+CivColor.DarkPurple+"unknown"+CivColor.LightGreen+" happened to a temple. It generates no Culture.");
+			return;
 		default:
 			break;
 		}
@@ -171,6 +192,32 @@ public class Temple extends Structure {
 			return 0;
 		}
 		return lvl.culture;
+	}
+	
+	public void delevel() {
+		int currentLevel = getLevel();
+		
+		if (currentLevel > 1) {
+			getConsumeComponent().setLevel(getLevel()-1);
+			getConsumeComponent().setCount(0);
+			getConsumeComponent().onSave();
+		}
+	}
+	
+	@Override
+	public void delete() throws SQLException {
+		super.delete();
+		if (getConsumeComponent() != null) {
+			getConsumeComponent().onDelete();
+		}
+	}
+	
+	public void onDestroy() {
+		super.onDestroy();
+		
+		getConsumeComponent().setLevel(1);
+		getConsumeComponent().setCount(0);
+		getConsumeComponent().onSave();
 	}
 
 

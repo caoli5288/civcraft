@@ -76,7 +76,7 @@ public class ConfigCottageLevel {
 			cottage_levels.put(cottagelevel.level, cottagelevel);
 			
 		}
-		CivLog.info("Loaded "+cottage_levels.size()+" cottage levels.");		
+		CivLog.info("Loaded "+cottage_levels.size()+" cottage levels");		
 	}
 	
 }

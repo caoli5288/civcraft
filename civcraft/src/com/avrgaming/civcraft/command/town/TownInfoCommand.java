@@ -463,7 +463,7 @@ public class TownInfoCommand extends CommandBase {
 			double culture = temple.getCultureGenerated();
 			
 			if (!struct.isDestroyed()) {
-				out.add(color+"Cottage ("+struct.getCorner()+")");
+				out.add(color+"Temple ("+struct.getCorner()+")");
 				out.add(CivColor.Green+"    level: "+CivColor.Yellow+temple.getLevel()+
 						CivColor.Green+" count: "+CivColor.Yellow+"("+temple.getCount()+"/"+temple.getMaxCount()+")");
 				out.add(CivColor.Green+"    base Culture: "+CivColor.Yellow+culture+

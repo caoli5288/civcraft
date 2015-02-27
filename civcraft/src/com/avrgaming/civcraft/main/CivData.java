@@ -97,6 +97,7 @@ public class CivData {
 	public static final int OBSIDIAN = 49;
 	public static final int FIRE = 51;
 	public static final int FISH_RAW = 349;
+	public static final int MUTTON_RAW = 423;
 	public static final int BREAD = 297;
 	public static final int GLOWSTONE = 89;
 	public static final int DYE = 351;

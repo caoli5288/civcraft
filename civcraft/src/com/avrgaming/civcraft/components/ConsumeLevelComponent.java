@@ -27,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigCottageLevel;
 import com.avrgaming.civcraft.config.ConfigMineLevel;
+import com.avrgaming.civcraft.config.ConfigTempleLevel;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -35,6 +36,7 @@ import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Cottage;
 import com.avrgaming.civcraft.structure.Mine;
+import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.MultiInventory;
@@ -87,7 +89,12 @@ public class ConsumeLevelComponent extends Component {
 		
 		//XXX make both mine/cottage/longhouse levels similar in the yml so they can be loaded
 		// without this check.
-		if (buildable instanceof Cottage) {
+		if (buildable instanceof Temple) {
+				for (ConfigTempleLevel lvl : CivSettings.templeLevels.values()) {
+					this.addLevel(lvl.level, lvl.count);
+					this.setConsumes(lvl.level, lvl.consumes);
+				}
+		} else if (buildable instanceof Cottage) {
 			for (ConfigCottageLevel lvl : CivSettings.cottageLevels.values()) {
 				this.addLevel(lvl.level, lvl.count);
 				this.setConsumes(lvl.level, lvl.consumes);
