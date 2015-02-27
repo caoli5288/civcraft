@@ -97,7 +97,7 @@ public class EffectEventTimer extends CivAsyncTask {
 					}
 				}
 				break;
-			case "temple_Culture":
+			case "temple_culture":
 				CivLog.info("Temple Task 1");
 				if (struct instanceof Temple) {
 					CivLog.info("Temple Task 2");
