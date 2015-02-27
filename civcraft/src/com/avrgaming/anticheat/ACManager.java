@@ -175,6 +175,35 @@ public class ACManager implements PluginMessageListener {
 			}
 			
 			TaskMaster.syncTask(new ArenaCheckTask(player.getName()), TimeTools.toTicks(30));
+			
+			class HackerCheckTask implements Runnable {
+				String name;
+				
+				public HackerCheckTask(String name) {
+					this.name = name;
+				}
+				
+				@Override
+				public void run() {
+					try {
+						Player player = CivGlobal.getPlayer(name);
+						Resident resident = CivGlobal.getResident(player);
+						
+						if (resident != null && !resident.isUsesAntiCheat()) {
+							if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
+								
+							} else if (player.hasPermission(CivSettings.HACKER)) {
+								TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
+										"Visit https://www.minetexas.com/ to get it."));
+							}
+						}
+					} catch (CivException e) {
+					}
+					
+				}
+			}
+			
+			TaskMaster.syncTask(new HackerCheckTask(player.getName()), TimeTools.toTicks(30));
 		}
 	}
 
@@ -229,6 +258,8 @@ public class ACManager implements PluginMessageListener {
 			if (resident != null) {
 				resident.setUsesAntiCheat(true);
 			}
+			CivMessage.sendSuccess(player, "You've been validated by CivCraft Anti-Cheat");
+			return;
 			
 		} catch (CivException e) {
 			CivMessage.sendError(player, "[CivCraft Anti-Cheat] Couldn't Verify your client");
@@ -244,9 +275,6 @@ public class ACManager implements PluginMessageListener {
 			}
 			return;
 		}
-		
-		
-		CivMessage.sendSuccess(player, "You've been validated by CivCraft Anti-Cheat");
 	}
 	
 	public void validate(Player player, String decodedMessage) throws CivException {
