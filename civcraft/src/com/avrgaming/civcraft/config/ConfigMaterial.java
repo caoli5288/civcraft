@@ -42,7 +42,7 @@ public class ConfigMaterial {
 		for (Map<?, ?> b : configMaterials) {
 			ConfigMaterial mat = new ConfigMaterial();
 			
-			/* Manditory Settings */
+			/* Mandatory Settings */
 			mat.id = (String)b.get("id");
 			mat.item_id = (Integer)b.get("item_id");
 			mat.item_data = (Integer)b.get("item_data");

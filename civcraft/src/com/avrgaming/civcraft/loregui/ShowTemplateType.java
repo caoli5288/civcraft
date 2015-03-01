@@ -23,6 +23,10 @@ public class ShowTemplateType implements GuiAction {
 			{
 				resident.showTemplatePerks("arctic");
 			}
+			else if (perk.getIdent().startsWith("template_atlantean"))
+			{
+				resident.showTemplatePerks("atlantean");
+			}
 			else if (perk.getIdent().startsWith("template_aztec"))
 			{
 				resident.showTemplatePerks("aztec");

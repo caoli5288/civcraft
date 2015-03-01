@@ -205,6 +205,7 @@ public class CivSettings {
 	public static final String MODERATOR = "civ.moderator";
 	public static final String FREE_PERKS = "civ.freeperks";
 	public static final String ARCTIC_PERKS = "civ.arcticperks";
+	public static final String ATLANTEAN_PERKS = "civ.atlanteanperks";
 	public static final String AZTEC_PERKS = "civ.aztecperks";
 	public static final String EGYPTIAN_PERKS = "civ.egyptianperks";
 	public static final String ROMAN_PERKS = "civ.romanperks";

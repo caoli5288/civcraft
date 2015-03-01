@@ -178,46 +178,68 @@ public class PlayerLoginAsyncTask implements Runnable {
 			//TODO set default modes?
 			resident.showWarnings(getPlayer());
 			resident.loadPerks();
-	
 			try {
+
+				String perkMessage = "";
 				if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
 					resident.giveAllFreePerks();
+					perkMessage = "You have access to the Following Perks: ";
 				} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
 					if (getPlayer().hasPermission(CivSettings.MINI_ADMIN) || getPlayer().hasPermission(CivSettings.FREE_PERKS)) {
 						resident.giveAllFreePerks();
+						perkMessage = "You have access to the Following Perks: ";
+						perkMessage += "Weather, ";
 					}
 				}
 				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
 				{
 					resident.giveAllArcticPerks();
+					perkMessage += "Arctic, ";
+				}
+				if (getPlayer().hasPermission(CivSettings.ATLANTEAN_PERKS))
+				{
+					resident.giveAllAtlanteanPerks();
+					perkMessage += "Atlantean, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.AZTEC_PERKS))
 				{
 					resident.giveAllAztecPerks();
+					perkMessage += "Aztec, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
 				{
 					resident.giveAllCultistPerks();
+					perkMessage += "Cultist, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
 				{
 					resident.giveAllEgyptianPerks();
+					perkMessage += "Egyptian, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
 				{
 					resident.giveAllElvenPerks();
+					perkMessage += "Elven, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
 				{
 					resident.giveAllHellPerks();
+					perkMessage += "Hell, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
 				{
 					resident.giveAllRomanPerks();
+					perkMessage += "Roman, ";
 				}
+				
+
+				perkMessage += "Apply them with /res perks";
+				
+				CivMessage.send(resident, CivColor.LightGreen+perkMessage);
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
 			}
+
 			
 			/* Send Anti-Cheat challenge to player. */
 			if (!getPlayer().hasPermission("civ.ac_valid")) {

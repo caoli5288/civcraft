@@ -161,23 +161,24 @@ public class PlayerListener implements Listener {
 		}
 		
 		Resident resident = CivGlobal.getResident(player);
-		if (resident != null && resident.isOnWater()) {	
-			if (player.getVehicle() != null && player.getVehicle().getType().equals(EntityType.BOAT)) {
-				Vector vec = player.getVehicle().getVelocity();
-				double yComp = vec.getY();
-				
-				vec.multiply(CivGlobal.LIGHTHOUSE_WATER_BOAT_SPEED);
-				vec.setY(yComp); /* Do not multiply y velocity. */
-				
-				player.getVehicle().setVelocity(vec);
-			} else {
-//				speed *= CivGlobal.LIGHTHOUSE_WATER_PLAYER_SPEED;
-				if (!player.getAllowFlight()){
-				player.setAllowFlight(true);
-				player.setFlying(true);
-				}
-			}
-		} else if (resident != null && resident.isOnRoad()) {	
+//		if (resident != null && resident.isOnWater()) {	
+//			if (player.getVehicle() != null && player.getVehicle().getType().equals(EntityType.BOAT)) {
+//				Vector vec = player.getVehicle().getVelocity();
+//				double yComp = vec.getY();
+//				
+//				vec.multiply(CivGlobal.LIGHTHOUSE_WATER_BOAT_SPEED);
+//				vec.setY(yComp); /* Do not multiply y velocity. */
+//				
+//				player.getVehicle().setVelocity(vec);
+//			} else {
+////				speed *= CivGlobal.LIGHTHOUSE_WATER_PLAYER_SPEED;
+////				if (!player.getAllowFlight()){
+////				player.setAllowFlight(true);
+////				player.setFlying(true);
+////				}
+//			}
+//		} else 
+		if (resident != null && resident.isOnRoad()) {	
 			if (player.getVehicle() != null && player.getVehicle().getType().equals(EntityType.HORSE)) {
 				Vector vec = player.getVehicle().getVelocity();
 				double yComp = vec.getY();
@@ -190,12 +191,12 @@ public class PlayerListener implements Listener {
 				speed *= Road.ROAD_PLAYER_SPEED;
 			}
 		}
-		else{
-			if (player.getAllowFlight()){
-			player.setAllowFlight(false);
-			player.setFlying(false);
-			}
-		}
+//		else{
+//			if (player.getAllowFlight()){
+//			player.setAllowFlight(false);
+//			player.setFlying(false);
+//			}
+//		}
 		
 		player.setWalkSpeed((float) Math.min(1.0f, speed));
 	}

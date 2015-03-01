@@ -89,7 +89,7 @@ public class PlayerLocationCache {
 		Resident resident = CivGlobal.getResident(player);
 		if (resident != null) {
 			resident.onRoadTest(pc.getCoord(), player);
-			resident.onWaterTest(pc.getCoord(), player);
+//			resident.onWaterTest(pc.getCoord(), player);
 		}
 		
 		if (CivSettings.hasVanishNoPacket) {

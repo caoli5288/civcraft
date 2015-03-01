@@ -43,12 +43,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
+//import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+//import org.bukkit.potion.PotionEffect;
+//import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -175,7 +175,7 @@ public class Resident extends SQLObject {
 	private Date lastKilledTime = null;
 	private String lastIP = "";
 	private UUID uid;
-	private boolean onWater = false;
+//	private boolean onWater = false;
 	private boolean onRoad = false;
 	public String debugTown;
 	
@@ -1092,40 +1092,40 @@ public class Resident extends SQLObject {
 		this.performingMission = performingMission;
 	}
 
-	public void onWaterTest(BlockCoord coord, Player player) {
-		/* Test the block beneath us for water, if so, set the water flag. */
-		if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_water_speed")) {
-			if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).isLiquid()) {
-//				CivLog.info("player in Water");
-				onWater = true;
-				if (!player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
-					player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 1, 5));
-				}
-
-				if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-					player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1, 5));
-				}
-			} else {
-//				CivLog.info("player Out of Water");
-				onWater = false;
-				if (player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
-					player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-				}
-				if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-					player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-				}
+//	public void onWaterTest(BlockCoord coord, Player player) {
+//		/* Test the block beneath us for water, if so, set the water flag. */
+//		if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_water_speed")) {
+//			if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).isLiquid()) {
+////				CivLog.info("player in Water");
+//				onWater = true;
+//				if (!player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
+//					player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 1, 60));
+//				}
+//
+//				if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+//					player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1, 60));
+//				}
+//			} else {
+////				CivLog.info("player Out of Water");
+//				onWater = false;
+//				if (player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
+//					player.removePotionEffect(PotionEffectType.WATER_BREATHING);
+//				}
+//				if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
+//					player.removePotionEffect(PotionEffectType.NIGHT_VISION);
+//				}
+////			}
 //			}
-			}
-		}
-	}
-
-	public boolean isOnWater() {
-		return onWater;
-	}
-
-	public void setOnWater(boolean onWater) {
-		this.onWater = onWater;
-	}
+//		}
+//	}
+//
+//	public boolean isOnWater() {
+//		return onWater;
+//	}
+//
+//	public void setOnWater(boolean onWater) {
+//		this.onWater = onWater;
+//	}
 	
 	public void onRoadTest(BlockCoord coord, Player player) {
 		/* Test the block beneath us for a road, if so, set the road flag. */
@@ -1175,7 +1175,27 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Arctic Templates! Use /resident perks to apply them.");
+	}
+	
+	public void giveAllAtlanteanPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_atlantean") || perk.getIdent().startsWith("template_atlantean"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
 	}
 	
 	public void giveAllAztecPerks() {
@@ -1197,7 +1217,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Aztec Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllEgyptianPerks() {
@@ -1219,7 +1238,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Egyptian Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllRomanPerks() {
@@ -1241,7 +1259,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Roman Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllHellPerks() {
@@ -1263,7 +1280,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Hell Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllElvenPerks() {
@@ -1285,7 +1301,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllCultistPerks() {
@@ -1307,7 +1322,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Cultist Templates! Use /resident perks to a them.");
 	}
 
 
@@ -1330,7 +1344,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You've the weather perk! Use /resident perks to access it.");
 	}
 	
 	public void loadPerks() {
@@ -1870,10 +1883,6 @@ public class Resident extends SQLObject {
 		for (Object obj : perks.values()) {
 			Perk p = (Perk)obj;
 
-			CivMessage.send(this, CivColor.LightGray+"ident: "+p.getIdent());
-			CivMessage.send(this, CivColor.LightGray+"ident: "+p.configPerk.display_name);
-			CivMessage.send(this, CivColor.LightGray+"type: "+p.configPerk.type_id);
-			CivMessage.send(this, CivColor.LightGray+"data: "+p.configPerk.data);
 			if (p.getIdent().startsWith("temp"))
 			{
 				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
