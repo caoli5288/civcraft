@@ -584,21 +584,6 @@ public class Town extends SQLObject {
 		
 		double additional = this.getBuffManager().getEffectiveDouble(Buff.FINE_ART);
 		
-		if (this.getBuffManager().hasBuff("buff_globe_theatre_culture_from_towns")) {
-			int townCount = 0;
-			for (Civilization civ : CivGlobal.getCivs())
-			{
-				townCount += civ.getTownCount();
-			}
-			double culturePerTown = Double.valueOf(CivSettings.buffs.get("buff_globe_theatre_culture_from_towns").value);
-			
-			double bonus = culturePerTown*townCount;
-			
-			CivMessage.sendTown(this, CivColor.LightGreen+"The Globe Theatre generated "+CivColor.Yellow+bonus+CivColor.LightGreen+" culture from shows.");
-
-			additional += bonus;
-		}
-		
 		if (this.getBuffManager().hasBuff("buff_pyramid_culture")) {
 			additional += this.getBuffManager().getEffectiveDouble("buff_pyramid_culture");
 		}
@@ -643,6 +628,21 @@ public class Town extends SQLObject {
 					}
 				}
 			}
+		}
+		
+		if (this.getBuffManager().hasBuff("buff_globe_theatre_culture_from_towns")) {
+			int townCount = 0;
+			for (Civilization civ : CivGlobal.getCivs())
+			{
+				townCount += civ.getTownCount();
+			}
+			double culturePerTown = Double.valueOf(CivSettings.buffs.get("buff_globe_theatre_culture_from_towns").value);
+			
+			double bonus = culturePerTown*townCount;
+			
+			CivMessage.sendTown(this, CivColor.LightGreen+"The Globe Theatre generated "+CivColor.Yellow+bonus+CivColor.LightGreen+" culture from shows.");
+
+			fromStructures += bonus;
 		}
 		
 		total += fromStructures;
