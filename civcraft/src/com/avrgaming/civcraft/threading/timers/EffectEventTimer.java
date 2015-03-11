@@ -79,7 +79,6 @@ public class EffectEventTimer extends CivAsyncTask {
 			String[] split = struct.getEffectEvent().toLowerCase().split(":"); 
 			switch (split[0]) {
 			case "generate_coins":
-				CivLog.info("Coins Task 1");
 				if (struct instanceof Cottage) {
 					Cottage cottage = (Cottage)struct;
 					//cottage.generate_coins(this);
@@ -87,7 +86,6 @@ public class EffectEventTimer extends CivAsyncTask {
 				}
 				break;
 			case "process_mine":
-				CivLog.info("Mine Task 1");
 				if (struct instanceof Mine) {
 					Mine mine = (Mine)struct;
 					try {
@@ -98,12 +96,9 @@ public class EffectEventTimer extends CivAsyncTask {
 				}
 				break;
 			case "temple_culture":
-				CivLog.info("Temple Task 1");
 				if (struct instanceof Temple) {
-					CivLog.info("Temple Task 2");
 					Temple temple = (Temple)struct;
 					try {
-						CivLog.info("Temple Task 3");
 						temple.templeCulture(this);
 					} catch (InterruptedException e) {
 						e.printStackTrace();

@@ -561,3 +561,30 @@ upgrades:
       require_structure: 's_grocer'
       category: 'Grocer'
 
+# Trommel upgrades
+    - id: 'upgrade_trommel_material_granite'
+      name: 'Upgrade trommel Level 2'
+      action: 'set_trommel_level, 2'
+      cost: 50000.0
+      require_upgrade:
+      require_tech: 'tech_masonry'
+      require_structure: 's_trommel'
+      category: 'trommel'
+
+    - id: 'upgrade_trommel_material_diorite'
+      name: 'Upgrade trommel Level 3'
+      action: 'set_trommel_level, 3'
+      cost: 100000.0
+      require_upgrade: 'upgrade_trommel_material_granite'
+      require_tech: 'tech_advanced_masonry'
+      require_structure: 's_trommel'
+      category: 'trommel'
+
+    - id: 'upgrade_trommel_level_andesite'
+      name: 'Upgrade trommel Level 4'
+      action: 'set_trommel_level, 4'
+      cost: 150000.0
+      require_upgrade: 'upgrade_trommel_material_diorite'
+      require_tech: 'tech_alloys'
+      require_structure: 's_trommel'
+      category: 'trommel'

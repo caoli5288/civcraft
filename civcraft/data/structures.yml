@@ -7,16 +7,70 @@
 #TODO add bank config options
 
 ################# Trommel Settings #############
-trommel:
+tromme:
+    despotism_rate: 2.0
+    penalty_rate: 0.8
+
+trommel_gravel:
+    max: 10000
     redstone_chance: 0.03
     iron_chance: 0.04
     gold_chance: 0.02
     diamond_chance: 0.0050
     emerald_chance: 0.0020
     chromium_chance: 0.0008
+
+trommel_granite:
+    max: 100000
     gravel_rate: 1
-    despotism_rate: 2.0
-    penalty_rate: 0.8
+    dirt_rate: 0.75
+    polished_rate: 0.1
+    redstone_chance: 0.04
+    iron_chance: 0.04
+    gold_chance: 0.02
+    tungsten_chance: 0.0075
+    diamond_chance: 0.0050
+    emerald_chance: 0.0020
+    chromium_chance: 0.0008
+    crystal_fragment_chance: 0.0002
+    refined_chromium_chance: 0.00008
+    refined_tungsten_chance: 0.00004
+    crystal_chance: 0.00002
+
+trommel_diorite:
+    max: 100000
+    gravel_rate: 1
+    dirt_rate: 0.75
+    polished_rate: 0.1
+    redstone_chance: 0.05
+    iron_chance: 0.045
+    gold_chance: 0.025
+    tungsten_chance: 0.00080
+    diamond_chance: 0.0055
+    emerald_chance: 0.0025
+    chromium_chance: 0.00085
+    crystal_fragment_chance: 0.00025
+    refined_chromium_chance: 0.00012
+    refined_tungsten_chance: 0.00008
+    crystal_chance: 0.00004
+
+trommel_andesite:
+    max: 100000
+    gravel_rate: 1
+    dirt_rate: 0.75
+    polished_rate: 0.1
+    redstone_chance: 0.06
+    iron_chance: 0.05
+    gold_chance: 0.03
+    tungsten_chance: 0.0085
+    diamond_chance: 0.0060
+    emerald_chance: 0.0030
+    chromium_chance: 0.0009
+    crystal_fragment_chance: 0.0003
+    refined_chromium_chance: 0.00015
+    refined_tungsten_chance: 0.00010
+    crystal_chance: 0.00005
+
 
 ################# Mob Grinder Settings #############
 mobGrinder:

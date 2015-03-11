@@ -63,6 +63,13 @@ perks:
       components:
           - name: 'CustomTemplate'
 
+    - id: 'template_atlantean'
+      display_name: 'Atlantean Templates'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+
     - id: 'template_aztec'
       display_name: 'Aztec Templates'
       item_id: 98
@@ -97,15 +104,12 @@ perks:
       data: 3
       components:
           - name: 'CustomTemplate'
-
     - id: 'template_cultist'
       display_name: 'Cultist Template'
       item_id: 397
       data: 1
       components:
           - name: 'CustomTemplate'
-
-
 
 ############ ARCTIC THEME
     - id: 'tpl_arctic_camp'
@@ -1619,4 +1623,222 @@ perks:
             theme: 'cultist'
             template: 'trade_outpost'
 
+# ===== Atlantean TEMPLATES
+    - id: 'prem_tpl_atlantean_camp'
+      display_name: 'Atlantean Camp'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'atlantean'
+            template: 'camp'
+            id: 'camp'
 
+    - id: 'prem_tpl_atlantean_arrow_tower'
+      display_name: 'Atlantean Arrow Tower Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'arrow_tower'
+
+    - id: 'prem_tpl_atlantean_bank'
+      display_name: 'Atlantean Bank Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'bank'
+
+    - id: 'prem_tpl_atlantean_barracks'
+      display_name: 'Atlantean Barracks Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'barracks'
+
+    - id: 'prem_tpl_atlantean_cannon_tower'
+      display_name: 'Atlantean Cannon Tower Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'cannon_tower'
+
+    - id: 'prem_tpl_atlantean_capitol'
+      display_name: 'Atlantean Capitol Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'atlantean'
+            template: 'capital' #misspelt on purpose, easier to leave as is.
+            id: 's_capitol'
+
+    - id: 'prem_tpl_atlantean_cottage'
+      display_name: 'Atlantean Cottage Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'cottage'
+
+    - id: 'prem_tpl_atlantean_granary'
+      display_name: 'Atlantean Granary Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'granary'
+
+    - id: 'prem_tpl_atlantean_grocer'
+      display_name: 'Atlantean Grocer Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'grocer'
+
+    - id: 'prem_tpl_atlantean_library'
+      display_name: 'Atlantean Library Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'library'
+
+    - id: 'prem_tpl_atlantean_market'
+      display_name: 'Atlantean Market Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'market'
+
+    - id: 'prem_tpl_atlantean_mine'
+      display_name: 'Atlantean Mine Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'mine'
+
+    - id: 'prem_tpl_atlantean_monument'
+      display_name: 'Atlantean Monument Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'monument'
+
+    - id: 'prem_tpl_atlantean_pasture'
+      display_name: 'Atlantean Pasture Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'pasture'
+
+    - id: 'prem_tpl_atlantean_scout_tower'
+      display_name: 'Atlantean Scout Tower Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'scout_tower'
+
+    - id: 'prem_tpl_atlantean_shipyard'
+      display_name: 'Atlantean Shipyard Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'shipyard'
+
+    - id: 'prem_tpl_atlantean_stable'
+      display_name: 'Atlantean Stable Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'stable'
+
+    - id: 'prem_tpl_atlantean_temple'
+      display_name: 'Atlantean Temple Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'temple'
+
+    - id: 'prem_tpl_atlantean_trommel'
+      display_name: 'Atlantean Trommel Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'trommel'
+
+    - id: 'prem_tpl_atlantean_town_hall'
+      display_name: 'Atlantean Town Hall Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'atlantean'
+            template: 'town_hall'
+            id: 's_townhall'
+
+    - id: 'prem_tpl_atlantean_windmill'
+      display_name: 'Atlantean Windmill Template'
+      item_id: 169
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'windmill'
+
+    - id: 'prem_tpl_atlantean_blacksmith'
+      display_name: 'Atlantean Blacksmith Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'blacksmith'
+
+    - id: 'prem_tpl_atlantean_store'
+      display_name: 'Atlantean Store Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'store'
+
+    - id: 'prem_tpl_atlantean_trade_outpost'
+      display_name: 'Atlantean Trade Outpost Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'trade_outpost'

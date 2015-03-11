@@ -150,7 +150,7 @@ materials:
               - type_id: 341 
                 custom_id: 'mat_vanilla_slime'
                 data: 0
-                count: 9
+                count: 2
 
 # Replaced with block of iron
 #        - id: 'mat_forged_iron_ingot'
@@ -309,18 +309,18 @@ materials:
                 data: -1
                 count: 9
 
-        # Checked 10/8/13
-        - id: 'mat_refined_wood2'
-          item_id: 126
-          item_data: 0
-          name: 'Refined Wood'
-          craftable: true
-          shaped: false
-          category: '<lightgreen>Tier 1 Materials'
-          ingredients:
-              - type_id: 162
-                data: -1
-                count: 9
+        # # Checked 10/8/13
+        # - id: 'mat_refined_wood2'
+        #   item_id: 126
+        #   item_data: 
+        #   name: 'T1 Refined Wood'
+        #   craftable: true
+        #   shaped: false
+        #   category: '<lightgreen>Tier 1 Materials'
+        #   ingredients:
+        #       - type_id: 162
+        #         data: -1
+        #         count: 9
 
 # Replaced by diamond block
 #        - id: 'mat_refined_diamonds'
@@ -2997,7 +2997,8 @@ materials:
           craftable: true
           category: '<lightgreen>Tier 1 Materials'
           ingredients:
-              - type_id: 367
+              - type_id: 0
+                custom_id: 'mat_vanilla_slime'
                 data: 0
                 letter: 't'
               - type_id: 0

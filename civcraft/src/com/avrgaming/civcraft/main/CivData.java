@@ -39,7 +39,11 @@ public class CivData {
 	public static final byte DATA_PINE = 1;
 	public static final byte DATA_BIRCH = 2;
 	public static final byte DATA_JUNGLE = 3;
-	
+
+	public static final int DIRT = 3;
+
+	public static final int COARSE_DIRT = 1;
+	public static final int PODZOL = 2;
 	
 	public static final int GOLD_ORE = 14;
 	public static final int IRON_ORE = 15;
@@ -164,6 +168,14 @@ public class CivData {
 	public static final int IRON_BLOCK = 42;
 	public static final int COBWEB = 30;
 	public static final int STONE = 1;
+	public static final int GRANITE = 1;
+	public static final int POLISHED_GRANITE = 2;
+	public static final int DIORITE = 3;
+	public static final int POLISHED_DIORITE = 4;
+	public static final int ANDESITE = 5;
+	public static final int POLISHED_ANDESITE = 6;
+	
+	
 	public static final short MUNDANE_POTION_DATA = 8192;
 	public static final short MUNDANE_POTION_EXT_DATA = 64;
 	public static final short THICK_POTION_DATA = 32;
