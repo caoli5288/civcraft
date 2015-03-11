@@ -152,7 +152,7 @@ public class EffectEventTimer extends CivAsyncTask {
 								df.format(unusedBeakers)+CivColor.LightGreen+" beakers into "+CivColor.LightPurple+
 								df.format(cultureFromBeakers)+CivColor.LightGreen+" culture since no tech was being researched.");
 						cultureGenerated += cultureFromBeakers;
-						town.addAccumulatedCulture(unusedBeakers);
+						town.addAccumulatedCulture(cultureFromBeakers);
 						town.setUnusedBeakers(0);
 					}
 				}
