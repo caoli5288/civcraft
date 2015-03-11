@@ -563,7 +563,7 @@ upgrades:
 
 # Trommel upgrades
     - id: 'upgrade_trommel_material_granite'
-      name: 'Upgrade trommel Level 2'
+      name: 'Upgrade Trommel Level 2 (Granite)' 
       action: 'set_trommel_level, 2'
       cost: 50000.0
       require_upgrade:
@@ -572,7 +572,7 @@ upgrades:
       category: 'trommel'
 
     - id: 'upgrade_trommel_material_diorite'
-      name: 'Upgrade trommel Level 3'
+      name: 'Upgrade Trommel Level 3 (Diorite)'
       action: 'set_trommel_level, 3'
       cost: 100000.0
       require_upgrade: 'upgrade_trommel_material_granite'
@@ -581,7 +581,7 @@ upgrades:
       category: 'trommel'
 
     - id: 'upgrade_trommel_level_andesite'
-      name: 'Upgrade trommel Level 4'
+      name: 'Upgrade Trommel Level 4 (Andesite)'
       action: 'set_trommel_level, 4'
       cost: 150000.0
       require_upgrade: 'upgrade_trommel_material_diorite'
