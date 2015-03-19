@@ -21,7 +21,7 @@ public class LocationCheck extends RandomEventComponent {
 		String locString = this.getParent().componentVars.get(varname);
 		
 		if (locString == null) {
-			CivLog.warning("Couldn't get var name:"+varname+" for location check component.");
+			CivLog.warning("Couldn't get var name: "+varname+" for location check component.");
 			return false;
 		}
 		

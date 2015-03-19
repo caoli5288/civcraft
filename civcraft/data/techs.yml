@@ -461,14 +461,14 @@ techs:
      require_techs: 'tech_machinery:tech_global_trade:tech_economics:tech_nationalism'
 
    - id: 'tech_great_lighthouse'
-     name: 'Globe Theatre'
-     beaker_cost: 100000.0
-     cost: 100000.0
-     points: 40000
+     name: 'Great Lighthouse'
+     beaker_cost: 75000.0
+     cost: 75000.0
+     points: 18750
      require_techs: 'tech_machinery:tech_economics'
 
    - id: 'tech_mother_tree'
-     name: 'Globe Theatre'
+     name: 'Mother Tree'
      beaker_cost: 75000.0
      cost: 75000.0
      points: 18750

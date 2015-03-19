@@ -175,36 +175,36 @@ public class ACManager implements PluginMessageListener {
 			}
 			
 			TaskMaster.syncTask(new ArenaCheckTask(player.getName()), TimeTools.toTicks(30));
+		}
+		
+		class HackerCheckTask implements Runnable {
+			String name;
 			
-			class HackerCheckTask implements Runnable {
-				String name;
-				
-				public HackerCheckTask(String name) {
-					this.name = name;
-				}
-				
-				@Override
-				public void run() {
-					try {
-						Player player = CivGlobal.getPlayer(name);
-						Resident resident = CivGlobal.getResident(player);
-						
-						if (resident != null && !resident.isUsesAntiCheat()) {
-							if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
-								
-							} else if (player.hasPermission(CivSettings.HACKER)) {
-								TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
-										"Visit https://www.minetexas.com/ to get it."));
-							}
-						}
-					} catch (CivException e) {
-					}
-					
-				}
+			public HackerCheckTask(String name) {
+				this.name = name;
 			}
 			
-			TaskMaster.syncTask(new HackerCheckTask(player.getName()), TimeTools.toTicks(30));
+			@Override
+			public void run() {
+				try {
+					Player player = CivGlobal.getPlayer(name);
+					Resident resident = CivGlobal.getResident(player);
+					
+					if (resident != null && !resident.isUsesAntiCheat()) {
+						if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
+							
+						} else if (player.hasPermission(CivSettings.HACKER)) {
+							TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
+									"Visit https://www.minetexas.com/ to get it."));
+						}
+					}
+				} catch (CivException e) {
+				}
+				
+			}
 		}
+		
+		TaskMaster.syncTask(new HackerCheckTask(player.getName()), TimeTools.toTicks(30));
 	}
 
 	

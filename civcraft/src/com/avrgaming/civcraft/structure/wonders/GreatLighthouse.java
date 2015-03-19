@@ -21,12 +21,12 @@ public class GreatLighthouse extends Wonder {
 
 	@Override
 	protected void addBuffs() {
-		addBuffToTown(this.getTown(), "buff_great_lighthouse_water_speed");
+		addBuffToTown(this.getTown(), "buff_great_lighthouse_tower_range");
 	}
 	
 	@Override
 	protected void removeBuffs() {
-		removeBuffFromTown(this.getTown(), "buff_great_lighthouse_water_speed");
+		removeBuffFromTown(this.getTown(), "buff_great_lighthouse_tower_range");
 	}
 	
 	@Override

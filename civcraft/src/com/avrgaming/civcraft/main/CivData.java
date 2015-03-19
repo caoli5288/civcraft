@@ -32,6 +32,7 @@ public class CivData {
 	public static final int SIGN = 63;
 	public static final int CHEST = 54;
 	public static final int WOOD = 17;
+	public static final int PLANKS = 5;
 	public static final int LEAF = 18;
 	
 	
@@ -57,6 +58,7 @@ public class CivData {
 	public static final int LAVA = 11;
 	public static final int LAVA_RUNNING = 10;
 	public static final int COBBLESTONE = 4;
+	public static final int MOSS_STONE = 48;
 	public static final int EMERALD = 388;
 	public static final int DIAMOND = 264;
 	public static final int GRAVEL = 13;
@@ -82,6 +84,7 @@ public class CivData {
 	public static final int WATER_BUCKET = 326;
 	public static final int EMPTY_BUCKET = 325;
 	public static final int ENDER_PEARL = 368;
+	public static final int ENDER_CHEST = 130;
 	public static final int MONSTER_EGG = 383;
 	public static final String BOOK_UNDERLINE = "§n";
 	public static final String BOOK_BOLD = "§l";
@@ -95,7 +98,14 @@ public class CivData {
 	
 	public static final int ITEMFRAME = 389;
 	public static final int EMERALD_BLOCK = 133;
+	public static final int GOLD_BLOCK = 41;
+	public static final int DIAMOND_BLOCK = 57;
+	public static final int REDSTONE_BLOCK = 152;
+	public static final int LAPIS_BLOCK = 22;
+	public static final int COAL_BLOCK = 173;
 	public static final int WOOL = 35;
+	public static final int SPONGE = 19;
+	public static final int HAY_BALE = 170;
 	public static final byte DATA_WOOL_BLACK = 0xF;
 	public static final int COOKED_FISH = 350;
 	public static final int OBSIDIAN = 49;
@@ -107,7 +117,15 @@ public class CivData {
 	public static final int DYE = 351;
 	public static final int REDSTONE_TORCH_OFF = 75;
 	public static final int STONE_BRICK = 98;
-
+	public static final int PRISMARINE = 168;
+	public static final byte PRISMARINE_BRICKS = 0x1;
+	public static final byte DARK_PRISMARINE = 0x2;
+	public static final int ICE = 79;
+	public static final int SNOW = 80;
+	public static final int PACKED_ICE = 174;
+	public static final int SANDSTONE = 24;
+	public static final byte CHISELED_SANDSTONE = 0x1;
+	public static final byte SMOOTH_SANDSTONE = 0x2;
 	
 	public static final byte CHEST_NORTH = 0x2;
 	public static final byte CHEST_SOUTH = 0x3;

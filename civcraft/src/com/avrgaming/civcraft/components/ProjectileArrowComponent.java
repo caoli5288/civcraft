@@ -46,6 +46,10 @@ public class ProjectileArrowComponent extends ProjectileComponent {
 			setDamage(CivSettings.getInteger(CivSettings.warConfig, "arrow_tower.damage"));
 			power = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.power");
 			range = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.range");
+			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range"))
+			{
+				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_tower_range");
+			}
 			min_range = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.min_range");
 			
 			this.proximityComponent.setBuildable(buildable);

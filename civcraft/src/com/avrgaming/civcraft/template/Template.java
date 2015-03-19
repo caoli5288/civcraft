@@ -64,6 +64,7 @@ public class Template {
 	public int size_x;
 	public int size_y;
 	public int size_z;
+	private String strTheme;
 	private String dir;
 	private String filepath;
 	
@@ -187,7 +188,6 @@ public class Template {
 		
 		String dir = Template.parseDirection(playerLocationForDirection);
 		dir = Template.invertDirection(dir);
-				
 		return Template.getTemplateFilePath(buildable.getTemplateBaseName(), dir, type, theme);
 	}
 	
@@ -514,6 +514,7 @@ public class Template {
 		
 		
 		// Find the template file.
+		this.setTheme(theme);
 		String templatePath = Template.getTemplateFilePath(center, buildable, theme);
 		this.setFilepath(templatePath);
 		load_template(templatePath);
@@ -789,6 +790,14 @@ public class Template {
 	
 	public String dir() {
 		return dir;
+	}
+
+	public String getTheme() {
+		return strTheme;
+	}
+
+	public void setTheme(String strTheme) {
+		this.strTheme = strTheme;
 	}
 	
 }

@@ -263,7 +263,7 @@ wonder_buffs:
 
    - id: w_great_lighthouse
      buffs:
-         - buff_great_lighthouse_water_speed
+         - buff_great_lighthouse_tower_range
 
    - id: w_mother_tree
      buffs:

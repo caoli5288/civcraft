@@ -27,6 +27,7 @@ import com.avrgaming.civcraft.command.CommandBase;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.threading.TaskMaster;
@@ -40,11 +41,13 @@ public class TownOutlawCommand extends CommandBase {
 		command = "/town outlaw";
 		displayName = "Town Outlaw";
 		
-		commands.put("add", "[name] - Adds this player to the outlaw list.");
-		commands.put("remove", "[name] - Removes this player from the outlaw list.");
+		commands.put("add", "[name] (Case Sensitive) - Adds this player to the outlaw list.");
+		commands.put("remove", "[name] (Case Sensitive) - Removes this player from the outlaw list.");
 		commands.put("list", "Lists all of the town's current outlaws.");
 		commands.put("addall", "[town] - Adds entire town to the outlaw list.");
 		commands.put("removeall", "[town] - Removes entire town from the outlaw list.");
+		commands.put("addallciv", "[civ] - Adds entire town to the outlaw list.");
+		commands.put("removeallciv", "[civ] - Removes entire town from the outlaw list.");
 	}
 	
 	public void addall_cmd() throws CivException {
@@ -70,6 +73,37 @@ public class TownOutlawCommand extends CommandBase {
 		
 		for (Resident resident : targetTown.getResidents()) {
 			town.removeOutlaw(resident.getName());
+		}
+		town.save();
+	}
+	
+	public void addallciv_cmd() throws CivException {
+		Town town = getSelectedTown();
+		Civilization targetCiv = getNamedCiv(1);
+		
+		for (Town targetTown : targetCiv.getTowns()) {	
+		for (Resident resident : targetTown.getResidents()) {
+			
+			try {
+				Player player = CivGlobal.getPlayer(args[1]);
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in "+
+						town.getName()+"! You have one minute to get out ...");
+			} catch (CivException e) {
+			}
+			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
+		}
+		}
+		CivMessage.sendSuccess(sender, args[1]+" will be an outlaw in 60 seconds.");
+	}
+	
+	public void removeallciv_cmd() throws CivException {
+		Town town = getSelectedTown();
+		Civilization targetCiv = getNamedCiv(1);
+
+		for (Town targetTown : targetCiv.getTowns()) {	
+		for (Resident resident : targetTown.getResidents()) {
+			town.removeOutlaw(resident.getName());
+		}
 		}
 		town.save();
 	}

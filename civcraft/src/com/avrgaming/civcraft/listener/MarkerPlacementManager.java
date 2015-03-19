@@ -26,7 +26,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.InventoryClickEvent;
+//import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -126,19 +126,19 @@ public class MarkerPlacementManager implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.MONITOR) 
-	public void OnInventoryClick(InventoryClickEvent event) {
-		Player player;
-		try {
-			player = CivGlobal.getPlayer(event.getWhoClicked().getName());
-		} catch (CivException e) {
-			//Not a valid player or something, forget it.
-			return;
-		}
-
-		if (isPlayerInPlacementMode(player)) {
-			removeFromPlacementMode(player, true);
-		}
-	}
-	
+//	@EventHandler(priority = EventPriority.MONITOR) 
+//	public void OnInventoryClick(InventoryClickEvent event) {
+//		Player player;
+//		try {
+//			player = CivGlobal.getPlayer(event.getWhoClicked().getName());
+//		} catch (CivException e) {
+//			//Not a valid player or something, forget it.
+//			return;
+//		}
+//
+//		if (isPlayerInPlacementMode(player)) {
+//			removeFromPlacementMode(player, true);
+//		}
+//	}
+//	
 }

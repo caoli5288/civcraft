@@ -36,7 +36,6 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import org.apache.commons.io.FileUtils;
-
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -57,9 +56,9 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.randomevents.ConfigRandomEvent;
+import com.avrgaming.civcraft.structure.FortifiedWall;
 import com.avrgaming.civcraft.structure.Wall;
 import com.avrgaming.civcraft.template.Template;
-import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.global.perks.Perk;
 
 public class CivSettings {
@@ -271,10 +270,16 @@ public class CivSettings {
 		startingCoins = CivSettings.getDouble(civConfig, "global.starting_coins");
 		
 		alwaysCrumble.add(CivData.BEDROCK);
-		alwaysCrumble.add(ItemManager.getId(Material.GOLD_BLOCK));
-		alwaysCrumble.add(ItemManager.getId(Material.DIAMOND_BLOCK));
-		alwaysCrumble.add(ItemManager.getId(Material.IRON_BLOCK));
-		alwaysCrumble.add(ItemManager.getId(Material.REDSTONE_BLOCK));
+		alwaysCrumble.add(CivData.COAL_BLOCK);
+		alwaysCrumble.add(CivData.EMERALD_BLOCK);
+		alwaysCrumble.add(CivData.LAPIS_BLOCK);
+		alwaysCrumble.add(CivData.SPONGE);
+		alwaysCrumble.add(CivData.HAY_BALE);
+		alwaysCrumble.add(CivData.GOLD_BLOCK);
+		alwaysCrumble.add(CivData.DIAMOND_BLOCK);
+		alwaysCrumble.add(CivData.IRON_BLOCK);
+		alwaysCrumble.add(CivData.REDSTONE_BLOCK);
+		alwaysCrumble.add(CivData.ENDER_CHEST);
 		
 		LoreEnhancement.init();
 		LoreCraftableMaterial.buildStaticMaterials();
@@ -426,6 +431,7 @@ public class CivSettings {
 		ConfigRemovedRecipes.removeRecipes(materialsConfig, removedRecipies );
 		CivGlobal.preGenerator.preGenerate();
 		Wall.init_settings();
+		FortifiedWall.init_settings();
 	}
 
 	private static void initRestrictedSpawns() {

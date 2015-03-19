@@ -30,7 +30,7 @@ governments:
           growth_rate: 0.3
           maximum_tax_rate: 0.0
           culture_rate: 0.0 
-          hammer_rate: 0.5
+          hammer_rate: 0.6
           beaker_rate: 0.5
           power_type: mayor_all_power
 
@@ -43,7 +43,7 @@ governments:
           growth_rate: 0.5
           maximum_tax_rate: 0.05
           culture_rate: 1.0 
-          hammer_rate: 1.0
+          hammer_rate: 1.2
           beaker_rate: 1.0
           power_type: mayor_all_power
 
@@ -58,7 +58,7 @@ governments:
           growth_rate: 0.5
           maximum_tax_rate: 0.10
           culture_rate: 1.0 
-          hammer_rate: 1.10
+          hammer_rate: 1.32
           beaker_rate: 1.0
           power_type: mayor_all_power
 
@@ -72,7 +72,7 @@ governments:
           growth_rate: 0.8
           maximum_tax_rate: 0.30
           culture_rate: 1.05
-          hammer_rate: 1.0
+          hammer_rate: 1.2
           beaker_rate: 1.0
           power_type: mayor_all_power
 
@@ -86,7 +86,7 @@ governments:
           growth_rate: 0.75
           maximum_tax_rate: 0.5
           culture_rate: 1.25 
-          hammer_rate: 1.0
+          hammer_rate: 1.2
           beaker_rate: 1.0
           power_type: mayor_all_power
 
@@ -101,7 +101,7 @@ governments:
           growth_rate: 0.85
           maximum_tax_rate: 0.20
           culture_rate: 1.0
-          hammer_rate: 1.75
+          hammer_rate: 2.1
           beaker_rate: 1.0
           power_type: mayor_all_power
 
@@ -115,6 +115,6 @@ governments:
           growth_rate: 0.8
           maximum_tax_rate: 0.40
           culture_rate: 1.0
-          hammer_rate: 1.0
+          hammer_rate: 1.2
           beaker_rate: 1.0
           power_type: mayor_all_power

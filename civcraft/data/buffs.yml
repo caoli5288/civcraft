@@ -300,10 +300,10 @@ buffs:
       parent:
 
 #Great Lighthouse Buffs
-    - id: 'buff_great_lighthouse_water_speed'
-      name: 'Great Lighthouse Increse Embarked Movement'
-      description: 'Increase Boat movement speed in water for all town residents.'
-      value: '1'
+    - id: 'buff_great_lighthouse_tower_range'
+      name: 'Great Lighthouse Increse Tower Range'
+      description: 'Increase Tower Firing range in this town by 50%'
+      value: '1.5'
       stackable: false
       parent:
 

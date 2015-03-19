@@ -242,6 +242,13 @@ public class Structure extends Buildable {
 				struct = (Structure) new Wall(rs);
 			}
 			break;
+		case "ti_fortifiedwall":
+			if (rs == null) {
+				struct = (Structure) new FortifiedWall(center, id, town);
+			} else {
+				struct = (Structure) new FortifiedWall(rs);
+			}
+			break;
 		case "ti_road":
 			if (rs == null) {
 				struct = (Structure) new Road(center, id, town);

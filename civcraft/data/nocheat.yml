@@ -44,6 +44,7 @@ valid_mods:
       checksums: 
         - '193410396'
         - '2942626117'
+        - '1517681784'
     
     - name: 'ReiMinimap - Forge'
       checksums: 

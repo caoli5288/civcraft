@@ -104,6 +104,7 @@ perks:
       data: 3
       components:
           - name: 'CustomTemplate'
+
     - id: 'template_cultist'
       display_name: 'Cultist Template'
       item_id: 397
@@ -322,6 +323,15 @@ perks:
             theme: 'arctic'
             template: 'store'
 
+    - id: 'tpl_arctic_fortified_wall'
+      display_name: 'Arctic Fortified Wall Template'
+      item_id: 79
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'arctic'
+            template: 'fortified_wall'
+
 
 ############ AZTEC THEME
 
@@ -534,6 +544,15 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'store'
+
+    - id: 'tpl_aztec_fortified_wall'
+      display_name: 'Aztec Fortified Wall Template'
+      item_id: 98
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'aztec'
+            template: 'fortified_wall'
 
 
 # ===== EGYPTIAN TEMPLATES
@@ -748,6 +767,15 @@ perks:
             theme: 'egyptian'
             template: 'store'
 
+    - id: 'tpl_egyptian_fortified_wall'
+      display_name: 'Egyptian Fortified Wall Template'
+      item_id: 24
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'egyptian'
+            template: 'fortified_wall'
+
 # ===== ROMAN TEMPLATES
 
     - id: 'tpl_roman_camp'
@@ -960,8 +988,16 @@ perks:
             theme: 'roman'
             template: 'store'
 
-# ===== HELL TEMPLATES
+    - id: 'tpl_roman_fortified_wall'
+      display_name: 'Roman Fortified Wall Template'
+      item_id: 155
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'roman'
+            template: 'fortified_wall'
 
+# ===== HELL TEMPLATES
     - id: 'tpl_hell_camp'
       display_name: 'Hell Camp'
       item_id: 87
@@ -1171,6 +1207,15 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'store'
+
+    - id: 'tpl_hell_fortified_wall'
+      display_name: 'Hell Fortified Wall Template'
+      item_id: 87
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'hell'
+            template: 'fortified_wall'
 
 # ===== Elven TEMPLATES
 
@@ -1393,6 +1438,15 @@ perks:
             theme: 'elven'
             template: 'trade_outpost'
 
+    - id: 'prem_tpl_elven_fortified_wall'
+      display_name: 'Elven Fortified Wall Template'
+      item_id: 18
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'elven'
+            template: 'fortified_wall'
+
 # ===== CoreEmpire TEMPLATES
     - id: 'tpl_ce_monument'
       display_name: 'CoreEmpire Monument Template'
@@ -1587,14 +1641,14 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-#    - id: 'prem_tpl_cultist_windmill'
-#      display_name: 'Cultist Windmill Template'
-#      item_id: 397
-#      data: 3
-#      components:
-#          - name: 'CustomTemplate'
-#            theme: 'cultist'
-#            template: 'windmill'
+    - id: 'prem_tpl_cultist_windmill'
+      display_name: 'Cultist Windmill Template'
+      item_id: 397
+      data: 1
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'windmill'
 
     - id: 'prem_tpl_cultist_blacksmith'
       display_name: 'Cultist Blacksmith Template'
@@ -1622,6 +1676,15 @@ perks:
           - name: 'CustomTemplate'
             theme: 'cultist'
             template: 'trade_outpost'
+
+    - id: 'prem_tpl_cultist_fortified_wall'
+      display_name: 'Cultist Fortified Wall Template'
+      item_id: 397
+      data: 1
+      components:
+          - name: 'CustomTemplate'
+            theme: 'cultist'
+            template: 'fortified_wall'
 
 # ===== Atlantean TEMPLATES
     - id: 'prem_tpl_atlantean_camp'
@@ -1842,3 +1905,12 @@ perks:
           - name: 'CustomTemplate'
             theme: 'atlantean'
             template: 'trade_outpost'
+
+    - id: 'prem_tpl_atlantean_fortified_wall'
+      display_name: 'Atlantean Fortified Wall Template'
+      item_id: 169
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'atlantean'
+            template: 'fortified_wall'

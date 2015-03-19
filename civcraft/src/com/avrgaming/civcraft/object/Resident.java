@@ -1091,41 +1091,6 @@ public class Resident extends SQLObject {
 	public void setPerformingMission(boolean performingMission) {
 		this.performingMission = performingMission;
 	}
-
-//	public void onWaterTest(BlockCoord coord, Player player) {
-//		/* Test the block beneath us for water, if so, set the water flag. */
-//		if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_water_speed")) {
-//			if(player.getLocation().getBlock().getRelative(BlockFace.DOWN).isLiquid()) {
-////				CivLog.info("player in Water");
-//				onWater = true;
-//				if (!player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
-//					player.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, 1, 60));
-//				}
-//
-//				if (!player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-//					player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 1, 60));
-//				}
-//			} else {
-////				CivLog.info("player Out of Water");
-//				onWater = false;
-//				if (player.hasPotionEffect(PotionEffectType.WATER_BREATHING)) {
-//					player.removePotionEffect(PotionEffectType.WATER_BREATHING);
-//				}
-//				if (player.hasPotionEffect(PotionEffectType.NIGHT_VISION)) {
-//					player.removePotionEffect(PotionEffectType.NIGHT_VISION);
-//				}
-////			}
-//			}
-//		}
-//	}
-//
-//	public boolean isOnWater() {
-//		return onWater;
-//	}
-//
-//	public void setOnWater(boolean onWater) {
-//		this.onWater = onWater;
-//	}
 	
 	public void onRoadTest(BlockCoord coord, Player player) {
 		/* Test the block beneath us for a road, if so, set the road flag. */

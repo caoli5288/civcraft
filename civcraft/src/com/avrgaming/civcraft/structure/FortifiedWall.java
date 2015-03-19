@@ -26,36 +26,43 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.listener.MarkerPlacementManager;
+import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.CultureChunk;
+import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.StructureBlock;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.object.WallBlock;
 import com.avrgaming.civcraft.permission.PlotPermissions;
 import com.avrgaming.civcraft.template.Template;
+import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
 import com.avrgaming.civcraft.war.War;
+import com.avrgaming.global.perks.Perk;
 
-public class Wall extends Structure {
+public class FortifiedWall extends Wall {
 
 	//TODO make these configurable.
 	private static int RECURSION_LIMIT;
@@ -64,13 +71,14 @@ public class Wall extends Structure {
 	private static int MAX_HEIGHT;
 	private static double COST_PER_SEGMENT;
 	private static double MAX_SEGMENT;
+	private static String TEMPLATE;
 	
 	public static void init_settings() throws InvalidConfiguration {
-		HEIGHT = CivSettings.getInteger(CivSettings.warConfig, "wall.height");
-		MAX_HEIGHT = CivSettings.getInteger(CivSettings.warConfig, "wall.maximum_height");
-		COST_PER_SEGMENT = CivSettings.getDouble(CivSettings.warConfig, "wall.cost_per_segment");
-		MAX_SEGMENT = CivSettings.getDouble(CivSettings.warConfig, "wall.max_segment");
-		RECURSION_LIMIT = CivSettings.getInteger(CivSettings.warConfig, "wall.recursion_limit");
+		HEIGHT = CivSettings.getInteger(CivSettings.warConfig, "fortified_wall.height");
+		MAX_HEIGHT = CivSettings.getInteger(CivSettings.warConfig, "fortified_wall.maximum_height");
+		COST_PER_SEGMENT = CivSettings.getDouble(CivSettings.warConfig, "fortified_wall.cost_per_segment");
+		MAX_SEGMENT = CivSettings.getDouble(CivSettings.warConfig, "fortified_wall.max_segment");
+		RECURSION_LIMIT = CivSettings.getInteger(CivSettings.warConfig, "fortified_wall.recursion_limit");
 	}
 	
 	public Map<BlockCoord, WallBlock> wallBlocks = new HashMap<BlockCoord, WallBlock>();
@@ -80,17 +88,17 @@ public class Wall extends Structure {
 	 *  This is used to chain together the wall chunks built by the last operation. 
 	 * this allows us to undo all of the walls built in a single pass.
 	 */
-	private Wall nextWallBuilt = null;
+	private FortifiedWall nextWallBuilt = null;
 	
 //	private int verticalsegments = 0;
 	
 //	private HashMap<String, SimpleBlock> simpleBlocks = new HashMap<String, SimpleBlock>();
 	
-	protected Wall(Location center, String id, Town town) throws CivException {
+	protected FortifiedWall(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
 	}
 
-	public Wall(ResultSet rs) throws SQLException, CivException {
+	public FortifiedWall(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 		this.hitpoints = this.getMaxHitPoints();
 	}
@@ -210,8 +218,74 @@ public class Wall extends Structure {
 	
 	@Override
 	public void buildPlayerPreview(Player player, Location centerLoc) throws CivException, IOException {
-		// Set the player into "place mode" which allows them to place down
-		// markers.
+		
+		/* Look for any custom template perks and ask the player if they want to use them. */
+		Resident resident = CivGlobal.getResident(player);
+		ArrayList<Perk> perkList = this.getTown().getTemplatePerks(this, resident, this.info);		
+		ArrayList<Perk> personalUnboundPerks = resident.getUnboundTemplatePerks(perkList, this.info);
+		if (perkList.size() != 0 || personalUnboundPerks.size() != 0) {
+			/* Store the pending buildable. */
+			resident.pendingBuildable = this;
+			
+			/* Build an inventory full of templates to select. */
+			Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9);
+			ItemStack infoRec = LoreGuiItem.build("Default "+this.getDisplayName(), 
+					ItemManager.getId(Material.WRITTEN_BOOK), 
+					0, CivColor.Gold+"<Click To Build>");
+			infoRec = LoreGuiItem.setAction(infoRec, "BuildWithTemplate");
+			inv.addItem(infoRec);
+			
+			for (Perk perk : perkList) {
+				infoRec = LoreGuiItem.build(perk.getDisplayName(), 
+						perk.configPerk.type_id, 
+						perk.configPerk.data, CivColor.Gold+"<Click To Build>",
+						CivColor.Gray+"Provided by: "+CivColor.LightBlue+perk.provider);
+				infoRec = LoreGuiItem.setAction(infoRec, "BuildWithTemplate");
+				infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
+				inv.addItem(infoRec);
+			}
+			
+			for (Perk perk : personalUnboundPerks) {
+				infoRec = LoreGuiItem.build(perk.getDisplayName(), 
+						CivData.BEDROCK, 
+						perk.configPerk.data, CivColor.Gold+"<Click To Bind>",
+						CivColor.Gray+"Unbound Temple",
+						CivColor.Gray+"You own this template.",
+						CivColor.Gray+"The town is missing it.",
+						CivColor.Gray+"Click to bind to town first.",
+						CivColor.Gray+"Then build again.");				
+				infoRec = LoreGuiItem.setAction(infoRec, "ActivatePerk");
+				infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
+				
+			}
+			
+			/* We will resume by calling buildPlayerPreview with the template when a gui item is clicked. */
+			player.openInventory(inv);
+			return;
+		}
+		
+
+		
+		Template tpl;
+		
+		tpl = new Template();
+		try {
+			tpl.initTemplate(centerLoc, this);
+		} catch (CivException e) {
+			e.printStackTrace();
+			throw e;
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		buildPlayerPreview(player, centerLoc, tpl);
+	}
+
+	@Override
+	public void buildPlayerPreview(Player player, Location centerLoc, Template tpl) throws CivException, IOException {
+		this.setTEMPLATE(tpl.getTheme());
+		
 		if (!this.getTown().hasTechnology(this.getRequiredTechnology())) {
 			throw new CivException("We don't have the technology yet.");
 		}
@@ -272,8 +346,8 @@ public class Wall extends Structure {
 		}
 		
 		// Validate our locations
-		if (locs.get(0).distance(locs.get(1)) > Wall.MAX_SEGMENT) {
-			throw new CivException("Can only build a wall in "+Wall.MAX_SEGMENT+" block segments, pick a closer location");
+		if (locs.get(0).distance(locs.get(1)) > FortifiedWall.MAX_SEGMENT) {
+			throw new CivException("Can only build a wall in "+FortifiedWall.MAX_SEGMENT+" block segments, pick a closer location");
 		}
 		
 		
@@ -356,7 +430,7 @@ public class Wall extends Structure {
 			throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
 		}
 		
-		if (loc.getBlockY() >= Wall.MAX_HEIGHT) {
+		if (loc.getBlockY() >= FortifiedWall.MAX_HEIGHT) {
 			throw new CivException("Cannot build here, wall is too high.");
 		}
 		
@@ -374,16 +448,71 @@ public class Wall extends Structure {
 		}
 		
 	}
+	
+	private SimpleBlock getBlock(int block)
+	{
+		String template = this.getTEMPLATE();
+		if (template.equals("atlantean")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.PRISMARINE, CivData.DARK_PRISMARINE);
+			} else {
+				return new SimpleBlock(CivData.PRISMARINE, CivData.PRISMARINE_BRICKS);
+			}
+		} else if (template.equals("arctic")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.PACKED_ICE, 0);
+			} else {
+				return new SimpleBlock(CivData.SNOW, 0);
+			}
+		} else if (template.equals("aztec")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.MOSS_STONE, 0);
+			} else {
+				return new SimpleBlock(CivData.COBBLESTONE, 0);
+			}
+		} else if (template.equals("cultist")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(159, 11);
+			} else {
+				return new SimpleBlock(159, 3);
+			}
+		} else if (template.equals("egyptian")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.SANDSTONE, CivData.CHISELED_SANDSTONE);
+			} else {
+				return new SimpleBlock(CivData.SANDSTONE, CivData.SMOOTH_SANDSTONE);
+			}
+		} else if (template.equals("elven")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.WOOD, 3);
+			} else {
+				return new SimpleBlock(CivData.LEAF, 3);
+			}
+		} else if (template.equals("hell")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(112, 0);
+			} else {
+				return new SimpleBlock(CivData.NETHERRACK, 0);
+			}
+		} else if (template.equals("roman")) {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(155, 1);
+			} else {
+				return new SimpleBlock(155, 0);
+			}
+		} else {
+			if (block == 0 || block == FortifiedWall.HEIGHT/2) {
+				return new SimpleBlock(CivData.STONE_BRICK, 0x1);
+			} else {
+				return new SimpleBlock(CivData.STONE_BRICK, 0);
+			}
+		}
+	}
 
 	private void getVerticalWallSegment(Player player, Location loc, Map<String, SimpleBlock> simpleBlocks) throws CivException {
 		Location tmp = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ());
-		for (int i = 0; i < Wall.HEIGHT; i++) {
-			SimpleBlock sb;
-			if (i == 0) {
-				sb = new SimpleBlock(CivData.PLANKS, 0);
-			} else {
-				sb = new SimpleBlock(CivData.DIRT, 0);
-			}
+		for (int i = 0; i < FortifiedWall.HEIGHT; i++) {
+			SimpleBlock sb = getBlock(i);
 			sb.worldname = tmp.getWorld().getName();
 			sb.x = tmp.getBlockX();
 			sb.y = tmp.getBlockY();
@@ -393,7 +522,63 @@ public class Wall extends Structure {
 			simpleBlocks.put(sb.worldname+","+sb.x+","+sb.y+","+sb.z, sb);
 			
 			tmp.add(0, 1.0, 0);
-		} 
+		}
+		tmp = new Location(loc.getWorld(), loc.getX()+1, loc.getY(), loc.getZ());
+		for (int i = 0; i < FortifiedWall.HEIGHT; i++) {
+			SimpleBlock sb = getBlock(i);
+
+			sb.worldname = tmp.getWorld().getName();
+			sb.x = tmp.getBlockX();
+			sb.y = tmp.getBlockY();
+			sb.z = tmp.getBlockZ();
+			
+			validateBlockLocation(player, tmp);
+			simpleBlocks.put(sb.worldname+","+sb.x+","+sb.y+","+sb.z, sb);
+			
+			tmp.add(0, 1.0, 0);
+		}
+		tmp = new Location(loc.getWorld(), loc.getX()-1, loc.getY(), loc.getZ());
+		for (int i = 0; i < FortifiedWall.HEIGHT; i++) {
+			SimpleBlock sb = getBlock(i);
+
+			sb.worldname = tmp.getWorld().getName();
+			sb.x = tmp.getBlockX();
+			sb.y = tmp.getBlockY();
+			sb.z = tmp.getBlockZ();
+			
+			validateBlockLocation(player, tmp);
+			simpleBlocks.put(sb.worldname+","+sb.x+","+sb.y+","+sb.z, sb);
+			
+			tmp.add(0, 1.0, 0);
+		}
+		tmp = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()+1);
+		for (int i = 0; i < FortifiedWall.HEIGHT; i++) {
+			SimpleBlock sb = getBlock(i);
+
+			sb.worldname = tmp.getWorld().getName();
+			sb.x = tmp.getBlockX();
+			sb.y = tmp.getBlockY();
+			sb.z = tmp.getBlockZ();
+			
+			validateBlockLocation(player, tmp);
+			simpleBlocks.put(sb.worldname+","+sb.x+","+sb.y+","+sb.z, sb);
+			
+			tmp.add(0, 1.0, 0);
+		}
+		tmp = new Location(loc.getWorld(), loc.getX(), loc.getY(), loc.getZ()-1);
+		for (int i = 0; i < FortifiedWall.HEIGHT; i++) {
+			SimpleBlock sb = getBlock(i);
+
+			sb.worldname = tmp.getWorld().getName();
+			sb.x = tmp.getBlockX();
+			sb.y = tmp.getBlockY();
+			sb.z = tmp.getBlockZ();
+			
+			validateBlockLocation(player, tmp);
+			simpleBlocks.put(sb.worldname+","+sb.x+","+sb.y+","+sb.z, sb);
+			
+			tmp.add(0, 1.0, 0);
+		}
 	}
 	
 //	private boolean inSameChunk(Location loc1, Location loc2) {
@@ -441,7 +626,7 @@ public class Wall extends Structure {
 			}
 					
 			blockCount++; 
-			if (blockCount > Wall.RECURSION_LIMIT) {
+			if (blockCount > FortifiedWall.RECURSION_LIMIT) {
 				throw new CivException("ERROR: Building wall blocks exceeded recusion limit! Halted to keep server alive.");
 			}
 			
@@ -504,7 +689,7 @@ public class Wall extends Structure {
 					location.getBlockZ() == blockLocation.getBlockZ()) {
 				
 				//x and z match, now check that block is 'below' us.
-				if (location.getBlockY() < Wall.MAX_HEIGHT) {
+				if (location.getBlockY() < FortifiedWall.MAX_HEIGHT) {
 					return true;
 				}
 			}
@@ -531,7 +716,6 @@ public class Wall extends Structure {
 		
 		save();
 	}
-	
 	
 	@Override
 	public void repairStructure() throws CivException {
@@ -567,6 +751,14 @@ public class Wall extends Structure {
 			rate += this.getTown().getBuffManager().getEffectiveDouble(Buff.BARRICADE);
 		}
 		return (int) (info.max_hitpoints * rate);
+	}
+
+	public String getTEMPLATE() {
+		return TEMPLATE;
+	}
+
+	public void setTEMPLATE(String template) {
+		TEMPLATE = template;
 	}
 	
 }
