@@ -360,6 +360,7 @@ public class War {
 		
 		WarRegen.restoreBlocksFor(WarCamp.RESTORE_NAME);
 		WarRegen.restoreBlocksFor(Cannon.RESTORE_NAME);
+		WarRegen.restoreBlocksFor(WarListener.RESTORE_NAME);
 		Cannon.cleanupAll();
 	}
 

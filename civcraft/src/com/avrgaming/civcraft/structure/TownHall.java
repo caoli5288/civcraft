@@ -522,4 +522,15 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 		
 		CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by a cannon! ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
 	}
+	
+	public void onTNTDamage(int damage) {
+		this.hitpoints -= damage;
+		
+		if (hitpoints <= 0) {
+			CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" is out of hitpoints, walls can be destroyed by TNT blasts!");
+			hitpoints = 0;
+		}
+		
+		CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by TNT! ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
+	}
 }

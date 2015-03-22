@@ -2732,7 +2732,7 @@ materials:
                 data: 0
                 letter: 'e'
               - type_id: 0
-                custom_id: 'mat_ionic_crystal_4'
+                custom_id: 'mat_ionic_crystal_3'
                 data: 0
                 letter: 'c'
           shape:

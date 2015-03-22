@@ -417,6 +417,7 @@ public class BlockListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void OnEntityExplodeEvent(EntityExplodeEvent event) {
+
 		if (event.getEntity() == null) {
 			return;
 		}
@@ -475,7 +476,6 @@ public class BlockListener implements Listener {
 			if (tc == null) {
 				continue;
 			}
-
 			event.setCancelled(true);
 			return;
 		}

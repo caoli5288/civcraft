@@ -201,3 +201,12 @@ cannon:
     # Maximum range a cannon shot will travel.
     max_range: 300.0
 
+tnt:
+    # amount of blocks to destroy per shot
+    yield: 3
+
+    # Amount of damage done to PLAYERS when hit by a blast
+    player_damage: 50
+
+    # Amount of damage d one to STRUCTURES when hit by a blast
+    structure_damage: 10

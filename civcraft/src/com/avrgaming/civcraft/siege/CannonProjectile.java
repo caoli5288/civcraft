@@ -62,8 +62,7 @@ public class CannonProjectile {
 	}
 	
 	private void explodeBlock(Block b) {
-		WarRegen.saveBlock(b, Cannon.RESTORE_NAME, false);
-		ItemManager.setTypeId(b, CivData.AIR);
+		WarRegen.explodeThisBlock(b, Cannon.RESTORE_NAME);
 		launchExplodeFirework(b.getLocation());
 	}
 	
