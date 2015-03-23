@@ -53,6 +53,10 @@ public class Bank extends Structure {
 	private static final int GOLD_SIGN = 1;
 	private static final int DIAMOND_SIGN = 2;
 	private static final int EMERALD_SIGN = 3;
+	private static final int IRON_BLOCK_SIGN = 4;
+	private static final int GOLD_BLOCK_SIGN = 5;
+	private static final int DIAMOND_BLOCK_SIGN = 6;
+	private static final int EMERALD_BLOCK_SIGN = 7;
 	
 	protected Bank(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
@@ -128,13 +132,25 @@ public class Bank extends Structure {
 		if (signId == IRON_SIGN) {
 			itemPrice = CivSettings.iron_rate;
 		}
+		else if (signId == IRON_BLOCK_SIGN) {
+			itemPrice = CivSettings.iron_rate*9;
+		}
 		else if (signId == GOLD_SIGN) {
 			itemPrice = CivSettings.gold_rate;
 		}
+		else if (signId == GOLD_BLOCK_SIGN) {
+			itemPrice = CivSettings.gold_rate*9;
+		}
 		else if (signId == DIAMOND_SIGN) {
 			itemPrice = CivSettings.diamond_rate;
-		} else {
+		} 
+		else if (signId == DIAMOND_BLOCK_SIGN) {
+			itemPrice = CivSettings.diamond_rate*9;
+		}
+		else if (signId == EMERALD_SIGN) {
 			itemPrice = CivSettings.emerald_rate;
+		} else {
+			itemPrice = CivSettings.emerald_rate*9;
 		}
 		
 		
@@ -149,18 +165,21 @@ public class Bank extends Structure {
 		String itemName;
 		Player player = CivGlobal.getPlayer(resident);
 		
-		if (itemId == CivData.IRON_INGOT)
+		if (itemId == CivData.IRON_INGOT || itemId == CivData.IRON_BLOCK)
 			itemName = "Iron";
-		else if (itemId == CivData.GOLD_INGOT)
+		else if (itemId == CivData.GOLD_INGOT || itemId == CivData.GOLD_BLOCK)
 			itemName = "Gold";
-		else if (itemId == CivData.DIAMOND)
+		else if (itemId == CivData.DIAMOND || itemId == CivData.DIAMOND_BLOCK)
 			itemName = "Diamond";
-		else
+		else if (itemId == CivData.EMERALD || itemId == CivData.EMERALD_BLOCK)
 			itemName = "Emerald";
+		else 
+			itemName = "stuff";
 		
 		exchange_rate = getBankExchangeRate();
-				
-		if (!resident.takeItemInHand(itemId, 0, 1)) {
+		int count = resident.takeItemsInHand(itemId, 0);
+		if (count == 0)
+		{
 			throw new CivException("You do not have enough "+itemName+" in your hand.");
 		}
 		
@@ -169,14 +188,14 @@ public class Bank extends Structure {
 		// Resident is in his own town.
 		if (usersTown == this.getTown()) {		
 			DecimalFormat df = new DecimalFormat();
-			resident.getTreasury().deposit((double)((int)(coins*exchange_rate)));
+			resident.getTreasury().deposit((double)((int)((coins*count)*exchange_rate)));
 			CivMessage.send(player,
-					CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ df.format(coins*exchange_rate)+ " Redbacks.");	
+					CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ df.format((coins*count)*exchange_rate)+ " Redbacks.");	
 			return;
 		}
 		
 		// non-resident must pay the town's non-resident tax
-		double giveToPlayer = (double)((int)(coins*exchange_rate));
+		double giveToPlayer = (double)((int)((coins*count)*exchange_rate));
 		double giveToTown = (double)((int)giveToPlayer*this.getNonResidentFee());
 		giveToPlayer -= giveToTown;
 		
@@ -186,7 +205,7 @@ public class Bank extends Structure {
 			this.getTown().depositDirect(giveToTown);
 			resident.getTreasury().deposit(giveToPlayer);
 		
-		CivMessage.send(player, CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ giveToPlayer+ " Redbacks.");
+		CivMessage.send(player, CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ giveToPlayer+ " Redbacks.");
 		CivMessage.send(player,CivColor.Yellow+" Paid "+giveToTown+" coins in non-resident taxes.");
 		return;
 		
@@ -220,6 +239,18 @@ public class Bank extends Structure {
 			case "emerald":
 				exchange_for_coins(resident, CivData.EMERALD, CivSettings.emerald_rate);
 				break;
+			case "ironB":
+				exchange_for_coins(resident, CivData.IRON_INGOT, CivSettings.iron_rate*9);
+				break;
+			case "goldB":
+				exchange_for_coins(resident, CivData.GOLD_INGOT, CivSettings.gold_rate*9);
+				break;
+			case "diamondB":
+				exchange_for_coins(resident, CivData.DIAMOND, CivSettings.diamond_rate*9);
+				break;
+			case "emeraldB":
+				exchange_for_coins(resident, CivData.EMERALD, CivSettings.emerald_rate*9);
+				break;
 			}
 		} catch (CivException e) {
 			CivMessage.send(player, CivColor.Rose+e.getMessage());
@@ -245,14 +276,38 @@ public class Bank extends Structure {
 				break;
 			case "diamond":
 				sign.setText("Diamond\n"+
-						getExchangeRateString()+"\n"+
-						"At "+getSignItemPrice(DIAMOND_SIGN)+"\n"+
+						"At "+getExchangeRateString()+"\n"+
+						getSignItemPrice(DIAMOND_SIGN)+"\n"+
 						getNonResidentFeeString());
 				break;			
 			case "emerald":
 					sign.setText("Emerald\n"+
-							getExchangeRateString()+"\n"+
-							"At "+getSignItemPrice(EMERALD_SIGN)+"\n"+
+							"At "+getExchangeRateString()+"\n"+
+							getSignItemPrice(EMERALD_SIGN)+"\n"+
+							getNonResidentFeeString());
+					break;
+			case "ironb":
+				sign.setText("Iron Block\n"+
+						"At "+getExchangeRateString()+"\n"+
+						getSignItemPrice(IRON_BLOCK_SIGN)+"\n"+
+						getNonResidentFeeString());
+				break;
+			case "goldb":
+				sign.setText("Gold Block\n"+
+						"At "+getExchangeRateString()+"\n"+
+						getSignItemPrice(GOLD_BLOCK_SIGN)+"\n"+
+						getNonResidentFeeString());
+				break;
+			case "diamondb":
+				sign.setText("Diamond Block\n"+
+						"At "+getExchangeRateString()+"\n"+
+						getSignItemPrice(DIAMOND_BLOCK_SIGN)+"\n"+
+						getNonResidentFeeString());
+				break;			
+			case "emeraldb":
+					sign.setText("Emerald Block\n"+
+							"At "+getExchangeRateString()+"\n"+
+							getSignItemPrice(EMERALD_BLOCK_SIGN)+"\n"+
 							getNonResidentFeeString());
 					break;
 			}

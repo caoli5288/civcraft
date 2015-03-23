@@ -297,9 +297,17 @@ public class CivSettings {
 		restrictedUndoBlocks.add(Material.CARROT);
 		restrictedUndoBlocks.add(Material.POTATO);
 		restrictedUndoBlocks.add(Material.REDSTONE);
+		restrictedUndoBlocks.add(Material.REDSTONE_WIRE);
 		restrictedUndoBlocks.add(Material.REDSTONE_TORCH_OFF);
 		restrictedUndoBlocks.add(Material.REDSTONE_TORCH_ON);
+		restrictedUndoBlocks.add(Material.DIODE_BLOCK_OFF);
+		restrictedUndoBlocks.add(Material.DIODE_BLOCK_ON);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR);
 		restrictedUndoBlocks.add(Material.STRING);
+		restrictedUndoBlocks.add(Material.TRIPWIRE);
+		restrictedUndoBlocks.add(Material.SUGAR_CANE_BLOCK);
 	}
 
 	private static void initPlayerEntityWeapons() {

@@ -52,7 +52,7 @@ public class WarListener implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
 		if (event.isCancelled()) {
 			return;
@@ -84,6 +84,10 @@ public class WarListener implements Listener {
 			event.getBlock().getType().equals(Material.TNT) ||
 			event.getBlock().getType().equals(Material.LADDER) ||
 			event.getBlock().getType().equals(Material.VINE) ||
+			event.getBlock().getType().equals(Material.IRON_BLOCK) || 
+			event.getBlock().getType().equals(Material.GOLD_BLOCK) ||
+			event.getBlock().getType().equals(Material.DIAMOND_BLOCK) ||
+			event.getBlock().getType().equals(Material.EMERALD_BLOCK) ||
 			!event.getBlock().getType().isSolid()) {
 			return;
 		}
@@ -177,27 +181,22 @@ public class WarListener implements Listener {
 			return;
 		}
 		
-		CivLog.debug("Explosion 1");
 		if (event.isCancelled()) {
 			return;
 		}
-		CivLog.debug("Explosion 2");
 		
 		if (event.getEntity() == null) {
 			return;
 		}
-		CivLog.debug("Explosion 3");
 		
 		if (event.getEntityType().equals(EntityType.UNKNOWN)) {
 			return;
 		}
 
-		CivLog.debug("Explosion 4");
 		if (event.getEntityType().equals(EntityType.PRIMED_TNT) ||
 				event.getEntityType().equals(EntityType.MINECART_TNT)) {
 
 			HashSet<Buildable> structuresHit = new HashSet<Buildable>();
-			CivLog.debug("Explosion 5");
 		
 			for (int y = -yield; y <= yield; y++) {
 				for (int x = -yield; x <= yield; x++) {

@@ -709,7 +709,7 @@ public class BlockListener implements Listener {
 		}
 	}
 
-	@EventHandler(priority = EventPriority.NORMAL)
+	@EventHandler(priority = EventPriority.HIGH)
 	public void OnBlockBreakEvent(BlockBreakEvent event) {
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 

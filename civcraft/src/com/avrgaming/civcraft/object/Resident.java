@@ -740,6 +740,28 @@ public class Resident extends SQLObject {
 	}
 	
 	@SuppressWarnings("deprecation")
+	public int takeItemsInHand(int itemId, int itemData) throws CivException {
+		Player player = CivGlobal.getPlayer(this);
+		Inventory inv = player.getInventory();
+		if (!inv.contains(itemId)) {
+			return 0;
+		}
+
+		if ((player.getItemInHand().getTypeId() != itemId) &&
+				(player.getItemInHand().getTypeId() != itemData)) {
+			return 0;
+		}
+		
+		ItemStack stack = player.getItemInHand();
+		int count = stack.getAmount();
+		inv.removeItem(stack);
+		
+		player.updateInventory();
+		return count;
+	}
+	
+	
+	@SuppressWarnings("deprecation")
 	public boolean takeItemInHand(int itemId, int itemData, int amount) throws CivException {
 		Player player = CivGlobal.getPlayer(this);
 		Inventory inv = player.getInventory();
