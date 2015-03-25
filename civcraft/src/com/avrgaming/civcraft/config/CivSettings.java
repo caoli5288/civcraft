@@ -392,6 +392,12 @@ public class CivSettings {
 		fishingConfig = loadCivConfig("fishing.yml");
 	}
 	
+	public static void reloadPerks() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
+
+		perkConfig = loadCivConfig("perks.yml");
+		ConfigPerk.loadConfig(perkConfig, perks);
+	}
+	
 	public static void reloadNoCheat() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 
 		nocheatConfig = loadCivConfig("nocheat.yml");

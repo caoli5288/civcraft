@@ -1448,7 +1448,7 @@ perks:
             template: 'fortified_wall'
 
 # ===== CoreEmpire TEMPLATES
-    - id: 'tpl_ce_monument'
+    - id: 'perk_ce_monument'
       display_name: 'CoreEmpire Monument Template'
       item_id: 314
       data: 0
@@ -1914,3 +1914,23 @@ perks:
           - name: 'CustomTemplate'
             theme: 'atlantean'
             template: 'fortified_wall'
+
+    - id: 'perk_haunted_camp'
+      display_name: 'Haunted Camp'
+      item_id: 91
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'haunted'
+            template: 'camp'
+            id: 'camp'
+
+    - id: 'perk_midieval_camp'
+      display_name: 'Midieval Camp'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'midieval'
+            template: 'camp'
+            id: 'camp'
