@@ -59,6 +59,7 @@ import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
+import com.avrgaming.sls.SLSManager;
 
 public class AdminCommand extends CommandBase {
 
@@ -96,6 +97,7 @@ public class AdminCommand extends CommandBase {
 		commands.put("perk", "Admin perk management.");
 		commands.put("reloadgov", "Reload Government data configs");
 		commands.put("reloadac", "Reload NoCheat data config");
+		commands.put("heartbeat", "Send the heartbeat");
 	}
 	
 	public void reloadgov_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
@@ -107,6 +109,10 @@ public class AdminCommand extends CommandBase {
 			civ.setGovernment(gov.id);
 		}
 		CivMessage.send(sender, CivColor.Gold+"Reloaded Governments");
+	}
+	
+	public void heartbeat_cmd() {
+		SLSManager.sendHeartbeat();
 	}
 	
 	public void reloadac_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
