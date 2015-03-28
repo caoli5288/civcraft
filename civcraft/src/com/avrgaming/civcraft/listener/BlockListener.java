@@ -937,7 +937,7 @@ public class BlockListener implements Listener {
 			event.setCancelled(true);
 			return;
 		}
-		
+
 		if (event.isCancelled()) {
 			// Fix for bucket bug.
 			if (event.getAction() == Action.RIGHT_CLICK_AIR) {
@@ -949,7 +949,7 @@ public class BlockListener implements Listener {
 			}
 			return;
 		}		
-		
+
 		if (event.hasItem()) {
 
 			if (event.getItem().getType().equals(Material.POTION)) {
@@ -983,7 +983,6 @@ public class BlockListener implements Listener {
 				return;	
 			}
 		}
-
 		/* 
 		 * Right clicking causes some dupe bugs for some reason with items that have "actions" such as swords.
 		 * It also causes block place events on top of signs. So we'll just only allow signs to work with left click.
@@ -1015,6 +1014,7 @@ public class BlockListener implements Listener {
 			bcoord.setFromLocation(event.getClickedBlock().getLocation());
 			StructureSign sign = CivGlobal.getStructureSign(bcoord);
 			if (sign != null) {
+
 				if (leftClick || sign.isAllowRightClick()) {
 					if (sign.getOwner() != null && sign.getOwner().isActive()) {
 						try {
@@ -1029,7 +1029,6 @@ public class BlockListener implements Listener {
 				}
 				return;
 			}
-
 			if (CivSettings.switchItems.contains(event.getClickedBlock().getType())) {
 				OnPlayerSwitchEvent(event);
 				if (event.isCancelled()) {

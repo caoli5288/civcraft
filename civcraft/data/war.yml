@@ -17,9 +17,13 @@ war:
 
     # Days of the week that war-time will occur
     time_day: 7
-
     # Hour of the day that war-time will start
     time_hour: 14
+
+    # Days of the week that Disable TP-time will occur
+    disable_tp_time_day: 7
+    # Hour of the day that TP will be disabled
+    disable_tp_time_hour: 13
 
     # Days before war time that towns are no longer allowed to declare war
     time_declare_days: 3
@@ -184,22 +188,24 @@ cannon:
     yield: 7.0
 
     # TNT cost, number of TNT blocks it costs per shot.
-    tnt_cost: 10
+    tnt_cost: 5
 
     # Number of seconds between shots.
-    cooldown: 30
+    cooldown: 60
 
     # Amount of HP each cannon has
     hitpoints: 10
 
     # Amount of damage done to PLAYERS when hit by a blast
-    player_damage: 200
+    player_damage: 100
 
     # Amount of damage d one to STRUCTURES when hit by a blast
     structure_damage: 100
 
     # Maximum range a cannon shot will travel.
-    max_range: 300.0
+    max_range: 192.0
+
+    control_block_hp: 1
 
 tnt:
     # amount of blocks to destroy per shot

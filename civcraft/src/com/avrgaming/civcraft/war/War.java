@@ -29,6 +29,7 @@ import java.util.List;
 import com.avrgaming.civcraft.camp.WarCamp;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.endgame.EndGameCondition;
+import com.avrgaming.civcraft.event.DisableTeleportEvent;
 import com.avrgaming.civcraft.event.EventTimer;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -147,6 +148,7 @@ public class War {
 	public static void setWarTime(boolean warTime) {
 		
 		if (warTime == false) {
+			DisableTeleportEvent.enableTeleport();
 			/* War time has ended. */
 			War.setStart(null);
 			War.setEnd(null);
@@ -178,6 +180,7 @@ public class War {
 			}
 			
 		} else {
+			DisableTeleportEvent.disableTeleport();
 			/* War time has started. */
 			CivMessage.globalHeading(CivColor.BOLD+"WarTime Has Started");
 			War.setStart(new Date());
@@ -211,7 +214,6 @@ public class War {
 		
 		War.warTime = warTime;
 	}
-
 	/*
 	 * When a civ conqueres a town, then has its capitol conquered,
 	 * the town that it just conquered needs to go to the new owner.

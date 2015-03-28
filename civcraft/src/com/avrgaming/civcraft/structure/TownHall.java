@@ -56,6 +56,7 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.StructureBlock;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.object.TownChunk;
+import com.avrgaming.civcraft.siege.CannonProjectile;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -391,7 +392,57 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 			CivMessage.sendCiv(attacker.getTown().getCiv(), CivColor.LightGreen+"We've destroyed a control block in "+hit.getTown().getName()+"!");
 			CivMessage.sendCiv(hit.getTown().getCiv(), CivColor.Rose+"A control block in "+hit.getTown().getName()+" has been destroyed!");
 		}
+	}
+	
+	public void onControlBlockCannonDestroy(ControlPoint cp, Player player, StructureBlock hit) {
+		//Should always have a resident and a town at this point.
+		Resident attacker = CivGlobal.getResident(player);
 		
+		ItemManager.setTypeId(hit.getCoord().getLocation().getBlock(), CivData.AIR);
+		
+		boolean allDestroyed = true;
+		for (ControlPoint c : this.controlPoints.values()) {
+			if (c.isDestroyed() == false) {
+				allDestroyed = false;
+				break;
+			}
+		}
+		CivMessage.sendTownSound(hit.getTown(), Sound.AMBIENCE_CAVE, 1.0f, 0.5f);
+
+		if (allDestroyed) {
+			
+			if (this.getTown().getCiv().getCapitolName().equals(this.getTown().getName())) {
+				CivMessage.global(CivColor.LightBlue+ChatColor.BOLD+"The civilization of "+this.getTown().getCiv().getName()+" has been conquered by "+attacker.getCiv().getName()+"!");
+				for (Town town : this.getTown().getCiv().getTowns()) {
+					town.defeated = true;
+				}
+				
+				War.transferDefeated(this.getTown().getCiv(), attacker.getTown().getCiv());
+				WarStats.logCapturedCiv(attacker.getTown().getCiv(), this.getTown().getCiv());
+				War.saveDefeatedCiv(this.getCiv(), attacker.getTown().getCiv());
+			
+				if (CivGlobal.isCasualMode()) {
+					HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(this.getCiv().getRandomLeaderSkull("Victory Over "+this.getCiv().getName()+"!"));
+					for (ItemStack stack : leftovers.values()) {
+						player.getWorld().dropItem(player.getLocation(), stack);
+					}
+				}
+				
+			} else {
+				CivMessage.global(CivColor.Yellow+ChatColor.BOLD+"The town of "+getTown().getName()+" in "+this.getCiv().getName()+" has been conquered by "+attacker.getCiv().getName()+"!");
+				//this.getTown().onDefeat(attacker.getTown().getCiv());
+				this.getTown().defeated = true;
+				//War.defeatedTowns.put(this.getTown().getName(), attacker.getTown().getCiv());
+				WarStats.logCapturedTown(attacker.getTown().getCiv(), this.getTown());
+				War.saveDefeatedTown(this.getTown().getName(), attacker.getTown().getCiv());
+			}
+			
+		}
+		else {
+			CivMessage.sendTown(hit.getTown(), CivColor.Rose+"One of our Town Hall's Control Points has been destroyed!");
+			CivMessage.sendCiv(attacker.getTown().getCiv(), CivColor.LightGreen+"We've destroyed a control block in "+hit.getTown().getName()+"!");
+			CivMessage.sendCiv(hit.getTown().getCiv(), CivColor.Rose+"A control block in "+hit.getTown().getName()+" has been destroyed!");
+		}
 	}
 	
 	public void onControlBlockHit(ControlPoint cp, World world, Player player, StructureBlock hit) {
@@ -512,11 +563,30 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 		return this.controlPoints;
 	}
 
-	public void onCannonDamage(int damage) {
+	public void onCannonDamage(int damage, CannonProjectile projectile) throws CivException {
 		this.hitpoints -= damage;
-		
+
+		Resident resident = projectile.whoFired;
 		if (hitpoints <= 0) {
-			CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" is out of hitpoints, walls can be destroyed by cannon blasts!");
+			for (BlockCoord coord : this.controlPoints.keySet()) {
+				ControlPoint cp = this.controlPoints.get(coord);				
+				if (cp != null) {
+					if (cp.getHitpoints() > CannonProjectile.controlBlockHP) {
+						cp.damage(cp.getHitpoints()-1);
+						this.hitpoints = this.getMaxHitPoints()/2;
+						StructureBlock hit = CivGlobal.getStructureBlock(coord);
+						onControlBlockCannonDestroy(cp, CivGlobal.getPlayer(resident), hit);
+						CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by a cannon and a control block was set to "+CannonProjectile.controlBlockHP+" HP!");
+						CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has regenerated "+this.getMaxHitPoints()/2+" HP! If it drops to zero, we will lose another Control Point.");
+						return;
+						
+					}
+					
+				}
+			}
+			
+			
+			CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" is out of hitpoints, walls can be destroyed by cannon and TNT blasts!");
 			hitpoints = 0;
 		}
 		
@@ -524,13 +594,11 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 	}
 	
 	public void onTNTDamage(int damage) {
-		this.hitpoints -= damage;
 		
-		if (hitpoints <= 0) {
-			CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" is out of hitpoints, walls can be destroyed by TNT blasts!");
-			hitpoints = 0;
+		if (hitpoints >= damage+1) {
+			this.hitpoints -= damage;
+			CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by TNT! ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
 		}
 		
-		CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by TNT! ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
 	}
 }

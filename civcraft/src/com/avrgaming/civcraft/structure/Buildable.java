@@ -256,8 +256,8 @@ public abstract class Buildable extends SQLObject {
 		return info.tile_improvement;
 	}
 	
-	public boolean isActive() {	
-		return this.isComplete() && !isDestroyed() && isEnabled();
+	public boolean isActive() {
+		return this.isComplete() && (this.isTownHall() || !isDestroyed()) && isEnabled();
 	}
 
 	public abstract void processUndo() throws CivException;

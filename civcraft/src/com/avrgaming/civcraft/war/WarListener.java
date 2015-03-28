@@ -22,7 +22,6 @@ import com.avrgaming.civcraft.camp.CampBlock;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.StructureBlock;
@@ -272,7 +271,6 @@ public class WarListener implements Listener {
 			event.setCancelled(true);
 		}
 
-		CivLog.debug("Explosion 6");
 	}
 
 }
