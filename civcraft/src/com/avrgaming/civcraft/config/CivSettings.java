@@ -291,9 +291,35 @@ public class CivSettings {
 		restrictedUndoBlocks.add(Material.CARROT);
 		restrictedUndoBlocks.add(Material.POTATO);
 		restrictedUndoBlocks.add(Material.REDSTONE);
+		restrictedUndoBlocks.add(Material.REDSTONE_WIRE);
 		restrictedUndoBlocks.add(Material.REDSTONE_TORCH_OFF);
 		restrictedUndoBlocks.add(Material.REDSTONE_TORCH_ON);
+		restrictedUndoBlocks.add(Material.DIODE_BLOCK_OFF);
+		restrictedUndoBlocks.add(Material.DIODE_BLOCK_ON);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR_OFF);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR_ON);
+		restrictedUndoBlocks.add(Material.REDSTONE_COMPARATOR);
 		restrictedUndoBlocks.add(Material.STRING);
+		restrictedUndoBlocks.add(Material.LEVER);
+		restrictedUndoBlocks.add(Material.TRIPWIRE);
+		restrictedUndoBlocks.add(Material.SUGAR_CANE_BLOCK);
+		restrictedUndoBlocks.add(Material.POWERED_RAIL);
+		restrictedUndoBlocks.add(Material.RAILS);
+		restrictedUndoBlocks.add(Material.DETECTOR_RAIL);
+		restrictedUndoBlocks.add(Material.ACTIVATOR_RAIL);
+		restrictedUndoBlocks.add(Material.LADDER);
+		restrictedUndoBlocks.add(Material.VINE);
+		restrictedUndoBlocks.add(Material.WEB);
+		restrictedUndoBlocks.add(Material.SAPLING);
+		restrictedUndoBlocks.add(Material.STONE_PLATE);
+		restrictedUndoBlocks.add(Material.WOOD_PLATE);
+		restrictedUndoBlocks.add(Material.GOLD_PLATE);
+		restrictedUndoBlocks.add(Material.IRON_PLATE);
+		restrictedUndoBlocks.add(Material.TRIPWIRE_HOOK);
+		restrictedUndoBlocks.add(Material.MELON_STEM);
+		restrictedUndoBlocks.add(Material.PUMPKIN_STEM);
+		
+		
 	}
 
 	private static void initPlayerEntityWeapons() {

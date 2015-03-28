@@ -29,6 +29,7 @@ import java.util.List;
 import com.avrgaming.civcraft.camp.WarCamp;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.endgame.EndGameCondition;
+import com.avrgaming.civcraft.event.DisableTeleportEvent;
 import com.avrgaming.civcraft.event.EventTimer;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -148,6 +149,7 @@ public class War {
 		
 		if (warTime == false) {
 			/* War time has ended. */
+			DisableTeleportEvent.enableTeleport();
 			War.setStart(null);
 			War.setEnd(null);
 			War.restoreAllTowns();
@@ -178,6 +180,7 @@ public class War {
 			}
 			
 		} else {
+			DisableTeleportEvent.disableTeleport();
 			/* War time has started. */
 			CivMessage.globalHeading(CivColor.BOLD+"WarTime Has Started");
 			War.setStart(new Date());
@@ -360,6 +363,7 @@ public class War {
 		
 		WarRegen.restoreBlocksFor(WarCamp.RESTORE_NAME);
 		WarRegen.restoreBlocksFor(Cannon.RESTORE_NAME);
+		WarRegen.restoreBlocksFor(WarListener.RESTORE_NAME);
 		Cannon.cleanupAll();
 	}
 

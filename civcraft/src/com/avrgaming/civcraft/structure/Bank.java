@@ -160,7 +160,9 @@ public class Bank extends Structure {
 		
 		exchange_rate = getBankExchangeRate();
 				
-		if (!resident.takeItemInHand(itemId, 0, 1)) {
+		int count = resident.takeItemsInHand(itemId, 0);
+		if (count == 0)
+		{
 			throw new CivException("You do not have enough "+itemName+" in your hand.");
 		}
 		
@@ -169,14 +171,14 @@ public class Bank extends Structure {
 		// Resident is in his own town.
 		if (usersTown == this.getTown()) {		
 			DecimalFormat df = new DecimalFormat();
-			resident.getTreasury().deposit((double)((int)(coins*exchange_rate)));
+			resident.getTreasury().deposit((double)((int)((coins*count)*exchange_rate)));
 			CivMessage.send(player,
-					CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ df.format(coins*exchange_rate)+ " Redbacks.");	
+					CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ df.format((coins*count)*exchange_rate)+ " Redbacks.");	
 			return;
 		}
 		
 		// non-resident must pay the town's non-resident tax
-		double giveToPlayer = (double)((int)(coins*exchange_rate));
+		double giveToPlayer = (double)((int)((coins*count)*exchange_rate));
 		double giveToTown = (double)((int)giveToPlayer*this.getNonResidentFee());
 		giveToPlayer -= giveToTown;
 		
@@ -186,7 +188,7 @@ public class Bank extends Structure {
 			this.getTown().depositDirect(giveToTown);
 			resident.getTreasury().deposit(giveToPlayer);
 		
-		CivMessage.send(player, CivColor.LightGreen + "Exchanged 1 "+itemName+" for "+ giveToPlayer+ " Redbacks.");
+		CivMessage.send(player, CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ giveToPlayer+ " Redbacks.");
 		CivMessage.send(player,CivColor.Yellow+" Paid "+giveToTown+" coins in non-resident taxes.");
 		return;
 		

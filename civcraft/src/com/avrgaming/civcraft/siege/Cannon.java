@@ -182,7 +182,7 @@ public class Cannon extends Buildable {
 			throw new CivException("Can only build Cannons during war time.");
 		}
 		
-		if (player.getLocation().getY() >= 200) {
+		if (player.getLocation().getY() >= 128) {
 			throw new CivException("You're too high to build cannons.");
 		}
 		

@@ -737,6 +737,27 @@ public class Resident extends SQLObject {
 	}
 	
 	@SuppressWarnings("deprecation")
+	public int takeItemsInHand(int itemId, int itemData) throws CivException {
+		Player player = CivGlobal.getPlayer(this);
+		Inventory inv = player.getInventory();
+		if (!inv.contains(itemId)) {
+			return 0;
+		}
+
+		if ((player.getItemInHand().getTypeId() != itemId) &&
+				(player.getItemInHand().getTypeId() != itemData)) {
+			return 0;
+		}
+		
+		ItemStack stack = player.getItemInHand();
+		int count = stack.getAmount();
+		inv.removeItem(stack);
+		
+		player.updateInventory();
+		return count;
+	}
+	
+	@SuppressWarnings("deprecation")
 	public boolean takeItemInHand(int itemId, int itemData, int amount) throws CivException {
 		Player player = CivGlobal.getPlayer(this);
 		Inventory inv = player.getInventory();
@@ -1137,7 +1158,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Arctic Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllAztecPerks() {
@@ -1159,7 +1179,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Aztec Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllEgyptianPerks() {
@@ -1181,7 +1200,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Egyptian Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllRomanPerks() {
@@ -1203,7 +1221,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Roman Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllHellPerks() {
@@ -1225,7 +1242,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Hell Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllElvenPerks() {
@@ -1247,7 +1263,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllCultistPerks() {
@@ -1269,7 +1284,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Cultist Templates! Use /resident perks to a them.");
 	}
 
 
@@ -1292,7 +1306,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You've the weather perk! Use /resident perks to access it.");
 	}
 	
 	public void loadPerks() {
