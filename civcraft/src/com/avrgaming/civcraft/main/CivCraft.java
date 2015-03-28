@@ -175,7 +175,7 @@ public final class CivCraft extends JavaPlugin {
 				new FarmGrowthSyncTask(), TimeTools.toTicks(Farm.GROW_RATE));
 
 		TaskMaster.asyncTimer("announcer", new AnnouncementTimer("tips.txt", 5), 0, TimeTools.toTicks(60*60));
-		TaskMaster.asyncTimer("announcer", new AnnouncementTimer("war.txt", 60), 0, TimeTools.toTicks(60*60));
+		TaskMaster.asyncTimer("announcerwar", new AnnouncementTimer("war.txt", 60), 0, TimeTools.toTicks(60*60));
 		
 		TaskMaster.asyncTimer("ChangeGovernmentTimer", new ChangeGovernmentTimer(), TimeTools.toTicks(60));
 		TaskMaster.asyncTimer("CalculateScoreTimer", new CalculateScoreTimer(), 0, TimeTools.toTicks(60));
