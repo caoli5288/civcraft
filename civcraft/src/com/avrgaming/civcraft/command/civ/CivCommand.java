@@ -70,6 +70,12 @@ public class CivCommand extends CommandBase {
 		commands.put("disbandtown", "[town] Disbands this town. Mayor must also issue /town disbandtown");
 		commands.put("revolution", "stages a revolution for the mother civilization!");
 		commands.put("claimleader", "claim yourself as leader of this civ. All current leaders must be inactive.");
+		commands.put("motd", "View and change the Message of the day for your civ.");
+	}
+	
+	public void motd_cmd() throws CivException {
+		CivMotdCommand cmd = new CivMotdCommand();	
+		cmd.onCommand(sender, null, "motd", this.stripArgs(args, 1));
 	}
 	
 	public void claimleader_cmd() throws CivException {

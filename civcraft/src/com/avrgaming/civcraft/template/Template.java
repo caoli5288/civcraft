@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -48,6 +49,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
+import com.avrgaming.civcraft.threading.sync.SyncBuildUpdateTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.PlayerBlockChangeUtil;
@@ -67,6 +69,7 @@ public class Template {
 	private String strTheme;
 	private String dir;
 	private String filepath;
+	private Queue<SimpleBlock> sbs; //Blocks to add to main sync task queue;
 	
 	/* Save the command block locations when we init the template, so we dont have to search for them later. */
 	public ArrayList<BlockCoord> commandBlockRelativeLocations = new ArrayList<BlockCoord>();
@@ -168,9 +171,13 @@ public class Template {
 	}
 	
 	
-	public Template() 
-	{
-		
+	public Template() {
+		sbs = new LinkedList<SimpleBlock>();	
+	}
+	
+	public void updateBlocksQueue(Queue<SimpleBlock> sbs) {
+		SyncBuildUpdateTask.queueSimpleBlock(sbs);
+		return;
 	}
 	
 	/*public CivTemplate(Location center, String name, Type type) throws TownyException, IOException {
@@ -763,8 +770,18 @@ public class Template {
 						if (CivSettings.restrictedUndoBlocks.contains(ItemManager.getId(b))) {
 							continue;
 						}
+						SimpleBlock sb = tpl.blocks[x][y][z];
+						
+						// Convert relative x,y,z to real x,y,z in world.
+						sb.x = x+centerBlock.getX();
+						sb.y = y+centerBlock.getY();
+						sb.z = z+centerBlock.getZ();
+						sb.worldname = centerBlock.getWorld().getName();
+//						sb.buildable = buildable;
+
+						sbs.add(sb);
 					
-						ItemManager.setTypeIdAndData(b, tpl.blocks[x][y][z].getType(), (byte)tpl.blocks[x][y][z].getData(), false);
+//						ItemManager.setTypeIdAndData(b, tpl.blocks[x][y][z].getType(), (byte)tpl.blocks[x][y][z].getData(), false);
 //						try {
 //							nms.setBlockFast(b.getWorld(), b.getX(), b.getY(), b.getZ(), tpl.blocks[x][y][z].getType(), 
 //								(byte)tpl.blocks[x][y][z].getData());
@@ -786,6 +803,7 @@ public class Template {
 				}
 			}
 		}
+		updateBlocksQueue(sbs);
 	}
 	
 	public String dir() {

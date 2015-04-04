@@ -35,6 +35,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Bank;
 import com.avrgaming.civcraft.structure.Grocer;
 import com.avrgaming.civcraft.structure.Library;
+import com.avrgaming.civcraft.structure.Quarry;
 import com.avrgaming.civcraft.structure.Store;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.Trommel;
@@ -189,6 +190,28 @@ public class ConfigTownUpgrade {
 			if (didUpgrade)
 			{
 				CivMessage.sendTown(town, "Our trommels are now level "+trommelLevel);
+			}
+			break;
+		case "set_quarry_level":
+			boolean didUpgradeQuarry = false;
+			int quarryLevel = 1;
+			for (Structure structure : town.getStructures()) {
+				if (structure.getConfigId().equalsIgnoreCase("ti_quarry")) {
+
+					if (structure != null && (structure instanceof Quarry)) {
+						Quarry quarry = (Quarry)structure;
+						if (quarry.getLevel() < Integer.valueOf(args[1].trim())) {
+							didUpgrade = true;
+							quarry.setLevel(Integer.valueOf(args[1].trim()));
+							town.saved_quarry_level = quarry.getLevel();
+							quarryLevel = quarry.getLevel();
+						}
+					}
+				}
+			}
+			if (didUpgradeQuarry)
+			{
+				CivMessage.sendTown(town, "Our quarries are now level "+quarryLevel);
 			}
 			break;
 		}

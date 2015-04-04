@@ -183,6 +183,7 @@ public class CivGlobal {
 	private static SessionDatabase sdb;
 
 	public static boolean trommelsEnabled = true;
+	public static boolean quarriesEnabled = true;
 	public static boolean mobGrinderEnabled = true;
 	public static boolean towersEnabled = true;
 	public static boolean growthEnabled = true;

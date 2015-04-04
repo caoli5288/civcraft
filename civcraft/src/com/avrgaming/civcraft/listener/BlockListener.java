@@ -1216,6 +1216,13 @@ public class BlockListener implements Listener {
 						denyBreeding = true;
 					}
 					break;
+				case RABBIT:
+					if (inHand.getType().equals(Material.CARROT) ||
+						inHand.getType().equals(Material.GOLDEN_CARROT) ||
+						inHand.getType().equals(Material.YELLOW_FLOWER)) {
+						denyBreeding = true;
+					}
+					break;
 				default:
 					break;
 				}

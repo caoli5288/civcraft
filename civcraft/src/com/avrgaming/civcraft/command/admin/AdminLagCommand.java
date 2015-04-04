@@ -32,6 +32,7 @@ public class AdminLagCommand extends CommandBase {
 		displayName = "Admin Lag";
 		
 		commands.put("trommels", "Toggles trommels globally.");
+		commands.put("quarries", "Toggles quarries globally.");
 		commands.put("grinders", "Toggles Mob Grinders globally.");
 		commands.put("towers", "Toggles towers globally.");
 		commands.put("growth", "Toggles farm growth.");
@@ -76,6 +77,16 @@ public class AdminLagCommand extends CommandBase {
 			CivMessage.sendSuccess(sender, "Trommels enabled.");
 		} else {
 			CivMessage.sendError(sender, "Trommels disabled");
+		}
+	}
+	
+	public void quarries_cmd() {
+		CivGlobal.quarriesEnabled = !CivGlobal.quarriesEnabled;
+		
+		if (CivGlobal.quarriesEnabled) {
+			CivMessage.sendSuccess(sender, "Quarries enabled.");
+		} else {
+			CivMessage.sendError(sender, "Quarries disabled");
 		}
 	}
 	

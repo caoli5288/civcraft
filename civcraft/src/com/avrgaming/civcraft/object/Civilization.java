@@ -116,6 +116,8 @@ public class Civilization extends SQLObject {
 	public boolean scoutDebug = false;
 	public String scoutDebugPlayer = null;
 	
+	public String messageOfTheDay = "";
+	
 	private LinkedList<WarCamp> warCamps = new LinkedList<WarCamp>();
 	
 	public Civilization(String name, String capitolName, Resident leader) throws InvalidNameException {
@@ -156,6 +158,7 @@ public class Civilization extends SQLObject {
 					"`coins` double DEFAULT 0,"+
 					"`daysInDebt` int NOT NULL DEFAULT '0',"+
 					"`techs` mediumtext DEFAULT NULL," +
+					"`motd` mediumtext DEFAULT NULL,"+
 					"`researchTech` mediumtext DEFAULT NULL,"+
 					"`researchProgress` float NOT NULL DEFAULT 0,"+
 					"`researched` mediumtext DEFAULT NULL, "+
@@ -181,6 +184,7 @@ public class Civilization extends SQLObject {
 			SQL.makeCol("conquered", "booelan", TABLE_NAME);
 			SQL.makeCol("conquered_date", "long", TABLE_NAME);
 			SQL.makeCol("created_date", "long", TABLE_NAME);
+			SQL.makeCol("motd", "mediumtext", TABLE_NAME);
 		}
 	}
 
@@ -219,6 +223,13 @@ public class Civilization extends SQLObject {
 			this.conquer_date = null;
 		} else {
 			this.conquer_date = new Date(ctime);
+		}
+		
+		String motd = rs.getString("motd");
+		if (motd == null || motd == "") {
+			this.messageOfTheDay = null; //Forever in the past.
+		} else {
+			this.messageOfTheDay = motd;
 		}
 		
 		ctime = rs.getLong("created_date");
@@ -269,6 +280,12 @@ public class Civilization extends SQLObject {
 			hashmap.put("conquered_date", this.conquer_date.getTime());
 		} else {
 			hashmap.put("conquered_date", null);
+		}
+		
+		if (this.messageOfTheDay != null) {
+			hashmap.put("motd", this.messageOfTheDay);
+		} else {
+			hashmap.put("motd", null);
 		}
 		
 		if (this.created_date != null) {
@@ -396,6 +413,14 @@ public class Civilization extends SQLObject {
 
 	public void setColor(int color) {
 		this.color = color;
+	}
+	
+	public void setMotd(String message) {
+		this.messageOfTheDay = message;
+	}
+	
+	public String MOTD() {
+		return this.messageOfTheDay;
 	}
 
 	public Resident getLeader() {

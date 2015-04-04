@@ -83,14 +83,6 @@ public class EventTimer {
 			e.printStackTrace();
 		}
 		
-		/* Setup spawn regen event */
-		try {
-			SpawnRegenEvent spawnRegenEvent = new SpawnRegenEvent();
-			new EventTimer("spawn-regen", spawnRegenEvent, spawnRegenEvent.getNextDate());
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
-		
 		/* Setup war event. */
 		try {
 			WarEvent WarEvent = new WarEvent();

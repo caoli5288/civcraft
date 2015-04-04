@@ -158,6 +158,7 @@ public class War {
 		
 			CivGlobal.growthEnabled = true;
 			CivGlobal.trommelsEnabled = true;
+			CivGlobal.quarriesEnabled = true;
 			CivGlobal.tradeEnabled = true;
 			
 			/* Delete any wartime file used to prevent reboots. */
@@ -199,6 +200,7 @@ public class War {
 			
 			CivGlobal.growthEnabled = false;
 			CivGlobal.trommelsEnabled = false;
+			CivGlobal.quarriesEnabled = false;
 			CivGlobal.tradeEnabled = false;
 			
 			try {

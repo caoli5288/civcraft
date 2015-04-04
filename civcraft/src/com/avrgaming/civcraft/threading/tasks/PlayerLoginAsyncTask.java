@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.Relation;
 import com.avrgaming.civcraft.object.Resident;
@@ -307,6 +308,15 @@ public class PlayerLoginAsyncTask implements Runnable {
 			if (EndConditionDiplomacy.canPeopleVote()) {
 				CivMessage.send(resident, CivColor.LightGreen+"The Council of Eight is built! Use /vote to vote for your favorite Civilization!");
 			}
+			Civilization civ = resident.getCiv();
+			if (civ != null)
+			{
+			if (civ.MOTD() != null)
+			{
+			CivMessage.send(resident, CivColor.LightPurple+"[Civ MOTD] "+CivColor.White+resident.getCiv().MOTD());
+			}
+			}
+			
 		} catch (CivException playerNotFound) {
 			// Player logged out while async task was running.
 		} catch (InvalidNameException e1) {

@@ -98,6 +98,7 @@ import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.ChunkGenerateTask;
 import com.avrgaming.civcraft.threading.tasks.CultureProcessAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
+import com.avrgaming.civcraft.threading.tasks.QuarryAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.TradeGoodPostGenTask;
 import com.avrgaming.civcraft.threading.tasks.TrommelAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.MobGrinderAsyncTask;
@@ -167,6 +168,7 @@ public class DebugCommand extends CommandBase {
 		commands.put("camp", "Debugs camps.");
 		commands.put("blockinfo", "[x] [y] [z] shows block info for this block.");
 		commands.put("trommel", "[name] - turn on this town's trommel debugging.");
+		commands.put("quarry", "[name] - turn on this town's quarry debugging.");
 		commands.put("mobgrinder", "[name] - turn on this town's mob grinder debugging.");
 		commands.put("fakeresidents", "[town] [count] - Adds this many fake residents to a town.");
 		commands.put("clearresidents", "[town] - clears this town of it's random residents.");
@@ -806,7 +808,17 @@ public class DebugCommand extends CommandBase {
 		
 		CivMessage.send(sender, "Trommel toggled.");
 	}
-	
+	public void quarry_cmd() throws CivException {
+		Town town = getNamedTown(1);
+		
+		if (QuarryAsyncTask.debugTowns.contains(town.getName())) {
+			QuarryAsyncTask.debugTowns.remove(town.getName());
+		} else {
+			QuarryAsyncTask.debugTowns.add(town.getName());
+		}
+		
+		CivMessage.send(sender, "Quarry toggled.");
+	}
 	public void mobgrinder_cmd() throws CivException {
 		Town town = getNamedTown(1);
 		

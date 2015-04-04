@@ -96,6 +96,14 @@ public class Structure extends Buildable {
 			}
 			break;	
 			
+		case "ti_quarry":
+			if (rs == null) {
+				struct = (Structure) new Quarry(center, id, town);
+			} else {
+				struct = (Structure) new Quarry(rs);
+			}
+			break;	
+			
 		case "s_mob_grinder":
 			if (rs == null) {
 				struct = (Structure) new MobGrinder(center, id, town);
