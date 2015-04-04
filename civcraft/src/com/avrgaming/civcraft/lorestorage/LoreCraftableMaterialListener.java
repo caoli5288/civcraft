@@ -40,6 +40,10 @@ public class LoreCraftableMaterialListener implements Listener {
 				
 				/* Disable notch apples */
 				ItemStack resultStack = event.getInventory().getResult();
+				if (resultStack == null)
+				{
+					return;
+				}
 				if (resultStack.getType().equals(Material.GOLDEN_APPLE)) {
 					CivMessage.sendError((Player)event.getWhoClicked(), "You cannot craft golden apples. Sorry.");
 					event.setCancelled(true);
@@ -62,6 +66,16 @@ public class LoreCraftableMaterialListener implements Listener {
 				event.setCancelled(true);
 				return;
 			}
+//			String matName =craftMat.getId(); 
+//			if (matName.contains("_alt"))
+//			{
+//				ItemStack resultStack = event.getInventory().getResult();
+//				String id = matName.replaceAll("_alt(.*)", "");
+//				ItemStack newStack = LoreMaterial.spawn(LoreMaterial.materialMap.get(id));
+//				newStack.setAmount(resultStack.getAmount());
+//				event.getInventory().setResult(newStack);
+//				CivLog.debug("Item Crafting: " +id);
+//			}
 			
 //			if (craftMat.hasComponent("Tagged")) {
 //				String tag = Tagged.matrixHasSameTag(event.getInventory().getMatrix());
@@ -212,7 +226,7 @@ public class LoreCraftableMaterialListener implements Listener {
 				}
 				
 				return;
-			} else {
+			} else {				
 				if(!LoreCraftableMaterial.isCustom(event.getRecipe().getResult())) {
 					/* Result is not custom, but recipie is. Set to blank. */
 					if (!loreMat.isVanilla()) {
@@ -220,6 +234,13 @@ public class LoreCraftableMaterialListener implements Listener {
 						return;
 					}
 				}
+			}
+
+			String matName =loreMat.getId(); 
+			if (matName.contains("_alt"))
+			{
+				String id = matName.replaceAll("_alt(.*)", "");
+				loreMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 			}
 			
 			ItemStack newStack;
@@ -259,6 +280,12 @@ public class LoreCraftableMaterialListener implements Listener {
 				}
 			}
 			
+			String matName =loreMat.getId(); 
+			if (matName.contains("_alt"))
+			{
+				String id = matName.replaceAll("_alt(.*)", "");
+				loreMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
+			}
 			
 			ItemStack newStack;
 			if (!loreMat.isVanilla()) {

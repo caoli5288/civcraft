@@ -85,7 +85,7 @@ materials:
               - type_id: 334
                 data: 0
                 count: 9
-         
+
         # Checked 10/8/13
         - id: 'mat_refined_stone'
           item_id: 1
@@ -97,6 +97,45 @@ materials:
           ingredients:
               - type_id: 4
                 data: 0
+                count: 9
+
+        # Checked 10/8/13
+        - id: 'mat_refined_stone_alt0'
+          item_id: 1
+          item_data: 0
+          name: 'T1 Refined Stone'
+          craftable: true
+          shaped: false
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 1
+                data: 1
+                count: 9
+
+        # Checked 10/8/13
+        - id: 'mat_refined_stone_alt1'
+          item_id: 1
+          item_data: 0
+          name: 'T1 Refined Stone'
+          craftable: true
+          shaped: false
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 1
+                data: 3
+                count: 9
+
+        # Checked 10/8/13
+        - id: 'mat_refined_stone_alt2'
+          item_id: 1
+          item_data: 0
+          name: 'T1 Refined Stone'
+          craftable: true
+          shaped: false
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 1
+                data: 5
                 count: 9
 
 # Replaced with gold block
@@ -310,17 +349,17 @@ materials:
                 count: 9
 
         # # Checked 10/8/13
-        # - id: 'mat_refined_wood2'
-        #   item_id: 126
-        #   item_data: 
-        #   name: 'T1 Refined Wood'
-        #   craftable: true
-        #   shaped: false
-        #   category: '<lightgreen>Tier 1 Materials'
-        #   ingredients:
-        #       - type_id: 162
-        #         data: -1
-        #         count: 9
+        - id: 'mat_refined_wood_alt2'
+          item_id: 126
+          item_data: 0
+          name: 'T1 Refined Wood'
+          craftable: true
+          shaped: false
+          category: '<lightgreen>Tier 1 Materials'
+          ingredients:
+              - type_id: 162
+                data: -1
+                count: 9
 
 # Replaced by diamond block
 #        - id: 'mat_refined_diamonds'
@@ -2732,7 +2771,7 @@ materials:
                 data: 0
                 letter: 'e'
               - type_id: 0
-                custom_id: 'mat_ionic_crystal_3'
+                custom_id: 'mat_ionic_crystal_4'
                 data: 0
                 letter: 'c'
           shape:
