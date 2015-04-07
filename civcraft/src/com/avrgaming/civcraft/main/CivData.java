@@ -180,6 +180,11 @@ public class CivData {
 	public static final int COAL = ItemManager.getId(Material.COAL);
 	public static final int WOOD_DOOR = 64;
 	public static final int IRON_DOOR = 71;
+	public static final int SPRUCE_DOOR = 193;
+	public static final int BIRCH_DOOR = 194;
+	public static final int JUNGLE_DOOR = 195;
+	public static final int ACACIA_DOOR = 196;
+	public static final int DARK_OAK_DOOR = 197;
 	public static final int NETHERRACK = 87;
 	public static final int BOW = 261;
 	public static final int ANVIL = 145;

@@ -273,7 +273,14 @@ public class BuildAsyncTask extends CivAsyncTask {
 		// of the build task async.
 		synchronized (this.aborted) {
 			if (!this.aborted) {
-				if (sb.getType() == CivData.WOOD_DOOR || sb.getType() == CivData.IRON_DOOR || Template.isAttachable(sb.getType())) {
+				if (sb.getType() == CivData.WOOD_DOOR || 
+					sb.getType() == CivData.IRON_DOOR || 
+					sb.getType() == CivData.SPRUCE_DOOR || 
+					sb.getType() == CivData.BIRCH_DOOR || 
+					sb.getType() == CivData.JUNGLE_DOOR || 
+					sb.getType() == CivData.ACACIA_DOOR || 
+					sb.getType() == CivData.DARK_OAK_DOOR ||
+					Template.isAttachable(sb.getType())) {
 					// dont build doors, save it for post sync build.
 				}
 				else {

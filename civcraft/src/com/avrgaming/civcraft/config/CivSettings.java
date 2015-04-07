@@ -523,6 +523,14 @@ public class CivSettings {
 		switchItems.add(Material.TRAPPED_CHEST);
 		switchItems.add(Material.GOLD_PLATE);
 		switchItems.add(Material.IRON_PLATE);
+		switchItems.add(Material.IRON_TRAPDOOR);
+		
+		// 1.6 additions.
+		switchItems.add(Material.SPRUCE_DOOR);
+		switchItems.add(Material.BIRCH_DOOR);
+		switchItems.add(Material.JUNGLE_DOOR);
+		switchItems.add(Material.ACACIA_DOOR);
+		switchItems.add(Material.DARK_OAK_DOOR);
 		
 		
 	}
