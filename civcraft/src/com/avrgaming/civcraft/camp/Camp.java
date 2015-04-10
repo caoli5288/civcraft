@@ -78,6 +78,7 @@ import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.template.Template.TemplateType;
 import com.avrgaming.civcraft.threading.TaskMaster;
+import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -437,6 +438,8 @@ public class Camp extends Buildable {
 			e1.printStackTrace();
 		}
 		buildCampFromTemplate(tpl, corner);
+
+		TaskMaster.syncTask(new PostBuildSyncTask(tpl, this));
 		processCommandSigns(tpl, corner);
 		try {
 			this.saveNow();

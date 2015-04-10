@@ -493,6 +493,7 @@ public class CivSettings {
 		switchItems.add(Material.CAKE_BLOCK);
 		switchItems.add(Material.CAULDRON);
 		switchItems.add(Material.CHEST);
+		switchItems.add(Material.TRAPPED_CHEST);
 		switchItems.add(Material.COMMAND);
 		switchItems.add(Material.DIODE);
 		switchItems.add(Material.DIODE_BLOCK_OFF);

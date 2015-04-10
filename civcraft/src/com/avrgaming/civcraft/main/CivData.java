@@ -31,6 +31,7 @@ public class CivData {
 	public static final int WALL_SIGN = 68;
 	public static final int SIGN = 63;
 	public static final int CHEST = 54;
+	public static final int TRAPPED_CHEST = 146;
 	public static final int WOOD = 17;
 	public static final int PLANKS = 5;
 	public static final int LEAF = 18;

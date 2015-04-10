@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.command.camp;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
@@ -50,6 +51,34 @@ public class CampCommand extends CommandBase {
 		commands.put("info", "Shows information about your current camp.");
 		commands.put("disband", "Disbands this camp.");
 		commands.put("upgrade", "Manage camp upgrades.");
+		commands.put("refresh", "Refresh all attachables (ladders, doors, etc) in this camp.");
+	}
+	
+	public void refresh_cmd() throws CivException {
+		Resident resident = getResident();
+		
+		if (!resident.hasCamp()) {
+			throw new CivException("You are not currently in a camp.");
+		}
+		
+		Camp camp = resident.getCamp();
+		if (camp.getOwner() != resident) {
+			throw new CivException("Only the owner of the camp can refresh it.");
+		}
+		
+		if (camp.isDestroyed())
+		{
+			throw new CivException("Your camp is destroyed and cannot be refreshed.");
+		}
+		
+		try {
+			camp.repairFromTemplate();
+		} catch (IOException e) {
+		} catch (CivException e) {
+			e.printStackTrace();
+		}
+		camp.reprocessCommandSigns();
+		CivMessage.send(sender, "Repaired the camp. Check your Chests/firepit/garden, items were ejected by the refresh.");
 	}
 	
 	public void upgrade_cmd() {

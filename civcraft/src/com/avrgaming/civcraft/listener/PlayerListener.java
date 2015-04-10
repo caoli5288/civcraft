@@ -68,6 +68,7 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.CultureChunk;
+import com.avrgaming.civcraft.object.Relation;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.structure.Capitol;
@@ -116,10 +117,30 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.MONITOR)
 	public void onPlayerTeleportEvent(PlayerTeleportEvent event) {
+		//Handle Teleportation Things here!
 		if (event.getCause().equals(TeleportCause.COMMAND) ||
-				event.getCause().equals(TeleportCause.PLUGIN)) {
+				event.getCause().equals(TeleportCause.PLUGIN)) {	
 			CivLog.info("[TELEPORT] "+event.getPlayer().getName()+" to:"+event.getTo().getBlockX()+","+event.getTo().getBlockY()+","+event.getTo().getBlockZ()+
 					" from:"+event.getFrom().getBlockX()+","+event.getFrom().getBlockY()+","+event.getFrom().getBlockZ());
+			Player player = event.getPlayer();
+			if (!player.isOp() && !player.hasPermission("civ.admin")) {
+				CultureChunk cc = CivGlobal.getCultureChunk(new ChunkCoord(event.getTo()));
+				Resident resident = CivGlobal.getResident(player);
+				if (cc != null && cc.getCiv() != resident.getCiv() && !cc.getCiv().isAdminCiv()) {
+					Relation.Status status = cc.getCiv().getDiplomacyManager().getRelationStatus(player);
+					if (!status.equals(Relation.Status.ALLY)) {
+						/* 
+						 * Deny telportation into Civ if not allied.
+						 */
+						if (!event.isCancelled())
+						{
+						event.setCancelled(true);
+							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Civ ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] unless you are allied with them.");
+						}
+					}
+					
+				}
+			}
 		}
 	}
 		
