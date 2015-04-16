@@ -93,7 +93,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		
 		sendGiftRequest(toCiv, fromCiv, 
 				CivColor.Yellow+ChatColor.BOLD+"The Civilization of "+fromCiv.getName()+" wishes to give itself to you. All of their towns will be yours."+
-						" It will cost us "+fromCiv.getMergeCost()+" Redbacks. Do you accept?", dipResponse);
+						" It will cost us "+fromCiv.getMergeCost()+" Coins. Do you accept?", dipResponse);
 		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
 	}
 	
@@ -137,7 +137,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				"Our Civilization of "+fromCiv.getName()+" wishes to give the town of "+giftedTown.getName()+" to you. It will cost us "+giftedTown.getGiftCost()+" Redbacks. Do you accept?", dipResponse);
+				"Our Civilization of "+fromCiv.getName()+" wishes to give the town of "+giftedTown.getName()+" to you. It will cost us "+giftedTown.getGiftCost()+" Coins. Do you accept?", dipResponse);
 		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
 		
 	}

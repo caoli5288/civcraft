@@ -12,8 +12,6 @@ import org.bukkit.Bukkit;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.util.CivColor;
 
 public class DisableTeleportEvent implements EventInterface {
 
@@ -50,9 +48,7 @@ public class DisableTeleportEvent implements EventInterface {
 	
 
 	public static void disableTeleport() {
-
-		File file = new File("teleportsOff.txt");
-		
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/teleportsOff.txt");
 		
 		if (!file.exists()) {
 			CivLog.warning("No teleportsOff.txt to run commands from");
@@ -63,7 +59,6 @@ public class DisableTeleportEvent implements EventInterface {
 			
 			String line;
 			try {
-				CivMessage.globalHeading(CivColor.BOLD+"Teleportation is disabled until after War Time");
 				while ((line = br.readLine()) != null) {
 					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), line);
 				}
@@ -83,8 +78,7 @@ public class DisableTeleportEvent implements EventInterface {
 
 	
 	public static void enableTeleport() {
-		File file = new File("teleportsOn.txt");
-		
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/teleportsOn.txt");
 		
 		if (!file.exists()) {
 			CivLog.warning("No teleportsOn.txt to run commands from");
@@ -95,8 +89,6 @@ public class DisableTeleportEvent implements EventInterface {
 			
 			String line;
 			try {
-
-				CivMessage.globalHeading(CivColor.BOLD+"Teleportation is now enabled.");
 				while ((line = br.readLine()) != null) {
 					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), line);
 				}

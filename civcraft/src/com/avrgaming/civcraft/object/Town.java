@@ -1111,7 +1111,7 @@ public class Town extends SQLObject {
 			}
 			
 			double capturePayment = amount * capturedPenalty;
-			CivMessage.sendTown(this, CivColor.Yellow+"Your town paid "+(amount - capturePayment)+" Redbacks due to being captured by "+this.getCiv().getName());
+			CivMessage.sendTown(this, CivColor.Yellow+"Your town paid "+(amount - capturePayment)+" Coins due to being captured by "+this.getCiv().getName());
 			amount = capturePayment;
 		}
 		
@@ -1162,7 +1162,7 @@ public class Town extends SQLObject {
 		}
 		
 		if (!this.getTreasury().hasEnough(upgrade.cost)) {
-			throw new CivException("The town does not have the required "+upgrade.cost+" Redbacks.");
+			throw new CivException("The town does not have the required "+upgrade.cost+" Coins.");
 		}
 		
 		if (!this.hasStructure(upgrade.require_structure)) {
@@ -1557,7 +1557,7 @@ public class Town extends SQLObject {
 		
 		double cost = wonder.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Redbacks to build "+wonder.getDisplayName());
+			throw new CivException("Your town cannot not afford the "+cost+" Coins to build "+wonder.getDisplayName());
 		}
 		
 		wonder.runCheck(center); //Throws exception if we can't build here.	
@@ -1621,7 +1621,7 @@ public class Town extends SQLObject {
 		
 		double cost = struct.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Redbacks to build a "+struct.getDisplayName());
+			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+struct.getDisplayName());
 		}
 		
 		struct.runCheck(center); //Throws exception if we can't build here.	
@@ -2498,7 +2498,7 @@ public void changeCiv(Civilization newCiv) {
 
 	public void depositFromResident(Double amount, Resident resident) throws CivException {
 		if (!resident.getTreasury().hasEnough(amount)) {
-			throw new CivException("You do not have enough Redbacks for that.");
+			throw new CivException("You do not have enough Coins for that.");
 		}
 		
 		if (this.inDebt()) {

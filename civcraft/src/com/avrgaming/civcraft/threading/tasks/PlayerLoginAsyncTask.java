@@ -189,7 +189,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 						resident.giveAllFreePerks();
 
 						perkMessage = "You have access to the Following Perks: ";
-						perkMessage += "Weather, ";
+						perkMessage += "Weather, Name Change, ";
 					}
 				}
 				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
@@ -202,20 +202,10 @@ public class PlayerLoginAsyncTask implements Runnable {
 					resident.giveAllAztecPerks();
 					perkMessage += "Aztec, ";
 				}
-				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
-				{
-					resident.giveAllCultistPerks();
-					perkMessage += "Cultist, ";
-				}
 				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
 				{
 					resident.giveAllEgyptianPerks();
 					perkMessage += "Egyptian, ";
-				}
-				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
-				{
-					resident.giveAllElvenPerks();
-					perkMessage += "Elven, ";
 				}
 				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
 				{

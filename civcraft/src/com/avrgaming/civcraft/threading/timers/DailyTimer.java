@@ -132,7 +132,7 @@ public class DailyTimer implements Runnable {
 				if (civ.getTreasury().inDebt()) {
 					civ.incrementDaysInDebt();
 				}
-				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" Redbacks in civ upkeep costs.");
+				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" Coins in civ upkeep costs.");
 				civ.save();
 			}
 			catch (Exception e) {
@@ -151,7 +151,7 @@ public class DailyTimer implements Runnable {
 				}
 				
 				t.save();
-				CivMessage.sendTown(t, "Paid "+total+" Redbacks in upkeep costs.");
+				CivMessage.sendTown(t, "Paid "+total+" Coins in upkeep costs.");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -177,7 +177,7 @@ public class DailyTimer implements Runnable {
 					
 					double taxesToCiv = total*taxrate;
 					townTotal -= taxesToCiv;
-					CivMessage.sendTown(t, "Collected "+townTotal+" Redbacks in resident taxes."); 
+					CivMessage.sendTown(t, "Collected "+townTotal+" Coins in resident taxes."); 
 					t.depositTaxed(townTotal);	
 					
 					if (t.getDepositCiv().getId() == civ.getId()) {

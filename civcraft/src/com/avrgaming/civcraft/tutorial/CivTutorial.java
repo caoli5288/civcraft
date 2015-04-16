@@ -55,15 +55,15 @@ public class CivTutorial {
 					ChatColor.RESET+"These items are crafted using a crafting bench",
 					ChatColor.RESET+"and combining many more normal Minecraft items",
 					ChatColor.RESET+"into higher tier items. Certain items like iron, gold,",
-					ChatColor.RESET+"diamonds and emeralds can be exchanged for Redbacks at "+CivColor.Yellow+"Bank",
-					ChatColor.RESET+"structures. Redbacks can be traded for materials at the "+CivColor.Yellow+"Market"
+					ChatColor.RESET+"diamonds and emeralds can be exchanged for Coins at "+CivColor.Yellow+"Bank",
+					ChatColor.RESET+"structures. Coins can be traded for materials at the "+CivColor.Yellow+"Market"
 					));
 			
 			tutorialInventory.addItem(LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"Towns", ItemManager.getId(Material.FENCE), 0, 
 					ChatColor.RESET+"Towns can be created by players to protect",
 					ChatColor.RESET+"areas from outsiders. Inside a town the owners are",
 					ChatColor.RESET+"free to build creatively without interference from griefers",
-					ChatColor.RESET+"Towns cost materials to create and Redbacks to maintain.",
+					ChatColor.RESET+"Towns cost materials to create and Coins to maintain.",
 					ChatColor.RESET+"Towns can build functional structures which allow it's",
 					ChatColor.RESET+"residents access to more features. Towns can only be built",
 					ChatColor.RESET+"inside of a civilization."

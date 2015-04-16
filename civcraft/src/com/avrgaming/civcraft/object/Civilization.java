@@ -856,7 +856,7 @@ public class Civilization extends SQLObject {
 	}
 	
 	public void warnDebt() {
-		CivMessage.global(this.getName()+" is in "+this.getTreasury().getDebt()+" Redbacks of debt!");
+		CivMessage.global(this.getName()+" is in "+this.getTreasury().getDebt()+" Coins of debt!");
 	}
 	
 	
@@ -1035,7 +1035,7 @@ public class Civilization extends SQLObject {
 		}
 		
 		if (!this.getTreasury().hasEnough(tech.cost)) {
-			throw new CivException("Our Civilization's treasury does have the required "+tech.cost+" Redbacks to start this research.");
+			throw new CivException("Our Civilization's treasury does have the required "+tech.cost+" Coins to start this research.");
 		}
 		
 		if (this.hasTech(tech.id)) {

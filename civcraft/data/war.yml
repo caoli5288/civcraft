@@ -153,20 +153,6 @@ wall:
 
    recursion_limit: 350
 
-fortified_wall:
-   # Maximum height walls can be built at.
-   maximum_height: 200
-
-   # Height of a basic wall piece
-   height: 10
-
-   # Cost of a vertical segment
-   cost_per_segment: 100.0
-
-   max_segment: 300
-
-   recursion_limit: 350
-
 warcamp:
     # template for war camps.
     template: warcamp

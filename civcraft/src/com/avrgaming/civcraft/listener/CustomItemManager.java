@@ -279,7 +279,11 @@ public class CustomItemManager implements Listener {
 					/* Arrow was fired by a tower. */
 					afc.setHit(true);
 					afc.destroy(event.getDamager());
-					
+					if (defendingPlayer == null)
+					{
+						//Fix NPE, for some reason defending player can be null here.
+						return;
+					}
 					Resident defenderResident = CivGlobal.getResident(defendingPlayer);
 					if (defenderResident != null && defenderResident.hasTown() && 
 							defenderResident.getTown().getCiv() == afc.getFromTower().getTown().getCiv()) {

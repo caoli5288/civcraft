@@ -26,6 +26,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.util.CivColor;
@@ -38,7 +39,7 @@ public class AnnouncementTimer implements Runnable {
 	
 	public AnnouncementTimer(String filename, int interval) {
 		minutes = interval;
-		File file = new File(filename);
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/"+filename);
 		
 		announcements = new ArrayList<String>();
 		
