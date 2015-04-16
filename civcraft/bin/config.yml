@@ -15,14 +15,14 @@ use_server_listing_service: 'true'
 server_address: ""
 
 # Name of your server which will appear on civcraft.net, will be clipped to 64 characters.
-server_name: 'CivCraft'
+server_name: 'CivCraft (v1.5)'
 
 # Timezone hint that will tell users what timezone your server is in. This will help them join
 # servers that are in their own timezone.
-server_timezone: 'PST'
+server_timezone: 'CST'
 
 # A short message to display on civcraft.net to advertise your server or explain what it's about.
-server_description: 'Just another CivCraft server.'
+server_description: 'Just another Minecraft 1.7 CivCraft server.'
 
 # Prints a message to the console for every heartbeat packet sent to the server. Useful for debugging.
 debug_heartbeat: 'false'
@@ -43,7 +43,7 @@ mysql:
    
 global_database:
     database: 
-    hostname:
+    hostname: localhost
     port: '3306'
     username:
     password:
@@ -53,7 +53,7 @@ global_database:
     
 perk_database:
     database: 
-    hostname:
+    hostname: localhost
     port: '3306'
     username:
     password:
@@ -63,4 +63,3 @@ perk_database:
 
 server_phase: 'beta8'
 
- 

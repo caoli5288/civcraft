@@ -209,11 +209,11 @@ public class CivInfoCommand extends CommandBase {
 	    }
 		
 		if (resident == null || civ.getLeaderGroup().hasMember(resident) || civ.getAdviserGroup().hasMember(resident) || isOP) {
-			CivMessage.send(sender, CivColor.Green+"Treasury: "+CivColor.LightGreen+civ.getTreasury().getBalance()+CivColor.Green+" Redbacks.");
+			CivMessage.send(sender, CivColor.Green+"Treasury: "+CivColor.LightGreen+civ.getTreasury().getBalance()+CivColor.Green+" Coins.");
 		}
 		
 		if (civ.getTreasury().inDebt()) {
-			CivMessage.send(sender, CivColor.Yellow+"In Debt: "+civ.getTreasury().getDebt()+" Redbacks.");	
+			CivMessage.send(sender, CivColor.Yellow+"In Debt: "+civ.getTreasury().getDebt()+" Coins.");	
 			CivMessage.send(sender, CivColor.Yellow+civ.getDaysLeftWarning());
 		}
 		

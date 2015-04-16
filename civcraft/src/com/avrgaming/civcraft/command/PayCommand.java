@@ -58,7 +58,7 @@ public class PayCommand implements CommandExecutor {
 			try {
 				amount = Double.valueOf(args[1]);
 				if (!resident.getTreasury().hasEnough(amount)) {
-					throw new CivException("You do not have enough Redbacks.");
+					throw new CivException("You do not have enough Coins.");
 				}
 			} catch (NumberFormatException e) {
 				throw new CivException("Please enter a number.");
@@ -72,11 +72,11 @@ public class PayCommand implements CommandExecutor {
 			resident.getTreasury().withdraw(amount);
 			payTo.getTreasury().deposit(amount);
 			
-			CivMessage.sendSuccess(player, "Paid "+payTo.getName()+" "+amount+" Redbacks");
+			CivMessage.sendSuccess(player, "Paid "+payTo.getName()+" "+amount+" Coins");
 			
 			try {
 				Player payToPlayer = CivGlobal.getPlayer(payTo);
-				CivMessage.sendSuccess(payToPlayer, "Got "+amount+" Redbacks from "+resident.getName());
+				CivMessage.sendSuccess(payToPlayer, "Got "+amount+" Coins from "+resident.getName());
 			} catch (CivException e) {
 				// player not online, forget it.
 			}

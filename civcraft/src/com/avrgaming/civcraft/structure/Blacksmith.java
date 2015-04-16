@@ -150,7 +150,7 @@ public class Blacksmith extends Structure {
 				break;
 			case 1:
 				sign.setText("Forge!\n"+
-						"For "+cost+" Redbacks\n"+
+						"For "+cost+" Coins\n"+
 						getNonResidentFeeString());			
 				break;
 			case 2:

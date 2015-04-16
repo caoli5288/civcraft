@@ -156,7 +156,7 @@ public class Market extends Structure {
 			s = (Sign)sign.getCoord().getBlock().getState();
 			s.setLine(0, ChatColor.BOLD+"Sell Bulk");
 			s.setLine(1, item.name);
-			s.setLine(2, itemColor+item.getSellCostForAmount(BULK_AMOUNT)+" Redbacks");
+			s.setLine(2, itemColor+item.getSellCostForAmount(BULK_AMOUNT)+" Coins");
 			s.setLine(3, "Amount "+BULK_AMOUNT);
 			s.update();
 			break;
@@ -164,7 +164,7 @@ public class Market extends Structure {
 			s = (Sign)sign.getCoord().getBlock().getState();
 			s.setLine(0, ChatColor.BOLD+"Sell");
 			s.setLine(1, item.name);
-			s.setLine(2, itemColor+item.getSellCostForAmount(1)+" Redbacks");
+			s.setLine(2, itemColor+item.getSellCostForAmount(1)+" Coins");
 			s.setLine(3, "Amount 1");
 			s.update();
 			break;
@@ -172,7 +172,7 @@ public class Market extends Structure {
 			s = (Sign)sign.getCoord().getBlock().getState();
 			s.setLine(0, ChatColor.BOLD+"Buy");
 			s.setLine(1, item.name);
-			s.setLine(2, itemColor+item.getBuyCostForAmount(1)+" Redbacks");
+			s.setLine(2, itemColor+item.getBuyCostForAmount(1)+" Coins");
 			s.setLine(3, "Amount 1");
 			s.update();
 			break;
@@ -180,7 +180,7 @@ public class Market extends Structure {
 			s = (Sign)sign.getCoord().getBlock().getState();
 			s.setLine(0, ChatColor.BOLD+"Buy Bulk");
 			s.setLine(1, item.name);
-			s.setLine(2, itemColor+item.getBuyCostForAmount(BULK_AMOUNT)+" Redbacks");
+			s.setLine(2, itemColor+item.getBuyCostForAmount(BULK_AMOUNT)+" Coins");
 			s.setLine(3, "Amount "+BULK_AMOUNT);
 			s.update();
 			break;

@@ -538,7 +538,7 @@ public class Resident extends SQLObject {
 		Player player;
 		try {
 			player = CivGlobal.getPlayer(this);
-			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" Redbacks of debt!");
+			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" Coins of debt!");
 			CivMessage.send(player, CivColor.LightGray+"If you do not pay your debt within "+this.daysTilEvict+" days you will be evicted from town.");
 		} catch (CivException e) {
 			//Player is not online.
@@ -737,6 +737,27 @@ public class Resident extends SQLObject {
 	}
 	
 	@SuppressWarnings("deprecation")
+	public int takeItemsInHand(int itemId, int itemData) throws CivException {
+		Player player = CivGlobal.getPlayer(this);
+		Inventory inv = player.getInventory();
+		if (!inv.contains(itemId)) {
+			return 0;
+		}
+
+		if ((player.getItemInHand().getTypeId() != itemId) &&
+				(player.getItemInHand().getTypeId() != itemData)) {
+			return 0;
+		}
+		
+		ItemStack stack = player.getItemInHand();
+		int count = stack.getAmount();
+		inv.removeItem(stack);
+		
+		player.updateInventory();
+		return count;
+	}
+	
+	@SuppressWarnings("deprecation")
 	public boolean takeItemInHand(int itemId, int itemData, int amount) throws CivException {
 		Player player = CivGlobal.getPlayer(this);
 		Inventory inv = player.getInventory();
@@ -819,7 +840,7 @@ public class Resident extends SQLObject {
 	public boolean buyItem(String itemName, int id, byte data, double price, int amount) throws CivException {
 		
 		if (!this.getTreasury().hasEnough(price)) {
-			throw new CivException("Not enough Redbacks.");
+			throw new CivException("Not enough Coins.");
 		}
 		
 		boolean completed = true;
@@ -1137,7 +1158,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Arctic Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllAztecPerks() {
@@ -1159,7 +1179,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Aztec Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllEgyptianPerks() {
@@ -1181,7 +1200,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Egyptian Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllRomanPerks() {
@@ -1203,7 +1221,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Roman Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllHellPerks() {
@@ -1225,7 +1242,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Hell Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllElvenPerks() {
@@ -1247,7 +1263,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Elven Templates! Use /resident perks to apply them.");
 	}
 	
 	public void giveAllCultistPerks() {
@@ -1269,7 +1284,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You have the Cultist Templates! Use /resident perks to a them.");
 	}
 
 
@@ -1292,7 +1306,6 @@ public class Resident extends SQLObject {
 			}
 		}
 		
-		CivMessage.send(this, CivColor.LightGreen+"You've the weather perk! Use /resident perks to access it.");
 	}
 	
 	public void loadPerks() {
@@ -1519,9 +1532,9 @@ public class Resident extends SQLObject {
 							CivColor.LightGray+"to confirm this trade.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Redbacks Offered", 
+					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Redbacks");
+							CivColor.Yellow+"0 Coins");
 					inv.setItem(i, guiStack);
 				} else {
 					inv.setItem(i, signStack);
@@ -1537,21 +1550,21 @@ public class Resident extends SQLObject {
 					inv.setItem(i, guiStack);
 					
 				} else if ((i-start) == 0){ 
-					ItemStack guiStack = LoreGuiItem.build("Remove Redbacks", 
+					ItemStack guiStack = LoreGuiItem.build("Remove Coins", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Gold+"Click to Remove 100 Redbacks.",
-							CivColor.Gold+"Shift-Click to Remove 1000 Redbacks.");
+							CivColor.Gold+"Click to Remove 100 Coins.",
+							CivColor.Gold+"Shift-Click to Remove 1000 Coins.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 1) {
-					ItemStack guiStack = LoreGuiItem.build("Add Redbacks", 
+					ItemStack guiStack = LoreGuiItem.build("Add Coins", 
 							ItemManager.getId(Material.GOLD_INGOT), 0, 
-							CivColor.Gold+"Click to Add 100 Redbacks.",
-							CivColor.Gold+"Shift-Click to Add 1000 Redbacks.");
+							CivColor.Gold+"Click to Add 100 Coins.",
+							CivColor.Gold+"Shift-Click to Add 1000 Coins.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Redbacks Offered", 
+					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Redbacks");
+							CivColor.Yellow+"0 Coins");
 					inv.setItem(i, guiStack);
 				}
 				else {

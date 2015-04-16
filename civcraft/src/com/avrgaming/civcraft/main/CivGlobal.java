@@ -1096,6 +1096,10 @@ public class CivGlobal {
 	public static ProtectedBlock getProtectedBlock(BlockCoord coord) {
 		return protectedBlocks.get(coord);
 	}
+	
+	public static ProtectedBlock removeProtectedBlock(BlockCoord coord) {
+		return protectedBlocks.remove(coord);
+	}
 
 	public static SessionDatabase getSessionDB() {
 		return sdb;

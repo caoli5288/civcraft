@@ -21,6 +21,8 @@ public class SLSManager implements Runnable {
 	public static String serverName;
 	public static String serverDescription;
 	public static String serverAddress;
+	public static String serverURL;
+	public static String serverURLDescription;
 	public static String serverTimezone;
 	public static String gen_id;
 	
@@ -55,7 +57,6 @@ public class SLSManager implements Runnable {
 			throw new CivException("Cannot have a server timezone with a ';' in it.");
 		}
 		
-		
 		gen_id = CivSettings.getGenID();
 		if (gen_id == null) {
 			UUID uid = UUID.randomUUID();
@@ -76,8 +77,7 @@ public class SLSManager implements Runnable {
 	public static void sendHeartbeat() {
 		try {
 			InetAddress address = InetAddress.getByName("atlas.civcraft.net");
-			String message = gen_id+";"+serverName+";"+serverDescription+";"+serverTimezone+";"+serverAddress+";"+
-					Bukkit.getOnlinePlayers().length+";"+Bukkit.getMaxPlayers()+";"+getParsedVersion();
+			String message = gen_id+";"+serverName+";"+serverDescription+";"+serverTimezone+";"+serverAddress+";"+Bukkit.getOnlinePlayers().length+";"+Bukkit.getMaxPlayers()+";"+getParsedVersion();
 			
 			try {
 				if (CivSettings.getStringBase("debug_heartbeat").equalsIgnoreCase("true")) {

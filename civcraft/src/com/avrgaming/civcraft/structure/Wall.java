@@ -131,7 +131,7 @@ public class Wall extends Structure {
 		refund /= HEIGHT;
 		refund = Math.round(refund);
 		this.getTown().getTreasury().deposit(refund);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+refund+" Redbacks from wall construction.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+refund+" Coins from wall construction.");
 		try {
 			this.delete();
 		} catch (SQLException e) {
@@ -303,12 +303,12 @@ public class Wall extends Structure {
 			}
 			this.wallBlocks.clear();
 			
-			throw new CivException("Cannot build, not enough Redbacks to pay "+cost+" Redbacks for wall of length "+verticalSegments+" blocks.");
+			throw new CivException("Cannot build, not enough Coins to pay "+cost+" Coins for wall of length "+verticalSegments+" blocks.");
 		}
 		
 		this.getTown().getTreasury().withdraw(cost);
 		
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Paid "+cost+" Redbacks for "+verticalSegments+" wall segments.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Paid "+cost+" Coins for "+verticalSegments+" wall segments.");
 		
 		// build the blocks
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -520,7 +520,7 @@ public class Wall extends Structure {
 		}
 		
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Redbacks to build a "+getDisplayName());
+			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+getDisplayName());
 		}
 		
 		setHitpoints(this.getMaxHitPoints());

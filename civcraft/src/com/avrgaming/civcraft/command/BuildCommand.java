@@ -49,7 +49,7 @@ public class BuildCommand extends CommandBase {
 		commands.put("list", "shows all available structures.");
 		commands.put("progress", "Shows progress of currently building structures.");
 		commands.put("repairnearest", "Repairs destroyed structures.");
-//		commands.put("undo", "Undo the last structure built.");
+		commands.put("undo", "Undo the last structure built.");
 		commands.put("demolish", "[location] - destroys the structure at this location.");
 		commands.put("demolishnearest", "- destroys the nearest structure. Requires confirmation.");
 		commands.put("refreshnearest", "Refreshes the nearest structure's blocks. Requires confirmation.");
@@ -108,7 +108,7 @@ public class BuildCommand extends CommandBase {
 	
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
 			CivMessage.send(player, CivColor.LightGreen+"Are you sure you want to repair the structure "+CivColor.Yellow+nearest.getDisplayName()+
-					CivColor.LightGreen+" at "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" for "+CivColor.Yellow+nearest.getRepairCost()+" Redbacks?");
+					CivColor.LightGreen+" at "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" for "+CivColor.Yellow+nearest.getRepairCost()+" Coins?");
 			CivMessage.send(player, CivColor.LightGray+"If yes, use /build repairnearest yes");
 			return;
 		}
@@ -169,9 +169,8 @@ public class BuildCommand extends CommandBase {
 	}
 	
 	public void undo_cmd() throws CivException {
-		return;
-//		Town town = getSelectedTown();
-//		town.processUndo();
+		Town town = getSelectedTown();
+		town.processUndo();
 	}
 	
 	public void progress_cmd() throws CivException {
