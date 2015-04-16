@@ -8,6 +8,7 @@
 
 ################# Trommel Settings #############
 trommel:
+    redstone_chance: 0.03
     iron_chance: 0.04
     gold_chance: 0.02
     diamond_chance: 0.0050

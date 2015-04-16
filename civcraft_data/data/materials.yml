@@ -309,18 +309,18 @@ materials:
                 data: -1
                 count: 9
 
-        # Checked 10/8/13
-        - id: 'mat_refined_wood2'
-          item_id: 126
-          item_data: 0
-          name: 'Refined Wood'
-          craftable: true
-          shaped: false
-          category: '<lightgreen>Tier 1 Materials'
-          ingredients:
-              - type_id: 162
-                data: -1
-                count: 9
+        # # Checked 10/8/13
+        # - id: 'mat_refined_wood2'
+        #   item_id: 126
+        #   item_data: 0
+        #   name: 'T1 Refined Wood'
+        #   craftable: true
+        #   shaped: false
+        #   category: '<lightgreen>Tier 1 Materials'
+        #   ingredients:
+        #       - type_id: 162
+        #         data: -1
+        #         count: 9
 
 # Replaced by diamond block
 #        - id: 'mat_refined_diamonds'

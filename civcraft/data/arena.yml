@@ -5,7 +5,7 @@
 # 
 # Maximum number of players that can be in an arena team.
 #
-max_team_size: 1
+max_team_size: 5
 
 #
 # Amount of base ladder points to award for each match.
