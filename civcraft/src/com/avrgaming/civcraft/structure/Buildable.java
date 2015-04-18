@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.structure;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -80,6 +81,7 @@ import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.template.Template.TemplateType;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.BuildAsyncTask;
+import com.avrgaming.civcraft.threading.tasks.BuildUndoTask;
 import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
 import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.AABB;
@@ -526,16 +528,20 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public void undoFromTemplate() throws IOException, CivException {
-		Template undo_tpl = new Template();
-		undo_tpl.initUndoTemplate(this.getCorner().toString(), this.getTown().getName());
-		undo_tpl.buildUndoTemplate(undo_tpl, this.getCorner().getBlock());
-		
 		for (BuildAsyncTask task : this.getTown().build_tasks) {
 			if (task.buildable == this) {
 				task.abort();
 			}
 		}
-		undo_tpl.deleteUndoTemplate(this.getCorner().toString(), this.getTown().getName());
+		String filepath = "templates/undo/"+this.getTown().getName()+"/"+this.getCorner().toString();
+		File f = new File(filepath);
+		if(!f.exists()) {
+			throw new CivException("File Not found: "+filepath);
+		}
+		BuildUndoTask task = new BuildUndoTask(filepath, this.getCorner().toString(), this.getCorner(), 0, this.getTown().getName());
+		
+		this.town.undo_tasks.add(task);
+		BukkitObjects.scheduleAsyncDelayedTask(task, 0);
 	}
 	
 	public void unbindStructureBlocks() {

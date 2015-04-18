@@ -73,6 +73,7 @@ import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.sync.SyncUpdateTags;
 import com.avrgaming.civcraft.threading.tasks.BuildAsyncTask;
+import com.avrgaming.civcraft.threading.tasks.BuildUndoTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -139,6 +140,7 @@ public class Town extends SQLObject {
 	private boolean pvp = false;
 	
 	public ArrayList<BuildAsyncTask> build_tasks = new ArrayList<BuildAsyncTask>();
+	public ArrayList<BuildUndoTask> undo_tasks = new ArrayList<BuildUndoTask>();
 	public Buildable lastBuildableBuilt = null;
 
 	public boolean leaderWantsToDisband = false;
