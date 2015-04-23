@@ -78,6 +78,7 @@ public class ItemFrameStorage {
 		CivLog.debug("location: "+location.toString());
 		CivLog.debug("Blockface: "+blockface.toString());
 		ItemFrame frame = (ItemFrame)location.getWorld().spawnEntity(location, EntityType.ITEM_FRAME);
+		CivLog.debug("ID: "+frame.getUniqueId());
 		//frame.setItem(new ItemStack(Material.BAKED_POTATO));
 		
 		this.frameID = frame.getUniqueId();

@@ -1209,7 +1209,17 @@ public class CivGlobal {
 	}
 	
 	public static void removeProtectedItemFrame(UUID id) {
+
+		CivLog.debug("Remove ID: "+id);
+		if (id == null)
+		{
+			return;
+		}
 		ItemFrameStorage store = getProtectedItemFrame(id);
+		if (store == null)
+		{
+			return;
+		}
 		ItemFrameStorage.attachedBlockMap.remove(store.getAttachedBlock());
 		protectedItemFrames.remove(id);
 	}

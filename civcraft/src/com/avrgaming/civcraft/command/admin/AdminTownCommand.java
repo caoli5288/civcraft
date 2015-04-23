@@ -405,7 +405,7 @@ public class AdminTownCommand extends CommandBase {
 			throw new CivException("Cannot disband the capitol town, disband the civilization instead.");
 		}
 		
-		CivMessage.sendTown(town, "Your town is has disbanded by an admin!");
+		CivMessage.sendTown(town, "Your town has disbanded by an admin!");
 		try {
 			town.delete();
 		} catch (SQLException e) {

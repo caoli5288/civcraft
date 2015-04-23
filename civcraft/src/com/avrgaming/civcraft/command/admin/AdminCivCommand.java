@@ -343,7 +343,7 @@ public class AdminCivCommand extends CommandBase {
 	public void disband_cmd() throws CivException {
 		Civilization civ = getNamedCiv(1);
 		
-		CivMessage.sendCiv(civ, "Your civ is has disbanded by an admin!");
+		CivMessage.sendCiv(civ, "Your civ has disbanded by an admin!");
 		try {
 			civ.delete();
 		} catch (SQLException e) {

@@ -170,7 +170,7 @@ public class AdminBuildCommand extends CommandBase {
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
 			CivMessage.send(player, CivColor.LightGreen+"Are you sure you want to repair the structure "+CivColor.Yellow+nearest.getDisplayName()+
 					CivColor.LightGreen+" at "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" ?");
-			CivMessage.send(player, CivColor.LightGray+"If yes, use /ad repair yes");
+			CivMessage.send(player, CivColor.LightGray+"If yes, use /ad build repair yes");
 			return;
 		}
 		
