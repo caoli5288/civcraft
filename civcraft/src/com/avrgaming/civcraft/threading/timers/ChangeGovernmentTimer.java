@@ -24,6 +24,7 @@ import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
+import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.sessiondb.SessionEntry;
 
 public class ChangeGovernmentTimer implements Runnable {
@@ -51,8 +52,20 @@ public class ChangeGovernmentTimer implements Runnable {
 				if (CivGlobal.testFileFlag("debug")) {
 					duration = 1;
 				}
+				boolean noanarchy = false;
+				for (Town t : civ.getTowns()) {
+					if (t.getBuffManager().hasBuff("buff_noanarchy")) {
+						noanarchy = true;
+						break;
+					}
+				}
+				int anarchyHours = (Integer)CivSettings.getIntegerGovernment("anarchy_duration");
+				if (noanarchy)
+				{
+					anarchyHours *=0.5;
+				}
 			
-				if (CivGlobal.hasTimeElapsed(se, (Integer)CivSettings.getIntegerGovernment("anarchy_duration")*duration)) {
+				if (CivGlobal.hasTimeElapsed(se, anarchyHours*duration)) {
 
 					civ.setGovernment(se.value);
 					CivMessage.global(civ.getName()+" has emerged from anarchy and has adopted "+CivSettings.governments.get(se.value).displayName);

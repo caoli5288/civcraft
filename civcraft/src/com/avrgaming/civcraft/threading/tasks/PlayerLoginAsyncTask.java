@@ -232,7 +232,12 @@ public class PlayerLoginAsyncTask implements Runnable {
 					resident.giveAllRomanPerks();
 					perkMessage += "Roman, ";
 				}
-				
+
+				if (getPlayer().hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
+				{
+					resident.giveAllNightLightsPerks();
+					perkMessage += "Night Lights, ";
+				}
 
 				perkMessage += "Apply them with /res perks";
 				

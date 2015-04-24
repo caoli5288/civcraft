@@ -1248,6 +1248,27 @@ public class Resident extends SQLObject {
 		
 	}
 	
+	public void giveAllNightLightsPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_nightlights") || perk.getIdent().startsWith("template_nightlights"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+	}
+	
 	public void giveAllHellPerks() {
 		int perkCount;
 		try {

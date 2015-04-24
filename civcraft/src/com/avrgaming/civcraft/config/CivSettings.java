@@ -211,6 +211,7 @@ public class CivSettings {
 	public static final String HELL_PERKS = "civ.hellperks";
 	public static final String ELVEN_PERKS = "civ.elvenperks";
 	public static final String CULTIST_PERKS = "civ.cultistperks";
+	public static final String NIGHTLIGHTS_PERKS = "civ.nightlightperks";
 	public static final String ECON = "civ.econ";
 	public static final int MARKET_COIN_STEP = 5;
 	public static final int MARKET_BUYSELL_COIN_DIFF = 30;

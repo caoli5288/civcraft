@@ -241,9 +241,9 @@ buffs:
       parent:
 # Notre Dame buffs
     - id: 'buff_notre_dame_no_anarchy'
-      name: 'Notre Dame No Anarchy'
-      description: 'Civilization suffers no anarchy during government changes.'
-      value: '0'
+      name: 'Notre Dame Reduced Anarchy'
+      description: 'Civilization suffers 1/2 anarchy during government changes.'
+      value: '0.5'
       stackable: false
       parent: 'buff_noanarchy'
 
@@ -255,7 +255,7 @@ buffs:
       parent:
 
     - id: 'buff_notre_dame_extra_war_penalty'
-      name: 'Notre Dame No Anarchy'
+      name: 'Notre Dame Extra War Penalty'
       description: 'Aggressors pay 2x war penalties when declaring war on this civilization or its allies.'
       value: '2'
       stackable: false
