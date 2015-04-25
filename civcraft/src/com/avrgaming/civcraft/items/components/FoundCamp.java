@@ -42,6 +42,8 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 	public void onPrepareCreate(AttributeUtil attrUtil) {
 		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Starts a Camp");
 		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");		
+		attrUtil.addEnhancement("LoreEnhancementSoulBound", null, null);
+		attrUtil.addLore(CivColor.Gold+"Soulbound");
 	}
 	
 	public void foundCamp(Player player) throws CivException {

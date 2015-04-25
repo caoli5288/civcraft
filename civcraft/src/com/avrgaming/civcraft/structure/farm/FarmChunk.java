@@ -148,6 +148,11 @@ public class FarmChunk {
 	}
 	
 	public void addGrowBlock(String world, int x, int y, int z, int typeid, int data, boolean spawn) {
+		if ((x <= 128 && x >= -128) || ((y <= 128 && y >= -128)))
+		{
+			//Don't grow in spawn, gosh
+			return;
+		}
 		this.growBlocks.add(new GrowBlock(world, x, y, z, typeid, data, spawn));
 	}
 	
@@ -234,6 +239,12 @@ public class FarmChunk {
 			int bsx = growMe.getX() % 16;
 			int bsy = growMe.getY();
 			int bsz  = growMe.getZ() % 16;
+			
+			if ((bsx <= 2 && bsx >= -2) || ((bsz <= 2 && bsz >= -2)))
+			{
+				//Don't grow in spawn, gosh
+				return;
+			}
 			
 			BlockSnapshot bs = new BlockSnapshot(bsx, bsy, bsz, snapshot);
 
