@@ -62,7 +62,7 @@ public class ChangeGovernmentTimer implements Runnable {
 				int anarchyHours = (Integer)CivSettings.getIntegerGovernment("anarchy_duration");
 				if (noanarchy)
 				{
-					anarchyHours *=0.5;
+					anarchyHours = 1;
 				}
 			
 				if (CivGlobal.hasTimeElapsed(se, anarchyHours*duration)) {

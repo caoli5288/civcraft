@@ -34,6 +34,7 @@ import com.avrgaming.civcraft.components.Component;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.InvalidBlockLocation;
 import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Farm;
 import com.avrgaming.civcraft.structure.Structure;
@@ -148,8 +149,9 @@ public class FarmChunk {
 	}
 	
 	public void addGrowBlock(String world, int x, int y, int z, int typeid, int data, boolean spawn) {
-		if ((x <= 128 && x >= -128) || ((y <= 128 && y >= -128)))
+		if ((x > -64 && x < 64) || ((z > -64 && z < 64)))
 		{
+			CivLog.debug("Didn't grow in town "+this.town.getName()+": "+x+" "+y+" "+z);
 			//Don't grow in spawn, gosh
 			return;
 		}
@@ -239,12 +241,6 @@ public class FarmChunk {
 			int bsx = growMe.getX() % 16;
 			int bsy = growMe.getY();
 			int bsz  = growMe.getZ() % 16;
-			
-			if ((bsx <= 2 && bsx >= -2) || ((bsz <= 2 && bsz >= -2)))
-			{
-				//Don't grow in spawn, gosh
-				return;
-			}
 			
 			BlockSnapshot bs = new BlockSnapshot(bsx, bsy, bsz, snapshot);
 

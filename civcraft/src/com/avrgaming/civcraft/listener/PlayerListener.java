@@ -57,6 +57,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import com.avrgaming.civcraft.camp.Camp;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigTechPotion;
 import com.avrgaming.civcraft.items.units.Unit;
@@ -125,6 +126,7 @@ public class PlayerListener implements Listener {
 			Player player = event.getPlayer();
 			if (!player.isOp() && !player.hasPermission("civ.admin")) {
 				CultureChunk cc = CivGlobal.getCultureChunk(new ChunkCoord(event.getTo()));
+				Camp toCamp = CivGlobal.getCampFromChunk(new ChunkCoord(event.getTo()));
 				Resident resident = CivGlobal.getResident(player);
 				if (cc != null && cc.getCiv() != resident.getCiv() && !cc.getCiv().isAdminCiv()) {
 					Relation.Status status = cc.getCiv().getDiplomacyManager().getRelationStatus(player);
@@ -138,6 +140,18 @@ public class PlayerListener implements Listener {
 							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Civ ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] unless you are allied with them.");
 						}
 					}
+					
+				}
+				
+				if (toCamp != null && toCamp != resident.getCamp()) {
+						/* 
+						 * Deny telportation into Civ if not allied.
+						 */
+						if (!event.isCancelled())
+						{
+						event.setCancelled(true);
+							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Camp ["+CivColor.Green+toCamp.getName()+CivColor.White+"] unless you are a member of that camp.");
+						}
 					
 				}
 			}
