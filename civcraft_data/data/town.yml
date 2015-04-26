@@ -1,4 +1,4 @@
-# This configuration file contains all of the relevent town configuration information
+# This configuration file contains all of the relevant town configuration information
 # Use this to configure global town costs/settings as well as town levels and culture 
 # levels for towns.
 town:
@@ -561,3 +561,58 @@ upgrades:
       require_structure: 's_grocer'
       category: 'Grocer'
 
+# Trommel upgrades
+    - id: 'upgrade_trommel_material_granite'
+      name: 'Upgrade Trommel Level 2 (Granite)' 
+      action: 'set_trommel_level, 2'
+      cost: 5000.0
+      require_upgrade:
+      require_tech: 'tech_masonry'
+      require_structure: 's_trommel'
+      category: 'trommel'
+
+    - id: 'upgrade_trommel_material_diorite'
+      name: 'Upgrade Trommel Level 3 (Diorite)'
+      action: 'set_trommel_level, 3'
+      cost: 10000.0
+      require_upgrade: 'upgrade_trommel_material_granite'
+      require_tech: 'tech_advanced_masonry'
+      require_structure: 's_trommel'
+      category: 'trommel'
+
+    - id: 'upgrade_trommel_level_andesite'
+      name: 'Upgrade Trommel Level 4 (Andesite)'
+      action: 'set_trommel_level, 4'
+      cost: 20000.0
+      require_upgrade: 'upgrade_trommel_material_diorite'
+      require_tech: 'tech_alloys'
+      require_structure: 's_trommel'
+      category: 'trommel'
+
+# quarry upgrades
+    - id: 'upgrade_quarry_material_granite'
+      name: 'Upgrade quarry Level 2 (Stone)' 
+      action: 'set_quarry_level, 2'
+      cost: 5000.0
+      require_upgrade:
+      require_tech: 'tech_masonry'
+      require_structure: 'ti_quarry'
+      category: 'quarry'
+
+    - id: 'upgrade_quarry_material_diorite'
+      name: 'Upgrade quarry Level 3 (Iron)'
+      action: 'set_quarry_level, 3'
+      cost: 10000.0
+      require_upgrade: 'upgrade_quarry_material_granite'
+      require_tech: 'tech_advanced_masonry'
+      require_structure: 'ti_quarry'
+      category: 'quarry'
+
+    - id: 'upgrade_quarry_level_andesite'
+      name: 'Upgrade quarry Level 4 (Diamond)'
+      action: 'set_quarry_level, 4'
+      cost: 20000.0
+      require_upgrade: 'upgrade_quarry_material_diorite'
+      require_tech: 'tech_alloys'
+      require_structure: 'ti_quarry'
+      category: 'quarry'

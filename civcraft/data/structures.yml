@@ -480,7 +480,7 @@ structures:
     template_y_shift: 0
     displayName: Trommel
     require_upgrade:
-    require_tech: 'tech_automation'
+    require_tech: 'tech_mining'
     effect_event: 
     check_event: 
     update_event: trommel_process
@@ -498,7 +498,7 @@ structures:
     template_y_shift: -30
     displayName: quarry
     require_upgrade:
-    require_tech: 'tech_mining'
+    require_tech: 'tech_automation'
     effect_event: 
     check_event: 
     update_event: quarry_process
