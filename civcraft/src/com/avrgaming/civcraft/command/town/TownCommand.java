@@ -49,9 +49,9 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.permission.PermissionGroup;
 import com.avrgaming.civcraft.questions.JoinTownResponse;
-import com.avrgaming.civcraft.structure.Capitol;
+//import com.avrgaming.civcraft.structure.Capitol;
 import com.avrgaming.civcraft.structure.Structure;
-import com.avrgaming.civcraft.structure.TownHall;
+//import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
@@ -94,7 +94,7 @@ public class TownCommand extends CommandBase {
 		commands.put("templates", "Displays all templates bound to this town.");
 		commands.put("event", "Displays information about the current random event going down.");
 		commands.put("claimmayor", "claim yourself as mayor of this town. All current mayors must be inactive.");
-		commands.put("movestructure", "[coord] [town] moves the structure specified by the coord to the specfied town.");
+//		commands.put("movestructure", "[coord] [town] moves the structure specified by the coord to the specfied town.");
 		commands.put("enablestructure", "[coord] attempts to enable the specified structure if its currently disabled.");
 	}
 	
@@ -131,46 +131,46 @@ public class TownCommand extends CommandBase {
 		CivMessage.sendSuccess(sender, "Re-enabled structure.");
 	}
 	
-	public void movestructure_cmd() throws CivException {
-		Town town = getSelectedTown();
-		Resident resident = getResident();
-		String coordString = getNamedString(1, "Coordinate of structure. Example: world,555,65,444");
-		Town targetTown = getNamedTown(2);
-		Structure struct;
-		
-		try {
-			struct = CivGlobal.getStructure(new BlockCoord(coordString));
-		} catch (Exception e) {
-			throw new CivException("Invalid structure coordinate. Example: world,555,65,444");
-		}
-
-		if (struct instanceof TownHall || struct instanceof Capitol) {
-			throw new CivException("Cannot move town halls or capitols.");
-		}
-		
-		if (War.isWarTime()) {
-			throw new CivException("Cannot move structures during war time.");
-		}
-		
-		if (struct == null) {
-			throw new CivException("Structure at:"+coordString+" is not found.");
-		}
-		
-		if (!resident.getCiv().getLeaderGroup().hasMember(resident)) {
-			throw new CivException("You must be the civ's leader in order to do this.");
-		}
-		
-		if (town.getCiv() != targetTown.getCiv()) {
-			throw new CivException("You can only move structures between towns in your own civ.");
-		}
-		
-		town.removeStructure(struct);
-		targetTown.addStructure(struct);
-		struct.setTown(targetTown);
-		struct.save();
-		
-		CivMessage.sendSuccess(sender, "Moved structure "+coordString+" to town "+targetTown.getName());
-	}
+//	public void movestructure_cmd() throws CivException {
+//		Town town = getSelectedTown();
+//		Resident resident = getResident();
+//		String coordString = getNamedString(1, "Coordinate of structure. Example: world,555,65,444");
+//		Town targetTown = getNamedTown(2);
+//		Structure struct;
+//		
+//		try {
+//			struct = CivGlobal.getStructure(new BlockCoord(coordString));
+//		} catch (Exception e) {
+//			throw new CivException("Invalid structure coordinate. Example: world,555,65,444");
+//		}
+//
+//		if (struct instanceof TownHall || struct instanceof Capitol) {
+//			throw new CivException("Cannot move town halls or capitols.");
+//		}
+//		
+//		if (War.isWarTime()) {
+//			throw new CivException("Cannot move structures during war time.");
+//		}
+//		
+//		if (struct == null) {
+//			throw new CivException("Structure at:"+coordString+" is not found.");
+//		}
+//		
+//		if (!resident.getCiv().getLeaderGroup().hasMember(resident)) {
+//			throw new CivException("You must be the civ's leader in order to do this.");
+//		}
+//		
+//		if (town.getCiv() != targetTown.getCiv()) {
+//			throw new CivException("You can only move structures between towns in your own civ.");
+//		}
+//		
+//		town.removeStructure(struct);
+//		targetTown.addStructure(struct);
+//		struct.setTown(targetTown);
+//		struct.save();
+//		
+//		CivMessage.sendSuccess(sender, "Moved structure "+coordString+" to town "+targetTown.getName());
+//	}
 	
 	public void claimmayor_cmd() throws CivException {
 		Town town = getSelectedTown();

@@ -566,7 +566,7 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 	public void onCannonDamage(int damage, CannonProjectile projectile) throws CivException {
 		this.hitpoints -= damage;
 
-		Resident resident = projectile.whoFired;
+//		Resident resident = projectile.whoFired;
 		if (hitpoints <= 0) {
 			for (BlockCoord coord : this.controlPoints.keySet()) {
 				ControlPoint cp = this.controlPoints.get(coord);				
@@ -574,8 +574,8 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 					if (cp.getHitpoints() > CannonProjectile.controlBlockHP) {
 						cp.damage(cp.getHitpoints()-1);
 						this.hitpoints = this.getMaxHitPoints()/2;
-						StructureBlock hit = CivGlobal.getStructureBlock(coord);
-						onControlBlockCannonDestroy(cp, CivGlobal.getPlayer(resident), hit);
+//						StructureBlock hit = CivGlobal.getStructureBlock(coord);
+//						onControlBlockCannonDestroy(cp, CivGlobal.getPlayer(resident), hit);
 						CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has been hit by a cannon and a control block was set to "+CannonProjectile.controlBlockHP+" HP!");
 						CivMessage.sendCiv(getCiv(), "Our "+this.getDisplayName()+" has regenerated "+this.getMaxHitPoints()/2+" HP! If it drops to zero, we will lose another Control Point.");
 						return;

@@ -134,26 +134,48 @@ public class PlayerListener implements Listener {
 						/* 
 						 * Deny telportation into Civ if not allied.
 						 */
+						event.setTo(event.getFrom());
 						if (!event.isCancelled())
 						{
+							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
 							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Civ ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] unless you are allied with them.");
+							return;
 						}
 					}
-					
 				}
 				
 				if (toCamp != null && toCamp != resident.getCamp()) {
 						/* 
 						 * Deny telportation into Civ if not allied.
 						 */
+					event.setTo(event.getFrom());
 						if (!event.isCancelled())
 						{
+							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
 							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Camp ["+CivColor.Green+toCamp.getName()+CivColor.White+"] unless you are a member of that camp.");
+							return;
 						}
 					
 				}
+				
+//				if (War.isWarTime()) {
+//					
+//					if (toCamp != null && toCamp == resident.getCamp()) {
+//						return;
+//					}
+//					if (cc != null && (cc.getCiv() == resident.getCiv() || cc.getCiv().isAdminCiv())) {
+//						return;
+//					}
+//					
+//					event.setTo(event.getFrom());
+//					if (!event.isCancelled())
+//					{
+//					event.setCancelled(true);
+//						CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport during War unless you are teleporting to your own Civ or Camp");
+//					}
+//				}
 			}
 		}
 	}

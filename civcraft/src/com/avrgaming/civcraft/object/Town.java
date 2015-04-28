@@ -2801,9 +2801,31 @@ public class Town extends SQLObject {
 			e.printStackTrace();
 			return null;
 		}
+		HashSet<Resident> UnResidents = new HashSet<Resident>();
+		HashSet<Resident> NonResidents = new HashSet<Resident>();
+		for (PermissionGroup group : this.getGroups())
+		{
+			for (Resident res : group.getMemberList())
+			{
+				if (res.getCiv() != null)
+				{
+				if (res.getCiv() != this.getCiv())
+				{
+					NonResidents.add(res);
+				}
+				}
+				else 
+				{
+					UnResidents.add(res);
+				}
+			}
+		}
+
 		double happy_resident = per_resident * this.getResidents().size();
-		sources.put("Residents", happy_resident);
-		total += happy_resident;
+		double happy_Nonresident = (per_resident*0.25) * NonResidents.size();
+		double happy_Unresident = per_resident * UnResidents.size();
+		sources.put("Residents", (happy_resident+happy_Nonresident+happy_Unresident));
+		total += happy_resident+happy_Nonresident+happy_Unresident;
 		
 		/* Try to reduce war unhappiness via the component. */
 		if (sources.containsKey("War")) {
