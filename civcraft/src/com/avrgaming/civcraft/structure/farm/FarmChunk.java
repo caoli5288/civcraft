@@ -149,7 +149,7 @@ public class FarmChunk {
 	}
 	
 	public void addGrowBlock(String world, int x, int y, int z, int typeid, int data, boolean spawn) {
-		if ((x > -64 && x < 64) || ((z > -64 && z < 64)))
+		if ((x > -64 && x < 64) && ((z > -64 && z < 64)))
 		{
 			CivLog.debug("Didn't grow in town "+this.town.getName()+": "+x+" "+y+" "+z);
 			//Don't grow in spawn, gosh
