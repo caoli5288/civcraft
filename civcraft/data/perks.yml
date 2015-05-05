@@ -166,7 +166,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'arctic'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
     
     - id: 'tpl_arctic_cottage'
@@ -397,7 +397,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'aztec'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
     
     - id: 'tpl_aztec_cottage'
@@ -610,7 +610,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'egyptian'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
     
     - id: 'tpl_egyptian_cottage'
@@ -831,7 +831,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'roman'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
     
     - id: 'tpl_roman_cottage'
@@ -1051,7 +1051,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'hell'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
     
     - id: 'tpl_hell_cottage'
@@ -1272,7 +1272,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'elven'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
 
     - id: 'prem_tpl_elven_cottage'
@@ -1511,7 +1511,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'cultist'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
 
     - id: 'prem_tpl_cultist_cottage'
@@ -1740,7 +1740,7 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'atlantean'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
 
     - id: 'prem_tpl_atlantean_cottage'

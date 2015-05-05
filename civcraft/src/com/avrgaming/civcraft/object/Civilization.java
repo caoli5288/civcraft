@@ -1658,14 +1658,14 @@ public class Civilization extends SQLObject {
 		int conqueredCivs = 1; /* Your civ already counts */
 		
 		for (Civilization civ : CivGlobal.getConqueredCivs()) {
-			Town capital = CivGlobal.getTown(civ.getCapitolName());
-			if (capital == null) {
+			Town capitol = CivGlobal.getTown(civ.getCapitolName());
+			if (capitol == null) {
 				/* Invalid civ? */
 				totalCivs--;
 				continue;
 			}
 			
-			if (capital.getCiv() == this) {
+			if (capitol.getCiv() == this) {
 				conqueredCivs++;
 			}
 		}

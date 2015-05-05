@@ -435,7 +435,7 @@ structures:
           value: '25.0'
   
   - id: s_capitol
-    template: capital #XXX misspelt =( but its easier to leave it that way.
+    template: capitol #XXX misspelt =( but its easier to leave it that way.
     template_y_shift: 0
     displayName: Capitol
     require_tech:

@@ -104,20 +104,20 @@ civ:
     # Amount of coins required to start a civilization
     cost: 100000.0
     
-    # Amount of static upkeep civ's pay for each new town(minus the capital)
+    # Amount of static upkeep civ's pay for each new town(minus the capitol)
     town_upkeep: 500.0
 
     # Formula for distance upkeep is:
     # upkeep = town_distance_base_upkeep * ( distance ^ town_distance_multiplier )
     #
 
-    # Base amount of upkeep paid for town distance to capital
+    # Base amount of upkeep paid for town distance to capitol
     town_distance_base_upkeep: 0.0
 
     # Multiplier used to make distance upkeep expoential, greater = higher upkeep
     town_distance_multiplier: 0.1
 
-    # Multiplier used when a town's culture doesnt connect to the capitals culture.
+    # Multiplier used when a town's culture doesnt connect to the capitols culture.
     town_distance_multiplier_outside_culture: 0.2
 
     # Maximum amount of distance upkeep anybody can pay per town

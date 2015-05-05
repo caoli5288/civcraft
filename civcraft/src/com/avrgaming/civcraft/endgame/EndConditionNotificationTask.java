@@ -24,7 +24,7 @@ public class EndConditionNotificationTask implements Runnable {
 				Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
 				CivMessage.global(CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+" is "+
 				CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White+" days away from a "+CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+
-				CivColor.White+" victory! Capture their capital to prevent it!");
+				CivColor.White+" victory! Capture their capitol to prevent it!");
 			}
 		}
 		
