@@ -86,6 +86,8 @@ public class CivData {
 	public static final int EMPTY_BUCKET = 325;
 	public static final int ENDER_PEARL = 368;
 	public static final int ENDER_CHEST = 130;
+	public static final int BEACON = 138;
+	
 	public static final int MONSTER_EGG = 383;
 	public static final String BOOK_UNDERLINE = "§n";
 	public static final String BOOK_BOLD = "§l";

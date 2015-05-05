@@ -458,6 +458,25 @@ structures:
           attribute: 'CULTURE'
           value: '50.0'
 
+  - id: s_lighthouse
+    template: lighthouse
+    template_y_shift: -1
+    displayName: Lighthouse
+    require_tech: 'tech_sailing'
+    effect_event: generate_culture:10
+    limit: 1
+    cost: 5000.0
+    upkeep: 200.0
+    hammer_cost: 2500.0
+    points: 2000
+    max_hitpoints: 500
+    ignore_floating: true
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'CULTURE'
+          value: '10.0'
+
   - id: s_bank
     template: bank
     template_y_shift: 0
@@ -503,10 +522,10 @@ structures:
     check_event: 
     update_event: quarry_process
     onBuild_event:
-    limit: 0
+    limit: 1
     allow_outside_town: true
     cost: 10000.0
-    upkeep: 1500.0
+    upkeep: 5000.0
     hammer_cost: 5000.0
     points: 1500
     max_hitpoints: 100

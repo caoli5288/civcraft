@@ -80,6 +80,13 @@ public class Structure extends Buildable {
 		Structure struct;
 		
 		switch (id) {
+		case "s_lighthouse":
+			if (rs == null) {
+				struct = (Structure) new Lighthouse(center, id, town);
+			} else {
+				struct = (Structure) new Lighthouse(rs);
+			}
+			break;
 		case "s_bank":
 			if (rs == null) {
 				struct = (Structure) new Bank(center, id, town);

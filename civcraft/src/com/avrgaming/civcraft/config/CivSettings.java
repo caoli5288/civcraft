@@ -281,6 +281,7 @@ public class CivSettings {
 		alwaysCrumble.add(CivData.IRON_BLOCK);
 		alwaysCrumble.add(CivData.REDSTONE_BLOCK);
 		alwaysCrumble.add(CivData.ENDER_CHEST);
+		alwaysCrumble.add(CivData.BEACON);
 		
 		LoreEnhancement.init();
 		LoreCraftableMaterial.buildStaticMaterials();
