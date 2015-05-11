@@ -367,7 +367,12 @@ public class FortifiedWall extends Wall {
 		int verticalSegments = this.buildWallSegment(player, first, second, 0, simpleBlocks, 0);
 		
 		// Pay the piper
-		double cost = verticalSegments*COST_PER_SEGMENT;
+		double cost =0;
+
+		cost = COST_PER_SEGMENT * simpleBlocks.size();
+		
+		cost /= HEIGHT;
+		cost = Math.round(cost);
 		if (!this.getTown().getTreasury().hasEnough(cost)) {
 			
 			for (WallBlock wb : this.wallBlocks.values()) {
