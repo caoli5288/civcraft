@@ -43,8 +43,6 @@ commands:
         aliases:
     report:
         aliases:
-    vote:
-        aliases: [v]
     trade:
         aliases:
     kill:

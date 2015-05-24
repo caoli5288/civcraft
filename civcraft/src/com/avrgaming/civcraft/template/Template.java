@@ -534,6 +534,11 @@ public class Template {
 	
 	public static Template getTemplate(String filepath, Location dirLoc) throws IOException, CivException {
 		/* Attempt to get template statically. */
+		if (filepath.contains("capital"))
+		{
+			CivLog.debug("Template getTemplate - Replacing Capital occurence");
+			filepath = filepath.replace("capital", "capitol");
+		}
 		Template tpl = templateCache.get(filepath);
 		if (tpl == null) {
 			/* No template found in cache. Load it. */

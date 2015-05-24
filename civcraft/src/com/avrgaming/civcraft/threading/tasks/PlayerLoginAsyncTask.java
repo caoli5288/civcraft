@@ -311,7 +311,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 			}
 			
 			if (EndConditionDiplomacy.canPeopleVote()) {
-				CivMessage.send(resident, CivColor.LightGreen+"The Council of Eight is built! Use /vote to vote for your favorite Civilization!");
+				CivMessage.send(resident, CivColor.LightGreen+"The Council of Eight is built! Use /civ vote to vote for your favorite Civilization!");
 			}
 			Civilization civ = resident.getCiv();
 			if (civ != null)

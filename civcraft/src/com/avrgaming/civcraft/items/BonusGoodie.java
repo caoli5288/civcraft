@@ -218,7 +218,7 @@ public class BonusGoodie extends LoreItem {
 		// if in an item frame
 		if (this.frameStore != null) {
 			try {
-				if (frameStore.isEmpty() || !isItemStackOurs(frameStore.getItem())) {
+				if (frameStore.isEmpty()) {
 					CivLog.warning("Found frame, but item was wrong, trying to recover by spawning item.");
 					
 					ItemStack stack = ItemManager.createItemStack(this.config.material, 1, (short) this.config.material_data);
@@ -578,7 +578,7 @@ public class BonusGoodie extends LoreItem {
 			this.item = null;
 			
 			try {
-				if (frameStore.isEmpty() || !isItemStackOurs(frameStore.getItem())) {
+				if (frameStore.isEmpty()) {
 					//Couldn't find good, deleting...
 					CivLog.warning("Found frame, but item was wrong:"+frameUID);
 					deleteAndReset();
@@ -604,6 +604,8 @@ public class BonusGoodie extends LoreItem {
 			holderStore = null;
 			
 			if (!this.isItemStackOurs(this.item.getItemStack())) {
+
+				CivLog.warning("ITEM STOLEN...deleting goodie");
 				deleteAndReset();
 				return;
 			}

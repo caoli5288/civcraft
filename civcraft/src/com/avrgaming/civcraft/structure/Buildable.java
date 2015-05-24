@@ -385,6 +385,7 @@ public abstract class Buildable extends SQLObject {
 				}
 			}
 		}
+		this.save();
 	}
 	
 	public void buildPlayerPreview(Player player, Location centerLoc) throws CivException, IOException {
@@ -1070,6 +1071,13 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public String getSavedTemplatePath() {
+		if (templateName == null)
+			return templateName;
+		if (templateName.contains("capital"))
+		{
+			CivLog.debug("getSavedTemplatePath - Replacing Capital occurence");
+			templateName = templateName.replace("capital", "capitol");;
+		}
 		return templateName;
 	}
 	public void setTemplateName(String templateName) {
