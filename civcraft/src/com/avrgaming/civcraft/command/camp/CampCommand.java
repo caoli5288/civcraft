@@ -52,6 +52,7 @@ public class CampCommand extends CommandBase {
 		commands.put("disband", "Disbands this camp.");
 		commands.put("upgrade", "Manage camp upgrades.");
 		commands.put("refresh", "Refresh all attachables (ladders, doors, etc) in this camp.");
+		commands.put("location", "Shows the location of your camp.");
 	}
 	
 	public void location_cmd() throws CivException {
