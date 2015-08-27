@@ -20,6 +20,13 @@ quarry:
     tungsten_chance: 0.0009
     rare_chance: 0.0004
 
+fishery:
+    max: 100000
+    fish_rate: 1.0
+    clownfish_rate: 1.0
+    salmon_rate: 1.0
+    pufferfish_rate: 1.0
+
 trommel:
     despotism_rate: 2.0
     penalty_rate: 0.8
@@ -512,6 +519,24 @@ structures:
     points: 1500
     max_hitpoints: 200
 
+  - id: ti_fish_hatchery
+    template: fish_hatchery
+    template_y_shift: 0
+    displayName: Fish Hatchery
+    require_upgrade:
+    require_tech: 'tech_automation'
+    effect_event: 
+    check_event: 
+    update_event: fish_hatchery_process
+    onBuild_event:
+    limit: 1
+    allow_outside_town: true
+    cost: 10000.0
+    upkeep: 5000.0
+    hammer_cost: 5000.0
+    points: 1500
+    max_hitpoints: 100
+
   - id: ti_quarry
     template: quarry
     template_y_shift: -30
@@ -703,8 +728,6 @@ structures:
     components:
         - name: 'AttributeStatic'
           type: 'direct'
-          attribute: 'CULTURE'
-          value: '200.0'
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'HAPPINESS'

@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.object.LibraryEnchantment;
 import com.avrgaming.civcraft.object.StoreMaterial;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Bank;
+import com.avrgaming.civcraft.structure.FishHatchery;
 import com.avrgaming.civcraft.structure.Grocer;
 import com.avrgaming.civcraft.structure.Library;
 import com.avrgaming.civcraft.structure.Quarry;
@@ -159,6 +160,29 @@ public class ConfigTownUpgrade {
 				CivMessage.sendTown(town, "The library now offers the "+args[1].trim()+" enchantment at level "+args[2]+"!");
 			}
 			break;
+		case "set_fish_hatchery_level":
+			boolean didUpgradeFishery = false;
+			int fisheryLevel = 1;
+			for (Structure structure : town.getStructures()) {
+				if (structure.getConfigId().equalsIgnoreCase("ti_fish_hatchery")) {
+
+					if (structure != null && (structure instanceof FishHatchery)) {
+						FishHatchery fishery = (FishHatchery)structure;
+						if (fishery.getLevel() < Integer.valueOf(args[1].trim())) {
+							didUpgradeFishery = true;
+							fishery.setLevel(Integer.valueOf(args[1].trim()));
+							fishery.updateSignText();
+							town.saved_fish_hatchery_level = fishery.getLevel();
+							fisheryLevel = fishery.getLevel();
+						}
+					}
+				}
+			}
+			if (didUpgradeFishery)
+			{
+				CivMessage.sendTown(town, "Our Fish Hatcheries are now level "+fisheryLevel);
+			}
+			break;
 		case "set_grocer_level":
 			struct = town.getStructureByType("s_grocer");
 			if (struct != null && (struct instanceof Grocer)) {
@@ -201,7 +225,7 @@ public class ConfigTownUpgrade {
 					if (structure != null && (structure instanceof Quarry)) {
 						Quarry quarry = (Quarry)structure;
 						if (quarry.getLevel() < Integer.valueOf(args[1].trim())) {
-							didUpgrade = true;
+							didUpgradeQuarry = true;
 							quarry.setLevel(Integer.valueOf(args[1].trim()));
 							town.saved_quarry_level = quarry.getLevel();
 							quarryLevel = quarry.getLevel();

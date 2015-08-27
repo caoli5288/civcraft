@@ -19,12 +19,16 @@
 package com.avrgaming.civcraft.command.admin;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -42,7 +46,7 @@ public class AdminBuildCommand extends CommandBase {
 	public void init() {
 		command = "/ad build";
 		displayName = "Admin Build";
-		
+		commands.put("unbuild", "[town] [id] demolish the structure by this ID.");
 		commands.put("demolish", "[town] [location] demolish the structure at this location.");
 		commands.put("repair", "Fixes the nearest structure, requires confirmation.");
 		commands.put("destroywonder", "[id] destroyes this wonder.");
@@ -182,6 +186,60 @@ public class AdminBuildCommand extends CommandBase {
 		}
 		CivMessage.sendSuccess(player, nearest.getDisplayName()+" Repaired.");
 		
+	}
+	
+	public void unbuild_cmd() throws CivException, SQLException {		
+		
+		if (args.length < 2) {
+			throw new CivException ("Enter a town and structure ID.");
+		}
+		
+		Town town = getNamedTown(1);
+		
+		if (args.length < 3) {
+			CivMessage.sendHeading(sender, "Demolish Structure");
+			for (Structure struct : town.getStructures()) {
+				CivMessage.send(sender, struct.getDisplayName()+": "+CivColor.Yellow+struct.getId()+
+						CivColor.White+" - Location: "+CivColor.Yellow+struct.getCorner().toString());
+			}
+			return;
+		}
+		
+		String id = new String(args[2]);
+		
+		Connection context = null;
+		ResultSet rs = null;
+		PreparedStatement ps = null;
+		Structure struct = null;
+
+		try {
+			context = SQL.getGameConnection();		
+			ps = context.prepareStatement("SELECT * FROM "+SQL.tb_prefix+Structure.TABLE_NAME+" WHERE id = "+id);
+			rs = ps.executeQuery();
+			
+			while(rs.next()) {
+				try {
+					Structure structure = Structure.newStructure(rs);
+					struct = CivGlobal.getStructure(structure.getCorner());
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+		} finally {
+			SQL.close(rs, ps, context);
+		}
+		
+		
+		if (struct == null) {
+			CivMessage.send(sender, CivColor.Rose+"No structure at "+args[2]);
+			return;
+		}
+		
+		struct.getTown().demolish(struct, true);
+		
+	
+		CivMessage.sendTown(struct.getTown(), struct.getDisplayName()+" has been demolished.");
 	}
 	
 	public void demolish_cmd() throws CivException {		

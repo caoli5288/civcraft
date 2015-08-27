@@ -9,14 +9,14 @@ import java.util.concurrent.ConcurrentMap;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import net.minecraft.server.v1_8_R2.NBTBase;
-import net.minecraft.server.v1_8_R2.NBTTagCompound;
-import net.minecraft.server.v1_8_R2.NBTTagInt;
-import net.minecraft.server.v1_8_R2.NBTTagList;
-import net.minecraft.server.v1_8_R2.NBTTagString;
+import net.minecraft.server.v1_8_R3.NBTBase;
+import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_8_R3.NBTTagInt;
+import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_8_R3.NBTTagString;
 
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_8_R2.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
@@ -221,7 +221,7 @@ public class AttributeUtil {
     }
     
     // This may be modified
-    public net.minecraft.server.v1_8_R2.ItemStack nmsStack;
+    public net.minecraft.server.v1_8_R3.ItemStack nmsStack;
     
     private NBTTagCompound parent;
     private NBTTagList attributes;

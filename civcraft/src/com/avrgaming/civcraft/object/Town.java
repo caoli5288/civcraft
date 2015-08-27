@@ -65,6 +65,7 @@ import com.avrgaming.civcraft.randomevents.RandomEvent;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Structure;
+import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.TradeOutpost;
 import com.avrgaming.civcraft.structure.Wall;
@@ -155,6 +156,7 @@ public class Town extends SQLObject {
 	public int saved_bank_level = 1;
 	public int saved_trommel_level = 1;
 	public int saved_quarry_level = 1;
+	public int saved_fish_hatchery_level = 1;
 	public double saved_bank_interest_amount = 0;
 	
 	/* Happiness Stuff */
@@ -631,6 +633,10 @@ public class Town extends SQLObject {
 						fromStructures += as.getGenerated();
 					}
 				}
+			}
+			if (struct instanceof Temple) {
+				Temple temple = (Temple)struct;
+				fromStructures += temple.getCultureGenerated();
 			}
 		}
 		

@@ -47,6 +47,10 @@ public class CivData {
 	public static final int COARSE_DIRT = 1;
 	public static final int PODZOL = 2;
 	
+	public static final int SALMON = 1;
+	public static final int CLOWNFISH = 2;
+	public static final int PUFFERFISH = 3;
+	
 	public static final int GOLD_ORE = 14;
 	public static final int IRON_ORE = 15;
 	public static final int IRON_INGOT = 265;
@@ -113,6 +117,7 @@ public class CivData {
 	public static final int COOKED_FISH = 350;
 	public static final int OBSIDIAN = 49;
 	public static final int FIRE = 51;
+	public static final int FISHING_ROD = 346;
 	public static final int FISH_RAW = 349;
 	public static final int MUTTON_RAW = 423;
 	public static final int BREAD = 297;
@@ -207,8 +212,6 @@ public class CivData {
 	public static final short THICK_POTION_DATA = 32;
 	public static final short DATA_WOOL_RED = 14;
 	public static final int DATA_WOOL_WHITE = 0;
-	public static final int CLOWNFISH = 2;
-	public static final int PUFFERFISH = 3;
 	public static final int GOLDEN_APPLE = 322;
 	public static final int TNT = 46;
 	

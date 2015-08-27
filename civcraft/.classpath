@@ -16,8 +16,8 @@
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/junit-4.11.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/json.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.8.3-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.8.3.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.8.3.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.8.7-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.8.7.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.8.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

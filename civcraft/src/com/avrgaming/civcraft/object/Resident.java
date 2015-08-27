@@ -873,6 +873,7 @@ public class Resident extends SQLObject {
 		return this.getTown().getCiv();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setScoreboardName(String name, String key) {
 		if (this.scoreboard == null) {
 			this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
