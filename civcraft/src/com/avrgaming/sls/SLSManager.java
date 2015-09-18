@@ -88,7 +88,7 @@ public class SLSManager implements Runnable {
 	public static void sendHeartbeat() {
 		try {
 			InetAddress address = InetAddress.getByName("atlas.civcraft.net");
-			String message = gen_id+";<a href=\""+serverURL+"\" title=\""+serverURLDescription+"\" target=\"_blank\" style=\"color:black\"><strong>"+serverName+"</strong></a>;<strong>"+serverDescription+"</strong>;"+serverTimezone+";<strong>"+serverAddress+"</strong>;"+
+			String message = gen_id+";<a href=\""+serverURL+"\" title=\""+serverURLDescription+"\" target=\"_blank\" style=\"color:black\">"+serverName+"</a>;"+serverDescription+";"+serverTimezone+";"+serverAddress+";"+
 					Bukkit.getOnlinePlayers().size()+";"+Bukkit.getMaxPlayers()+";"+getParsedVersion();
 			
 			try {

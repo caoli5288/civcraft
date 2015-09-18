@@ -39,7 +39,12 @@ public class DisableTeleportEvent implements EventInterface {
 	public void process() {
 		CivLog.info("TimerEvent: DisableTeleportEvent -------------------------------------");
 
-		disableTeleport();
+		try {
+			disableTeleport();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -67,15 +72,16 @@ public class DisableTeleportEvent implements EventInterface {
 	}
 	
 
-	public static void disableTeleport() {
+	public static void disableTeleport() throws IOException {
 
-		File file = new File("teleportsOff.txt");
-		
-		
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/teleportsOff.txt");
 		if (!file.exists()) {
-			CivLog.warning("No teleportsOff.txt to run commands from");
-			return;
+			CivLog.warning("Configuration file: teleportsOff.txt was missing. Streaming to disk from Jar.");
+			CivSettings.streamResourceToDisk("/data/teleportsOff.txt");
 		}
+		
+		CivLog.info("Loading Configuration file: teleportsOff.txt");		
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			
@@ -100,14 +106,16 @@ public class DisableTeleportEvent implements EventInterface {
 	
 
 	
-	public static void enableTeleport() {
-		File file = new File("teleportsOn.txt");
+	public static void enableTeleport() throws IOException {
 		
-		
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/teleportsOn.txt");
 		if (!file.exists()) {
-			CivLog.warning("No teleportsOn.txt to run commands from");
-			return;
+			CivLog.warning("Configuration file: teleportsOn.txt was missing. Streaming to disk from Jar.");
+			CivSettings.streamResourceToDisk("/data/teleportsOn.txt");
 		}
+		
+		CivLog.info("Loading Configuration file: teleportsOn.txt");
+		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			

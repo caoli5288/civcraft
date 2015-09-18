@@ -90,7 +90,7 @@ public class NotreDame extends Wonder {
 		}
 		
 		this.getTown().depositTaxed(totalCoins);
-		CivMessage.sendTown(this.getTown(), "Generated "+totalCoins+" Redbacks from the peaceful towns of the world!");	
+		CivMessage.sendTown(this.getTown(), "Generated "+totalCoins+" Coins from the peaceful towns of the world!");	
 		
 	}
 

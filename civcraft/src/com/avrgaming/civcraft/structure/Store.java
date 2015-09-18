@@ -110,7 +110,7 @@ public class Store extends Structure {
 			
 			sign.setText("Buy 64\n"+
 		             mat.name+"\n"+
-				     "For "+(int)mat.price+" Redbacks\n"+
+				     "For "+(int)mat.price+" Coins\n"+
 		             getNonResidentFeeString());
 			sign.update();
 			count++;
@@ -148,13 +148,13 @@ public class Store extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Redbacks.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Redbacks in non-resident taxes.");
+					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
 				}
 			
 			}

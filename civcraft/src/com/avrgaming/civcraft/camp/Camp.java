@@ -711,16 +711,16 @@ public class Camp extends Buildable {
 		
 		switch (result) {
 		case STARVE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved"+consumeComponent.getCountString()+CivColor.LightGreen+" and generated no Redbacks.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved"+consumeComponent.getCountString()+CivColor.LightGreen+" and generated no Coins.");
 			return;
 		case LEVELDOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved and leveled-down"+CivColor.LightGreen+" and generated no Redbacks.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved and leveled-down"+CivColor.LightGreen+" and generated no Coins.");
 			return;
 		case STAGNATE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Yellow+"stagnated"+CivColor.LightGreen+" and generated no Redbacks.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Yellow+"stagnated"+CivColor.LightGreen+" and generated no Coins.");
 			return;
 		case UNKNOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse has done "+CivColor.Purple+"something unknown"+CivColor.LightGreen+" and generated no Redbacks.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse has done "+CivColor.Purple+"something unknown"+CivColor.LightGreen+" and generated no Coins.");
 			return;
 		default:
 			break;
@@ -767,7 +767,7 @@ public class Camp extends Buildable {
 			break;
 		}
 		
-		CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+stateMessage+" and generated "+total_coins+" Redbacks. Redbacks were given to the camp's owner.");
+		CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+stateMessage+" and generated "+total_coins+" Coins. Coins were given to the camp's owner.");
 	}
 	
 	private void buildCampFromTemplate(Template tpl, BlockCoord corner) {
@@ -1346,7 +1346,7 @@ public class Camp extends Buildable {
 		Resident owner = this.getOwner();
 		
 		if (!owner.getTreasury().hasEnough(upgrade.cost)) {
-			throw new CivException("The owner does not have the required "+upgrade.cost+" Redbacks to purchase this upgrade.");
+			throw new CivException("The owner does not have the required "+upgrade.cost+" Coins to purchase this upgrade.");
 		}
 		
 		this.upgrades.put(upgrade.id, upgrade);

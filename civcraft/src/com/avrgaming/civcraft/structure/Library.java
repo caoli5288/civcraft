@@ -263,7 +263,7 @@ public class Library extends Structure {
 				
 		// Determine if resident can pay.
 		if (!resident.getTreasury().hasEnough(ench.price+payToTown)) {
-			CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+ench.price+payToTown+ " Redbacks.");
+			CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+ench.price+payToTown+ " Coins.");
 			return;
 		}
 				
@@ -274,7 +274,7 @@ public class Library extends Structure {
 		if (payToTown != 0) {
 			getTown().depositDirect(payToTown);
 			
-			CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Redbacks in non-resident taxes.");
+			CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
 		}
 				
 		// Successful payment, process enchantment.

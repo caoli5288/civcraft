@@ -322,7 +322,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 		double refund = (int)(buildable.getCost() / 2);			
 		buildable.getTown().depositDirect(refund);
 
-		CivMessage.sendTown(buildable.getTown(), CivColor.Yellow+"Town was refunded 50% ("+refund+" Redbacks) of the cost to build the wonder.");
+		CivMessage.sendTown(buildable.getTown(), CivColor.Yellow+"Town was refunded 50% ("+refund+" Coins) of the cost to build the wonder.");
 		abortWonder();
 	}
 	

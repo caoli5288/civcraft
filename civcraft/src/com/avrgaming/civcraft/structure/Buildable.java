@@ -1076,7 +1076,7 @@ public abstract class Buildable extends SQLObject {
 		if (templateName.contains("capital"))
 		{
 			CivLog.debug("getSavedTemplatePath - Replacing Capital occurence");
-			templateName = templateName.replace("capital", "capitol");;
+			templateName = templateName.replace("capital", "capitol");
 		}
 		return templateName;
 	}

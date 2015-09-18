@@ -148,7 +148,12 @@ public class War {
 	public static void setWarTime(boolean warTime) {
 		
 		if (warTime == false) {
-			DisableTeleportEvent.enableTeleport();
+			try {
+				DisableTeleportEvent.enableTeleport();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			/* War time has ended. */
 			War.setStart(null);
 			War.setEnd(null);
@@ -159,7 +164,6 @@ public class War {
 			CivGlobal.growthEnabled = true;
 			CivGlobal.trommelsEnabled = true;
 			CivGlobal.quarriesEnabled = true;
-			CivGlobal.fisheryEnabled = true;
 			CivGlobal.tradeEnabled = true;
 			
 			/* Delete any wartime file used to prevent reboots. */
@@ -182,7 +186,12 @@ public class War {
 			}
 			
 		} else {
-			DisableTeleportEvent.disableTeleport();
+			try {
+				DisableTeleportEvent.disableTeleport();
+			} catch (IOException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
 			/* War time has started. */
 			CivMessage.globalHeading(CivColor.BOLD+"WarTime Has Started");
 			War.setStart(new Date());
@@ -202,7 +211,6 @@ public class War {
 			CivGlobal.growthEnabled = false;
 			CivGlobal.trommelsEnabled = false;
 			CivGlobal.quarriesEnabled = false;
-			CivGlobal.fisheryEnabled = false;
 			CivGlobal.tradeEnabled = false;
 			
 			try {

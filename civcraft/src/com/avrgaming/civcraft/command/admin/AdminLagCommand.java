@@ -33,7 +33,6 @@ public class AdminLagCommand extends CommandBase {
 		
 		commands.put("trommels", "Toggles trommels globally.");
 		commands.put("quarries", "Toggles quarries globally.");
-		commands.put("fishery", "Toggles Fish Hatcheries globally.");
 		commands.put("grinders", "Toggles Mob Grinders globally.");
 		commands.put("towers", "Toggles towers globally.");
 		commands.put("growth", "Toggles farm growth.");
@@ -88,16 +87,6 @@ public class AdminLagCommand extends CommandBase {
 			CivMessage.sendSuccess(sender, "Quarries enabled.");
 		} else {
 			CivMessage.sendError(sender, "Quarries disabled");
-		}
-	}
-	
-	public void fishery_cmd() {
-		CivGlobal.fisheryEnabled = !CivGlobal.fisheryEnabled;
-		
-		if (CivGlobal.fisheryEnabled) {
-			CivMessage.sendSuccess(sender, "Fish Hatcheries enabled.");
-		} else {
-			CivMessage.sendError(sender, "Fish Hatcheries disabled");
 		}
 	}
 	

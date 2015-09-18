@@ -61,7 +61,7 @@ public class Grocer extends Structure {
 
 		for (int i = 0; i < level; i++) {
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(i+1);
-			out += "<b>"+grocerlevel.itemName+"</b> Amount: "+grocerlevel.amount+ " Price: "+grocerlevel.price+" Redbacks.<br/>";
+			out += "<b>"+grocerlevel.itemName+"</b> Amount: "+grocerlevel.amount+ " Price: "+grocerlevel.price+" Coins.<br/>";
 		}
 		
 		return out;
@@ -113,14 +113,14 @@ public class Grocer extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Redbacks.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Redbacks.");
-					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Redbacks in non-resident taxes.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
+					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
 				}
 			
 			}
@@ -144,7 +144,7 @@ public class Grocer extends Structure {
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(count+1);
 			
 			sign.setText("Buy\n"+grocerlevel.itemName+"\n"+
-						 "For "+grocerlevel.price+" Redbacks\n"+
+						 "For "+grocerlevel.price+" Coins\n"+
 					     getNonResidentFeeString());
 			
 			sign.update();
