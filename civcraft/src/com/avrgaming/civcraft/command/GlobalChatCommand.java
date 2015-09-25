@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -40,18 +41,18 @@ public class GlobalChatCommand implements CommandExecutor {
 		Player player = (Player)sender;
 		Resident resident = CivGlobal.getResident(player);
 		if (resident == null) {
-			CivMessage.sendError(sender, "You are not a resident? Relogin please..");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_gc_notResident"));
 			return false;
 		}
 	
 		if (args.length == 0) {
 			resident.setCivChat(false);
 			resident.setTownChat(false);
-			CivMessage.sendSuccess(sender, "Enabled global chat mode.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_gc_enabled"));
 			return true;
 		}
 		
-		CivMessage.sendError(sender, "Global chat command /gc <message> disabled, using HeroChat /ch global instead. use /gc to exit civ or town chat.");
+		CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_gc_disabled"));
 		return true;
 		
 //		String fullArgs = "";

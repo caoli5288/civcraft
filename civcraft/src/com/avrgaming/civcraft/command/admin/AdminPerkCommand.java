@@ -18,18 +18,18 @@ public class AdminPerkCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad perk";
-		displayName = "Admin Perk";
+		displayName = CivSettings.localize.localizedString("adcmd_perk_name");
 		
-		commands.put("list", "Lists all configured perks and their id's");
-		commands.put("reload", "Reload the perks from the config");
+		commands.put("list", CivSettings.localize.localizedString("adcmd_perk_listDesc"));
+		commands.put("reload", CivSettings.localize.localizedString("adcmd_perk_reloadDesc"));
 	}
 
 	public void list_cmd() {
-		CivMessage.sendHeading(sender, "Configured Perks");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_perk_listHeading"));
 		for (ConfigPerk perk : CivSettings.perks.values()) {
 			CivMessage.send(sender, CivColor.Green+perk.display_name+CivColor.LightGreen+" id:"+CivColor.Rose+perk.id);
 		}
-		CivMessage.send(sender, CivColor.LightGray+"If list is too long, see perks.yml for all IDs.");
+		CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("adcmd_perk_listingSuccess"));
 	}
 	
 	public void reload_cmd() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration

@@ -44,28 +44,27 @@ public class AdminCivCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad civ";
-		displayName = "Admin civ";
+		displayName = CivSettings.localize.localizedString("adcmd_civ_name");
 		
-		commands.put("disband", "[civ] - disbands this civilization");
-		commands.put("addleader", "[civ] [player] - adds this player to the leaders group.");
-		commands.put("addadviser", "[civ] [player] - adds this player to the advisers group.");
-		commands.put("rmleader", "[civ] [player] - removes this player from the leaders group.");
-		commands.put("rmadviser", "[civ] [player] - removes this player from the advisers group.");
-		commands.put("givetech", "[civ] [tech_id] - gives this civilization this technology.");
-		commands.put("beakerrate", "[civ] [amount] set this towns's beaker rate to this amount.");
-		commands.put("toggleadminciv", "[civ] - sets/unsets this civilization to an admin civ. Prevents war.");
-		commands.put("alltech", "[civ] - gives this civilization every technology.");
-		commands.put("setrelation", "[civ] [otherCiv] [NEUTRAL|HOSTILE|WAR|PEACE|ALLY] sets the relationship between [civ] and [otherCiv].");
-		commands.put("info", "[civ] - Processes /civ info command as if you were a member of this civilization.");
-		commands.put("merge", "[oldciv] [newciv] - Merges oldciv into newciv. oldciv is then destroyed");
-		commands.put("setgov", "[civ] [government] - Changes this civilization's government immediatly. Removes any anarchy timers.");
-		commands.put("bankrupt", "[civ] Clear the Coins of all towns, and all members of this civ. requires confirmation.");
-		commands.put("setgov", "[civ] [gov_id] - sets this civ to this government, no anarchy");
-		commands.put("conquered", "[civ] - Marks this civ as a conquered civ");
-		commands.put("unconquer", "[civ] - Unmarks this civ as a conquered civ");
-		commands.put("liberate", "[civ] - Liberates the specified civ if it is conquered.");
-		commands.put("setvotes", "[civ] [votes] - sets this civ's diplomatic votes to this amount.");
-		commands.put("rename", "[civ] [new name] - Renames this civ.");
+		commands.put("disband", CivSettings.localize.localizedString("adcmd_civ_disbandDesc"));
+		commands.put("addleader", CivSettings.localize.localizedString("adcmd_civ_addLeaderDesc"));
+		commands.put("addadviser", CivSettings.localize.localizedString("adcmd_civ_addAdvisorDesc"));
+		commands.put("rmleader", CivSettings.localize.localizedString("adcmd_civ_rmLeaderDesc"));
+		commands.put("rmadviser", CivSettings.localize.localizedString("adcmd_civ_rmAdvisorDesc"));
+		commands.put("givetech", CivSettings.localize.localizedString("adcmd_civ_giveTechDesc"));
+		commands.put("beakerrate", CivSettings.localize.localizedString("adcmd_civ_beakerRateDesc"));
+		commands.put("toggleadminciv", CivSettings.localize.localizedString("adcmd_civ_toggleadminCivDesc"));
+		commands.put("alltech", CivSettings.localize.localizedString("adcmd_civ_alltechDesc"));
+		commands.put("setrelation", CivSettings.localize.localizedString("adcmd_civ_setRelationDesc"));
+		commands.put("info", CivSettings.localize.localizedString("adcmd_civ_infoDesc"));
+		commands.put("merge", CivSettings.localize.localizedString("adcmd_civ_mergeDesc"));
+		commands.put("setgov", CivSettings.localize.localizedString("adcmd_civ_setgovDesc"));
+		commands.put("bankrupt", CivSettings.localize.localizedString("adcmd_civ_bankruptDesc"));
+		commands.put("conquered", CivSettings.localize.localizedString("adcmd_civ_concqueredDesc"));
+		commands.put("unconquer", CivSettings.localize.localizedString("adcmd_civ_unconquerDesc"));
+		commands.put("liberate", CivSettings.localize.localizedString("adcmd_civ_liberateDesc"));
+		commands.put("setvotes", CivSettings.localize.localizedString("adcmd_civ_setvotesDesc"));
+		commands.put("rename", CivSettings.localize.localizedString("adcmd_civ_renameDesc"));
 	}
 	
 	public void liberate_cmd() throws CivException {
@@ -84,26 +83,26 @@ public class AdminCivCommand extends CommandBase {
 		CivGlobal.removeConqueredCiv(motherCiv);
 		CivGlobal.addCiv(motherCiv);
 		motherCiv.save();
-		CivMessage.sendSuccess(sender, "Liberated "+motherCiv.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_liberateSuccess")+" "+motherCiv.getName());
 	}
 	
 	public void rename_cmd() throws CivException, InvalidNameException {
 		Civilization civ = getNamedCiv(1);
-		String name = getNamedString(2, "Name for new civ.");
+		String name = getNamedString(2, CivSettings.localize.localizedString("adcmd_civ_newNamePrompt"));
 		
 		if (args.length < 3) {
-			throw new CivException("Use underscores for names with spaces.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_renameUseUnderscores"));
 		}
 		
 		civ.rename(name);
-		CivMessage.sendSuccess(sender, "Renamed civ.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_renameCivSuccess"));
 	}
 	
 	public void setvotes_cmd() throws CivException {
 		Civilization civ = getNamedCiv(1);
 		Integer votes = getNamedInteger(2);
 		EndConditionDiplomacy.setVotes(civ, votes);
-		CivMessage.sendSuccess(sender, "Set votes for "+civ.getName()+" to "+votes);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setVotesSuccess")+" "+civ.getName()+" -> "+votes);
 	}
 	
 	public void conquered_cmd() throws CivException {
@@ -113,7 +112,7 @@ public class AdminCivCommand extends CommandBase {
 		CivGlobal.addConqueredCiv(civ);
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "civ is now conquered.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_conqueredSuccess"));
 	}
 	
 	public void unconquer_cmd() throws CivException {
@@ -125,7 +124,7 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		if (civ == null) {
-			throw new CivException ("No civ called "+conquerCiv);
+			throw new CivException (CivSettings.localize.localizedString("adcmd_civ_NoCivByThatNane")+" "+conquerCiv);
 		}
 		
 		civ.setConquered(false);
@@ -133,7 +132,7 @@ public class AdminCivCommand extends CommandBase {
 		CivGlobal.addCiv(civ);
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Civ is now unconquered.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_unconquerSuccess"));
 	}
 	
 	
@@ -141,8 +140,8 @@ public class AdminCivCommand extends CommandBase {
 		Civilization civ = getNamedCiv(1);
 		
 		if (args.length < 3) {
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Are you absolutely sure you want to wipe ALL Coins from ALL RESIDENTS and ALL TOWNS of this civ?");
-			CivMessage.send(sender, "use /civ bankrupt yes if you do.");
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("adcmd_civ_bankruptConfirmPrompt"));
+			CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_civ_bankruptConfirmCmd")+" /civ bankrupt yes");
 		}
 		
 		civ.getTreasury().setBalance(0);
@@ -158,27 +157,27 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		civ.save();
-		CivMessage.sendSuccess(sender, "Bankrupted "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_bankruptSuccess")+" "+civ.getName());
 	}
 	
 	public void setgov_cmd() throws CivException {
 		Civilization civ = getNamedCiv(1);
 		
 		if (args.length < 3) {
-			throw new CivException("Enter a government name");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_setgovPrompt"));
 		}
 		
 		ConfigGovernment gov = CivSettings.governments.get(args[2]);
 		if (gov == null) {
-			throw new CivException("No government with that id.. try gov_monarchy, gov_depostism... etc");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_setGovInvalidGov")+" gov_monarchy, gov_depostism... etc");
 		}
 		// Remove any anarchy timers
 		String key = "changegov_"+civ.getId();
 		CivGlobal.getSessionDB().delete_all(key);
 		
 		civ.setGovernment(gov.id);
-		CivMessage.global(civ.getName()+" has emerged from anarchy and has adopted "+CivSettings.governments.get(gov.id).displayName);
-		CivMessage.sendSuccess(sender, "Successfully changed government");
+		CivMessage.global(civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_setGovSuccessBroadcast")+" "+CivSettings.governments.get(gov.id).displayName);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setGovSuccess"));
 		
 	}
 	
@@ -187,11 +186,11 @@ public class AdminCivCommand extends CommandBase {
 		Civilization newciv = getNamedCiv(2);
 		
 		if (oldciv == newciv) {
-			throw new CivException("Cannot merge a civ into itself.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_mergeSameError"));
 		}
 		
 		newciv.mergeInCiv(oldciv);
-		CivMessage.global("An admin has merged "+oldciv.getName()+" into "+newciv.getName());
+		CivMessage.global(CivSettings.localize.localizedString("adcmd_civ_mergeSuccess")+" "+oldciv.getName()+" -> "+newciv.getName());
 	}
 	
 	public void info_cmd() throws CivException {
@@ -221,7 +220,7 @@ public class AdminCivCommand extends CommandBase {
 	
 	public void setrelation_cmd() throws CivException {
 		if (args.length < 4) {
-			throw new CivException("Usage: [civ] [otherCiv] [NEUTRAL|HOSTILE|WAR|PEACE|ALLY]");
+			throw new CivException(CivSettings.localize.localizedString("Usage") +" [civ] [otherCiv] [NEUTRAL|HOSTILE|WAR|PEACE|ALLY]");
 		}
 		
 		Civilization civ = getNamedCiv(1);
@@ -234,7 +233,7 @@ public class AdminCivCommand extends CommandBase {
 			CivGlobal.setAggressor(civ, otherCiv, civ);
 			CivGlobal.setAggressor(otherCiv, civ, civ);
 		}
-		CivMessage.sendSuccess(sender, "Set relationship between "+civ.getName()+" and "+otherCiv.getName()+" to "+status.name());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setrelationSuccess")+" "+civ.getName()+" & "+otherCiv.getName()+" -> "+status.name());
 		
 	}
 	
@@ -248,7 +247,7 @@ public class AdminCivCommand extends CommandBase {
 		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "All techs awarded.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_alltechSuccess"));
 	}
 	
 	public void toggleadminciv_cmd() throws CivException {
@@ -256,7 +255,7 @@ public class AdminCivCommand extends CommandBase {
 		
 		civ.setAdminCiv(!civ.isAdminCiv());
 		civ.save();
-		CivMessage.sendSuccess(sender, civ.getName()+" admin civ is now:"+civ.isAdminCiv());
+		CivMessage.sendSuccess(sender, civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_toggleAdminCivSuccess")+" "+civ.isAdminCiv());
 	}
 	
 	public void beakerrate_cmd() throws CivException {
@@ -266,29 +265,29 @@ public class AdminCivCommand extends CommandBase {
 		civ.setBaseBeakers(amount);
 		civ.save();
 
-		CivMessage.sendSuccess(sender, "Set "+civ.getName()+" beaker rate to "+amount);
+		CivMessage.sendSuccess(sender, civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_beakerRateSuccess")+" "+amount);
 	}
 	
 	public void givetech_cmd() throws CivException {
 		Civilization civ = getNamedCiv(1);
 		
 		if (args.length < 3) {
-			throw new CivException("Enter a tech ID");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_giveTechPrompt"));
 		}
 		
 		ConfigTech tech = CivSettings.techs.get(args[2]);
 		if (tech == null) {
-			throw new CivException("No tech with ID:"+args[2]);
+			throw new CivException(CivSettings.localize.localizedString("adcmd_civ_giveTechInvalid")+args[2]);
 		}
 		
 		if (civ.hasTechnology(tech.id)) {
-			throw new CivException("Civ "+civ.getName()+" already has tech id:"+tech.id);
+			throw new CivException(civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_giveTechAlreadyhas")+" "+tech.id);
 		}
 		
 		civ.addTech(tech);
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Added "+tech.name+" to "+civ.getName());
+		CivMessage.sendSuccess(sender, tech.name+" "+CivSettings.localize.localizedString("adcmd_civ_giveTechSuccess")+" "+civ.getName());
 		
 	}
 	
@@ -299,9 +298,9 @@ public class AdminCivCommand extends CommandBase {
 		if (civ.getAdviserGroup().hasMember(resident)) {
 			civ.getAdviserGroup().removeMember(resident);
 			civ.save();
-			CivMessage.sendSuccess(sender, "Removed "+resident.getName()+" to advisers group in "+civ.getName());
+			CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmAdvisorSuccess")+" "+civ.getName());
 		} else {
-			CivMessage.sendError(sender, resident.getName()+" is not currently in the advisers group for "+civ.getName());
+			CivMessage.sendError(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmAdvisorNotInGroup")+" "+civ.getName());
 		}
 	}
 	
@@ -312,9 +311,9 @@ public class AdminCivCommand extends CommandBase {
 		if (civ.getLeaderGroup().hasMember(resident)) {
 			civ.getLeaderGroup().removeMember(resident);
 			civ.save();
-			CivMessage.sendSuccess(sender, "Removed "+resident.getName()+" to leaders group in "+civ.getName());
+			CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmLeaderSuccess")+" "+civ.getName());
 		} else {
-			CivMessage.sendError(sender, resident.getName()+" is not currently in the leaders group for "+civ.getName());
+			CivMessage.sendError(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmLeaderNotInGroup")+" "+civ.getName());
 		}
 	}
 	
@@ -326,7 +325,7 @@ public class AdminCivCommand extends CommandBase {
 		civ.getAdviserGroup().save();
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Added "+resident.getName()+" to advisers group in "+civ.getName());
+		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_addAdvisorSuccess")+" "+civ.getName());
 	}
 
 	public void addleader_cmd() throws CivException {
@@ -337,20 +336,20 @@ public class AdminCivCommand extends CommandBase {
 		civ.getLeaderGroup().save();
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Added "+resident.getName()+" to leaders group in "+civ.getName());
+		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_addLeaderSuccess")+" "+civ.getName());
 	}
 	
 	public void disband_cmd() throws CivException {
 		Civilization civ = getNamedCiv(1);
 		
-		CivMessage.sendCiv(civ, "Your civ has disbanded by an admin!");
+		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("adcmd_civ_disbandAlert"));
 		try {
 			civ.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Civ disbanded");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_disbandSuccess"));
 	}
 	
 	@Override

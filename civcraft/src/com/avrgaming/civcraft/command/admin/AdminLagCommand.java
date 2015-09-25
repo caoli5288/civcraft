@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.admin;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -29,17 +30,17 @@ public class AdminLagCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad lag";
-		displayName = "Admin Lag";
+		displayName = CivSettings.localize.localizedString("adcmd_lag_cmdDesc");
 		
-		commands.put("trommels", "Toggles trommels globally.");
-		commands.put("quarries", "Toggles quarries globally.");
-		commands.put("grinders", "Toggles Mob Grinders globally.");
-		commands.put("towers", "Toggles towers globally.");
-		commands.put("growth", "Toggles farm growth.");
-		commands.put("trade", "Toggles farm growth.");
-		commands.put("score", "Toggles score calculations");
-		commands.put("warning", "Toggles warnings in the logs.");
-		commands.put("blockupdate", "[#] - sets the block update limit to this amount.");
+		commands.put("trommels", CivSettings.localize.localizedString("adcmd_lag_trommelsDesc"));
+		commands.put("quarries", CivSettings.localize.localizedString("adcmd_lag_quarryDesc"));
+		commands.put("grinders", CivSettings.localize.localizedString("adcmd_lag_grinderDesc"));
+		commands.put("towers", CivSettings.localize.localizedString("adcmd_lag_towersDesc"));
+		commands.put("growth", CivSettings.localize.localizedString("adcmd_lag_growthDesc"));
+		commands.put("trade", CivSettings.localize.localizedString("adcmd_lag_tradeDesc"));
+		commands.put("score", CivSettings.localize.localizedString("adcmd_lag_scoreDesc"));
+		commands.put("warning", CivSettings.localize.localizedString("adcmd_lag_warningDesc"));
+		commands.put("blockupdate", CivSettings.localize.localizedString("adcmd_lag_blockUpdateDesc"));
 		
 	}
 	
@@ -47,87 +48,47 @@ public class AdminLagCommand extends CommandBase {
 		Integer blocks = this.getNamedInteger(1);
 		
 		SyncBuildUpdateTask.UPDATE_LIMIT = blocks;
-		CivMessage.sendSuccess(sender, "Set block update limit to "+blocks);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_blockupdateSet")+" "+blocks);
 	}
 	
 	public void score_cmd() {
 		CivGlobal.scoringEnabled = !CivGlobal.scoringEnabled;
-		
-		if (CivGlobal.scoringEnabled) {
-			CivMessage.sendSuccess(sender, "Scoring enabled.");
-		} else {
-			CivMessage.sendError(sender, "Scoring disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_scoring")+" "+CivGlobal.scoringEnabled);
 	}
 
 	public void grinders_cmd() {
 		CivGlobal.mobGrinderEnabled = !CivGlobal.mobGrinderEnabled;
-		
-		if (CivGlobal.mobGrinderEnabled) {
-			CivMessage.sendSuccess(sender, "Mob Grinders enabled.");
-		} else {
-			CivMessage.sendError(sender, "Mob Grinders disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_mobGrinders")+" "+CivGlobal.mobGrinderEnabled);
 	}
 	
 	public void trommels_cmd() {
 		CivGlobal.trommelsEnabled = !CivGlobal.trommelsEnabled;
-		
-		if (CivGlobal.trommelsEnabled) {
-			CivMessage.sendSuccess(sender, "Trommels enabled.");
-		} else {
-			CivMessage.sendError(sender, "Trommels disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_trommel")+" "+CivGlobal.trommelsEnabled);
 	}
 	
 	public void quarries_cmd() {
 		CivGlobal.quarriesEnabled = !CivGlobal.quarriesEnabled;
-		
-		if (CivGlobal.quarriesEnabled) {
-			CivMessage.sendSuccess(sender, "Quarries enabled.");
-		} else {
-			CivMessage.sendError(sender, "Quarries disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_quarry")+" "+CivGlobal.quarriesEnabled);
 	}
 	
 	public void towers_cmd() {
 		CivGlobal.towersEnabled = !CivGlobal.towersEnabled;
-		
-		if (CivGlobal.towersEnabled) {
-			CivMessage.sendSuccess(sender, "Towers enabled.");
-		} else {
-			CivMessage.sendError(sender, "Towers disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_towers")+" "+CivGlobal.towersEnabled);
 	}
 	
 	public void growth_cmd() {
 		CivGlobal.growthEnabled = !CivGlobal.growthEnabled;
-		
-		if (CivGlobal.growthEnabled) {
-			CivMessage.sendSuccess(sender, "Growth enabled.");
-		} else {
-			CivMessage.sendError(sender, "Growth disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_growth")+" "+CivGlobal.growthEnabled);
 	}
 	
 	public void trade_cmd() {
 		CivGlobal.tradeEnabled = !CivGlobal.tradeEnabled;
-		
-		if (CivGlobal.tradeEnabled) {
-			CivMessage.sendSuccess(sender, "Trade enabled.");
-		} else {
-			CivMessage.sendError(sender, "Trade disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_trade")+" "+CivGlobal.tradeEnabled);
 	}
 	
 	public void warning_cmd() {
 		CivGlobal.growthEnabled = !CivGlobal.growthEnabled;
-		
-		if (CivGlobal.warningsEnabled) {
-			CivMessage.sendSuccess(sender, "Warnings enabled.");
-		} else {
-			CivMessage.sendError(sender, "Warnings disabled");
-		}
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_warnings")+" "+CivGlobal.warningsEnabled);
 	}
 	
 	@Override

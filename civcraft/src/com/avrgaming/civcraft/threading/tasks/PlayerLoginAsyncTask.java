@@ -44,7 +44,6 @@ import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.war.War;
-import com.avrgaming.global.perks.PlatinumManager;
 
 public class PlayerLoginAsyncTask implements Runnable {
 	
@@ -275,10 +274,10 @@ public class PlayerLoginAsyncTask implements Runnable {
 			
 			try {
 				Player p = CivGlobal.getPlayer(resident);
-				PlatinumManager.givePlatinumDaily(resident,
-						CivSettings.platinumRewards.get("loginDaily").name, 
-						CivSettings.platinumRewards.get("loginDaily").amount, 
-						"Welcome back to CivCraft! Here is %d for logging in today!" );			
+//				PlatinumManager.givePlatinumDaily(resident,
+//						CivSettings.platinumRewards.get("loginDaily").name, 
+//						CivSettings.platinumRewards.get("loginDaily").amount, 
+//						"Welcome back to CivCraft! Here is %d for logging in today!" );			
 		
 				
 				ArrayList<SessionEntry> deathEvents = CivGlobal.getSessionDB().lookup("pvplogger:death:"+resident.getName());

@@ -7,6 +7,7 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Sound;
 import org.bukkit.World;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -32,7 +33,7 @@ public class ArenaControlBlock {
 	
 	public void onBreak(Resident resident) {
 		if (resident.getTeam() == arena.getTeamFromID(teamID)) {
-			CivMessage.sendError(resident, "Can't damage our own control blocks.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("arena_cannotDamage"));
 			return;
 		}
 		
@@ -50,8 +51,8 @@ public class ArenaControlBlock {
 			arena.onControlBlockDestroy(teamID, resident.getTeam());
 
 		} else {
-			CivMessage.sendTeam(resident.getTeam(), CivColor.LightGreen+resident.getName()+" hit an enemy control block! ("+curHP+" / "+maxHP+")");
-			CivMessage.sendTeam(arena.getTeamFromID(teamID), CivColor.Rose+"Our control block was hit by "+resident.getName()+" ("+curHP+" / "+maxHP+")");
+			CivMessage.sendTeam(resident.getTeam(), CivColor.LightGreen+resident.getName()+" "+CivSettings.localize.localizedString("arena_playerHitControlBlock")+" ("+curHP+" / "+maxHP+")");
+			CivMessage.sendTeam(arena.getTeamFromID(teamID), CivColor.Rose+CivSettings.localize.localizedString("arena_announceHitControlBlock") +" "+resident.getName()+" ("+curHP+" / "+maxHP+")");
 		}
 		
 	}

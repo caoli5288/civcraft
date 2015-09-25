@@ -35,6 +35,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
+import localize.Localize;
+
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.InvalidConfigurationException;
@@ -97,7 +99,6 @@ public class CivSettings {
 	
 	public static FileConfiguration civConfig; /* civ.yml */
 	public static Map<String, ConfigEndCondition> endConditions = new HashMap<String, ConfigEndCondition>();
-	public static Map<String, ConfigPlatinumReward> platinumRewards = new HashMap<String, ConfigPlatinumReward>();
 	
 	public static FileConfiguration cultureConfig; /* culture.yml */
 	public static Map<Integer, ConfigCultureLevel> cultureLevels = new HashMap<Integer, ConfigCultureLevel>();
@@ -216,9 +217,21 @@ public class CivSettings {
 	public static final int MARKET_COIN_STEP = 5;
 	public static final int MARKET_BUYSELL_COIN_DIFF = 30;
 	public static final int MARKET_STEP_THRESHOLD = 2;
+	public static String CURRENCY_NAME;
+	
+	public static Localize localize;
 	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;
+		
+
+//		#TO-DO: Load configs
+		String languageFile = CivSettings.getStringBase("localization_file");
+		localize = new Localize(plugin, languageFile);
+
+
+		CivLog.debug(localize.localizedString("welcome_string"));
+		CURRENCY_NAME = localize.localizedString("civ_currencyName");
 		
 		// Check for required data folder, if it's not there export it.
 		CivSettings.validateFiles();
@@ -439,7 +452,6 @@ public class CivSettings {
 		ConfigMaterial.loadConfig(materialsConfig, materials);
 		ConfigRandomEvent.loadConfig(randomEventsConfig, randomEvents, randomEventIDs);
 		ConfigEndCondition.loadConfig(civConfig, endConditions);
-		ConfigPlatinumReward.loadConfig(civConfig, platinumRewards);
 		ConfigValidMod.loadConfig(nocheatConfig, validMods);
 		ConfigArena.loadConfig(arenaConfig, arenas);
 		ConfigFishing.loadConfig(fishingConfig, fishingDrops);

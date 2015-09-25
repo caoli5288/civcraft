@@ -31,6 +31,12 @@ server_url_description: 'CivCraft Homepage'
 # Prints a message to the console for every heartbeat packet sent to the server. Useful for debugging.
 debug_heartbeat: 'false'
 
+# ============================== Language Configuration ====================================
+# If you wish to localize CivilizationCraft, run the server once to generate a default_lang.yml file
+# Then rename the file. For example "ru_lang.yml" and then translate the strings to Russian.
+# Update this config line below to match the name of your translated file.
+localization_file: "default_lang.yml"
+
 # ============================== Database Configuration ====================================
 
 # MySQL database to store game data in across reloads. 

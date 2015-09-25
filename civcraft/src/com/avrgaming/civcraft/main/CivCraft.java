@@ -110,7 +110,6 @@ import com.avrgaming.civcraft.util.BukkitObjects;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.TimeTools;
 import com.avrgaming.civcraft.war.WarListener;
-import com.avrgaming.global.perks.PlatinumManager;
 import com.avrgaming.global.scores.CalculateScoreTimer;
 import com.avrgaming.sls.SLSManager;
 
@@ -184,9 +183,9 @@ public final class CivCraft extends JavaPlugin {
 		
 		TaskMaster.asyncTimer(EventTimerTask.class.getName(), new EventTimerTask(), TimeTools.toTicks(5));
 
-		if (PlatinumManager.isEnabled()) {
-			TaskMaster.asyncTimer(PlatinumManager.class.getName(), new PlatinumManager(), TimeTools.toTicks(5));
-		}
+//		if (PlatinumManager.isEnabled()) {
+//			TaskMaster.asyncTimer(PlatinumManager.class.getName(), new PlatinumManager(), TimeTools.toTicks(5));
+//		}
 		
 		TaskMaster.syncTimer("WindmillTimer", new WindmillTimer(), TimeTools.toTicks(60));
 		TaskMaster.asyncTimer("EndGameNotification", new EndConditionNotificationTask(), TimeTools.toTicks(3600));
@@ -233,6 +232,7 @@ public final class CivCraft extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		setPlugin(this);
+		
 		this.saveDefaultConfig();
 		
 		CivLog.init(this);
@@ -297,6 +297,7 @@ public final class CivCraft extends JavaPlugin {
 		} else {
 			CivLog.warning("NoCheatPlus not found, not registering NCP hooks. This is fine if you're not using NCP.");
 		}
+		
 		startTimers();
 				
 		//creativeInvPacketManager.init(this);		

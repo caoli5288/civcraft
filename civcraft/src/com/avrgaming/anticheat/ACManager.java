@@ -164,7 +164,7 @@ public class ACManager implements PluginMessageListener {
 							resident.setInsideArena(false);
 							resident.save();
 							
-							CivMessage.send(resident, CivColor.LightGray+"You've been teleported home since you cannot be inside an arena without anti-cheat.");
+							CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("arena_WithoutAnticheat"));
 						}
 						
 					} catch (CivException e) {
@@ -194,8 +194,7 @@ public class ACManager implements PluginMessageListener {
 						if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
 							
 						} else if (player.hasPermission(CivSettings.HACKER)) {
-							TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
-									"Visit https://www.minetexas.com/ to get it."));
+							TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, CivSettings.localize.localizedString("ac_hackerNeedsAC")));
 						}
 					}
 				} catch (CivException e) {
@@ -223,7 +222,7 @@ public class ACManager implements PluginMessageListener {
 		SecretKeySpec key = new SecretKeySpec(ACManager.key.getBytes(), "DES");
 		Long iv = ivSpecs.get(player.getName());
 		if (iv == null) {
-			CivMessage.sendError(player, "Invalid Auth Message(0xFFFFEEC1)");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("ac_invalidAuth")+" (0xFFFFEEC1)");
 			return;
 		}
 		
@@ -240,7 +239,7 @@ public class ACManager implements PluginMessageListener {
 				InvalidKeyException | InvalidAlgorithmParameterException | 
 				ShortBufferException | IllegalBlockSizeException | BadPaddingException e1) {
 			e1.printStackTrace();
-			CivMessage.sendError(player, "Invalid Auth Message(0xFFFFEEA1)");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("ac_invalidAuth")+" (0xFFFFEEA1)");
 			return;
 		}
 		
@@ -258,11 +257,11 @@ public class ACManager implements PluginMessageListener {
 			if (resident != null) {
 				resident.setUsesAntiCheat(true);
 			}
-			CivMessage.sendSuccess(player, "You've been validated by CivCraft Anti-Cheat");
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("ac_validated"));
 			return;
 			
 		} catch (CivException e) {
-			CivMessage.sendError(player, "[CivCraft Anti-Cheat] Couldn't Verify your client");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("ac_unableToValidate"));
 			CivMessage.sendError(player, e.getMessage());
 			CivLog.info("Failed to validate player:"+player.getName()+" Message:"+e.getMessage());
 			//e.printStackTrace();
@@ -270,8 +269,7 @@ public class ACManager implements PluginMessageListener {
 			if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
 				
 			} else if (player.hasPermission(CivSettings.HACKER)) {
-				TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "You must use AntiCheat to join this server."+
-						"Visit https://www.minetexas.com/ to get it."));
+				TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, CivSettings.localize.localizedString("ac_hackerNeedsAC")));
 			}
 			return;
 		}
@@ -280,12 +278,12 @@ public class ACManager implements PluginMessageListener {
 	public void validate(Player player, String decodedMessage) throws CivException {
 		String[] mods = decodedMessage.split(",");
 		if (mods.length < 1) {
-			throw new CivException("Invalid Auth Message(0xB4D132VF)");
+			throw new CivException(CivSettings.localize.localizedString("ac_invalidAuth")+" (0xB4D132VF)");
 		}
 		
 		String[] versionArray = mods[0].split(":");
 		if (versionArray.length != 3) {
-			throw new CivException("Invalid Auth Message(0xAF421FFF).");
+			throw new CivException(CivSettings.localize.localizedString("ac_invalidAuth")+" (0xAF421FFF).");
 		}
 		
 		boolean validTrap = Boolean.valueOf(versionArray[2]);
@@ -305,12 +303,12 @@ public class ACManager implements PluginMessageListener {
 		for (int i = 1; i < mods.length; i++) {
 			String[] modArray = mods[i].split(":");
 			if (modArray.length < 1) {
-				throw new CivException("Invalid Auth Message(0xFFFFFFFF).");
+				throw new CivException(CivSettings.localize.localizedString("ac_invalidAuth")+" (0xFFFFFFFF).");
 			}
 			
 			ConfigValidMod mod = CivSettings.validMods.get(modArray[0]);
 			if (mod == null) {
-				throw new CivException("Unapproved Mod: "+modArray[0]+" ("+modArray[1]+")");
+				throw new CivException(CivSettings.localize.localizedString("ac_unapprovedMod")+" "+modArray[0]+" ("+modArray[1]+")");
 			} else {
 				
 				boolean valid = false;
@@ -325,7 +323,7 @@ public class ACManager implements PluginMessageListener {
 					if (modArray[0].equals("net.minecraft.client.main.Main")) {
 						modArray[0] = "Minecraft Client";
 					}
-					throw new CivException(modArray[0]+" ("+modArray[1]+")"+" failed authorization check.");
+					throw new CivException(modArray[0]+" ("+modArray[1]+") "+CivSettings.localize.localizedString("ac_failedAuthCheck"));
 				}
 			}
 		}

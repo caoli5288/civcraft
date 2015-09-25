@@ -4,6 +4,7 @@ import com.avrgaming.civcraft.arena.Arena;
 import com.avrgaming.civcraft.arena.ArenaManager;
 import com.avrgaming.civcraft.arena.ArenaTeam;
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.util.CivColor;
@@ -13,53 +14,53 @@ public class AdminArenaCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad arena";
-		displayName = "Admin Arena";
+		displayName = CivSettings.localize.localizedString("adcmd_arena_Name");
 				
-		commands.put("list", "Lists all active arenas and which teams are in them.");
-		commands.put("end", "[name] end the arena with this id.");
-		commands.put("messageall", "[msg] send a message to all arenas.");
-		commands.put("message", "[id] [msg] send a message to this arena.");
-		commands.put("enable", "Enable arenas globally.");
-		commands.put("disable", "Disable arenas globally.");
+		commands.put("list", CivSettings.localize.localizedString("adcmd_arena_listDesc"));
+		commands.put("end", CivSettings.localize.localizedString("adcmd_arena_listDesc"));
+		commands.put("messageall", CivSettings.localize.localizedString("adcmd_arena_msgAllDesc"));
+		commands.put("message", CivSettings.localize.localizedString("adcmd_arena_msgdesc"));
+		commands.put("enable", CivSettings.localize.localizedString("adcmd_arena_enableDesc"));
+		commands.put("disable", CivSettings.localize.localizedString("adcmd_arena_disableDesc"));
 	}
 
 	public void enable_cmd() {
 		ArenaManager.enabled = true;
-		CivMessage.sendSuccess(sender, "Arenas Enabled");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_arena_Enabled"));
 	}
 	
 	public void disable_cmd() {
 		ArenaManager.enabled = false;
-		CivMessage.sendSuccess(sender, "Arenas Disabled");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_arena_disabled"));
 	}
 	
 	public void list_cmd() {
-		CivMessage.sendHeading(sender, "Active Arenas");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_arena_activeArenas"));
 		for (Arena arena : ArenaManager.activeArenas.values()) {
 			String teams = "";
 			for (ArenaTeam team : arena.getTeams()) {
 				teams += team.getName()+", ";
 			}
 
-			CivMessage.send(sender, arena.getInstanceName()+": Teams: "+teams);
+			CivMessage.send(sender, arena.getInstanceName()+": "+CivSettings.localize.localizedString("adcmd_arena_activeArenasTeams")+" "+teams);
 		}
 	}
 	
 	public void messageall_cmd() {
 		String message = this.combineArgs(this.stripArgs(args, 1));
 		for (Arena arena : ArenaManager.activeArenas.values()) {
-			CivMessage.sendArena(arena, CivColor.Rose+"ADMIN:"+CivColor.RESET+message);
+			CivMessage.sendArena(arena, CivColor.Rose+CivSettings.localize.localizedString("adcmd_arena_adminMessage")+CivColor.RESET+message);
 		}
-		CivMessage.send(sender, CivColor.Rose+"ADMIN:"+CivColor.RESET+message);
+		CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("adcmd_arena_adminMessage")+CivColor.RESET+message);
 	}
 	
 	public void message_cmd() throws CivException {
-		String id = getNamedString(1, "Enter arena instance name");
+		String id = getNamedString(1, CivSettings.localize.localizedString("adcmd_arena_enterInstanceName"));
 		String message = this.combineArgs(this.stripArgs(args, 2));
 
 		Arena arena = ArenaManager.activeArenas.get(id);
 		if (arena == null) {
-			throw new CivException("No arena with that id found.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_arena_arenaIDNotFound"));
 		}
 		
 		CivMessage.sendArena(arena, CivColor.Rose+"ADMIN:"+CivColor.RESET+message);
@@ -68,14 +69,14 @@ public class AdminArenaCommand extends CommandBase {
 	}
 	
 	public void end_cmd() throws CivException {
-		String id = getNamedString(1, "Enter arena instance name");
+		String id = getNamedString(1, CivSettings.localize.localizedString("adcmd_arena_enterInstanceName"));
 		
 		Arena arena = ArenaManager.activeArenas.get(id);
 		if (arena == null) {
-			throw new CivException("No arena with that id found.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_arena_arenaIDNotFound"));
 		}
 		
-		CivMessage.sendArena(arena, CivColor.Rose+"An Admin is ending this arena in a draw.");
+		CivMessage.sendArena(arena, CivColor.Rose+CivSettings.localize.localizedString("adcmd_arena_endDraw"));
 		ArenaManager.declareDraw(arena);
 		
 	}

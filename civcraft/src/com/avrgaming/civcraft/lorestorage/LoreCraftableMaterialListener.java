@@ -26,7 +26,6 @@ import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
-import com.avrgaming.global.perks.PlatinumManager;
 
 public class LoreCraftableMaterialListener implements Listener {
 
@@ -95,15 +94,15 @@ public class LoreCraftableMaterialListener implements Listener {
 			
 			Resident resident = CivGlobal.getResident(player);
 			if (craftMat.getId().equals("mat_found_camp")) {
-				PlatinumManager.givePlatinumOnce(resident, 
-						CivSettings.platinumRewards.get("buildCamp").name,
-						CivSettings.platinumRewards.get("buildCamp").amount, 
-						"Achievement! You've founded your first camp and earned %d");
+//				PlatinumManager.givePlatinumOnce(resident, 
+//						CivSettings.platinumRewards.get("buildCamp").name,
+//						CivSettings.platinumRewards.get("buildCamp").amount, 
+//						"Achievement! You've founded your first camp and earned %d");
 			} else if(craftMat.getId().equals("mat_found_civ")) {
-				PlatinumManager.givePlatinumOnce(resident, 
-						CivSettings.platinumRewards.get("buildCiv").name,
-						CivSettings.platinumRewards.get("buildCiv").amount, 
-						"Achievement! You've founded your first Civilization and earned %d");				
+//				PlatinumManager.givePlatinumOnce(resident, 
+//						CivSettings.platinumRewards.get("buildCiv").name,
+//						CivSettings.platinumRewards.get("buildCiv").amount, 
+//						"Achievement! You've founded your first Civilization and earned %d");				
 			} else {
 				class AsyncTask implements Runnable {
 					Resident resident;
@@ -129,9 +128,9 @@ public class LoreCraftableMaterialListener implements Listener {
 							amount = Integer.valueOf(entries.get(0).value);
 							amount += craftAmount;
 							if (amount >= 100) {
-								PlatinumManager.givePlatinum(resident, 
-										CivSettings.platinumRewards.get("craft100Items").amount, 
-										"Expert crafting earns you %d");
+//								PlatinumManager.givePlatinum(resident, 
+//										CivSettings.platinumRewards.get("craft100Items").amount, 
+//										"Expert crafting earns you %d");
 								amount -= 100;
 							}
 						

@@ -92,7 +92,6 @@ import com.avrgaming.civcraft.util.PlayerBlockChangeUtil;
 import com.avrgaming.civcraft.util.SimpleBlock;
 import com.avrgaming.global.perks.NotVerifiedException;
 import com.avrgaming.global.perks.Perk;
-import com.avrgaming.global.perks.PlatinumManager;
 import com.avrgaming.global.perks.components.CustomPersonalTemplate;
 import com.avrgaming.global.perks.components.CustomTemplate;
 
@@ -1356,9 +1355,9 @@ public class Resident extends SQLObject {
 	}
 	
 	public void loadPerks() {
-		if (!PlatinumManager.isEnabled()) {
-			return;
-		}
+//		if (!PlatinumManager.isEnabled()) {
+//			return;
+//		}
 		
 		class AsyncTask implements Runnable {
 			Resident resident;
@@ -1379,16 +1378,16 @@ public class Resident extends SQLObject {
 						e.printStackTrace();
 						return;
 					} catch (NotVerifiedException e) {
-						String url;
-						try {
-							url = CivSettings.getString(CivSettings.perkConfig, "system.register_url");
-						} catch (InvalidConfiguration e1) {
-							e1.printStackTrace();
-							return;
-						}
-						
-						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"Hey! You're in-game account is not registered! Register it at "+url);
-						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"You'll be unable to earn Platinum until you register.");	
+//						String url;
+//						try {
+//							url = CivSettings.getString(CivSettings.perkConfig, "system.register_url");
+//						} catch (InvalidConfiguration e1) {
+//							e1.printStackTrace();
+//							return;
+//						}
+//						
+//						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"Hey! You're in-game account is not registered! Register it at "+url);
+//						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"You'll be unable to earn Platinum until you register.");	
 						return;
 					}	
 				} catch (CivException e1) {
@@ -1396,10 +1395,10 @@ public class Resident extends SQLObject {
 				}
 				
 				/* User was verified, lets see if it was the first time. */
-				PlatinumManager.givePlatinumOnce(resident,
-				CivSettings.platinumRewards.get("loginFirstVerified").name, 
-				CivSettings.platinumRewards.get("loginFirstVerified").amount, 
-				"Achievement! First time you've logged in while verified! %d");
+//				PlatinumManager.givePlatinumOnce(resident,
+//				CivSettings.platinumRewards.get("loginFirstVerified").name, 
+//				CivSettings.platinumRewards.get("loginFirstVerified").amount, 
+//				"Achievement! First time you've logged in while verified! %d");
 			}
 		}
 		

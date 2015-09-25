@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -35,7 +36,7 @@ public class AcceptCommand implements CommandExecutor {
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		
 		if (!(sender instanceof Player)) {
-			CivMessage.sendError(sender, "Only a player can execute this command.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_MustBePlayer"));
 			return false;
 		}
 		
@@ -66,7 +67,7 @@ public class AcceptCommand implements CommandExecutor {
 		}
 		
 
-		CivMessage.sendError(sender, "No question to respond to.");
+		CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_acceptError"));
 		return false;			
 	}
 

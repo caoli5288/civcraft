@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementArenaItem;
@@ -25,22 +26,22 @@ public class AdminItemCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad item";
-		displayName = "Admin Item";
+		displayName = CivSettings.localize.localizedString("adcmd_item_cmdDesc");
 		
-		commands.put("enhance", "[name] - Adds the specified enhancement.");
-		commands.put("give", "[player] [custom_id] [amount] - Gives player this custom item.");
+		commands.put("enhance", CivSettings.localize.localizedString("adcmd_item_enhanceDesc"));
+		commands.put("give", CivSettings.localize.localizedString("adcmd_item_giveDesc"));
 	}
 
 	public void give_cmd() throws CivException {
 		Resident resident = getNamedResident(1);
-		String id = getNamedString(2, "Enter a custom id from materials.yml");
+		String id = getNamedString(2, CivSettings.localize.localizedString("adcmd_item_givePrompt")+" materials.yml");
 		int amount = getNamedInteger(3);
 		
 		Player player = CivGlobal.getPlayer(resident);
 		
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 		if (craftMat == null) {
-			throw new CivException("No custom item with id:"+id);
+			throw new CivException(CivSettings.localize.localizedString("adcmd_item_giveInvalid")+id);
 		}
 		
 		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
@@ -51,7 +52,7 @@ public class AdminItemCommand extends CommandBase {
 			player.getWorld().dropItem(player.getLocation(), is);
 		}
 		
-		CivMessage.sendSuccess(player, "Gave item.");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("adcmd_item_giveSuccess"));
 	}
 	
 	public void enhance_cmd() throws CivException {
@@ -65,11 +66,11 @@ public class AdminItemCommand extends CommandBase {
 		enhancements.put("arena", new LoreEnhancementArenaItem());
 
 		if (inHand == null || ItemManager.getId(inHand) == CivData.AIR) {
-			throw new CivException("You must have an item in your hand to enhance it.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_item_enhanceNoItem"));
 		}
 		
 		if (args.length < 2) {
-			CivMessage.sendHeading(sender, "Possible Enchants");
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_item_enhancementList"));
 			String out = "";
 			for (String str : enhancements.keySet()) {
 				out += str + ", ";
@@ -85,7 +86,7 @@ public class AdminItemCommand extends CommandBase {
 				LoreEnhancement enh = enhancements.get(str);
 				ItemStack stack = LoreMaterial.addEnhancement(inHand, enh);
 				player.setItemInHand(stack);
-				CivMessage.sendSuccess(sender, "Enhanced with "+name);
+				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_item_enhanceSuccess")+" "+name);
 				return;
 			}
 		}

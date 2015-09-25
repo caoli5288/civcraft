@@ -15,10 +15,7 @@ import com.avrgaming.civcraft.config.ConfigPerk;
 import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivLog;
-//import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
-//import com.avrgaming.civcraft.util.CivColor;
 
 public class PerkManager {
 
@@ -229,32 +226,32 @@ public class PerkManager {
 //		}
 //	}
 	
-	public void updatePlatinum(Resident resident, Integer plat) throws SQLException, NotVerifiedException {
-		Integer userId = PerkManager.getUserWebsiteId(resident);
-		PerkManager.updatePlatinum(userId, plat);
-	}
-	
-	private static void updatePlatinum(Integer userID, Integer plat) throws SQLException {
-		Connection context = null;
-		PreparedStatement s = null;
-		
-		try {
-			context = SQL.getPerkConnection();	
-			String sql = "UPDATE `users` SET `platinum` = `platinum` + ? WHERE `id` = ?";
-			s = context.prepareStatement(sql);
-			s.setInt(1, plat);
-			s.setInt(2, userID);
-		
-			CivLog.info("Updated Platinum, user:"+userID+" with:"+plat);
-			int update = s.executeUpdate();
-			if (update != 1) {
-				CivLog.error("Failed to update platinum. Updated "+update+" rows when it should have been 1");
-			}
-			
-			return;
-		} finally {
-			SQL.close(null, s, context);
-		}
-	}
+//	public void updatePlatinum(Resident resident, Integer plat) throws SQLException, NotVerifiedException {
+//		Integer userId = PerkManager.getUserWebsiteId(resident);
+//		PerkManager.updatePlatinum(userId, plat);
+//	}
+//	
+//	private static void updatePlatinum(Integer userID, Integer plat) throws SQLException {
+//		Connection context = null;
+//		PreparedStatement s = null;
+//		
+//		try {
+//			context = SQL.getPerkConnection();	
+//			String sql = "UPDATE `users` SET `platinum` = `platinum` + ? WHERE `id` = ?";
+//			s = context.prepareStatement(sql);
+//			s.setInt(1, plat);
+//			s.setInt(2, userID);
+//		
+//			CivLog.info("Updated Platinum, user:"+userID+" with:"+plat);
+//			int update = s.executeUpdate();
+//			if (update != 1) {
+//				CivLog.error("Failed to update platinum. Updated "+update+" rows when it should have been 1");
+//			}
+//			
+//			return;
+//		} finally {
+//			SQL.close(null, s, context);
+//		}
+//	}
 		
 }
