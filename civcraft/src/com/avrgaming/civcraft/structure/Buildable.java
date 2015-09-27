@@ -461,8 +461,7 @@ public abstract class Buildable extends SQLObject {
 		this.setCorner(new BlockCoord(centerLoc));
 		
 		CivMessage.sendHeading(player, "Building a Structure");
-		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"We've placed a bedrock outline, only visible to you which outlines "+
-				" the structure's location.");
+		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"We've placed a bedrock outline, only visible to you which outlines the structure's location.");
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"If this location looks good, type 'yes'. Otherwise, type anything else to cancel building.");
 		Resident resident = CivGlobal.getResident(player);
 		resident.startPreviewTask(tpl, centerLoc.getBlock(), player.getUniqueId());
@@ -537,7 +536,7 @@ public abstract class Buildable extends SQLObject {
 		String filepath = "templates/undo/"+this.getTown().getName()+"/"+this.getCorner().toString();
 		File f = new File(filepath);
 		if(!f.exists()) {
-			throw new CivException("File Not found: "+filepath);
+			throw new CivException("File Not found:"+" "+filepath);
 		}
 		BuildUndoTask task = new BuildUndoTask(filepath, this.getCorner().toString(), this.getCorner(), 0, this.getTown().getName());
 		
@@ -697,7 +696,7 @@ public abstract class Buildable extends SQLObject {
 
 			double distance = townHallLoc.distance(loc);
 			if (distance < requiredDistance) {
-				throw new CivException("You must build at least "+requiredDistance+" blocks away from spawn.");
+				throw new CivException("You must build at least"+" "+requiredDistance+" "+"blocks away from spawn.");
 			}
 			
 		}
@@ -744,7 +743,7 @@ public abstract class Buildable extends SQLObject {
 				double dist = townhall.getCenterLocation().distance(new BlockCoord(centerBlock));
 				if (dist < minDistance) {
 					DecimalFormat df = new DecimalFormat();
-					CivMessage.sendError(player, "Cannot build town here. Too close to the town of "+town.getName()+". Distance is "+df.format(dist)+" and needs to be "+minDistance);
+					CivMessage.sendError(player, "Cannot build town here. Too close to the town of"+" "+town.getName()+". "+"Distance is"+" "+df.format(dist)+" "+"and needs to be"+" "+minDistance);
 					return;
 				}
 			}
@@ -850,7 +849,7 @@ public abstract class Buildable extends SQLObject {
 					
 					if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 						// Make sure we have permission to destroy any block in this area.
-						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+b.getX()+","+b.getY()+","+b.getZ());
+						throw new CivException("Cannot build here, you need DESTROY permissions to the block at"+" "+b.getX()+","+b.getY()+","+b.getZ());
 					}
 		
 					BlockCoord coord = new BlockCoord(b);
@@ -1150,7 +1149,7 @@ public abstract class Buildable extends SQLObject {
 	
 	public void onDestroy() {
 		//can be overriden in subclasses.
-		CivMessage.global("A "+this.getDisplayName()+" in "+this.getTown().getName()+" has been destroyed!");
+		CivMessage.global("A "+this.getDisplayName()+" in "+this.getTown().getName()+" "+"has been destroyed!");
 		this.hitpoints = 0;
 		this.fancyDestroyStructureBlocks();
 		this.save();
@@ -1161,14 +1160,14 @@ public abstract class Buildable extends SQLObject {
 		
 		if(hit.getOwner().isDestroyed()) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is already destroyed.");
+				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+"is already destroyed.");
 			}
 			return;
 		}
 		
 		if (!hit.getOwner().isComplete() && !(hit.getOwner() instanceof Wonder)) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is still being built, cannot be destroyed.");
+				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+"is still being built, cannot be destroyed.");
 			}
 			return;		
 		}
@@ -1191,7 +1190,7 @@ public abstract class Buildable extends SQLObject {
 		if (player != null) {
 		Resident resident = CivGlobal.getResident(player);
 			if (resident.isCombatInfo()) {
-				CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" has been damaged ("+
+				CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" "+"has been damaged ("+
 						hit.getOwner().hitpoints+"/"+hit.getOwner().getMaxHitPoints()+")");
 			}
 		}
@@ -1199,10 +1198,10 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public void onDamageNotification(Player player, BuildableDamageBlock hit) {
-		CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" has been damaged "+
+		CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" "+"has been damaged "+
 				hit.getOwner().getDamagePercentage()+"%!");
 		CivMessage.sendTown(hit.getTown(), CivColor.Yellow+"Our "+hit.getOwner().getDisplayName()+" at ("+hit.getOwner().getCorner()+
-				") is under attack! Damage is "+hit.getOwner().getDamagePercentage()+"%!");	
+				") "+"is under attack! Damage is"+" "+hit.getOwner().getDamagePercentage()+"%!");	
 	}
 	
 	public Map<BlockCoord, Boolean> getStructureBlocks() {
@@ -1552,9 +1551,9 @@ public abstract class Buildable extends SQLObject {
 		this.damage(damage);
 
 		DecimalFormat df = new DecimalFormat("###");
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+"Our town's "+this.getDisplayName()+" at ("+
-				center.getX()+","+center.getY()+","+center.getZ()+") cannot be supported by the blocks underneath!");
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+"It's lost "+df.format(invalid_hourly_penalty*100)+"% of it's hitpoints! HP is now ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+"Our town's"+" "+this.getDisplayName()+" @ ("+
+				center.getX()+","+center.getY()+","+center.getZ()+") "+"cannot be supported by the blocks underneath!");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+"It's lost "+df.format(invalid_hourly_penalty*100)+"% "+"of it's hitpoints! HP is now"+" ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+this.invalidLayerMessage);
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+"Fix the blocks on this layer then run '/build validatenearest' to fix it.");
 		this.save();

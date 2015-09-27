@@ -236,7 +236,7 @@ public class TownChunk extends SQLObject {
 		cost = getNextPlotCost(town);
 		
 		if (!town.hasEnough(cost)) {
-			throw new CivException("The town does not have the required "+cost+" Coins to claim this plot.");
+			throw new CivException("The town does not have the required"+" "+cost+" "+CivSettings.CURRENCY_NAME+" to claim this plot.");
 		}
 		
 		CultureChunk cultureChunk = CivGlobal.getCultureChunk(coord);
@@ -264,7 +264,7 @@ public class TownChunk extends SQLObject {
 				if (cc.getCiv() != town.getCiv()) {
 					double dist = coord.distance(cc.getChunkCoord());
 					if (dist <= min_distance) {
-						throw new CivException("Too close to the culture of "+cc.getCiv().getName()+", cannot claim here.");
+						throw new CivException("Too close to the culture of"+" "+cc.getCiv().getName()+", "+"cannot claim here.");
 					}
 				}
 			}	
@@ -305,7 +305,7 @@ public class TownChunk extends SQLObject {
 		
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of "+town.getName()+" and has been disbaned!");
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of"+" "+town.getName()+" "+"and has been disbaned!");
 			camp.disband();
 		}
 		
@@ -321,7 +321,7 @@ public class TownChunk extends SQLObject {
 	public static TownChunk claim(Town town, Player player, boolean outpost) throws CivException {
 		double cost = getNextPlotCost(town);
 		TownChunk tc = claim(town, new ChunkCoord(player.getLocation()), outpost);
-		CivMessage.sendSuccess(player, "Claimed chunk at "+tc.getChunkCoord()+" for "+CivColor.Yellow+cost+CivColor.LightGreen+" Coins.");
+		CivMessage.sendSuccess(player, "Claimed chunk at"+" "+tc.getChunkCoord()+" for "+CivColor.Yellow+cost+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
 		return tc;
 	}
 	
@@ -397,7 +397,7 @@ public class TownChunk extends SQLObject {
 	
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of "+town.getName()+" and has been disbaned!");
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of"+" "+town.getName()+" "+"and has been disbaned!");
 			camp.disband();
 		}
 		
@@ -446,7 +446,7 @@ public class TownChunk extends SQLObject {
 		String out = "";
 		
 		if (this.perms.getOwner() != null) {
-			out += CivColor.LightGray+"[Owned by: "+CivColor.LightGreen+this.perms.getOwner().getName()+CivColor.LightGray+"]";
+			out += CivColor.LightGray+"[Owned by:"+" "+CivColor.LightGreen+this.perms.getOwner().getName()+CivColor.LightGray+"]";
 		}
 		
 		if (this.perms.getOwner() == null && fromTc != null && fromTc.perms.getOwner() != null) {
@@ -454,7 +454,7 @@ public class TownChunk extends SQLObject {
 		}
 		
 		if (this.isForSale()) {
-			out += CivColor.Yellow+"[For Sale: "+this.price+" Coins]";
+			out += CivColor.Yellow+"[For Sale: "+this.price+" "+CivSettings.CURRENCY_NAME+"]";
 		}
 		
 		return out;
@@ -463,7 +463,7 @@ public class TownChunk extends SQLObject {
 	public void purchase(Resident resident) throws CivException {
 
 		if (!resident.getTreasury().hasEnough(this.price)) {
-			throw new CivException("You do not have the required "+this.price+" Coins to purchase this plot.");
+			throw new CivException("You do not have the required"+" "+this.price+" "+CivSettings.CURRENCY_NAME+" to purchase this plot.");
 		}
 		
 		if (this.perms.getOwner() == null) {

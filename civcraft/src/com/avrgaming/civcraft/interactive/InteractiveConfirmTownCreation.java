@@ -55,8 +55,8 @@ public class InteractiveConfirmTownCreation implements InteractiveResponse {
 		join.resident = resident;
 		join.civ = resident.getCiv();
 		try {
-			CivGlobal.questionLeaders(player, resident.getCiv(), player.getName()+" would like to found the town of "+
-					resident.desiredTownName+" at "+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ(),
+			CivGlobal.questionLeaders(player, resident.getCiv(), player.getName()+" "+"would like to found the town of"+" "+
+					resident.desiredTownName+" @ "+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ(),
 					30*1000, join);
 		} catch (CivException e) {
 			CivMessage.sendError(player, e.getMessage());

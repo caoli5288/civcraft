@@ -99,9 +99,9 @@ public class PlayerListener implements Listener {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (resident.getItemMode().equals("all")) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up"+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
 		} else if (resident.getItemMode().equals("rare") && rare) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up"+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
 		}
 	}
 	
@@ -121,8 +121,8 @@ public class PlayerListener implements Listener {
 		//Handle Teleportation Things here!
 		if (event.getCause().equals(TeleportCause.COMMAND) ||
 				event.getCause().equals(TeleportCause.PLUGIN)) {	
-			CivLog.info("[TELEPORT] "+event.getPlayer().getName()+" to:"+event.getTo().getBlockX()+","+event.getTo().getBlockY()+","+event.getTo().getBlockZ()+
-					" from:"+event.getFrom().getBlockX()+","+event.getFrom().getBlockY()+","+event.getFrom().getBlockZ());
+			CivLog.info("[TELEPORT]"+" "+event.getPlayer().getName()+" "+"to:"+event.getTo().getBlockX()+","+event.getTo().getBlockY()+","+event.getTo().getBlockZ()+
+					" "+"from:"+event.getFrom().getBlockX()+","+event.getFrom().getBlockY()+","+event.getFrom().getBlockZ());
 			Player player = event.getPlayer();
 			if (!player.isOp() && !player.hasPermission("civ.admin")) {
 				CultureChunk cc = CivGlobal.getCultureChunk(new ChunkCoord(event.getTo()));
@@ -139,7 +139,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Civ ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] unless you are allied with them.");
+							CivMessage.send(resident, CivColor.Red+"[Denied]"+" "+CivColor.White+"You're not allowed to Teleport into Civ"+" ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] "+"unless you are allied with them.");
 							return;
 						}
 					}
@@ -154,7 +154,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+"[Denied] "+CivColor.White+"You're not allowed to Teleport into Camp ["+CivColor.Green+toCamp.getName()+CivColor.White+"] unless you are a member of that camp.");
+							CivMessage.send(resident, CivColor.Red+"[Denied]"+" "+CivColor.White+"You're not allowed to Teleport into Camp"+" ["+CivColor.Green+toCamp.getName()+CivColor.White+"] "+"unless you are a member of that camp.");
 							return;
 						}
 					
@@ -502,7 +502,7 @@ public class PlayerListener implements Listener {
 			ConfigTechPotion pot = CivSettings.techPotions.get(Integer.valueOf(event.getItem().getDurability()));
 			if (pot != null) {
 				if (!pot.hasTechnology(event.getPlayer())) {
-					CivMessage.sendError(event.getPlayer(), "You cannot use "+pot.name+" potions. You do not have the technology yet.");
+					CivMessage.sendError(event.getPlayer(), "You cannot use"+" "+pot.name+" "+"potions. You do not have the technology yet.");
 					event.setCancelled(true);
 					return;
 				}
@@ -581,8 +581,8 @@ public class PlayerListener implements Listener {
 			Resident defenderResident = CivGlobal.getResident(defender);
 			if (defenderResident.isCombatInfo()) {	
 				if (attacker != null) {
-					CivMessage.send(defender, CivColor.LightGray+"   [Combat] Took "+CivColor.Rose+damage+
-							" damage "+CivColor.LightGray+" from "+CivColor.LightPurple+attacker.getName());				
+					CivMessage.send(defender, CivColor.LightGray+"   "+"[Combat] Took"+" "+CivColor.Rose+damage+
+							" "+"damage"+" "+CivColor.LightGray+" "+"from"+" "+CivColor.LightPurple+attacker.getName());				
 				} else {
 					String entityName = null;
 					
@@ -594,8 +594,8 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(defender, CivColor.LightGray+"   [Combat] Took "+CivColor.Rose+damage+
-							" damage "+CivColor.LightGray+" from a "+entityName);
+					CivMessage.send(defender, CivColor.LightGray+"   "+"[Combat] Took"+" "+CivColor.Rose+damage+
+							" "+"damage"+" "+CivColor.LightGray+" "+"from a"+" "+entityName);
 				}
 			}
 		}
@@ -604,7 +604,7 @@ public class PlayerListener implements Listener {
 			Resident attackerResident = CivGlobal.getResident(attacker);
 			if (attackerResident.isCombatInfo()) {
 				if (defender != null) {
-					CivMessage.send(attacker, CivColor.LightGray+"   [Combat] Gave "+CivColor.LightGreen+damage+CivColor.LightGray+" damage to "+CivColor.LightPurple+defender.getName());
+					CivMessage.send(attacker, CivColor.LightGray+"   "+"[Combat] Gave"+" "+CivColor.LightGreen+damage+CivColor.LightGray+" "+"damage to"+" "+CivColor.LightPurple+defender.getName());
 				} else {
 					String entityName = null;
 					
@@ -616,7 +616,7 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(attacker, CivColor.LightGray+"   [Combat] Gave "+CivColor.LightGreen+damage+CivColor.LightGray+" damage to a "+entityName);
+					CivMessage.send(attacker, CivColor.LightGray+"   "+"[Combat] Gave"+" "+CivColor.LightGreen+damage+CivColor.LightGray+" "+"damage to a"+" "+entityName);
 				}
 			}
 		}

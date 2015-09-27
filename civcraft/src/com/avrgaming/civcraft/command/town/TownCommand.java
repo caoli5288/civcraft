@@ -110,7 +110,7 @@ public class TownCommand extends CommandBase {
                 CivMessage.send(sender, CivColor.Rose+CivColor.BOLD+"NO TOWN HALL");
             } else {
                 CivMessage.send(sender, CivColor.LightGreen+CivColor.BOLD+town.getName()+" - ");
-                CivMessage.send(sender, CivColor.LightGreen+"Location: "+CivColor.LightPurple+townhall.getCorner());
+                CivMessage.send(sender, CivColor.LightGreen+"Location:"+" "+CivColor.LightPurple+townhall.getCorner());
             }
         }
 	}
@@ -131,7 +131,7 @@ public class TownCommand extends CommandBase {
 		}
 		
 		if (struct == null) {
-			throw new CivException("Structure at:"+coordString+" is not found.");
+			throw new CivException("Structure at:"+" "+coordString+" "+"is not found.");
 		}
 		
 		if (!resident.getCiv().getLeaderGroup().hasMember(resident)) {
@@ -203,8 +203,8 @@ public class TownCommand extends CommandBase {
 		
 		town.getMayorGroup().addMember(resident);
 		town.getMayorGroup().save();
-		CivMessage.sendSuccess(sender, "You are now a mayor in "+town.getName());
-		CivMessage.sendTown(town, resident.getName()+" has assumed control of the town due to inactive mayorship.");
+		CivMessage.sendSuccess(sender, "You are now a mayor in"+" "+town.getName());
+		CivMessage.sendTown(town, resident.getName()+" "+"has assumed control of the town due to inactive mayorship.");
 	}
 	
 	public void event_cmd() throws CivException {
@@ -223,7 +223,7 @@ public class TownCommand extends CommandBase {
 				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
 						p.configPerk.type_id, 
 						p.configPerk.data, 
-						CivColor.Gray+"Provided by: "+CivColor.LightBlue+p.provider);
+						CivColor.Gray+"Provided by:"+" "+CivColor.LightBlue+p.provider);
 				inv.addItem(stack);
 			}
 		}
@@ -312,10 +312,10 @@ public class TownCommand extends CommandBase {
 	//	outList.add(CivColor.Green+"Biome Count: "+CivColor.LightGreen+totalBiomes);
 		
 		outList.add(CivColor.LightBlue+"Totals");
-		outList.add(CivColor.Green+" Happiness:"+CivColor.LightGreen+df.format(happiness)+
-				CivColor.Green+" Hammers:"+CivColor.LightGreen+df.format(hammers)+
-				CivColor.Green+" Growth:"+CivColor.LightGreen+df.format(growth)+
-				CivColor.Green+" Beakers:"+CivColor.LightGreen+df.format(beakers));
+		outList.add(CivColor.Green+" "+"Happiness:"+" "+CivColor.LightGreen+df.format(happiness)+
+				CivColor.Green+" "+"Hammers:"+" "+CivColor.LightGreen+df.format(hammers)+
+				CivColor.Green+" "+"Growth:"+" "+CivColor.LightGreen+df.format(growth)+
+				CivColor.Green+" "+"Beakers:"+" "+CivColor.LightGreen+df.format(beakers));
 		return outList;
 	}
 	
@@ -337,7 +337,7 @@ public class TownCommand extends CommandBase {
 		}
 		
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Capitualting means that this town will become a normal town in "+town.getCiv().getName()+" and can no longer revolt. Are you sure?");
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Capitualting means that this town will become a normal town in"+" "+town.getCiv().getName()+" "+"and can no longer revolt. Are you sure?");
 			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"If you're sure, type /town capitulate yes");
 			return;
 		}
@@ -346,7 +346,7 @@ public class TownCommand extends CommandBase {
 		town.setMotherCiv(null);
 		town.save();
 		
-		CivMessage.global("The conquered town of "+town.getName()+" has capitualted to "+town.getCiv().getName()+" and can no longer revolt.");	
+		CivMessage.global("The conquered town of"+" "+town.getName()+" "+"has capitualted to"+" "+town.getCiv().getName()+" "+"and can no longer revolt.");	
 	}
 	
 //	public void capture_cmd() throws CivException {
@@ -394,18 +394,18 @@ public class TownCommand extends CommandBase {
 		
 		if (resident.getSelectedTown() == null) {
 			if (resident.getTown() == selectTown) {
-				throw new CivException("You already have "+selectTown.getName()+" selected.");
+				throw new CivException("You already have"+" "+selectTown.getName()+" "+"selected.");
 			}
 		}
 		
 		if (resident.getSelectedTown() == selectTown) {
-			throw new CivException("You already have "+selectTown.getName()+" selected.");
+			throw new CivException("You already have"+" "+selectTown.getName()+" "+"selected.");
 		}
 		
 		selectTown.validateResidentSelect(resident);
 				
 		resident.setSelectedTown(selectTown);
-		CivMessage.sendSuccess(sender, "You have selected "+selectTown.getName()+".");
+		CivMessage.sendSuccess(sender, "You have selected:"+" "+selectTown.getName());
 	}
 	
 	public void leavegroup_cmd() throws CivException {
@@ -414,7 +414,7 @@ public class TownCommand extends CommandBase {
 		Resident resident = getResident();
 		
 		if (!grp.hasMember(resident)) {
-			throw new CivException("You are not a member of the group "+grp.getName()+" in town "+town.getName());
+			throw new CivException("You are not a member of the group"+" "+grp.getName()+" "+"in town"+" "+town.getName());
 		}
 		
 		if (grp == town.getMayorGroup() && grp.getMemberCount() == 1) {
@@ -427,7 +427,7 @@ public class TownCommand extends CommandBase {
 		
 		grp.removeMember(resident);
 		grp.save();
-		CivMessage.sendSuccess(sender, "You are no longer a member of the "+grp.getName()+" group in town "+town.getName());
+		CivMessage.sendSuccess(sender, "You are no longer a member of the"+" "+grp.getName()+" "+"group in town"+" "+town.getName());
 	}
 
 	public void outlaw_cmd() {
@@ -457,7 +457,7 @@ public class TownCommand extends CommandBase {
 		
 		
 		if (town.leaderWantsToDisband && town.mayorWantsToDisband) {
-			CivMessage.sendCiv(town.getCiv(), "Town "+town.getName()+" is being disbanded by agreement from the civ leader and the mayor");
+			CivMessage.sendCiv(town.getCiv(), "Town"+" "+town.getName()+" "+"is being disbanded by agreement from the civ leader and the mayor");
 			town.disband();
 		}
 		
@@ -510,7 +510,7 @@ public class TownCommand extends CommandBase {
 		Resident residentToKick = getNamedResident(1);
 		
 		if (residentToKick.getTown() != town) {
-			throw new CivException(args[1]+" is not a member of this town.");
+			throw new CivException(args[1]+" "+"is not a member of this town.");
 		}
 		
 		if (!town.isInGroup("mayors", resident) && !town.isInGroup("assistants", resident)) {
@@ -529,14 +529,14 @@ public class TownCommand extends CommandBase {
 			} catch (CivException e) {
 				//Player not online.
 			}
-			CivMessage.sendTown(town, residentToKick.getName()+" has been evicted from town by "+resident.getName());
+			CivMessage.sendTown(town, residentToKick.getName()+" "+"has been evicted from town by"+" "+resident.getName());
 			return;
 		}
 		
 		residentToKick.setDaysTilEvict(CivSettings.GRACE_DAYS);
 		residentToKick.warnEvict();
 		residentToKick.save();
-		CivMessage.sendSuccess(sender, args[1]+" will be evicted from town in "+CivSettings.GRACE_DAYS+" days.");
+		CivMessage.sendSuccess(sender, args[1]+" "+"will be evicted from town in"+" "+CivSettings.GRACE_DAYS+" "+"days.");
 	}
 	
 	public void show_cmd() throws CivException {
@@ -570,9 +570,9 @@ public class TownCommand extends CommandBase {
 							potentialDistanceLow = civ.getDistanceUpkeepAtLocation(ourCapLoc, theirTownHallLoc, true);
 							potentialDistanceHigh = civ.getDistanceUpkeepAtLocation(ourCapLoc, theirTownHallLoc, false);
 							
-							CivMessage.send(player, CivColor.Yellow+"Your civilization would pay "+potentialDistanceLow+" if it or owned it."); 
+							CivMessage.send(player, CivColor.Yellow+"Your civilization would pay"+" "+potentialDistanceLow+" "+"if it or owned it."); 
 							CivMessage.send(player, CivColor.Yellow+"Your civilization would pay 0 upkeep if you conquered it and it remains uncapitulated"); 
-							CivMessage.send(player, CivColor.Yellow+"If this town's culture is not connected to your captial's culture and it was owned fully by your civ, you would pay "+potentialDistanceHigh+" Coins in distance upkeep if you owned it.");
+							CivMessage.send(player, CivColor.Yellow+"If this town's culture is not connected to your captial's culture and it was owned fully by your civ, you would pay"+" "+potentialDistanceHigh+" "+CivSettings.CURRENCY_NAME+" in distance upkeep if you owned it.");
 						} else {
 							CivMessage.send(player, CivColor.Yellow+"This town has no town hall! Cannot calculate distance upkeep to it.");
 						}
@@ -612,8 +612,8 @@ public class TownCommand extends CommandBase {
 			CivMessage.send(sender, CivColor.LightGray+"You've been removed from town chat since you've left the town.");		
 		}
 		
-		CivMessage.sendSuccess(sender, "You left the town of "+town.getName());
-		CivMessage.sendTown(town, resident.getName()+" has left the town.");
+		CivMessage.sendSuccess(sender, "You left the town of"+" "+town.getName());
+		CivMessage.sendTown(town, resident.getName()+" "+"has left the town.");
 		
 		town.save();
 		resident.save();
@@ -658,10 +658,10 @@ public class TownCommand extends CommandBase {
 				throw new CivException("The town does not have that much.");
 			}
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is not a valid number.");
+			throw new CivException(args[1]+" "+"is not a valid number.");
 		}
 		
-		CivMessage.sendSuccess(sender, "Withdrew "+args[1]+" Coins.");
+		CivMessage.sendSuccess(sender, "Withdrew"+" "+args[1]+" "+CivSettings.CURRENCY_NAME);
 	}
 	
 	public void deposit_cmd() throws CivException {
@@ -684,7 +684,7 @@ public class TownCommand extends CommandBase {
 			throw new CivException(args[1]+" is not a valid number.");
 		}
 		
-		CivMessage.sendSuccess(sender, "Deposited "+args[1]+" Coins.");
+		CivMessage.sendSuccess(sender, "Deposited "+args[1]+" "+CivSettings.CURRENCY_NAME);
 	}
 	
 	public void add_cmd() throws CivException {
@@ -705,20 +705,20 @@ public class TownCommand extends CommandBase {
 		if (newResident.hasCamp()) {
 			try {
 				Player resPlayer = CivGlobal.getPlayer(newResident);
-				CivMessage.send(resPlayer, CivColor.Yellow+player.getName()+" tried to invite you to the town of "+town.getName()+
-						" but cannot since you are in a camp. Leave camp first using /camp leave");
+				CivMessage.send(resPlayer, CivColor.Yellow+player.getName()+" "+"tried to invite you to the town of"+" "+town.getName()+
+						" "+"but cannot since you are in a camp. Leave camp first using /camp leave");
 			} catch(CivException e) {
 				//player not online
 			}
-			throw new CivException("You cannot invite "+newResident.getName()+" to town since he is part of a camp. Have him leave camp first with /camp leave.");
+			throw new CivException("You cannot invite"+" "+newResident.getName()+" "+"to town since he is part of a camp. Have him leave camp first with /camp leave.");
 		}
 		
 		if (town.hasResident(newResident)) {
-			throw new CivException(newResident.getName()+" is already a member of town.");
+			throw new CivException(newResident.getName()+" "+"is already a member of town.");
 		}
 		
 		if (newResident.getTown() != null) {
-			throw new CivException(newResident.getName()+" is already in town "+newResident.getTown().getName());
+			throw new CivException(newResident.getName()+" "+"is already in town"+" "+newResident.getTown().getName());
 		}
 		
 		JoinTownResponse join = new JoinTownResponse();
@@ -729,10 +729,10 @@ public class TownCommand extends CommandBase {
 		newResident.validateJoinTown(town);
 		
 		CivGlobal.questionPlayer(player, CivGlobal.getPlayer(newResident), 
-				"Would you like to join the town of "+town.getName()+"?",
+				"Would you like to join the town of"+" "+town.getName()+"?",
 				INVITE_TIMEOUT, join);
 		
-		CivMessage.sendSuccess(sender, CivColor.LightGray+"Invited to "+args[1]+" to town "+town.getName());
+		CivMessage.sendSuccess(sender, CivColor.LightGray+"Invited to"+" "+args[1]+" "+"to town"+" "+town.getName());
 	}
 	
 	public void info_cmd() throws CivException {
@@ -809,9 +809,9 @@ public class TownCommand extends CommandBase {
 		
 		TownChunk.unclaim(tc);
 		if (tc.isOutpost()) {
-			CivMessage.sendSuccess(sender, "Unclaimed Outpost at "+tc.getCenterString());
+			CivMessage.sendSuccess(sender, "Unclaimed Outpost at"+" "+tc.getCenterString());
 		} else {
-			CivMessage.sendSuccess(sender, "Unclaimed "+tc.getCenterString());
+			CivMessage.sendSuccess(sender, "Unclaimed"+" "+tc.getCenterString());
 		}
 		
 	}
@@ -825,7 +825,7 @@ public class TownCommand extends CommandBase {
 	public void members_cmd() throws CivException {
 		Town town = this.getSelectedTown();
 		
-		CivMessage.sendHeading(sender, town.getName()+" Members");
+		CivMessage.sendHeading(sender, town.getName()+" "+"Members");
 		String out = "";
 		for (Resident res : town.getResidents()) {
 			out += res.getName() + ", ";

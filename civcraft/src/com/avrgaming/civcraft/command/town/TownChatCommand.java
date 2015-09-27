@@ -48,7 +48,7 @@ public class TownChatCommand implements CommandExecutor {
 		if (args.length == 0) {
 			resident.setTownChat(!resident.isTownChat());
 			resident.setCivChat(false);
-			CivMessage.sendSuccess(sender, "Town chat mode set to "+resident.isTownChat());
+			CivMessage.sendSuccess(sender, "Town chat mode set to"+" "+resident.isTownChat());
 			return true;
 		}
 		

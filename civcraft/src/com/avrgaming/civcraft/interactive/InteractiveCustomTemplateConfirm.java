@@ -36,10 +36,10 @@ public class InteractiveCustomTemplateConfirm implements InteractiveResponse {
 		Perk perk = customTemplate.getParent();
 		
 		CivMessage.sendHeading(player, "Confirm Template Binding");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"You are about to bind the "+perk.getDisplayName()+" template to your town of "+town.getName());
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"You are about to bind the"+" "+perk.getDisplayName()+" "+"template to your town of"+" "+town.getName());
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Once the template is bound, you will be able to build the custom template by");
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Using the normal build command. This action consumes the perk, and cannot be undone.");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Are you sure you want to bind the template? Type "+CivColor.Yellow+CivColor.BOLD+"yes");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Are you sure you want to bind the template? Type [yes]");
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Type anything else to abort.");
 	}
 	
@@ -60,6 +60,6 @@ public class InteractiveCustomTemplateConfirm implements InteractiveResponse {
 		
 		customTemplate.bindTemplateToTown(resident.getTown(), resident);
 		customTemplate.markAsUsed(resident);
-		CivMessage.sendSuccess(player, "Bound "+customTemplate.getParent().getDisplayName()+" to "+resident.getTown().getName());
+		CivMessage.sendSuccess(player, customTemplate.getParent().getDisplayName()+" was bound to "+resident.getTown().getName());
 	}
 }

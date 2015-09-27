@@ -24,6 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -79,8 +80,8 @@ public class SignSelectionComponent extends Component {
 						sign.update();
 					} else {
 						sign.setLine(0, "");
-						sign.setLine(1, "Nothing");
-						sign.setLine(2, "Available");
+						sign.setLine(1, CivSettings.localize.localizedString("Nothing"));
+						sign.setLine(2, CivSettings.localize.localizedString("Available"));
 						sign.setLine(3, "");
 						sign.update();
 					}

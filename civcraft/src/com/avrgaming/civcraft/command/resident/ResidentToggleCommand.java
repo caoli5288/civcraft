@@ -99,11 +99,11 @@ public class ResidentToggleCommand extends CommandBase {
 			resident.toggleItemMode();
 			return;
 		default:
-			throw new CivException("Unknown flag "+args[0]);
+			throw new CivException("Unknown flag"+" "+args[0]);
 		}
 		
 		resident.save();
-		CivMessage.sendSuccess(sender, "Toggled "+args[0]+" to "+result);
+		CivMessage.sendSuccess(sender, "Toggled"+" "+args[0]+" -> "+result);
 	}
 
 	@Override

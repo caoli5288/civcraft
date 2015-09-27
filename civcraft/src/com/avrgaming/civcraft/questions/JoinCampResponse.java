@@ -34,15 +34,15 @@ public class JoinCampResponse implements QuestionResponseInterface {
 	@Override
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
-			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" accepted our camp invitation.");
+			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" "+"accepted our camp invitation.");
 			
 			if (!camp.hasMember(resident.getName())) {
 				camp.addMember(resident);
-				CivMessage.sendCamp(camp, resident.getName()+" has joined the camp.");
+				CivMessage.sendCamp(camp, resident.getName()+" "+"has joined the camp.");
 				resident.save();
 			}
 		} else {
-			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" denied our camp invitation.");
+			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" "+"denied our camp invitation.");
 		}
 	}
 	

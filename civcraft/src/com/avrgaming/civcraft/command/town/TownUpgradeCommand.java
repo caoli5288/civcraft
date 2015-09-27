@@ -56,13 +56,13 @@ public class TownUpgradeCommand extends CommandBase {
 	
 	private void list_upgrades(String category, Town town) throws CivException {
 		if (!ConfigTownUpgrade.categories.containsKey(category.toLowerCase()) && !category.equalsIgnoreCase("all")) {
-			throw new CivException("No category called "+category);
+			throw new CivException("No category called"+" "+category);
 		}
 				
 		for (ConfigTownUpgrade upgrade : CivSettings.townUpgrades.values()) {
 			if (category.equalsIgnoreCase("all") || upgrade.category.equalsIgnoreCase(category)) {	
 				if (upgrade.isAvailable(town)) {
-					CivMessage.send(sender, upgrade.name+CivColor.LightGray+" Cost: "+CivColor.Yellow+upgrade.cost);
+					CivMessage.send(sender, upgrade.name+CivColor.LightGray+" "+"Cost:"+" "+CivColor.Yellow+upgrade.cost);
 				}
 			}
 		}
@@ -74,7 +74,7 @@ public class TownUpgradeCommand extends CommandBase {
 		CivMessage.sendHeading(sender, "Available Upgrades");
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "- "+CivColor.Gold+"All "+
+			CivMessage.send(sender, "- "+CivColor.Gold+"All"+" "+
 					CivColor.LightBlue+"("+ConfigTownUpgrade.getAvailableCategoryCount("all", town)+")");
 			for (String category : ConfigTownUpgrade.categories.keySet()) {
 				CivMessage.send(sender, "- "+CivColor.Gold+WordUtils.capitalize(category)+
@@ -105,7 +105,7 @@ public class TownUpgradeCommand extends CommandBase {
 		
 		ConfigTownUpgrade upgrade = CivSettings.getUpgradeByNameRegex(town, combinedArgs);
 		if (upgrade == null) {
-			throw new CivException("No upgrade by the name of "+combinedArgs+" could be found.");
+			throw new CivException("There is no upgrade with the name:"+" "+combinedArgs);
 		}
 		
 		if (town.hasUpgrade(upgrade.id)) {
@@ -114,7 +114,7 @@ public class TownUpgradeCommand extends CommandBase {
 		
 		//TODO make upgrades take time by using hammers.
 		town.purchaseUpgrade(upgrade);
-		CivMessage.sendSuccess(sender, "Upgrade \""+upgrade.name+"\" purchased.");
+		CivMessage.sendSuccess(sender, "Upgrade purchased:"+" "+upgrade.name);
 	}
 	
 	@Override

@@ -54,7 +54,7 @@ public class CivGroupCommand extends CommandBase {
 		} else if (groupName.equalsIgnoreCase("advisers")) {
 			grp = civ.getAdviserGroup();
 		} else {
-			throw new CivException("Could not find group "+groupName);
+			throw new CivException("Could not find group"+" "+groupName);
 		}
 		
 		if (grp == civ.getLeaderGroup() && !grp.hasMember(resident)) {
@@ -71,10 +71,10 @@ public class CivGroupCommand extends CommandBase {
 		
 		grp.removeMember(oldMember);	
 		grp.save();
-		CivMessage.sendSuccess(sender, "Removed "+oldMember.getName()+" from group "+groupName);	
+		CivMessage.sendSuccess(sender, "Removed"+" "+oldMember.getName()+" "+"from group"+" "+groupName);	
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
-			CivMessage.send(newPlayer, CivColor.Rose+"You were removed from the "+groupName+" group in civ "+civ.getName());
+			CivMessage.send(newPlayer, CivColor.Rose+"You were removed from the"+" "+groupName+" "+"group in civ"+" "+civ.getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -92,7 +92,7 @@ public class CivGroupCommand extends CommandBase {
 		} else if (groupName.equalsIgnoreCase("advisers")) {
 			grp = civ.getAdviserGroup();
 		} else {
-			throw new CivException("Could not find group "+groupName);
+			throw new CivException("Could not find group"+" "+groupName);
 		}
 		
 		if (grp == civ.getLeaderGroup() && !grp.hasMember(resident)) {
@@ -106,11 +106,11 @@ public class CivGroupCommand extends CommandBase {
 		grp.addMember(newMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, "Added "+newMember.getName()+" to group "+groupName);
+		CivMessage.sendSuccess(sender, "Added"+" "+newMember.getName()+" "+"to group"+" "+groupName);
 
 		try {
 			Player newPlayer = CivGlobal.getPlayer(newMember);
-			CivMessage.sendSuccess(newPlayer, "You were added to the "+groupName+" group in civ "+civ.getName());
+			CivMessage.sendSuccess(newPlayer, "You were added to the"+" "+groupName+" "+"group in civ"+" "+civ.getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -127,10 +127,10 @@ public class CivGroupCommand extends CommandBase {
 			} else if (args[1].equalsIgnoreCase("advisers")) {
 				grp = civ.getAdviserGroup();
 			} else {
-				throw new CivException("Could not find group "+args[1]);
+				throw new CivException("Could not find group"+" "+args[1]);
 			}
 			
-			CivMessage.sendHeading(sender, "Group:"+args[1]);
+			CivMessage.sendHeading(sender, "Group:"+" "+args[1]);
 			
 			String residents = "";
 			for (Resident res : grp.getMemberList()) {
@@ -142,10 +142,10 @@ public class CivGroupCommand extends CommandBase {
 			CivMessage.sendHeading(sender, "Civ Group Information");
 
 			PermissionGroup grp = civ.getLeaderGroup();
-			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" members)");
+			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+"members"+")");
 					
 			grp = civ.getAdviserGroup();
-			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" members)");
+			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+"members"+")");
 
 		}
 	}

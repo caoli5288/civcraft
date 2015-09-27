@@ -59,7 +59,7 @@ public class BuildChooseTemplate implements GuiAction {
 			infoRec = LoreGuiItem.build(perk.getDisplayName(), 
 					perk.configPerk.type_id, 
 					perk.configPerk.data, CivColor.Gold+"<Click To Build>",
-					CivColor.Gray+"Provided by: "+CivColor.LightBlue+perk.provider);
+					CivColor.Gray+"Provided by:"+" "+CivColor.LightBlue+perk.provider);
 			infoRec = LoreGuiItem.setAction(infoRec, "BuildWithTemplate");
 			infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
 			inv.addItem(infoRec);

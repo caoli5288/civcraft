@@ -45,7 +45,7 @@ public class Attack extends ItemComponent {
 				type(AttributeType.GENERIC_ATTACK_DAMAGE).
 				amount(0).
 				build());
-		attrs.addLore(CivColor.Rose+""+this.getDouble("value")+" Attack");
+		attrs.addLore(CivColor.Rose+""+this.getDouble("value")+" "+"Attack");
 		return;
 	}
 	
@@ -54,7 +54,7 @@ public class Attack extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
+			CivMessage.send(resident, CivColor.Rose+"Warning"+" - "+CivColor.LightGray+
 					"You do not have the required technology to use this item. It's attack output will be reduced in half.");
 		}
 	}

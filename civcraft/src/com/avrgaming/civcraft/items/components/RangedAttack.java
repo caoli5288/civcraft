@@ -22,7 +22,7 @@ public class RangedAttack extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrs) {
-		attrs.addLore(CivColor.Rose+this.getDouble("value")+" Ranged Attack");	
+		attrs.addLore(CivColor.Rose+this.getDouble("value")+" "+"Ranged Attack");	
 	}
 	
 	private static double ARROW_MAX_VEL = 6.0; 
@@ -41,7 +41,7 @@ public class RangedAttack extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
+			CivMessage.send(resident, CivColor.Rose+"Warning"+" - "+CivColor.LightGray+
 					"You do not have the required technology to use this item. It's attack output will be reduced in half.");
 		}
 	}

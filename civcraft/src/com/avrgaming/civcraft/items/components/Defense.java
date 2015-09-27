@@ -37,7 +37,7 @@ public class Defense extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrs) {
-		attrs.addLore(CivColor.Blue+""+this.getDouble("value")+" Defense");
+		attrs.addLore(CivColor.Blue+""+this.getDouble("value")+" "+"Defense");
 	}
 	
 	@Override
@@ -45,7 +45,7 @@ public class Defense extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
+			CivMessage.send(resident, CivColor.Rose+"Warning"+" - "+CivColor.LightGray+
 					"You do not have the required technology to use this item. It's defense output will be reduced in half.");
 		}
 	}

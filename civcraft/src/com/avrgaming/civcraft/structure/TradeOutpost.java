@@ -145,7 +145,7 @@ public class TradeOutpost extends Structure {
 		/* this.good is set by the good's load function or by the onBuild function. */
 		TradeGood good = this.good;
 		if (good == null) {
-			throw new CivException("Couldn't find trade good at location:"+good);
+			throw new CivException("Couldn't find trade good at location:"+" "+good);
 		}
 		
 		/* Build the 'trade good tower' */

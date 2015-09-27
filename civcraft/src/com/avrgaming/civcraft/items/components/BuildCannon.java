@@ -27,7 +27,7 @@ public class BuildCannon extends ItemComponent {
 			Resident resident = CivGlobal.getResident(event.getPlayer());
 			Cannon.newCannon(resident);
 			
-			CivMessage.sendCiv(resident.getCiv(), "We've deployed a cannon at "+
+			CivMessage.sendCiv(resident.getCiv(), "We've deployed a cannon at"+" "+
 					event.getPlayer().getLocation().getBlockX()+","+
 					event.getPlayer().getLocation().getBlockY()+","+
 					event.getPlayer().getLocation().getBlockZ());

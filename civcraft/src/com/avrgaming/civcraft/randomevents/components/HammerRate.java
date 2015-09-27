@@ -17,9 +17,9 @@ public class HammerRate extends RandomEventComponent {
 		DecimalFormat df = new DecimalFormat();
 		
 		if (rate > 1.0) {
-			sendMessage("Our production rate has increased by "+df.format((rate - 1.0)*100)+"% due to an unforseen event!");
+			sendMessage("Our production rate has increased by"+" "+df.format((rate - 1.0)*100)+"% "+"due to an unforseen event!");
 		} else {
-			sendMessage("Our production rate has decreased by "+df.format((1.0 - rate)*100)+"% due to an unforseen event!");
+			sendMessage("Our production rate has decreased by"+" "+df.format((1.0 - rate)*100)+"% "+"due to an unforseen event!");
 		}
 	}
 

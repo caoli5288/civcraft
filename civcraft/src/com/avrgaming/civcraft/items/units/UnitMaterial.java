@@ -226,7 +226,7 @@ public class UnitMaterial extends LoreMaterial {
 		
 		ConfigUnit unit = Unit.getPlayerUnit(event.getPlayer());
 		if (unit != null) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "Already a "+unit.name+" cannot pickup another unit item.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), "Already have a"+" "+unit.name+" "+"cannot pickup another unit item.");
 			event.setCancelled(true);
 		} else {
 			// Reposition item to the last quickbar slot
@@ -321,7 +321,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, "You already are a "+unit.name+" cannot pickup another unit item.");
+				CivMessage.sendError(player, "You already are a"+" "+unit.name+" "+"cannot pickup another unit item.");
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
@@ -370,7 +370,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, "You already are a "+unit.name+" cannot pickup another unit item.");
+				CivMessage.sendError(player, "You already are a"+" "+unit.name+" "+"cannot pickup another unit item.");
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();

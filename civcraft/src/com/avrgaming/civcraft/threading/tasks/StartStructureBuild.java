@@ -51,7 +51,7 @@ public class StartStructureBuild implements Runnable {
 			struct.doBuild(player, centerLoc, tpl);
 			struct.save();
 		} catch (CivException e) {
-			CivMessage.sendError(player, "Unable to build: "+e.getMessage());
+			CivMessage.sendError(player, "Unable to build:"+" "+e.getMessage());
 		} catch (IOException e) {
 			CivMessage.sendError(player, "Internal IO error.");
 			e.printStackTrace();

@@ -132,9 +132,9 @@ public class TeamCommand  extends CommandBase {
 	
 	public void printTeamInfo(ArenaTeam team) {
 		CivMessage.sendHeading(sender, "Team "+team.getName());
-		CivMessage.send(sender, CivColor.Green+"Points: "+CivColor.LightGreen+team.getLadderPoints()+
-								CivColor.Green+" Leader: "+CivColor.LightGreen+team.getLeader().getName());
-		CivMessage.send(sender, CivColor.Green+"Members: "+CivColor.LightGreen+team.getMemberListSaveString());
+		CivMessage.send(sender, CivColor.Green+"Points:"+" "+CivColor.LightGreen+team.getLadderPoints()+
+								CivColor.Green+" "+"Leader:"+" "+CivColor.LightGreen+team.getLeader().getName());
+		CivMessage.send(sender, CivColor.Green+"Members:"+" "+CivColor.LightGreen+team.getMemberListSaveString());
 	}
 
 	public void info_cmd() throws CivException {
@@ -188,8 +188,8 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		ArenaTeam.removeMember(team.getName(), resident);
-		CivMessage.sendSuccess(sender, "Left Team "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" has left the team.");
+		CivMessage.sendSuccess(sender, "Left Team"+" "+team.getName());
+		CivMessage.sendTeam(team, resident.getName()+" "+"has left the team.");
 	}
 	
 	public void disband_cmd() throws CivException {
@@ -206,7 +206,7 @@ public class TeamCommand  extends CommandBase {
 		String teamName = resident.getTeam().getName();
 		ArenaTeam.deleteTeam(teamName);
 		ArenaTeam.arenaTeams.remove(teamName);
-		CivMessage.sendSuccess(sender, "Disbanded team: "+teamName);
+		CivMessage.sendSuccess(sender, "Disbanded team:"+" "+teamName);
 	}
 	
 	public void add_cmd() throws CivException {
@@ -218,7 +218,7 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		if (member.hasTeam()) {
-			throw new CivException(member.getName()+" is already on a team.");
+			throw new CivException(member.getName()+" "+"is already on a team.");
 		}
 		
 		if (resident.getTeam().getCurrentArena() != null) {
@@ -229,7 +229,7 @@ public class TeamCommand  extends CommandBase {
 			Player player = CivGlobal.getPlayer(member);
 			
 			if (member.isProtected()) {
-				throw new CivException(player.getName()+" is protected and unable to join a team");
+				throw new CivException(player.getName()+" "+"is protected and unable to join a team");
 			}
 			
 			ArenaTeam team = resident.getTeam();
@@ -239,14 +239,14 @@ public class TeamCommand  extends CommandBase {
 			join.sender = (Player)sender;
 					
 			CivGlobal.questionPlayer(CivGlobal.getPlayer(resident), player, 
-					"Would you like to join team "+team.getName()+"?",
+					"Would you like to join team"+" "+team.getName()+"?",
 					30000, join);
 			
 		} catch (CivException e) {
 			throw new CivException(e.getMessage());
 		}
 				
-		CivMessage.sendSuccess(sender, "Sent invitation to "+member.getName());
+		CivMessage.sendSuccess(sender, "Sent invitation to"+" "+member.getName());
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -262,8 +262,8 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		ArenaTeam.removeMember(resident.getTeam().getName(), member);
-		CivMessage.sendSuccess(sender, "Removed Team Member "+member.getName());
-		CivMessage.sendTeam(resident.getTeam(), member.getName()+" has left the team.");
+		CivMessage.sendSuccess(sender, "Removed Team Member"+" "+member.getName());
+		CivMessage.sendTeam(resident.getTeam(), member.getName()+" "+"has left the team.");
 
 	}
 	
@@ -282,15 +282,15 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		if (!team.hasMember(member)) {
-			throw new CivException(member.getName()+" must already be added to your team in order to become it's leader.");
+			throw new CivException(member.getName()+" "+"must already be added to your team in order to become it's leader.");
 		}
 		
 		team.setLeader(member);
 		team.save();
 		
-		CivMessage.sendSuccess(sender, "Changed team leader to "+member.getName());
-		CivMessage.sendSuccess(member, "You are now leader of team "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" has changed the team leader to "+member.getName());
+		CivMessage.sendSuccess(sender, "Changed team leader to"+" "+member.getName());
+		CivMessage.sendSuccess(member, "You are now leader of team"+" "+team.getName());
+		CivMessage.sendTeam(team, resident.getName()+" "+"has changed the team leader to"+" "+member.getName());
 		
 	}
 	

@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.main.CivData;
@@ -216,11 +217,11 @@ public class TradeInventoryListener implements Listener {
 		/* Update our display item. */
 		ItemStack guiStack;
 		if (pair.coins == 0) {
-			guiStack = LoreGuiItem.build("Coins Offered", 
+			guiStack = LoreGuiItem.build(""+CivSettings.CURRENCY_NAME+" Offered", 
 					ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
 					CivColor.Yellow+"0 Coins");
 		} else {
-			guiStack = LoreGuiItem.build("Coins Offered", 
+			guiStack = LoreGuiItem.build(""+CivSettings.CURRENCY_NAME+" Offered", 
 					ItemManager.getId(Material.GOLD_INGOT), 0, 
 					CivColor.Yellow+pair.coins+" Coins");
 		}
@@ -459,16 +460,16 @@ public class TradeInventoryListener implements Listener {
 			}
 			
 			if (!pair.resident.getTreasury().hasEnough(pair.coins)) {
-				CivMessage.sendError(us, pair.resident.getName()+" doesnt have enough Coins!");
-				CivMessage.sendError(them, pair.resident.getName()+" doesnt have enough Coins!");
+				CivMessage.sendError(us, pair.resident.getName()+" doesnt have enough "+CivSettings.CURRENCY_NAME+"!");
+				CivMessage.sendError(them, pair.resident.getName()+" doesnt have enough "+CivSettings.CURRENCY_NAME+"!");
 				us.closeInventory();
 				them.closeInventory();
 				return;
 			}
 			
 			if (!pair.otherResident.getTreasury().hasEnough(pair.otherCoins)) {
-				CivMessage.sendError(us, pair.otherResident.getName()+" doesnt have enough Coins!");
-				CivMessage.sendError(them, pair.otherResident.getName()+" doesnt have enough Coins!");
+				CivMessage.sendError(us, pair.otherResident.getName()+" doesnt have enough "+CivSettings.CURRENCY_NAME+"!");
+				CivMessage.sendError(them, pair.otherResident.getName()+" doesnt have enough "+CivSettings.CURRENCY_NAME+"!");
 				us.closeInventory();
 				them.closeInventory();
 				return;
@@ -477,15 +478,15 @@ public class TradeInventoryListener implements Listener {
 			if (pair.coins != 0) {
 				pair.resident.getTreasury().withdraw(pair.coins);
 				pair.otherResident.getTreasury().deposit(pair.coins);
-				CivMessage.sendSuccess(pair.resident, "Gave "+CivColor.Rose+pair.coins+" to "+pair.otherResident.getName());
-				CivMessage.sendSuccess(pair.otherResident, "Recieved "+CivColor.Yellow+pair.coins+" from "+pair.resident.getName());
+				CivMessage.sendSuccess(pair.resident, "Gave "+CivColor.Rose+pair.coins+" "+CivSettings.CURRENCY_NAME+" to "+pair.otherResident.getName());
+				CivMessage.sendSuccess(pair.otherResident, "Recieved "+CivColor.Yellow+pair.coins+" "+CivSettings.CURRENCY_NAME+" from "+pair.resident.getName());
 			}
 
 			if (pair.otherCoins != 0) {
 				pair.otherResident.getTreasury().withdraw(pair.otherCoins);
 				pair.resident.getTreasury().deposit(pair.otherCoins);
-				CivMessage.sendSuccess(pair.resident, "Recieved "+CivColor.Yellow+pair.otherCoins+" from "+pair.otherResident.getName());
-				CivMessage.sendSuccess(pair.otherResident, "Gave "+CivColor.Rose+pair.otherCoins+" to "+pair.resident.getName());
+				CivMessage.sendSuccess(pair.resident, "Recieved "+CivColor.Yellow+pair.otherCoins+" "+CivSettings.CURRENCY_NAME+" from "+pair.otherResident.getName());
+				CivMessage.sendSuccess(pair.otherResident, "Gave "+CivColor.Rose+pair.otherCoins+" "+CivSettings.CURRENCY_NAME+" to "+pair.resident.getName());
 			}
 
 			/* Finally, give their stuff to me. And my stuff to them. */
@@ -610,7 +611,7 @@ public class TradeInventoryListener implements Listener {
 		if (otherPair != null) {
 			ItemStack guiStack = LoreGuiItem.build(pair.otherResident.getName()+" Confirm", 
 					CivData.BEDROCK, 0, 
-					CivColor.LightGray+player.getName()+" has closed the trading window.");
+					CivColor.LightGray+player.getName()+" "+"has closed the trading window.");
 			for (int i = OTHERS_SLOTS_START; i < OTHERS_SLOTS_END; i++) {
 				otherPair.inv.setItem(i, guiStack);
 			}

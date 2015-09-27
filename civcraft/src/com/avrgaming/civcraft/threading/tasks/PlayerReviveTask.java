@@ -60,7 +60,7 @@ public class PlayerReviveTask implements Runnable {
 			return;
 		}
 		
-		CivMessage.send(player, CivColor.LightGray+"You will respawn in "+timeout+" seconds.");
+		CivMessage.send(player, CivColor.LightGray+"You will respawn in"+" "+timeout+" "+"seconds.");
 		
 		try {
 			synchronized(this) {

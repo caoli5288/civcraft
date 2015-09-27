@@ -26,8 +26,8 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 	}
 	
 	public void displayQuestion(Resident resident) {		
-		CivMessage.send(resident, CivColor.Green+"Would you like to rename a "+CivColor.LightGreen+"CIV"+
-								  CivColor.Green+" or a "+CivColor.LightGreen+"TOWN"+CivColor.Green+"?");
+		CivMessage.send(resident, CivColor.Green+"Would you like to rename a"+" "+CivColor.LightGreen+"CIV"+
+								  CivColor.Green+" "+"or a"+" "+CivColor.LightGreen+"TOWN"+CivColor.Green+"?");
 		CivMessage.send(resident, CivColor.Gray+"(Type 'civ' or 'town' anything else cancels.)");
 		return;
 	}
@@ -54,7 +54,7 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 				if (selection.equals("town")) {
 					Town town = CivGlobal.getTown(oldName);
 					if (town == null) {
-						throw new CivException("No town named "+oldName+".");
+						throw new CivException("No town named"+" "+oldName+".");
 					}
 					
 					if (!town.getMayorGroup().hasMember(resident) && !town.getCiv().getLeaderGroup().hasMember(resident)) {
@@ -83,8 +83,8 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 				newName = message.replace(" ", "_");
 				if (selectedCiv != null) {
 					try {
-						CivMessage.global(resident.getName()+" has used a "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" to rename the civ of "+
-								selectedCiv.getName()+" to "+newName);
+						CivMessage.global(resident.getName()+" "+"has used a"+" "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" "+"to rename the civ of"+" "+
+								selectedCiv.getName()+" -> "+newName);
 						selectedCiv.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {
@@ -92,8 +92,8 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 					}
 				} else if (selectedTown != null) {
 					try {
-						CivMessage.global(resident.getName()+" has used a "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" to rename the town of "+
-								selectedTown.getName()+" to "+newName);
+						CivMessage.global(resident.getName()+" "+"has used a"+" "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" "+"to rename the town of"+" "+
+								selectedTown.getName()+" -> "+newName);
 						selectedTown.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {

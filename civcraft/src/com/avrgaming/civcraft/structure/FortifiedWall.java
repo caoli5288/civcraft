@@ -141,7 +141,7 @@ public class FortifiedWall extends Wall {
 		refund /= HEIGHT;
 		refund = Math.round(refund);
 		this.getTown().getTreasury().deposit(refund);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+refund+" Coins from wall construction.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded"+" "+refund+" "+CivSettings.CURRENCY_NAME+" from wall construction.");
 		try {
 			this.delete();
 		} catch (SQLException e) {
@@ -347,7 +347,7 @@ public class FortifiedWall extends Wall {
 		
 		// Validate our locations
 		if (locs.get(0).distance(locs.get(1)) > FortifiedWall.MAX_SEGMENT) {
-			throw new CivException("Can only build a wall in "+FortifiedWall.MAX_SEGMENT+" block segments, pick a closer location");
+			throw new CivException("Can only build a fortified wall in"+" "+FortifiedWall.MAX_SEGMENT+" "+"block segments, pick a closer location");
 		}
 		
 		
@@ -384,12 +384,12 @@ public class FortifiedWall extends Wall {
 			}
 			this.wallBlocks.clear();
 			
-			throw new CivException("Cannot build, not enough Coins to pay "+cost+" Coins for wall of length "+verticalSegments+" blocks.");
+			throw new CivException("Cannot build, not enough pay"+" "+cost+" "+CivSettings.CURRENCY_NAME+" for wall of length"+" "+verticalSegments+" "+"blocks.");
 		}
 		
 		this.getTown().getTreasury().withdraw(cost);
 		
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Paid "+cost+" Coins for "+verticalSegments+" wall segments.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Paid"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"for"+" "+verticalSegments+" "+"wall segments.");
 		
 		// build the blocks
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -416,7 +416,7 @@ public class FortifiedWall extends Wall {
 			
 		if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 			// Make sure we have permission to destroy any block in this area.
-			throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+b.getX()+","+b.getY()+","+b.getZ());
+			throw new CivException("Cannot build here, you need DESTROY permissions to the block at"+" "+b.getX()+","+b.getY()+","+b.getZ());
 		}
 
 		BlockCoord coord = new BlockCoord(b);
@@ -427,7 +427,7 @@ public class FortifiedWall extends Wall {
 
 		
 		if (CivGlobal.getStructureBlock(coord) != null) {
-			throw new CivException("Cannot build here, structure blocks in the way at "+coord);
+			throw new CivException("Cannot build here, structure blocks in the way at"+" "+coord);
 		}
 		
 	
@@ -448,7 +448,7 @@ public class FortifiedWall extends Wall {
 			bcoord.setY(y);
 			StructureBlock sb = CivGlobal.getStructureBlock(bcoord);
 			if (sb != null) {
-				throw new CivException("Cannot build here, this wall segment overlaps with a structure block belonging to a "+sb.getOwner().getName()+" structure.");
+				throw new CivException("Cannot build here, this wall segment overlaps with a structure block belonging to a"+" "+sb.getOwner().getName()+" "+"structure.");
 			}
 		}
 		
@@ -731,7 +731,7 @@ public class FortifiedWall extends Wall {
 		}
 		
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+getDisplayName());
+			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"to build a"+" "+getDisplayName());
 		}
 		
 		setHitpoints(this.getMaxHitPoints());
@@ -745,7 +745,7 @@ public class FortifiedWall extends Wall {
 		
 		save();
 		getTown().getTreasury().withdraw(cost);
-		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a "+getDisplayName()+" at "+getCorner());
+		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a"+" "+getDisplayName()+" @ "+getCorner());
 	}
 	
 	@Override

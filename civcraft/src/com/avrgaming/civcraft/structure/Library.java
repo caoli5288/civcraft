@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.components.AttributeBiome;
 import com.avrgaming.civcraft.components.NonMemberFeeComponent;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -263,7 +264,7 @@ public class Library extends Structure {
 				
 		// Determine if resident can pay.
 		if (!resident.getTreasury().hasEnough(ench.price+payToTown)) {
-			CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+ench.price+payToTown+ " Coins.");
+			CivMessage.send(player, CivColor.Rose+"You cannot afford that, you need "+ench.price+payToTown+ " "+CivSettings.CURRENCY_NAME);
 			return;
 		}
 				
@@ -274,13 +275,13 @@ public class Library extends Structure {
 		if (payToTown != 0) {
 			getTown().depositDirect(payToTown);
 			
-			CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
+			CivMessage.send(player, CivColor.Yellow + "Paid"+" "+ payToTown+" "+CivSettings.CURRENCY_NAME+" "+"in non-resident taxes.");
 		}
 				
 		// Successful payment, process enchantment.
 		ItemStack newStack = this.addEnchantment(item, ench);
 		player.setItemInHand(newStack);
-		CivMessage.send(player, CivColor.LightGreen+"Enchanted with "+ench.displayName+"!");
+		CivMessage.send(player, CivColor.LightGreen+"Enchanted with"+" "+ench.displayName+"!");
 	}
 
 	@Override
@@ -294,14 +295,14 @@ public class Library extends Structure {
 	
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>Library</u></b><br/>";
+		String out = "<u><b>"+"Library"+"</u></b><br/>";
 		
 		if (this.enchantments.size() == 0) {
 			out += "Nothing stocked.";
 		} 
 		else {
 			for (LibraryEnchantment mat : this.enchantments) {
-				out += mat.displayName+" for "+mat.price+"<br/>";
+				out += mat.displayName+" "+"for"+" "+mat.price+"<br/>";
 			}
 		}
 		return out;

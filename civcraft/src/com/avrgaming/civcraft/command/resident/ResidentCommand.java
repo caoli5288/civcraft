@@ -77,7 +77,7 @@ public class ResidentCommand extends CommandBase {
 		
 		if (args.length < 2) {
 ;
-			CivMessage.sendSuccess(sender, "Your current timezone is set to "+resident.getTimezone());
+			CivMessage.sendSuccess(sender, "Your current timezone is set to"+" "+resident.getTimezone());
 			return;
 		}
 		
@@ -94,13 +94,13 @@ public class ResidentCommand extends CommandBase {
 		TimeZone timezone = TimeZone.getTimeZone(args[1]);
 		
 		if (timezone.getID().equals("GMT") && !args[1].equalsIgnoreCase("GMT")) {
-			CivMessage.send(sender, CivColor.LightGray+"We may not have recognized your timezone \""+args[1]+"\" if so, we'll set it to GMT.");
+			CivMessage.send(sender, CivColor.LightGray+"We may not have recognized your timezone"+" \""+args[1]+"\" "+"if so, we'll set it to GMT.");
 			CivMessage.send(sender, CivColor.LightGray+"Type \"/resident timezone list\" to get a list of all available timezones.");
 		}
 		
 		resident.setTimezone(timezone.getID());
 		resident.save();
-		CivMessage.sendSuccess(sender, "TimeZone has been set to "+timezone.getID());
+		CivMessage.sendSuccess(sender, "TimeZone has been set to"+" "+timezone.getID());
 	}
 	
 	public void refresh_cmd() throws CivException {
@@ -216,7 +216,7 @@ public class ResidentCommand extends CommandBase {
 			rate = CivSettings.emerald_rate;
 			break;
 		default:
-			throw new CivException("Unknown exchange type "+type+" must be iron, gold, diamond, or emerald.");
+			throw new CivException("Unknown exchange type"+" "+type+" "+"must be iron, gold, diamond, or emerald.");
 		}
 
 		double exchangeRate;
@@ -245,7 +245,7 @@ public class ResidentCommand extends CommandBase {
 		}
 		
 		if (total == 0) {
-			throw new CivException("You do not have any "+type);
+			throw new CivException("You do not have any"+" "+type);
 		}
 		
 		if (amount > total) {
@@ -257,7 +257,7 @@ public class ResidentCommand extends CommandBase {
 		double coins = amount*rate*exchangeRate;
 		
 		resident.getTreasury().deposit(coins);
-		CivMessage.sendSuccess(player, "Exchanged "+amount+" "+type+" for "+coins+" Coins.");
+		CivMessage.sendSuccess(player, "Exchanged"+" "+amount+" "+type+" -> "+coins+" "+CivSettings.CURRENCY_NAME);
 		
 	}
 	
@@ -292,11 +292,11 @@ public class ResidentCommand extends CommandBase {
 		Resident resident = getResident();
 	
 		if (!resident.getTreasury().hasEnough(resident.getTreasury().getDebt())) {
-			throw new CivException("You do not have the required "+resident.getTreasury().getDebt()+" Coins to pay off your debt.");
+			throw new CivException("You do not have the required"+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" to pay off your debt.");
 		}
 		
 
-		CivMessage.sendSuccess(sender, "Paid "+resident.getTreasury().getDebt()+" Coins of debt.");
+		CivMessage.sendSuccess(sender, resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" paid towards your debt.");
 		resident.payOffDebt();
 	}
 	
@@ -310,30 +310,30 @@ public class ResidentCommand extends CommandBase {
 		Date lastOnline = new Date(resident.getLastOnline());
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy h:mm:ss a z");
 		CivMessage.send(sender, CivColor.Green+"Last Online:"+CivColor.LightGreen+sdf.format(lastOnline));
-		CivMessage.send(sender, CivColor.Green+"Town: "+CivColor.LightGreen+resident.getTownString());
-		CivMessage.send(sender, CivColor.Green+"Camp: "+CivColor.LightGreen+resident.getCampString());
+		CivMessage.send(sender, CivColor.Green+"Town:"+" "+CivColor.LightGreen+resident.getTownString());
+		CivMessage.send(sender, CivColor.Green+"Camp:"+" "+CivColor.LightGreen+resident.getCampString());
 		
 		if (sender.getName().equalsIgnoreCase(resident.getName()) || sender.isOp()) {
-			CivMessage.send(sender, CivColor.Green+"Personal Treasury: "+CivColor.LightGreen+resident.getTreasury().getBalance()+" "+
+			CivMessage.send(sender, CivColor.Green+"Personal Treasury:"+" "+CivColor.LightGreen+resident.getTreasury().getBalance()+" "+
 								  CivColor.Green+"Taxes Owed: "+CivColor.LightGreen+(resident.getPropertyTaxOwed()+resident.getFlatTaxOwed()));
 			if (resident.hasTown()) {
 				if (resident.getSelectedTown() != null) {
-					CivMessage.send(sender, CivColor.Green+"Selected Town: "+CivColor.LightGreen+resident.getSelectedTown().getName());
+					CivMessage.send(sender, CivColor.Green+"Selected Town:"+" "+CivColor.LightGreen+resident.getSelectedTown().getName());
 				} else {
-					CivMessage.send(sender, CivColor.Green+"Selected Town: "+CivColor.LightGreen+resident.getTown().getName());
+					CivMessage.send(sender, CivColor.Green+"Selected Town:"+" "+CivColor.LightGreen+resident.getTown().getName());
 				}
 			}
 		}
 		
 		if (resident.getTreasury().inDebt()) {
-			CivMessage.send(resident, CivColor.Yellow+"In Debt "+resident.getTreasury().getDebt()+" Coins!");
+			CivMessage.send(resident, CivColor.Yellow+"In Debt"+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (resident.getDaysTilEvict() > 0) {
-			CivMessage.send(resident, CivColor.Yellow+"Eviction in "+resident.getDaysTilEvict()+" days.");
+			CivMessage.send(resident, CivColor.Yellow+"Days till Eviction: "+resident.getDaysTilEvict());
 		}
 		
-		CivMessage.send(sender, CivColor.Green+"Groups: "+resident.getGroupsString());
+		CivMessage.send(sender, CivColor.Green+"Groups:"+" "+resident.getGroupsString());
 		
 		try {
 			if (resident.isUsesAntiCheat()) {

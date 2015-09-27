@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -31,8 +32,8 @@ public class InteractiveRepairItem implements InteractiveResponse {
 		}
 		
 		CivMessage.sendHeading(player, "Repair!");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Hello there! Would you like to repair your "+craftMat.getName()+"?");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Looks like we can get you fixed up for "+CivColor.Yellow+CivColor.BOLD+cost+" Coins.");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Hello there! Would you like to repair your"+" "+craftMat.getName()+"?");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Looks like we can get you fixed up for"+" "+CivColor.Yellow+CivColor.BOLD+cost+" "+CivSettings.CURRENCY_NAME);
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"If that's ok, please type 'yes'. Type anything else to cancel.");
 		
 	}

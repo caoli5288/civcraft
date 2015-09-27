@@ -709,7 +709,7 @@ public class CivSettings {
 				if (returnUpgrade == null) {
 					returnUpgrade = upgrade;
 				} else {
-					throw new CivException(name+" is not specific enough to single out only one upgrade.");
+					throw new CivException(name+" "+CivSettings.localize.localizedString("cmd_notSpecificUpgrade"));
 				}
 			}
 		}
@@ -734,7 +734,7 @@ public class CivSettings {
 				if (returnUpgrade == null) {
 					returnUpgrade = upgrade;
 				} else {
-					throw new CivException(name+" is not specific enough to single out only one upgrade.");
+					throw new CivException(name+" "+CivSettings.localize.localizedString("cmd_notSpecificUpgrade"));
 				}
 			}
 		}

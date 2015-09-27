@@ -6,7 +6,6 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
-import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.TimeTools;
 import com.avrgaming.global.perks.components.ChangeWeather;
 
@@ -28,7 +27,7 @@ public class InteractiveConfirmWeatherChange implements InteractiveResponse {
 				player.getWorld().setStorm(false);
 				player.getWorld().setThundering(false);
 				player.getWorld().setWeatherDuration((int) TimeTools.toTicks(20*60));
-				CivMessage.global(resident.getName()+" has used a "+CivColor.Yellow+"Weather Change"+CivColor.RESET+" token to change the weather to sunny!");
+				CivMessage.global(resident.getName()+" "+"has used a [Weather Change] token to change the weather to sunny!");
 				perk.markAsUsed(resident);
 			} catch (CivException e) {
 			}

@@ -68,7 +68,7 @@ public class TownGroupCommand extends CommandBase {
 			throw new CivException("Internal DB Error.");
 		}
 
-		CivMessage.sendSuccess(sender, "Deleted group "+args[1]);
+		CivMessage.sendSuccess(sender, "Deleted group"+" "+args[1]);
 	}
 	
 	public void new_cmd() throws CivException {
@@ -78,7 +78,7 @@ public class TownGroupCommand extends CommandBase {
 		
 		Town town = getSelectedTown();	
 		if (town.hasGroupNamed(args[1])) {
-			throw new CivException("Town already has a group named "+args[1]);
+			throw new CivException("Town already has a group named"+" "+args[1]);
 		}
 		
 		if (PermissionGroup.isProtectedGroupName(args[1])) {
@@ -96,7 +96,7 @@ public class TownGroupCommand extends CommandBase {
 			throw new CivException("Invalid name, please choose another.");
 		}
 
-		CivMessage.sendSuccess(sender, "Created group "+args[1]);
+		CivMessage.sendSuccess(sender, "Created group"+" "+args[1]);
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -118,11 +118,11 @@ public class TownGroupCommand extends CommandBase {
 		grp.removeMember(oldMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, "Removed "+oldMember.getName()+" from group "+grp.getName()+" in town "+town.getName());
+		CivMessage.sendSuccess(sender, oldMember.getName()+" was removed from the"+" "+grp.getName()+" "+" group in town"+" "+town.getName());
 		
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
-			CivMessage.send(newPlayer, CivColor.Rose+"You were removed from the "+grp.getName()+" group in town "+grp.getTown().getName());
+			CivMessage.send(newPlayer, CivColor.Rose+"You were removed from the "+grp.getName()+" "+"group in town"+" "+grp.getTown().getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -138,7 +138,7 @@ public class TownGroupCommand extends CommandBase {
 			
 			PermissionGroup leaderGrp = town.getCiv().getLeaderGroup();
 			if (leaderGrp == null) {
-				throw new CivException("ERROR: Couldn't find leader group for civ "+town.getCiv()+" contact an admin.");
+				throw new CivException("ERROR: Couldn't find leader group for civ"+" "+town.getCiv()+" "+"contact an admin.");
 			}
 			
 			if (!leaderGrp.hasMember(commandSenderResident)) {
@@ -151,23 +151,23 @@ public class TownGroupCommand extends CommandBase {
 		}
 		
 		if (grp.isTownProtectedGroup() && newMember.getTown() != grp.getTown()) {
-			throw new CivException(newMember.getName()+" belongs to town "+newMember.getTown().getName()+
-					" and cannot be added to a protected group in town "+grp.getTown().getName());
+			throw new CivException(newMember.getName()+" "+"belongs to town"+" "+newMember.getTown().getName()+
+					" "+"and cannot be added to a protected group in town"+" "+grp.getTown().getName());
 		}
 		
 		if (grp.isCivProtectedGroup() && newMember.getCiv() != grp.getCiv()) {
-			throw new CivException(newMember.getName()+" belongs to civ "+newMember.getCiv().getName()+
-					" and cannot be added to a protected group in civ "+grp.getCiv().getName());
+			throw new CivException(newMember.getName()+" "+"belongs to civ"+" "+newMember.getCiv().getName()+
+					" "+"and cannot be added to a protected group in civ"+" "+grp.getCiv().getName());
 		}
 		
 		grp.addMember(newMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, "Added "+newMember.getName()+" to group "+grp.getName()+" in town "+town.getName());
+		CivMessage.sendSuccess(sender, newMember.getName()+" "+"was added to the "+grp.getName()+" group in town "+town.getName());
 
 		try {
 			Player newPlayer = CivGlobal.getPlayer(newMember);
-			CivMessage.sendSuccess(newPlayer, "You were added to the "+grp.getName()+" group in town "+grp.getTown().getName());
+			CivMessage.sendSuccess(newPlayer, "You were added to the"+" "+grp.getName()+" "+"group in town"+" "+grp.getTown().getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -179,7 +179,7 @@ public class TownGroupCommand extends CommandBase {
 		if (args.length >= 2) {
 			PermissionGroup grp = town.getGroupByName(args[1]);
 			if (grp == null) {
-				throw new CivException("No group named "+args[1]+" in "+town.getName());
+				throw new CivException(town.getName()+" "+"has no group named"+" "+args[1]);
 			}
 			
 			CivMessage.sendHeading(sender, "Group("+town.getName()+"):"+args[1]);

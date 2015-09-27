@@ -38,9 +38,9 @@ public class CivLeaderQuestionTask extends QuestionBaseTask implements Runnable 
 	public void run() {	
 		
 		for (Resident resident : askedCivilization.getLeaderGroup().getMemberList()) {
-			CivMessage.send(resident, CivColor.LightGray+"Question from: "+CivColor.LightBlue+questionPlayer.getName());
+			CivMessage.send(resident, CivColor.LightGray+"Question from:"+" "+CivColor.LightBlue+questionPlayer.getName());
 			CivMessage.send(resident, CivColor.LightPurple+CivColor.BOLD+question);
-			CivMessage.send(resident, CivColor.LightGray+"Respond by typing "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" or "+CivColor.LightBlue+"/deny");
+			CivMessage.send(resident, CivColor.LightGray+"Respond by typing"+" "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" | "+CivColor.LightBlue+"/deny");
 		}
 		
 		try {

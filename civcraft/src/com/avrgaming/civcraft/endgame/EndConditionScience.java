@@ -60,7 +60,7 @@ public class EndConditionScience extends EndGameCondition {
 	public boolean finalWinCheck(Civilization civ) {
 		Civilization rival = getMostAccumulatedBeakers();
 		if (rival != civ) {
-			CivMessage.global(civ.getName()+" doesn't have enough beakers for a scientific victory. The rival civilization of "+rival.getName()+" has more!");
+			CivMessage.global(civ.getName()+" "+"doesn't have enough beakers for a scientific victory. The rival civilization of"+" "+rival.getName()+" "+"has more!");
 			return false;
 		}
 		

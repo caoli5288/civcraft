@@ -82,7 +82,7 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 	}
 	
 	private String getToWildMessage() {
-		return CivColor.LightGray+"Entering Wilderness "+CivColor.Rose+"[PvP]";
+		return CivColor.LightGray+"Entering Wilderness"+" "+CivColor.Rose+"[PvP]";
 	}
 	
 	private String getToTownMessage(Town town, TownChunk tc) {
@@ -101,9 +101,9 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		}
 		
 		if (!tc.isOutpost()) {
-			return CivColor.LightGray+"Entering "+CivColor.White+town.getName()+" "+town.getPvpString()+" ";
+			return CivColor.LightGray+"Entering"+" "+CivColor.White+town.getName()+" "+town.getPvpString()+" ";
 		} else {
-			return CivColor.LightGray+"Entering Outpost of "+CivColor.White+town.getName()+" "+town.getPvpString()+" ";
+			return CivColor.LightGray+"Entering Outpost of"+" "+CivColor.White+town.getName()+" "+town.getPvpString()+" ";
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		
 		//We've entered a camp.
 		if (toCamp != null && toCamp != fromCamp) {
-			out += CivColor.Gold+"Camp "+toCamp.getName()+" "+CivColor.Rose+"[PvP]";
+			out += CivColor.Gold+"Camp"+" "+toCamp.getName()+" "+CivColor.Rose+"[PvP]";
 		}
 		
 		if (toCamp == null && fromCamp != null) {
@@ -219,7 +219,7 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		lastMessageTime = now;
 
 		cultureEnterTimes.put(borderSpamKey, lastMessageTime);
-		CivMessage.sendCiv(toCc.getCiv(), color+player.getDisplayName()+"("+relationName+") has entered our borders.");
+		CivMessage.sendCiv(toCc.getCiv(), color+player.getDisplayName()+"("+relationName+")"+" has entered our borders.");
 	}
 
 

@@ -65,7 +65,7 @@ public class MarkerPlacementManager implements Listener {
 		stack.setItemMeta(meta);
 		player.setItemInHand(stack);
 		
-		CivMessage.send(player, "You're now in placement mode for a "+structure.getDisplayName());
+		CivMessage.send(player, "You're now in placement mode for a"+" "+structure.getDisplayName());
 	}
 	
 	public static void removeFromPlacementMode(Player player, boolean canceled) {

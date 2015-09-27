@@ -214,16 +214,16 @@ public abstract class Wonder extends Buildable {
 			this.undoFromTemplate();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			CivMessage.sendTown(getTown(), CivColor.Rose+"Couldn't find undo data! Destroying structure instead.");;
+			CivMessage.sendTown(getTown(), CivColor.Rose+"Couldn't find undo data! Destroying structure instead.");
 			this.fancyDestroyStructureBlocks();
 		}
 		
-		CivMessage.global("The "+CivColor.LightGreen+this.getDisplayName()+CivColor.White+" has been unbuilt by "+this.getTown().getName()
-				+"("+this.getTown().getCiv().getName()+") with the undo command.");
+		CivMessage.global("The"+" "+CivColor.LightGreen+this.getDisplayName()+CivColor.White+" "+"has been unbuilt by"+" "+this.getTown().getName()
+				+"("+this.getTown().getCiv().getName()+") "+"with the undo command.");
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded "+refund+" Coins.");
+		CivMessage.sendTown(getTown(), "Town refunded "+refund+" "+CivSettings.CURRENCY_NAME);
 		
 		this.unbindStructureBlocks();
 		
@@ -269,7 +269,7 @@ public abstract class Wonder extends Buildable {
 		
 		this.save();
 		CivGlobal.addWonder(this);
-		CivMessage.global(this.getCiv().getName()+" has started construction of "+this.getDisplayName()+" in the town of "+this.getTown().getName());
+		CivMessage.global(this.getCiv().getName()+" "+"has started construction of"+" "+this.getDisplayName()+" "+"in the town of"+" "+this.getTown().getName());
 	}
 
 
@@ -292,7 +292,7 @@ public abstract class Wonder extends Buildable {
 	public void onDestroy() {
 		if (!CivGlobal.isCasualMode()) {
 			//can be overriden in subclasses.
-			CivMessage.global(this.getDisplayName()+" in "+this.getTown().getName()+" has been destroyed! Any town may now build it again!");
+			CivMessage.global(this.getDisplayName()+" in "+this.getTown().getName()+" "+"has been destroyed! Any town may now build it again!");
 			try {
 				this.getTown().removeWonder(this);
 				this.fancyDestroyStructureBlocks();
@@ -482,7 +482,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerCulture*cultureCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated "+CivColor.Yellow+total+CivColor.LightGreen+" Coins from culture.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated"+" "+CivColor.Yellow+total+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME+" from culture.");
 	}
 	
 	public void processCoinsFromColosseum() {
@@ -496,7 +496,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerTown*townCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated "+CivColor.Yellow+total+CivColor.LightGreen+" Coins from ticket sales.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated"+" "+CivColor.Yellow+total+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME+" from ticket sales.");
 	}
 	
 }

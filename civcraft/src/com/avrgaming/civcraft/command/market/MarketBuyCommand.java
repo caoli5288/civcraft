@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.market;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -46,7 +47,7 @@ public class MarketBuyCommand extends CommandBase {
 			if (!town.isCapitol()) {
 				if (town.isForSale()) {
 					CivMessage.send(sender, town.getName()+" - "+CivColor.Yellow+
-							df.format(town.getForSalePrice())+" Coins.");
+							df.format(town.getForSalePrice())+" "+CivSettings.CURRENCY_NAME);
 				}
 			}
 		}
@@ -59,7 +60,7 @@ public class MarketBuyCommand extends CommandBase {
 		for (Civilization civ : CivGlobal.getCivs()) {
 				if (civ.isForSale()) {
 					CivMessage.send(sender, civ.getName()+" - "+CivColor.Yellow+
-							df.format(civ.getTotalSalePrice())+" Coins.");
+							df.format(civ.getTotalSalePrice())+" "+CivSettings.CURRENCY_NAME);
 				}
 		}
 	}
@@ -97,8 +98,8 @@ public class MarketBuyCommand extends CommandBase {
 		}
 		
 		senderCiv.buyTown(town);
-		CivMessage.global("Town of "+town.getName()+" has been bought and is now part of "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, "Bought town "+args[1]);
+		CivMessage.global("Town of"+" "+town.getName()+" "+"has been bought and is now part of"+" "+senderCiv.getName());
+		CivMessage.sendSuccess(sender, "Bought town"+" "+args[1]);
 	}
 	
 	
@@ -131,8 +132,8 @@ public class MarketBuyCommand extends CommandBase {
 		}
 		
 		senderCiv.buyCiv(civBought);
-		CivMessage.global(civBought.getName()+" has been bought by "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, "Bought civ "+args[1]);
+		CivMessage.global(civBought.getName()+" "+"has been bought by"+" "+senderCiv.getName());
+		CivMessage.sendSuccess(sender, "Bought civ"+" "+args[1]);
 	}
 	
 	

@@ -649,7 +649,7 @@ public class Town extends SQLObject {
 			
 			double bonus = culturePerTown*townCount;
 			
-			CivMessage.sendTown(this, CivColor.LightGreen+"The Globe Theatre generated "+CivColor.Yellow+bonus+CivColor.LightGreen+" culture from shows.");
+			CivMessage.sendTown(this, CivColor.LightGreen+"The Globe Theatre generated"+" "+CivColor.Yellow+bonus+CivColor.LightGreen+" "+"culture from shows.");
 
 			fromStructures += bonus;
 		}
@@ -679,7 +679,7 @@ public class Town extends SQLObject {
 		if (this.getCultureLevel() != CivSettings.getMaxCultureLevel()) {
 			if (this.culture >= clc.amount) {
 				CivGlobal.processCulture();
-				CivMessage.sendCiv(this.civ, "The borders of "+this.getName()+" have expanded!");
+				CivMessage.sendCiv(this.civ, "The borders of"+" "+this.getName()+" "+"have expanded!");
 			}
 		}
 		return;
@@ -806,7 +806,7 @@ public class Town extends SQLObject {
 			}
 			
 			if (resident.getTown() != null && resident.getTown().isMayor(resident)) {
-				throw new CivException("You cannot start another town since you are the mayor of "+resident.getTown().getName());
+				throw new CivException("You cannot start another town since you are the mayor of"+" "+resident.getTown().getName());
 			}
 		
 			if (resident.hasCamp()) {
@@ -815,14 +815,14 @@ public class Town extends SQLObject {
 			
 			Town existTown = CivGlobal.getTown(name);
 			if (existTown != null) {
-				throw new CivException("A town named "+name+" already exists!");
+				throw new CivException("A town named"+" "+name+" "+"already exists!");
 			}
 			
 			Town newTown;
 			try {
 				newTown = new Town(name, resident, civ);
 			} catch (InvalidNameException e) {
-				throw new CivException("The town name of "+name+" is invalid, choose another.");
+				throw new CivException(name+" "+"is not a valid town name, choose another.");
 			}
 			
 			Player player = CivGlobal.getPlayer(resident.getName());
@@ -863,7 +863,7 @@ public class Town extends SQLObject {
 								
 				if (dist < minDistance) {
 					DecimalFormat df = new DecimalFormat();
-					throw new CivException("Cannot build town here. Too close to the town of "+town.getName()+". Distance is "+df.format(dist)+" and needs to be "+minDistance);
+					throw new CivException("Cannot build town here. Too close to the town of"+" "+town.getName()+". "+"Distance is"+" "+df.format(dist)+" "+"and needs to be"+" "+minDistance);
 				}
 			}
 			
@@ -878,7 +878,7 @@ public class Town extends SQLObject {
 					}
 					
 					if (foundLocation.distance(cc.getChunkCoord()) <= min_distance) {
-						throw new CivException("The town borders of "+cc.getTown().getName()+" are too close, cannot found town here.");
+						throw new CivException("The town borders of"+" "+cc.getTown().getName()+" "+"are too close, cannot found town here.");
 					}
 				}	
 			} catch (InvalidConfiguration e1) {
@@ -958,7 +958,7 @@ public class Town extends SQLObject {
 			
 			try {	
 				if (resident.getTown() != null) {
-					CivMessage.sendTown(resident.getTown(), resident.getName()+" has left the town.");
+					CivMessage.sendTown(resident.getTown(), resident.getName()+" "+"has left the town.");
 					resident.getTown().removeResident(resident);
 				}
 				newTown.addResident(resident);
@@ -1120,7 +1120,7 @@ public class Town extends SQLObject {
 			}
 			
 			double capturePayment = amount * capturedPenalty;
-			CivMessage.sendTown(this, CivColor.Yellow+"Your town paid "+(amount - capturePayment)+" Coins due to being captured by "+this.getCiv().getName());
+			CivMessage.sendTown(this, CivColor.Yellow+"Your town paid"+" "+(amount - capturePayment)+" "+CivSettings.CURRENCY_NAME+" due to being captured by"+" "+this.getCiv().getName());
 			amount = capturePayment;
 		}
 		
@@ -1171,7 +1171,7 @@ public class Town extends SQLObject {
 		}
 		
 		if (!this.getTreasury().hasEnough(upgrade.cost)) {
-			throw new CivException("The town does not have the required "+upgrade.cost+" Coins.");
+			throw new CivException("The town does not have the required"+" "+upgrade.cost+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (!this.hasStructure(upgrade.require_structure)) {
@@ -1566,18 +1566,18 @@ public class Town extends SQLObject {
 		
 		double cost = wonder.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Coins to build "+wonder.getDisplayName());
+			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"to build"+" "+wonder.getDisplayName());
 		}
 		
 		wonder.runCheck(center); //Throws exception if we can't build here.	
 
 		Buildable inProgress  = getCurrentStructureInProgress();
 		if (inProgress != null) {
-			throw new CivException("Your town is currently building a "+inProgress.getDisplayName()+" structure. Can only build one structure at a time.");
+			throw new CivException("Your town is currently building a"+" "+inProgress.getDisplayName()+". "+"Can only build one structure at a time.");
 		} else {
 			inProgress  = getCurrentWonderInProgress();
 			if (inProgress != null) {
-				throw new CivException("Your town is currently building "+inProgress.getDisplayName()+" and can only build one wonder at a time.");
+				throw new CivException("Your town is currently building"+" "+inProgress.getDisplayName()+" "+"and can only build one wonder at a time.");
 			}
 		}
 		
@@ -1590,13 +1590,13 @@ public class Town extends SQLObject {
 			if (CivGlobal.testFileFlag("debug")) {
 				e.printStackTrace();
 			}
-			throw new CivException("Failed to build: "+e.getMessage());
+			throw new CivException("Failed to build:"+" "+e.getMessage());
 		}
 		
 		wonders.put(wonder.getCorner(), wonder);
 		
 		this.getTreasury().withdraw(cost);
-		CivMessage.sendTown(this, CivColor.Yellow+"The town has started construction on  "+wonder.getDisplayName());
+		CivMessage.sendTown(this, CivColor.Yellow+"The town has started construction on"+" "+wonder.getDisplayName());
 		this.save();
 	}
 	
@@ -1624,20 +1624,20 @@ public class Town extends SQLObject {
 		
 		if (struct.getLimit() != 0) {
 			if (getStructureTypeCount(id) >= struct.getLimit()) {
-				throw new CivException("Your town can only have "+struct.getLimit()+" "+struct.getDisplayName()+" structures.");
+				throw new CivException("Your town can only have"+" "+struct.getLimit()+" "+struct.getDisplayName()+" "+"structures.");
 			}
 		}
 		
 		double cost = struct.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+struct.getDisplayName());
+			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" to build a "+struct.getDisplayName());
 		}
 		
 		struct.runCheck(center); //Throws exception if we can't build here.	
 
 		Buildable inProgress  = getCurrentStructureInProgress();
 		if (inProgress != null) {
-			throw new CivException("Your town is currently building a "+inProgress.getDisplayName()+" and can only build one structure at a time.");
+			throw new CivException("Your town is currently building a"+" "+inProgress.getDisplayName()+" "+"and can only build one structure at a time.");
 		}
 		
 		try {
@@ -1669,14 +1669,14 @@ public class Town extends SQLObject {
 				this.giveExtraHammers(this.getExtraHammers());
 			}
 		} catch (CivException e) {
-			throw new CivException("Failed to build: "+e.getMessage());
+			throw new CivException("Failed to build:"+" "+e.getMessage());
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CivException("Internal Error.");
 		}
 				
 		this.getTreasury().withdraw(cost);
-		CivMessage.sendTown(this, CivColor.Yellow+"The town has started construction on a "+struct.getDisplayName());
+		CivMessage.sendTown(this, CivColor.Yellow+"The town has started construction on a"+" "+struct.getDisplayName());
 		
 	//	try {
 			//this.save();
@@ -2488,12 +2488,12 @@ public class Town extends SQLObject {
 		if (daysInDebt >= CivSettings.TOWN_DEBT_GRACE_DAYS) {
 			if (daysInDebt >= CivSettings.TOWN_DEBT_SELL_DAYS) {
 				this.disband();
-				CivMessage.global("The town of "+this.getName()+" could not pay its debts and has fell into ruin!");
+				CivMessage.global("The town of"+" "+this.getName()+" "+"could not pay its debts and has fell into ruin!");
 				return;
 			}
 		}
 		
-		CivMessage.global("Town of "+this.getName()+" is in debt! "+getDaysLeftWarning());
+		CivMessage.global("Town of"+" "+this.getName()+" "+"is in debt!"+" "+getDaysLeftWarning());
 	}
 	
 	public String getDaysLeftWarning() {
@@ -2503,7 +2503,7 @@ public class Town extends SQLObject {
 		}
 		
 		if (daysInDebt < CivSettings.TOWN_DEBT_SELL_DAYS) {
-			return this.getName()+" is up for sale, "+(CivSettings.TOWN_DEBT_SELL_DAYS-daysInDebt)+" days until the town is deleted!";
+			return this.getName()+" "+"is up for sale,"+" "+(CivSettings.TOWN_DEBT_SELL_DAYS-daysInDebt)+" "+"days until the town is deleted!";
 		}
 		
 		return "";
@@ -2535,7 +2535,7 @@ public class Town extends SQLObject {
 			
 			if (this.getTreasury().inDebt() == false) {
 				this.daysInDebt = 0;
-				CivMessage.global("Town of "+this.getName()+" is no longer in debt.");
+				CivMessage.global("Town of"+" "+this.getName()+" "+"is no longer in debt.");
 			}
 		} else {
 			this.getTreasury().deposit(amount);
@@ -2585,7 +2585,7 @@ public class Town extends SQLObject {
 		/* Town is capitulating, no longer need a mother civ. */
 		this.setMotherCiv(null);
 		this.save();
-		CivMessage.global("The conquered town of "+this.getName()+" has capitualted to "+this.getCiv().getName()+" and can no longer revolt.");	
+		CivMessage.global("The conquered town of"+" "+this.getName()+" "+"has capitualted to"+" "+this.getCiv().getName()+" "+"and can no longer revolt.");	
 	}
 	
 	public ConfigGovernment getGovernment() {
@@ -2990,11 +2990,11 @@ public class Town extends SQLObject {
 			}
 
 			if (percent > CivSettings.getDouble(CivSettings.espionageConfig, "espionage.town_exposure_location")) {
-				message += "Scouts report activity around "+player.getLocation().getBlockX()+", "+player.getLocation().getBlockY()+", "+player.getLocation().getBlockZ()+" ";
+				message += "Scouts report activity around"+" "+player.getLocation().getBlockX()+", "+player.getLocation().getBlockY()+", "+player.getLocation().getBlockZ()+" ";
 			} 
 
 			if (percent > CivSettings.getDouble(CivSettings.espionageConfig, "espionage.town_exposure_name")) {
-				message += "The spy is "+resident.getName()+"!";
+				message += "The spy is"+" "+resident.getName()+"!";
 			} 
 
 			if (message.length() > 0) {
@@ -3060,7 +3060,7 @@ public class Town extends SQLObject {
 			}
 			
 			if (now.getTime() < this.lastBuildableRefresh.getTime() + (buildable_refresh_cooldown*60*1000)) {
-				throw new CivException("You must wait "+buildable_refresh_cooldown+" mins before you can refresh another building.");
+				throw new CivException("You must wait"+" "+buildable_refresh_cooldown+" "+"mins before you can refresh another building.");
 			}
 		}
 		
@@ -3125,7 +3125,7 @@ public class Town extends SQLObject {
 		
 		CivGlobal.addTown(this);
 		
-		CivMessage.global("The town of "+oldName+" is now called "+this.getName());
+		CivMessage.global("The town of"+" "+oldName+" is now called"+" "+this.getName());
 	}
 
 	public void trimCultureChunks(HashSet<ChunkCoord> expanded) {
@@ -3172,7 +3172,7 @@ public class Town extends SQLObject {
 			int min_gift_age = CivSettings.getInteger(CivSettings.civConfig, "civ.min_gift_age");
 		
 			if (!DateUtil.isAfterDays(created_date, min_gift_age)) {
-				throw new CivException(this.getName()+" cannot be gifted until it is "+min_gift_age+" days old.");
+				throw new CivException(this.getName()+" "+"cannot be gifted until it is"+" "+min_gift_age+" "+"days old.");
 			}
 		} catch (InvalidConfiguration e) {
 			throw new CivException("Configuration error.");

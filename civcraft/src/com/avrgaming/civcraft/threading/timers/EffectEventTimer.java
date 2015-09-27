@@ -143,9 +143,9 @@ public class EffectEventTimer extends CivAsyncTask {
 					unusedBeakers = Math.round(unusedBeakers);
 					
 					if (cultureFromBeakers > 0) {
-						CivMessage.sendTown(town, CivColor.LightGreen+"Converted "+CivColor.LightPurple+
-								df.format(unusedBeakers)+CivColor.LightGreen+" beakers into "+CivColor.LightPurple+
-								df.format(cultureFromBeakers)+CivColor.LightGreen+" culture since no tech was being researched.");
+						CivMessage.sendTown(town, CivColor.LightGreen+"Converted"+" "+CivColor.LightPurple+
+								df.format(unusedBeakers)+CivColor.LightGreen+" "+"beakers into"+" "+CivColor.LightPurple+
+								df.format(cultureFromBeakers)+CivColor.LightGreen+" "+"culture since no tech was being researched.");
 						cultureGenerated += cultureFromBeakers;
 						town.addAccumulatedCulture(cultureFromBeakers);
 						town.setUnusedBeakers(0);
@@ -157,7 +157,7 @@ public class EffectEventTimer extends CivAsyncTask {
 			}
 			
 			cultureGenerated = Math.round(cultureGenerated);
-			CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.LightPurple+cultureGenerated+CivColor.LightGreen+" culture.");
+			CivMessage.sendTown(town, CivColor.LightGreen+"Generated"+" "+CivColor.LightPurple+cultureGenerated+CivColor.LightGreen+" "+"culture.");
 		}
 		
 		/* Checking for expired vassal states. */

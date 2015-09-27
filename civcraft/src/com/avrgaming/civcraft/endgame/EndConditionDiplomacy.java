@@ -117,7 +117,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			
 			Integer otherVotes = getVotesFor(otherCiv);
 			if (otherVotes > votes) {
-				CivMessage.global(civ.getName()+" doesn't have enough votes for a diplomatic victory! The rival civilization of "+otherCiv.getName()+" has more!");
+				CivMessage.global(civ.getName()+" "+"doesn't have enough votes for a diplomatic victory! The rival civilization of"+" "+otherCiv.getName()+" "+"has more!");
 				return false;
 			}
 		}
@@ -148,7 +148,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			CivGlobal.getSessionDB().update(entries.get(0).request_id, entries.get(0).key, ""+votes);			
 		}
 		
-		CivMessage.sendSuccess(resident, "Added a vote for "+civ.getName());
+		CivMessage.sendSuccess(resident, "Added a vote for"+" "+civ.getName());
 	}
 
 	public static void setVotes(Civilization civ, Integer votes) {

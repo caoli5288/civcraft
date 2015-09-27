@@ -91,7 +91,7 @@ public class Blacksmith extends Structure {
 	}
 	
 	private String getNonResidentFeeString() {
-		return "Fee: "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
+		return "Fee:"+" "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
 	}
 	
 	@Override
@@ -114,7 +114,7 @@ public class Blacksmith extends Structure {
 		diff /= 1000;
 		
 		if (diff < Blacksmith.COOLDOWN) {
-			throw new CivException("Blacksmith is on cooldown. Please wait another "+(Blacksmith.COOLDOWN - diff)+" seconds.");
+			throw new CivException("Blacksmith is on cooldown. Please wait another"+" "+(Blacksmith.COOLDOWN - diff)+" "+"seconds.");
 		}
 		
 		lastUse = now;
@@ -313,7 +313,7 @@ public class Blacksmith extends Structure {
 				String str = lore[i];
 				if (str.contains("free enhancements")) {
 					if (level != 0) {
-						lore[i] = CivColor.LightBlue+level+" free enhancements! Redeem at blacksmith.";
+						lore[i] = CivColor.LightBlue+level+" "+"free enhancements! Redeem at blacksmith.";
 					} else {
 						lore[i] = "";
 					}
@@ -386,10 +386,10 @@ public class Blacksmith extends Structure {
 		// Schedule a message to notify the player when the smelting is finished.
 		BukkitObjects.scheduleAsyncDelayedTask(new NotificationTask(player.getName(), 
 				CivColor.LightGreen+" Your stack of "+itemsInHand.getAmount()+" "+
-				CivData.getDisplayName(itemsInHand.getTypeId())+" has finished smelting."), 
+				CivData.getDisplayName(itemsInHand.getTypeId())+" "+"has finished smelting."), 
 				TimeTools.toTicks(SMELT_TIME_SECONDS));
 		
-		CivMessage.send(player,CivColor.LightGreen+ "Deposited "+itemsInHand.getAmount()+ " ore.");
+		CivMessage.send(player,CivColor.LightGreen+ "Deposited"+" "+itemsInHand.getAmount()+ " ore.");
 		
 		player.updateInventory();
 	}
@@ -441,7 +441,7 @@ public class Blacksmith extends Structure {
 				double timeLeft = ((double)Blacksmith.SMELT_TIME_SECONDS - (double)secondsBetween) / (double)60;
 				//Date finish = new Date(now+(secondsBetween*1000));
 				CivMessage.send(player, CivColor.Yellow+"Stack of "+amount+" "+
-						CivData.getDisplayName(itemId)+" will be finished in "+ df1.format(timeLeft) +" minutes.");
+						CivData.getDisplayName(itemId)+" "+"will be finished in"+" "+ df1.format(timeLeft) +" "+"minutes.");
 				continue;
 			}
 			
@@ -452,7 +452,7 @@ public class Blacksmith extends Structure {
 			// If this stack was successfully withdrawn, delete it from the DB.
 			if (leftovers.size() == 0) {
 				CivGlobal.getSessionDB().delete(se.request_id, se.key);
-				CivMessage.send(player, CivColor.LightGreen+"Withdrew "+amount+" "+CivData.getDisplayName(itemId));
+				CivMessage.send(player, CivColor.LightGreen+"Withdrew"+" "+amount+" "+CivData.getDisplayName(itemId));
 				break;
 			} else {
 				// We do not have space in our inventory, inform the player.

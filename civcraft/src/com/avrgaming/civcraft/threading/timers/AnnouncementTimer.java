@@ -88,7 +88,7 @@ public class AnnouncementTimer implements Runnable {
 	public void run() {		
 		
 		for (String str : announcements) {
-			CivMessage.sendAll(CivColor.Gold+"Tip: "+CivColor.White+str);
+			CivMessage.sendAll(CivColor.Gold+"Tip:"+" "+CivColor.White+str);
 			
 			try {
 				Thread.sleep(60*minutes*1000); //sleep for x mins

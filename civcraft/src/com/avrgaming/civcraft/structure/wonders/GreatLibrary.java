@@ -167,7 +167,7 @@ public class GreatLibrary extends Wonder {
 			
 			configEnchant = CivSettings.enchants.get("ench_flame");
 			if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-				CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+configEnchant.cost+" Coins.");
+				CivMessage.send(player, CivColor.Rose+"You do not have enough, you need"+" "+configEnchant.cost+" "+CivSettings.CURRENCY_NAME);
 				return;
 			}
 			
@@ -194,7 +194,7 @@ public class GreatLibrary extends Wonder {
 				}
 				
 				if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-					CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+configEnchant.cost+" Coins.");
+					CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need"+" "+configEnchant.cost+" "+CivSettings.CURRENCY_NAME);
 					return;
 				}
 				

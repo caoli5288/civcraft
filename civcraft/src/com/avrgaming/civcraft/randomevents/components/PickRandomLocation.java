@@ -48,7 +48,7 @@ public class PickRandomLocation extends RandomEventComponent {
 						String varname = getString("varname");
 						event.componentVars.put(varname, bcoord.toString());
 						
-						sendMessage("Head to "+bcoord.getX()+","+bcoord.getY()+","+bcoord.getZ()+"!");
+						sendMessage("Head to"+" "+bcoord.getX()+","+bcoord.getY()+","+bcoord.getZ()+"!");
 					} catch (InvalidConfiguration e) {
 						e.printStackTrace();
 					}

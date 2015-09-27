@@ -17,7 +17,7 @@ public class RightClickForItem extends ItemComponent {
 		String mat_id = this.getString("custom_id");
 		
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(mat_id);
-		attrUtil.addLore("Right click for "+amount+" "+craftMat.getName());
+		attrUtil.addLore("Right click for"+" "+amount+" "+craftMat.getName());
 	}
 	
 	

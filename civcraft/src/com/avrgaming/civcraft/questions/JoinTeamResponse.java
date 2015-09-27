@@ -17,7 +17,7 @@ public class JoinTeamResponse implements QuestionResponseInterface {
 	@Override
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
-			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" accepted our team invitation.");
+			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" "+"accepted our team invitation.");
 			
 			try {
 				ArenaTeam.addMember(team.getName(), resident);
@@ -26,9 +26,9 @@ public class JoinTeamResponse implements QuestionResponseInterface {
 				return;
 			}
 
-			CivMessage.sendTeam(team, resident.getName()+" has joined the team.");
+			CivMessage.sendTeam(team, resident.getName()+" "+"has joined the team.");
 		} else {
-			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" denied our team invitation.");
+			CivMessage.send(sender, CivColor.LightGray+resident.getName()+" "+"denied our team invitation.");
 		}
 	}
 	

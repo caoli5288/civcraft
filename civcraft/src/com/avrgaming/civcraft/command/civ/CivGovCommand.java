@@ -48,11 +48,11 @@ public class CivGovCommand extends CommandBase {
 		
 		ConfigGovernment gov = ConfigGovernment.getGovernmentFromName(args[1]);
 		if (gov == null) {
-			throw new CivException("Could not find government named "+args[1]);
+			throw new CivException("Could not find government named"+" "+args[1]);
 		}
 		
 		if (!gov.isAvailable(civ)) {
-			throw new CivException(gov.displayName+" is not yet available.");
+			throw new CivException(gov.displayName+" "+"is not yet available.");
 		}
 		
 		civ.changeGovernment(civ, gov, false);
@@ -67,7 +67,7 @@ public class CivGovCommand extends CommandBase {
 		
 		for (ConfigGovernment gov : govs) {
 			if (gov == civ.getGovernment()) {
-				CivMessage.send(sender, CivColor.Gold+gov.displayName+" (current)");
+				CivMessage.send(sender, CivColor.Gold+gov.displayName+" "+"(current)");
 			} else {
 				CivMessage.send(sender, CivColor.Green+gov.displayName);
 			}
@@ -79,13 +79,13 @@ public class CivGovCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		CivMessage.sendHeading(sender, "Government "+civ.getGovernment().displayName);
-		CivMessage.send(sender, CivColor.Green+"Trade Rate: "+CivColor.LightGreen+civ.getGovernment().trade_rate+
+		CivMessage.send(sender, CivColor.Green+"Trade Rate:"+" "+CivColor.LightGreen+civ.getGovernment().trade_rate+
 				CivColor.Green+" Cottage Rate: "+CivColor.LightGreen+civ.getGovernment().cottage_rate);
-		CivMessage.send(sender, CivColor.Green+"Upkeep Rate: "+CivColor.LightGreen+civ.getGovernment().upkeep_rate+
+		CivMessage.send(sender, CivColor.Green+"Upkeep Rate:"+" "+CivColor.LightGreen+civ.getGovernment().upkeep_rate+
 				CivColor.Green+" Growth Rate: "+CivColor.LightGreen+civ.getGovernment().growth_rate);
-		CivMessage.send(sender, CivColor.Green+"Hammer Rate: "+CivColor.LightGreen+civ.getGovernment().hammer_rate+
+		CivMessage.send(sender, CivColor.Green+"Hammer Rate:"+" "+CivColor.LightGreen+civ.getGovernment().hammer_rate+
 				CivColor.Green+" Beaker Rate: "+CivColor.LightGreen+civ.getGovernment().beaker_rate);
-		CivMessage.send(sender, CivColor.Green+"Culture Rate: "+CivColor.LightGreen+civ.getGovernment().culture_rate+
+		CivMessage.send(sender, CivColor.Green+"Culture Rate:"+" "+CivColor.LightGreen+civ.getGovernment().culture_rate+
 				CivColor.Green+" Max Tax Rate: "+CivColor.LightGreen+civ.getGovernment().maximum_tax_rate);
 				
 	}

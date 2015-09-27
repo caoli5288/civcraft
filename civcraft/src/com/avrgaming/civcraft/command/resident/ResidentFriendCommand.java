@@ -45,7 +45,7 @@ public class ResidentFriendCommand extends CommandBase {
 		Resident friendToAdd = getNamedResident(1);
 		
 		resident.addFriend(friendToAdd);
-		CivMessage.sendSuccess(sender, "Added "+args[1]+" as a friend.");	
+		CivMessage.sendSuccess(sender, args[1]+" "+"was added as a friend.");	
 		resident.save();
 	}
 	
@@ -59,7 +59,7 @@ public class ResidentFriendCommand extends CommandBase {
 		Resident friendToRemove = getNamedResident(1);
 		
 		resident.removeFriend(friendToRemove);
-		CivMessage.sendSuccess(sender, "Removed "+args[1]+" as a friend.");	
+		CivMessage.sendSuccess(sender, args[1]+" was removed as a friend.");	
 		resident.save();
 	}
 	

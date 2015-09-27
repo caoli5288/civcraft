@@ -54,7 +54,7 @@ public class Spy extends UnitMaterial {
 
 		UnitMaterial.setOwningTown(town, is);		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make "+Unit.SPY_UNIT.getUnit().name+". Barracks chest is full! Make Room!");
+			throw new CivException("Cannot make"+" "+Unit.SPY_UNIT.getUnit().name+". "+"Barracks chest is full! Make Room!");
 		}
 	}
 	
@@ -62,7 +62,7 @@ public class Spy extends UnitMaterial {
 		ItemStack is = LoreMaterial.spawn(Unit.SPY_UNIT);
 
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make "+Unit.SPY_UNIT.getUnit().name+". Barracks chest is full! Make Room!");
+			throw new CivException("Cannot make"+" "+Unit.SPY_UNIT.getUnit().name+". "+"Barracks chest is full! Make Room!");
 		}
 	}
 	
@@ -130,7 +130,7 @@ public class Spy extends UnitMaterial {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Mission Report");
 		meta.setAuthor("Mission Reports");
-		meta.setTitle("Missions From "+resident.getTown().getName());
+		meta.setTitle("Missions From"+" "+resident.getTown().getName());
 		
 		String out = "";
 		for (String str : bookout) {

@@ -706,7 +706,7 @@ public class CivGlobal {
 	public static Player getPlayer(Resident resident) throws CivException {
 		Player player = Bukkit.getPlayer(resident.getUUID());
 		if (player == null)
-			throw new CivException("No player named "+resident.getName());
+			throw new CivException("No player named"+" "+resident.getName());
 		return player;
 	}
 	
@@ -1461,22 +1461,22 @@ public class CivGlobal {
 		civ.getDiplomacyManager().setRelation(otherCiv, status, null);
 		otherCiv.getDiplomacyManager().setRelation(civ, status, null);
 		
-		String out = civ.getName()+" is now ";
+		String out = civ.getName()+" "+"is now"+" ";
 		switch (status) {
 		case NEUTRAL:
-			out += "NEUTRAL with ";
+			out += "NEUTRAL with"+" ";
 			break;
 		case HOSTILE:
-			out += CivColor.Yellow+"HOSTILE"+CivColor.White+" towards ";
+			out += CivColor.Yellow+"HOSTILE"+CivColor.White+" "+"towards"+" ";
 			break;
 		case WAR:
-			out += "at "+CivColor.Rose+"WAR"+CivColor.White+" with ";
+			out += "at "+CivColor.Rose+"WAR"+CivColor.White+" "+"with"+" ";
 			break;
 		case PEACE:
-			out += "at PEACE with ";
+			out += "at PEACE with"+" ";
 			break;
 		case ALLY:
-			out += CivColor.LightGreen+" ALLIED "+CivColor.White+" with ";
+			out += CivColor.LightGreen+"ALLIED"+CivColor.White+" "+"with"+" ";
 			break;
 		default:
 			break;

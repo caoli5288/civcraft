@@ -180,7 +180,7 @@ public class Bank extends Structure {
 		int count = resident.takeItemsInHand(itemId, 0);
 		if (count == 0)
 		{
-			throw new CivException("You do not have enough "+itemName+" in your hand.");
+			throw new CivException("You do not have enough"+" "+itemName+" "+"in your hand.");
 		}
 		
 		Town usersTown = resident.getTown();
@@ -190,7 +190,7 @@ public class Bank extends Structure {
 			DecimalFormat df = new DecimalFormat();
 			resident.getTreasury().deposit((double)((int)((coins*count)*exchange_rate)));
 			CivMessage.send(player,
-					CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ df.format((coins*count)*exchange_rate)+ " Coins.");	
+					CivColor.LightGreen + "Exchanged"+" "+count+" "+itemName+" "+"for"+" "+ df.format((coins*count)*exchange_rate)+ " "+CivSettings.CURRENCY_NAME);	
 			return;
 		}
 		
@@ -205,8 +205,8 @@ public class Bank extends Structure {
 			this.getTown().depositDirect(giveToTown);
 			resident.getTreasury().deposit(giveToPlayer);
 		
-		CivMessage.send(player, CivColor.LightGreen + "Exchanged "+count+" "+itemName+" for "+ giveToPlayer+ " Coins.");
-		CivMessage.send(player,CivColor.Yellow+" Paid "+giveToTown+" coins in non-resident taxes.");
+		CivMessage.send(player, CivColor.LightGreen + "Exchanged"+" "+count+" "+itemName+" "+"for"+" "+ giveToPlayer+ " "+CivSettings.CURRENCY_NAME);
+		CivMessage.send(player,CivColor.Yellow+" Paid"+" "+giveToTown+" "+CivSettings.CURRENCY_NAME+" in non-resident taxes.");
 		return;
 		
 	}
@@ -389,7 +389,7 @@ public class Bank extends Structure {
 		newCoins = Math.floor(newCoins);
 		
 		if (newCoins != 0) {
-			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town earned "+newCoins+" Coins from interest on a principal of "+principal+" Coins.");
+			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town earned"+" "+newCoins+" "+CivSettings.CURRENCY_NAME+" "+"from interest on a principal of"+" "+principal+" "+CivSettings.CURRENCY_NAME);
 			this.getTown().getTreasury().deposit(newCoins);
 			
 		}

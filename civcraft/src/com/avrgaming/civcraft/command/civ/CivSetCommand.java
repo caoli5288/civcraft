@@ -52,7 +52,7 @@ public class CivSetCommand extends CommandBase {
 			return ((double)amount/100);
 			
 		} catch (NumberFormatException e) {
-			throw new CivException(arg+" is not a number.");
+			throw new CivException(arg+" "+"is not a number.");
 		}
 				
 	}
@@ -61,14 +61,14 @@ public class CivSetCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "Current income percentage:"+civ.getIncomeTaxRateString());
+			CivMessage.send(sender, "Current income percentage:"+" "+civ.getIncomeTaxRateString());
 			return;
 		}
 		
 		double newPercentage = vaildatePercentage(args[1]);
 		
 		if (newPercentage > civ.getGovernment().maximum_tax_rate) {
-			throw new CivException("Cannot set your tax rate higher than your government's maximum("+
+			throw new CivException("Cannot set your tax rate higher than your government's maximum"+"("+
 					DecimalHelper.formatPercentage(civ.getGovernment().maximum_tax_rate)+")");
 		}
 		
@@ -76,14 +76,14 @@ public class CivSetCommand extends CommandBase {
 		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Set income rate to "+args[1]+" percent.");
+		CivMessage.sendSuccess(sender, "Set income rate to"+" "+args[1]+" "+"percent.");
 	}
 	
 	public void science_cmd() throws CivException {
 	Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "Current science percentage:"+civ.getSciencePercentage());
+			CivMessage.send(sender, "Current science percentage:"+" "+civ.getSciencePercentage());
 			return;
 		}
 		
@@ -92,7 +92,7 @@ public class CivSetCommand extends CommandBase {
 		civ.setSciencePercentage(newPercentage);		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Set science rate to "+args[1]+" percent.");	
+		CivMessage.sendSuccess(sender, "Set science rate to"+" "+args[1]+""+" percent.");	
 	}
 	
 
@@ -100,7 +100,7 @@ public class CivSetCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.sendSuccess(sender, "Civ color is: "+Integer.toHexString(civ.getColor()));
+			CivMessage.sendSuccess(sender, "Civ color is:"+" "+Integer.toHexString(civ.getColor()));
 			return;
 		}
 	
@@ -116,9 +116,9 @@ public class CivSetCommand extends CommandBase {
 			
 			civ.setColor(color);
 			civ.save();
-			CivMessage.sendSuccess(sender, "Set civ color to "+Integer.toHexString(color));
+			CivMessage.sendSuccess(sender, "Set civ color to"+" "+Integer.toHexString(color));
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is an invalid color.");
+			throw new CivException(args[1]+" "+"is an invalid color.");
 		}
 	}
 	

@@ -102,7 +102,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 					e1.printStackTrace();
 					return;
 				}
-				CivMessage.send(resident, CivColor.LightGray+"You have a PvP timer enabled for "+mins+" mins. You cannot attack or be attacked until it expires.");
+				CivMessage.send(resident, CivColor.LightGray+"You have a PvP timer enabled for"+" "+mins+" "+"mins. You cannot attack or be attacked until it expires.");
 				CivMessage.send(resident, CivColor.LightGray+"To remove it, type /resident pvptimer");
 	
 			} 
@@ -165,7 +165,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 						}
 					}
 					
-					CivMessage.sendCiv(cc.getCiv(), color+getPlayer().getDisplayName()+"("+relationName+") has logged-in to our borders.");
+					CivMessage.sendCiv(cc.getCiv(), color+getPlayer().getDisplayName()+"("+relationName+")"+" has logged-in to our borders.");
 				}
 			}
 					
@@ -183,59 +183,59 @@ public class PlayerLoginAsyncTask implements Runnable {
 				String perkMessage = "";
 				if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
 					resident.giveAllFreePerks();
-					perkMessage = "You have access to the Following Perks: ";
+					perkMessage = "You have access to the Following Perks:"+" ";
 				} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
 					if (getPlayer().hasPermission(CivSettings.MINI_ADMIN) || getPlayer().hasPermission(CivSettings.FREE_PERKS)) {
 						resident.giveAllFreePerks();
-						perkMessage = "You have access to the Following Perks: ";
-						perkMessage += "Weather, ";
+						perkMessage = "You have access to the Following Perks"+": ";
+						perkMessage += "Weather"+", ";
 					}
 				}
 				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
 				{
 					resident.giveAllArcticPerks();
-					perkMessage += "Arctic, ";
+					perkMessage += "Arctic"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ATLANTEAN_PERKS))
 				{
 					resident.giveAllAtlanteanPerks();
-					perkMessage += "Atlantean, ";
+					perkMessage += "Atlantean"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.AZTEC_PERKS))
 				{
 					resident.giveAllAztecPerks();
-					perkMessage += "Aztec, ";
+					perkMessage += "Aztec"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
 				{
 					resident.giveAllCultistPerks();
-					perkMessage += "Cultist, ";
+					perkMessage += "Cultist"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
 				{
 					resident.giveAllEgyptianPerks();
-					perkMessage += "Egyptian, ";
+					perkMessage += "Egyptian"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
 				{
 					resident.giveAllElvenPerks();
-					perkMessage += "Elven, ";
+					perkMessage += "Elven"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
 				{
 					resident.giveAllHellPerks();
-					perkMessage += "Hell, ";
+					perkMessage += "Hell"+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
 				{
 					resident.giveAllRomanPerks();
-					perkMessage += "Roman, ";
+					perkMessage += "Roman"+", ";
 				}
 
 				if (getPlayer().hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
 				{
 					resident.giveAllNightLightsPerks();
-					perkMessage += "Night Lights, ";
+					perkMessage += "Night Lights"+", ";
 				}
 
 				perkMessage += "Apply them with /res perks";

@@ -252,11 +252,11 @@ public class WarListener implements Listener {
 											}
 										} else {
 											sb.getOwner().onDamage(structureDamage, b.getWorld(), null, sb.getCoord(), sb);
-											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our "+sb.getOwner().getDisplayName()+" at ("+
+											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our"+" "+sb.getOwner().getDisplayName()+" @ ("+
 													sb.getOwner().getCenterLocation().getX()+","+
 													sb.getOwner().getCenterLocation().getY()+","+
 													sb.getOwner().getCenterLocation().getZ()+")"+
-													" was hit by TNT! ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+													" "+"was hit by TNT! ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 										}
 									}
 								} else {

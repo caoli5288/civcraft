@@ -61,7 +61,7 @@ public class Grocer extends Structure {
 
 		for (int i = 0; i < level; i++) {
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(i+1);
-			out += "<b>"+grocerlevel.itemName+"</b> Amount: "+grocerlevel.amount+ " Price: "+grocerlevel.price+" Coins.<br/>";
+			out += "<b>"+grocerlevel.itemName+"</b> "+"Amount:"+" "+grocerlevel.amount+ " "+"Price:"+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+".<br/>";
 		}
 		
 		return out;
@@ -113,14 +113,14 @@ public class Grocer extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
-					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
+					CivMessage.send(player, CivColor.Yellow + "Paid"+" "+ payToTown+" "+CivSettings.CURRENCY_NAME+" "+"in non-resident taxes.");
 				}
 			
 			}
@@ -143,8 +143,8 @@ public class Grocer extends Structure {
 			}
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(count+1);
 			
-			sign.setText("Buy\n"+grocerlevel.itemName+"\n"+
-						 "For "+grocerlevel.price+" Coins\n"+
+			sign.setText("Buy"+"\n"+grocerlevel.itemName+"\n"+
+						 "For"+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+"\n"+
 					     getNonResidentFeeString());
 			
 			sign.update();
@@ -156,7 +156,7 @@ public class Grocer extends Structure {
 				CivLog.error("sign from special id was null, id:"+count);
 				return;
 			}
-			sign.setText("Grocer Shelf\nEmpty");
+			sign.setText("Grocer Shelf"+"\n"+"Empty");
 			sign.update();
 		}
 		

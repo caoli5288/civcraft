@@ -36,7 +36,7 @@ public class TradeRequest implements QuestionResponseInterface {
 			otherPair.otherResident = pair.resident;
 			TradeInventoryListener.tradeInventories.put(TradeInventoryListener.getTradeInventoryKey(resident), otherPair);
 		} else {
-			CivMessage.send(trader, CivColor.LightGray+resident.getName()+" denied our trade invitation.");
+			CivMessage.send(trader, CivColor.LightGray+resident.getName()+" "+"denied our trade invitation.");
 		}
 	}
 

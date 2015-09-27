@@ -43,7 +43,7 @@ public class InteractiveReportPlayer implements InteractiveResponse {
 		}
 		
 		if (selectedType == null) {
-			CivMessage.sendError(player, "You must select a valid category to report. ("+ReportManager.getReportTypes()+")");
+			CivMessage.sendError(player, "You must select a valid category to report."+" ("+ReportManager.getReportTypes()+")");
 			return;
 		}
 		

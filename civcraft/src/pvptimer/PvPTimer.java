@@ -26,7 +26,7 @@ public class PvPTimer implements Runnable {
 				if (DateUtil.isAfterMins(new Date(resident.getRegistered()), mins)) {
 				//if (DateUtil.isAfterSeconds(new Date(resident.getRegistered()), mins)) {
 					resident.setisProtected(false);
-					CivMessage.send(resident, CivColor.LightGray+"Your PvP protection has expired.");
+					CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("pvpTimerEnded"));
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();

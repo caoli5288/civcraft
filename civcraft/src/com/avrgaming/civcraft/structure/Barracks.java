@@ -83,14 +83,14 @@ public class Barracks extends Structure {
 		ArrayList<ConfigUnit> unitList = getTown().getAvailableUnits();
 		
 		if (unitList.size() == 0) {
-			return "\n"+CivColor.LightGray+"None\n"+CivColor.LightGray+"Available";			
+			return "\n"+CivColor.LightGray+"None"+"\n"+CivColor.LightGray+"Available";			
 		}
 		
 		ConfigUnit unit = unitList.get(index);
 		String out = "\n";
 		out += CivColor.LightPurple+unit.name+"\n";
 		out += CivColor.Yellow+unit.cost+"\n";
-		out += CivColor.Yellow+"Coins";
+		out += CivColor.Yellow+CivSettings.CURRENCY_NAME;
 		
 		return out;
 	}
@@ -120,11 +120,11 @@ public class Barracks extends Structure {
 		}
 		
 		if (unit.limit != 0 && unit.limit < getTown().getUnitTypeCount(unit.id)) {
-			throw new CivException("We've reached the maximum number of "+unit.name+" units we can have.");
+			throw new CivException("We've reached the maximum number of"+" "+unit.name+" "+"units we can have.");
 		}
 		
 		if (!getTown().getTreasury().hasEnough(unit.cost)) {
-			throw new CivException("Not enough Coins to train unit. We require "+unit.cost+" Coins.");
+			throw new CivException("Not enough Coins to train unit. We require "+unit.cost+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (!unit.isAvailable(getTown())) {
@@ -132,7 +132,7 @@ public class Barracks extends Structure {
 		}
 		
 		if (this.trainingUnit != null) {
-			throw new CivException("Already training a "+this.trainingUnit.name+".");
+			throw new CivException("Already training a"+" "+this.trainingUnit.name+".");
 		}
 		
 		if (unit.id.equals("u_settler")) {
@@ -147,7 +147,7 @@ public class Barracks extends Structure {
 		
 		this.setCurrentHammers(0.0);
 		this.setTrainingUnit(unit);
-		CivMessage.sendTown(getTown(), "We've begun training a "+unit.name+"!");
+		CivMessage.sendTown(getTown(), "We've begun training a"+" "+unit.name+"!");
 		this.updateTraining();
 	}
 	
@@ -249,7 +249,7 @@ public class Barracks extends Structure {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (!resident.getTreasury().hasEnough(cost)) {
-			CivMessage.sendError(player, "Sorry, but you don't have the required "+cost+" Coins.");
+			CivMessage.sendError(player, "Sorry, but you don't have the required"+" "+cost+" "+CivSettings.CURRENCY_NAME);
 			return;
 		}
 		
@@ -263,7 +263,7 @@ public class Barracks extends Structure {
 		resident.getTreasury().withdraw(cost);
 		player.getItemInHand().setDurability((short)0);
 		
-		CivMessage.sendSuccess(player, "Repaired "+craftMat.getName()+" for "+cost+" Coins.");
+		CivMessage.sendSuccess(player, craftMat.getName()+" was repaired for "+cost+" "+CivSettings.CURRENCY_NAME);
 		
 	}
 	
@@ -420,7 +420,7 @@ public class Barracks extends Structure {
 			Method m = c.getMethod("spawn", Inventory.class, Town.class);
 			m.invoke(null, chest.getInventory(), this.getTown());
 			
-			CivMessage.sendTown(this.getTown(), "Completed a "+unit.name+"!");
+			CivMessage.sendTown(this.getTown(), "Completed a"+" "+unit.name+"!");
 			this.trainingUnit = null;
 			this.currentHammers = 0.0;
 			

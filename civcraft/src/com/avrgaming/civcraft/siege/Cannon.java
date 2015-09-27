@@ -683,7 +683,7 @@ public class Cannon extends Buildable {
 		}
 		
 		if (!resident.getCiv().getDiplomacyManager().atWarWith(owner.getCiv())) {
-			CivMessage.sendError(resident, "You've got to be at war with this cannon's owner civ("+owner.getCiv().getName()+") to destroy it.");
+			CivMessage.sendError(resident, "You've got to be at war with this cannon's owner civ"+"("+owner.getCiv().getName()+")"+" to destroy it.");
 			return;
 		}
 		
@@ -697,16 +697,16 @@ public class Cannon extends Buildable {
 		if (hitpoints <= 0) {
 			destroy();
 			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivColor.BOLD+"Cannon Destroyed!");
-			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+"Our Cannon at "+
+			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+"Our Cannon at"+" "+
 					cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
-					" has been destroyed!");
+					" "+"has been destroyed!");
 			return;
 		}
 		
 		CivMessage.send(event.getPlayer(), CivColor.Yellow+"Hit Cannon! ("+this.hitpoints+"/"+maxHitpoints+")");
-		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+"Our Cannon at "+
+		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+"Our Cannon at"+" "+
 				cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
-				" has been hit! ("+hitpoints+"/"+maxHitpoints+")");
+				" "+"has been hit! "+"("+hitpoints+"/"+maxHitpoints+")");
 	}
 	
 	private void launchExplodeFirework(Location loc) {

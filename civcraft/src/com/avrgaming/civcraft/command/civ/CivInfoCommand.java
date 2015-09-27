@@ -55,7 +55,7 @@ public class CivInfoCommand extends CommandBase {
 	public void online_cmd() throws CivException {
 		Civilization civ = getSenderCiv();
 		
-		CivMessage.sendHeading(sender, "Online Players In "+civ.getName());
+		CivMessage.sendHeading(sender, "Online Players In"+" "+civ.getName());
 		String out = "";
 		for (Resident resident : civ.getOnlineResidents()) {
 			out += resident.getName()+" ";
@@ -71,7 +71,7 @@ public class CivInfoCommand extends CommandBase {
 		
 		for (Town t : civ.getTowns()) {
 			for (Buff b : t.getBuffManager().getEffectiveBuffs(Buff.SCIENCE_RATE)) {
-				out.add(CivColor.Green+"From "+b.getSource()+": "+CivColor.LightGreen+b.getDisplayDouble());
+				out.add(CivColor.Green+"From"+" "+b.getSource()+": "+CivColor.LightGreen+b.getDisplayDouble());
 			}
 		}
 		
@@ -96,7 +96,7 @@ public class CivInfoCommand extends CommandBase {
 		}*/
 		
 		out.add(CivColor.LightBlue+"------------------------------------");
-		out.add(CivColor.Green+"Total: "+CivColor.LightGreen+df.format(civ.getBeakers()));	
+		out.add(CivColor.Green+"Total:"+" "+CivColor.LightGreen+df.format(civ.getBeakers()));	
 		CivMessage.send(sender, out);
 	}
 	
@@ -105,8 +105,8 @@ public class CivInfoCommand extends CommandBase {
 		
 		CivMessage.sendHeading(sender, "Town Tax Info");
 		for (Town t : civ.getTowns()) {
-			CivMessage.send(sender, CivColor.Green+"Town:"+CivColor.LightGreen+t.getName()+CivColor.Green+
-					" Total: "+CivColor.LightGreen+civ.lastTaxesPaidMap.get(t.getName()));
+			CivMessage.send(sender, CivColor.Green+"Town:"+" "+CivColor.LightGreen+t.getName()+CivColor.Green+
+					" Total:"+" "+CivColor.LightGreen+civ.lastTaxesPaidMap.get(t.getName()));
 		}
 		
 	}
@@ -127,13 +127,13 @@ public class CivInfoCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {		
-			CivMessage.sendHeading(sender, civ.getName()+" Upkeep Info");
+			CivMessage.sendHeading(sender, civ.getName()+"Upkeep Info");
 	
 			for (Town town : civ.getTowns()) {
-				CivMessage.send(sender, CivColor.Green+"Town:"+CivColor.LightGreen+town.getName()+CivColor.Green+
-													" Total: "+CivColor.LightGreen+getTownTotalLastTick(town, civ));
+				CivMessage.send(sender, CivColor.Green+"Town:"+" "+CivColor.LightGreen+town.getName()+CivColor.Green+
+													" Total:"+" "+CivColor.LightGreen+getTownTotalLastTick(town, civ));
 			}
-			CivMessage.send(sender, CivColor.Green+"War: "+CivColor.LightGreen+df.format(civ.getWarUpkeep()));
+			CivMessage.send(sender, CivColor.Green+"War:"+" "+CivColor.LightGreen+df.format(civ.getWarUpkeep()));
 			
 			CivMessage.send(sender, CivColor.LightGray+"Shows upkeep paid for last tick.");
 			CivMessage.send(sender, CivColor.LightGray+"Use /civ info upkeep <town name> to show a breakdown per town.");
@@ -143,15 +143,15 @@ public class CivInfoCommand extends CommandBase {
 	
 			Town town = civ.getTown(args[1]);
 			if (town == null) {
-				throw new CivException("Civilization has no town named "+args[1]);
+				throw new CivException("Civilization has no town named"+" "+args[1]);
 			}
 			
-			CivMessage.sendHeading(sender, "Town of "+town.getName()+"  Upkeep Details");
-			CivMessage.send(sender, CivColor.Green+"Base: "+CivColor.LightGreen+civ.getUpkeepPaid(town, "base"));
-			CivMessage.send(sender, CivColor.Green+"Distance: "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distance"));
-			CivMessage.send(sender, CivColor.Green+"DistanceUpkeep: "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distanceUpkeep"));
-			CivMessage.send(sender, CivColor.Green+"Debt: "+CivColor.LightGreen+civ.getUpkeepPaid(town, "debt"));
-			CivMessage.send(sender, CivColor.Green+"Total: "+CivColor.LightGreen+getTownTotalLastTick(town, civ));
+			CivMessage.sendHeading(sender, "Town of"+" "+town.getName()+" "+"Upkeep Details");
+			CivMessage.send(sender, CivColor.Green+"Base:"+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "base"));
+			CivMessage.send(sender, CivColor.Green+"Distance:"+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distance"));
+			CivMessage.send(sender, CivColor.Green+"DistanceUpkeep:"+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distanceUpkeep"));
+			CivMessage.send(sender, CivColor.Green+"Debt:"+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "debt"));
+			CivMessage.send(sender, CivColor.Green+"Total:"+" "+CivColor.LightGreen+getTownTotalLastTick(town, civ));
 
 			CivMessage.send(sender, CivColor.LightGray+"Shows upkeep paid for last tick.");
 		}

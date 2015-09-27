@@ -59,7 +59,7 @@ public class InteractiveTownName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredTownName = message;
-		CivMessage.send(player, CivColor.LightGreen+"The Town shall be called "+CivColor.Yellow+resident.desiredTownName+CivColor.LightGreen+"!");
+		CivMessage.send(player, CivColor.LightGreen+"The Town shall be called"+" "+CivColor.Yellow+resident.desiredTownName+CivColor.LightGreen+"!");
 		
 		class SyncTask implements Runnable {
 			Resident resident;

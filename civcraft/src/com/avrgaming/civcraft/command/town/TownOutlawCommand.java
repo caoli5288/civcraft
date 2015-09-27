@@ -58,13 +58,13 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in "+
-						town.getName()+"! You have one minute to get out ...");
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+
+						town.getName()+"! "+"You have one minute to get out ...");
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
-		CivMessage.sendSuccess(sender, args[1]+" will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
 	}
 	
 	public void removeall_cmd() throws CivException {
@@ -86,14 +86,14 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in "+
-						town.getName()+"! You have one minute to get out ...");
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+
+						town.getName()+"! "+"You have one minute to get out ...");
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
 		}
-		CivMessage.sendSuccess(sender, args[1]+" will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
 	}
 	
 	public void removeallciv_cmd() throws CivException {
@@ -122,11 +122,11 @@ public class TownOutlawCommand extends CommandBase {
 		
 		try {
 			Player player = CivGlobal.getPlayer(args[1]);
-			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in "+town.getName()+"! You have one minute to get out ...");			
+			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+town.getName()+"! "+"You have one minute to get out ...");			
 		} catch (CivException e) {
 		}	
 		
-		CivMessage.sendSuccess(sender, args[1]+" will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
 		TaskMaster.asyncTask(new TownAddOutlawTask(args[1], town), 1000);	
 	}
 	
@@ -140,7 +140,7 @@ public class TownOutlawCommand extends CommandBase {
 		town.removeOutlaw(args[1]);
 		town.save();
 		
-		CivMessage.sendSuccess(sender, "Removed "+args[1]+" from being an outlaw.");
+		CivMessage.sendSuccess(sender, args[1]+" "+"was removed from being an outlaw.");
 	}
 	
 	public void list_cmd() throws CivException {

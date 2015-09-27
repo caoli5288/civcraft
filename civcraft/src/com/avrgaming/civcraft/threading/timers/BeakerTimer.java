@@ -48,7 +48,7 @@ public class BeakerTimer extends CivAsyncTask {
 			
 			Town town = CivGlobal.getTown(civ.getCapitolName());
 			if (town == null) {
-				CivMessage.sendCiv(civ, "ERROR: Couldn't find your capitol town named "+civ.getCapitolName()+"! No research is progressing. Contact an admin.");
+				CivMessage.sendCiv(civ, "ERROR: Couldn't find your capitol town named"+" "+civ.getCapitolName()+"! "+"No research is progressing. Contact an admin.");
 				continue;
 			}
 			

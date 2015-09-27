@@ -29,7 +29,7 @@ public class InteractiveReportPlayerMessage implements InteractiveResponse {
 		}
 		
 		ReportManager.reportPlayer(playerName, type, message, resident.getName());
-		CivMessage.sendSuccess(player, playerName+" was reported. Thank you.");
+		CivMessage.sendSuccess(player, playerName+" "+"was reported. Thank you.");
 		resident.clearInteractiveMode();
 	}
 

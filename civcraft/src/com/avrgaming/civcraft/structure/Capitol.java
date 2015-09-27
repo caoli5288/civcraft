@@ -76,11 +76,11 @@ public class Capitol extends TownHall {
 			
 		if (this.respawnSign != null) {
 			try {
-				this.respawnSign.setText("Respawn At\n"+CivColor.Green+CivColor.BOLD+respawnables.get(newIndex).getRespawnName());
+				this.respawnSign.setText("Respawn At"+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(newIndex).getRespawnName());
 				index = newIndex;
 			} catch (IndexOutOfBoundsException e) {
 				if (respawnables.size() > 0) {
-					this.respawnSign.setText("Respawn At\n"+CivColor.Green+CivColor.BOLD+respawnables.get(0).getRespawnName());
+					this.respawnSign.setText("Respawn At"+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(0).getRespawnName());
 					index = 0;
 				}
 				//this.unitNameSign.setText(getUnitSignText(index));
@@ -128,7 +128,7 @@ public class Capitol extends TownHall {
 				long secondsLeft = (resident.getLastKilledTime().getTime() + (respawnTimeSeconds*1000)) - now.getTime();
 				if (secondsLeft > 0) {
 					secondsLeft /= 1000; 
-					CivMessage.sendError(resident, CivColor.Rose+"Cannot respawn yet. You have "+secondsLeft+" seconds left.");
+					CivMessage.sendError(resident, CivColor.Rose+"Cannot respawn yet. You have"+" "+secondsLeft+" "+"seconds left.");
 					return;
 				}
 			}
@@ -247,7 +247,7 @@ public class Capitol extends TownHall {
 		}
 		
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivColor.BOLD+"Our civ's capitol cannot be supported by the blocks underneath!"+
-				" It will take us an extra "+invalid_respawn_penalty+" mins to respawn during war if its not fixed in time!");
+				" "+"It will take us an extra"+" "+invalid_respawn_penalty+" "+"mins to respawn during war if its not fixed in time!");
 	}
 	
 	@Override

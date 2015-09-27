@@ -113,7 +113,7 @@ public class MissionBook extends UnitItemMaterial {
 		for (String str : mission.description) {
 			this.addLore(str);
 		}
-		this.addLore(CivColor.Yellow+mission.cost+" Coins.");
+		this.addLore(CivColor.Yellow+mission.cost+" "+CivSettings.CURRENCY_NAME);
 		this.addLore(CivColor.Gold+"Soulbound");
 	}
 	
@@ -134,7 +134,7 @@ public class MissionBook extends UnitItemMaterial {
 			
 			ConfigMission mission = CivSettings.missions.get(this.getId());
 			if (mission == null) {
-				throw new CivException("Unknown mission "+this.getId());
+				throw new CivException("Unknown mission:"+" "+this.getId());
 			}
 			
 			Resident resident = CivGlobal.getResident(event.getPlayer());
@@ -184,7 +184,7 @@ public class MissionBook extends UnitItemMaterial {
 			if (CivGlobal.isCasualMode()) {
 				if (!cc.getCiv().getDiplomacyManager().isHostileWith(resident.getCiv()) &&
 					!cc.getCiv().getDiplomacyManager().atWarWith(resident.getCiv())) {
-					throw new CivException("You must be hostile or at war with "+cc.getCiv().getName()+" in order to perform spy missions in casual mode.");
+					throw new CivException("You must be hostile or at war with"+" "+cc.getCiv().getName()+" "+"in order to perform spy missions in casual mode.");
 				}
 			}
 			
@@ -206,7 +206,7 @@ public class MissionBook extends UnitItemMaterial {
 		try {
 			Resident resident = CivGlobal.getResident(playerName);
 			if (!resident.getTown().getTreasury().hasEnough(mission.cost)) {
-				throw new CivException("Your town requires "+mission.cost+" Coins to perform this mission.");
+				throw new CivException(mission.cost+" "+CivSettings.CURRENCY_NAME+" are required in your town to perform this mission.");
 			}
 			
 			switch (mission.id) {
@@ -265,15 +265,15 @@ public class MissionBook extends UnitItemMaterial {
 			
 			if (next < compromise_rate) {
 				CivMessage.global(CivColor.Yellow+"INTERNATIONAL INCIDENT!"+CivColor.White+" "+
-						player.getName()+" was caught trying to perform a "+mission.name+" spy mission in "+
+						player.getName()+" "+"was caught trying to perform a"+" "+mission.name+" "+"spy mission in"+" "+
 						target.getName()+"!");
-				CivMessage.send(player, CivColor.Rose+"You've been compromised! (Rolled "+next+" vs "+compromise_rate+") Spy unit was destroyed!");
+				CivMessage.send(player, CivColor.Rose+"You've been compromised! (Rolled"+" "+next+" vs "+compromise_rate+") "+"Spy unit was destroyed!");
 				Unit.removeUnit(player);
 				result += ", COMPROMISED";
 			}
 			
 			MissionLogger.logMission(resident.getTown(), target, resident, mission.name, result);
-			CivMessage.send(player, CivColor.Rose+"Mission Failed! (Rolled "+failnext+" vs "+fail_rate+")");
+			CivMessage.send(player, CivColor.Rose+"Mission Failed! (Rolled"+" "+failnext+" vs "+fail_rate+")");
 			return false;
 		}
 		
@@ -305,7 +305,7 @@ public class MissionBook extends UnitItemMaterial {
 		
 		double distance = player.getLocation().distance(buildable.getCorner().getLocation());
 		if (distance > mission.range) {
-			throw new CivException("Too far away the "+buildable.getDisplayName()+" to sabotage it");
+			throw new CivException(buildable.getDisplayName()+" is too far away to sabotage.");
 		}
 		
 		if (buildable instanceof Structure) {
@@ -314,7 +314,7 @@ public class MissionBook extends UnitItemMaterial {
 			}
 			
 			if (buildable.isDestroyed()) {
-				throw new CivException(buildable.getDisplayName()+" is already destroyed.");
+				throw new CivException(buildable.getDisplayName()+" "+"is already destroyed.");
 			}
 		}
 		
@@ -330,7 +330,7 @@ public class MissionBook extends UnitItemMaterial {
 		}
 		
 		if (processMissionResult(player, cc.getTown(), mission, failMod, 1.0)) {
-			CivMessage.global(CivColor.Yellow+"DISASTER!"+CivColor.White+" A "+buildable.getDisplayName()+" has been destroyed! Foul play is suspected.");
+			CivMessage.global(CivColor.Yellow+"DISASTER!"+CivColor.White+" One of "+cc.getTown().getName()+"'s "+buildable.getDisplayName()+" "+"has been destroyed! Foul play is suspected.");
 			buildable.setHitpoints(0);
 			buildable.fancyDestroyStructureBlocks();
 			buildable.save();
@@ -384,7 +384,7 @@ public class MissionBook extends UnitItemMaterial {
 			player.getWorld().dropItem(player.getLocation(), stack);
 		
 			CivMessage.sendSuccess(player, "Arg! Got the booty!");
-			CivMessage.sendTown(cc.getTown(), CivColor.Rose+"Avast! Someone stole our trade goodie "+outpost.getGood().getInfo().name+" at "+outpost.getCorner());
+			CivMessage.sendTown(cc.getTown(), CivColor.Rose+"Avast! Someone stole our trade goodie"+" "+outpost.getGood().getInfo().name+" @ "+outpost.getCorner());
 		}
 	}
 	
@@ -452,15 +452,15 @@ public class MissionBook extends UnitItemMaterial {
 						}
 					}
 					
-					CivMessage.global(CivColor.Yellow+"DISASTER!"+CivColor.White+" The cottages in "+tc.getTown().getName()+
-							" have suffered a famine from poison grain! Each cottage loses 1 level.");
+					CivMessage.global(CivColor.Yellow+"DISASTER!"+CivColor.White+" "+"The cottages in"+" "+tc.getTown().getName()+
+							" "+"have suffered a famine from poison grain! Each cottage loses 1 level.");
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
 				throw new CivException("Invalid configuration.");
 			}
 			
-			CivMessage.sendSuccess(player, "Poisoned the granary for "+posion_ticks+" hours!");
+			CivMessage.sendSuccess(player, "Poisoned the granary for"+" "+posion_ticks+" "+"hours!");
 		}
 	}
 	
@@ -504,7 +504,7 @@ public class MissionBook extends UnitItemMaterial {
 				resident.getTown().getTreasury().deposit(amount);
 			}
 			
-			CivMessage.sendSuccess(player, "Success! Stole "+amount+" Coins from "+tc.getTown().getName());
+			CivMessage.sendSuccess(player, "Success! Stole"+" "+amount+" "+CivSettings.CURRENCY_NAME+" "+"from"+" "+tc.getTown().getName());
 		}
 	}
 	
@@ -540,14 +540,14 @@ public class MissionBook extends UnitItemMaterial {
 			out += ChatColor.UNDERLINE+"Civ:"+tc.getTown().getCiv().getName()+"\n\n"+ChatColor.RESET;
 			
 			SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
-			out += "Time: "+sdf.format(new Date())+"\n";
-			out += ("Treasury: "+tc.getTown().getTreasury().getBalance()+"\n");
-			out += ("Hammers: "+tc.getTown().getHammers().total+"\n");
-			out += ("Culture: "+tc.getTown().getCulture().total+"\n");
-			out += ("Growth: "+tc.getTown().getGrowth().total+"\n");
-			out += ("Beakers(civ): "+tc.getTown().getBeakers().total+"\n");
+			out += "Time:"+" "+sdf.format(new Date())+"\n";
+			out += ("Treasury:"+" "+tc.getTown().getTreasury().getBalance()+"\n");
+			out += ("Hammers:"+" "+tc.getTown().getHammers().total+"\n");
+			out += ("Culture:"+" "+tc.getTown().getCulture().total+"\n");
+			out += ("Growth:"+" "+tc.getTown().getGrowth().total+"\n");
+			out += ("Beakers(civ):"+" "+tc.getTown().getBeakers().total+"\n");
 			if (tc.getTown().getCiv().getResearchTech() != null) {
-				out += ("Researching: "+tc.getTown().getCiv().getResearchTech().name+"\n");
+				out += ("Researching:"+" "+tc.getTown().getCiv().getResearchTech().name+"\n");
 			} else {
 				out += ("Researching:Nothing"+"\n");
 			}
@@ -556,9 +556,9 @@ public class MissionBook extends UnitItemMaterial {
 			
 			out = ChatColor.UNDERLINE+"Upkeep Info\n\n"+ChatColor.RESET;
 			try {
-				out += "From Spread:"+tc.getTown().getSpreadUpkeep()+"\n";
-				out += "From Structures:"+tc.getTown().getStructureUpkeep()+"\n";
-				out += "Total:"+tc.getTown().getTotalUpkeep();
+				out += "From Spread:"+" "+tc.getTown().getSpreadUpkeep()+"\n";
+				out += "From Structures:"+" "+tc.getTown().getStructureUpkeep()+"\n";
+				out += "Total:"+" "+tc.getTown().getTotalUpkeep();
 				BookUtil.paginate(meta, out);
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();

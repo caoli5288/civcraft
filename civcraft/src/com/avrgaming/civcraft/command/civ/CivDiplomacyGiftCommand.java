@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.command.civ;
 import org.bukkit.ChatColor;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -82,7 +83,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		}
 		
 		if (War.isWithinWarDeclareDays()) {
-			throw new CivException("Cannot gift civilizations within "+War.getTimeDeclareDays()+" days before WarTime.");
+			throw new CivException("Cannot gift civilizations within"+" "+War.getTimeDeclareDays()+" "+"days before WarTime.");
 		}
 		
 		
@@ -92,8 +93,8 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				CivColor.Yellow+ChatColor.BOLD+"The Civilization of "+fromCiv.getName()+" wishes to give itself to you. All of their towns will be yours."+
-						" It will cost us "+fromCiv.getMergeCost()+" Coins. Do you accept?", dipResponse);
+				CivColor.Yellow+ChatColor.BOLD+"The Civilization of"+" "+fromCiv.getName()+" "+"wishes to give itself to you. All of their towns will be yours."+
+						" It will cost us "+fromCiv.getMergeCost()+" "+CivSettings.CURRENCY_NAME+". "+"Do you accept?", dipResponse);
 		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
 	}
 	
@@ -137,7 +138,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				"Our Civilization of "+fromCiv.getName()+" wishes to give the town of "+giftedTown.getName()+" to you. It will cost us "+giftedTown.getGiftCost()+" Coins. Do you accept?", dipResponse);
+				"Our Civilization of "+fromCiv.getName()+" "+"wishes to give the town of"+" "+giftedTown.getName()+" "+"to you. It will cost us "+""+giftedTown.getGiftCost()+CivSettings.CURRENCY_NAME+". "+"Do you accept?", dipResponse);
 		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
 		
 	}

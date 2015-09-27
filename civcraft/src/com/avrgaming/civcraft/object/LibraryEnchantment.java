@@ -37,7 +37,7 @@ public class LibraryEnchantment {
 		if (enchant == null)  {
 			enhancement = LoreEnhancement.enhancements.get(name);
 			if (enhancement == null) {
-				throw new CivException("Could not create CivEnchantment:"+name+". Couldn't find enchantment or enhancement");
+				throw new CivException("Could not create CivEnchantment:"+" "+name+". "+"Couldn't find enchantment or enhancement");
 			}
 		}
 		level = lvl;

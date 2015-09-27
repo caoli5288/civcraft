@@ -140,15 +140,15 @@ public class CannonProjectile {
 										}
 										
 										sb.getOwner().onDamage(cannon.getDamage(), b.getWorld(), player, sb.getCoord(), sb);
-										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our "+sb.getOwner().getDisplayName()+" at ("+
+										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our"+" "+sb.getOwner().getDisplayName()+" @ ("+
 												sb.getOwner().getCenterLocation().getX()+","+
 												sb.getOwner().getCenterLocation().getY()+","+
 												sb.getOwner().getCenterLocation().getZ()+")"+
-												" was hit by a cannon! ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+												" "+"was hit by a cannon!"+" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 									}
 									
-									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+"We've hit "+sb.getOwner().getTown().getName()+"'s " +
-											 sb.getOwner().getDisplayName()+" with a cannon!"+
+									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+"We've hit"+" "+sb.getOwner().getTown().getName()+"'s " +
+											 sb.getOwner().getDisplayName()+" "+"with a cannon!"+
 											" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 								}
 							} else {
@@ -170,7 +170,7 @@ public class CannonProjectile {
 			Player player = (Player)e;
 			player.damage(playerDamage);
 			if (player.isDead()) {
-				CivMessage.global(CivColor.LightGray+whoFired.getName()+" obliterated "+player.getName()+" with a cannon blast!");
+				CivMessage.global(CivColor.LightGray+whoFired.getName()+" "+"obliterated"+" "+player.getName()+" "+"with a cannon blast!");
 			}
 		}
 	}

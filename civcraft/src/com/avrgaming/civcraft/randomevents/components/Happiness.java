@@ -12,7 +12,7 @@ public class Happiness extends RandomEventComponent {
 		int duration = Integer.valueOf(this.getString("duration"));
 		
 		CivGlobal.getSessionDB().add(getKey(this.getParentTown()), happiness+":"+duration, this.getParentTown().getCiv().getId(), this.getParentTown().getId(), 0);	
-		sendMessage("We're now enjoying a happiness bonus  of "+happiness+" happiness for "+duration+" hours!");		
+		sendMessage("We're now enjoying a happiness bonus of"+" "+happiness+" "+"happiness for"+" "+duration+" "+"hours!");		
 	}
 
 	public static String getKey(Town town) {

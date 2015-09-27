@@ -83,7 +83,7 @@ public class BonusGoodieManager implements Listener {
 			return;
 		}
 		
-		CivMessage.send(event.getPlayer(), CivColor.Purple+"Bonus Goodie: "+CivColor.Yellow+goodie.getDisplayName());
+		CivMessage.send(event.getPlayer(), CivColor.Purple+"Bonus Goodie:"+" "+CivColor.Yellow+goodie.getDisplayName());
 		
 	}
 	

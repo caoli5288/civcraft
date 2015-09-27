@@ -22,7 +22,7 @@ public class ActivatePerk implements GuiAction {
 
 				perk.onActivate(resident);
 		} else {
-			CivLog.error("Couldn't activate perk:"+perk_id+" cause it wasn't found in perks hashmap.");
+			CivLog.error("Couldn't activate perk: "+perk_id+" because it wasn't found in perks hashmap.");
 		}
 		player.closeInventory();		
 	}

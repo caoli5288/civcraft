@@ -18,7 +18,7 @@ public class Unhappiness extends RandomEventComponent {
 		int duration = Integer.valueOf(this.getString("duration"));
 		
 		CivGlobal.getSessionDB().add(getKey(this.getParentTown()), unhappiness+":"+duration, this.getParentTown().getCiv().getId(), this.getParentTown().getId(), 0);	
-		sendMessage("Blast! We're now suffering a happiness penalty of "+unhappiness+" unhappiness for "+duration+" hours!");
+		sendMessage("Blast! We're now suffering a happiness penalty of"+" "+unhappiness+" "+"unhappiness for"+" "+duration+" "+"hours!");
 		
 	}
 

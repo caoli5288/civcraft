@@ -36,7 +36,7 @@ public class ChangeRelationResponse implements QuestionResponseInterface {
 		if (param.equalsIgnoreCase("accept")) {
 			CivGlobal.setRelation(fromCiv, toCiv, status);
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" declined our offer.");
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+"declined our offer.");
 		}
 	}
 	@Override

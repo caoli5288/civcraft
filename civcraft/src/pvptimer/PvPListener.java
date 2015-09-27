@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -25,7 +26,7 @@ public class PvPListener implements Listener {
 			Resident damagerResident = CivGlobal.getResident(damager);
 			
 			if (damagerResident.isProtected() && (event.getEntity() instanceof Player)) {
-				CivMessage.sendError(damager, "You are unable to damage players while protected.");
+				CivMessage.sendError(damager, CivSettings.localize.localizedString("pvpListenerError"));
 				event.setCancelled(true);					
 			}
 		}
@@ -37,13 +38,13 @@ public class PvPListener implements Listener {
 				Resident damagerResident = CivGlobal.getResident(damager);
 
 				if (damagerResident.isProtected()) {
-					CivMessage.sendError(damager, "You are unable to damage players while protected.");
+					CivMessage.sendError(damager, CivSettings.localize.localizedString("pvpListenerError"));
 					event.setCancelled(true);
 				} else {
 					Player defendingPlayer = (Player) event.getEntity();
 					Resident defendingResident = CivGlobal.getResident(defendingPlayer);
 					if (defendingResident.isProtected()) {
-						CivMessage.sendError(damager, "You are unable to damage protected players.");
+						CivMessage.sendError(damager, CivSettings.localize.localizedString("pvpListenerError2"));
 						event.setCancelled(true);
 					}
 				}				
@@ -56,7 +57,7 @@ public class PvPListener implements Listener {
 			if (event.getDamager() instanceof Player) {
 				if (defendingResident.isProtected()) {
 					event.setCancelled(true);
-					CivMessage.sendError(damager, "You are unable to damage protected players.");					
+					CivMessage.sendError(damager, CivSettings.localize.localizedString("pvpListenerError2"));					
 				}
 			}
 		}

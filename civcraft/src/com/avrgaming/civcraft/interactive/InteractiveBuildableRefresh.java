@@ -32,7 +32,7 @@ public class InteractiveBuildableRefresh implements InteractiveResponse {
 		}
 		
 		CivMessage.sendHeading(player, "Building Refresh");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Are you sure you want to refresh the blocks for your "+buildable.getDisplayName()+"?");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Are you sure you want to refresh the blocks for your"+" "+buildable.getDisplayName()+"?");
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Any blocks inside the structure (or where the structure ought to be) will be replaced with whats inside the template.");
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"You may lose some blocks. If that's ok, please type 'yes'. Type anything else to cancel.");
 		
@@ -63,10 +63,10 @@ public class InteractiveBuildableRefresh implements InteractiveResponse {
 					try {
 						buildable.repairFromTemplate();
 						buildable.getTown().markLastBuildableRefeshAsNow();
-						CivMessage.sendSuccess(resident, buildable.getDisplayName()+" refreshed.");
+						CivMessage.sendSuccess(resident, buildable.getDisplayName()+" "+"refreshed.");
 					} catch (IOException e) {
 						e.printStackTrace();
-						throw new CivException("IO error. Couldn't find template file:"+buildable.getSavedTemplatePath()+" ?");
+						throw new CivException("IO error. Couldn't find template file:"+" "+buildable.getSavedTemplatePath()+" ?");
 					} 
 				} catch (CivException e) {
 					CivMessage.sendError(resident, e.getMessage());

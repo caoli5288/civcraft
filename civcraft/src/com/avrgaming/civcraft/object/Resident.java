@@ -540,8 +540,8 @@ public class Resident extends SQLObject {
 		Player player;
 		try {
 			player = CivGlobal.getPlayer(this);
-			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" Coins of debt!");
-			CivMessage.send(player, CivColor.LightGray+"If you do not pay your debt within "+this.daysTilEvict+" days you will be evicted from town.");
+			CivMessage.send(player, CivColor.Yellow+"You are in debt by "+this.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.send(player, CivColor.LightGray+"If you do not pay your debt within"+" "+this.daysTilEvict+" "+"days you will be evicted from town.");
 		} catch (CivException e) {
 			//Player is not online.
 		}
@@ -684,7 +684,7 @@ public class Resident extends SQLObject {
 	public void warnEvict() {
 		try {
 			CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+"You are being evicted from town! You have "+
-					this.getDaysTilEvict()+" days left to pack your stuff and leave.");
+					this.getDaysTilEvict()+" "+"days left to pack your stuff and leave.");
 		} catch (CivException e) {
 			//player offline.
 		}
@@ -992,13 +992,13 @@ public class Resident extends SQLObject {
 		if (this.getTown() != null) {
 			for (Buildable struct : this.getTown().invalidStructures) {
 				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+
-						"WARNING: Your town's "+struct.getDisplayName()+" at "+struct.getCenterLocation()+
-						" is invalid! Reason:"+struct.getInvalidReason());
+						"WARNING: Your town's"+" "+struct.getDisplayName()+" @ "+struct.getCenterLocation()+
+						" "+"is invalid! Reason:"+" "+struct.getInvalidReason());
 			}
 			
 			/* Show any event messages. */
 			if (this.getTown().getActiveEvent() != null) {
-				CivMessage.send(player, CivColor.Yellow+"The is a "+this.getTown().getActiveEvent().configRandomEvent.name+" going on in your town! Use /town event for details.");
+				CivMessage.send(player, CivColor.Yellow+"The is a"+" "+this.getTown().getActiveEvent().configRandomEvent.name+" "+"going on in your town! Use /town event for details.");
 			}
 		}
 		
@@ -1458,7 +1458,7 @@ public class Resident extends SQLObject {
 				return;
 			}
 			
-			throw new CivException("Cannot invite a player who has left a different civilization within "+cooldownHours+" hours after leaving.");
+			throw new CivException("Cannot invite a player who has left a different civilization within"+" "+cooldownHours+" "+"hours after leaving.");
 		}	
 	}
 	
@@ -1574,13 +1574,13 @@ public class Resident extends SQLObject {
 				if ((i-start) == 8) {
 					ItemStack guiStack = LoreGuiItem.build(resident.getName()+" Confirm", 
 							CivData.WOOL, CivData.DATA_WOOL_RED, 
-							CivColor.LightGreen+"Waiting for "+CivColor.LightBlue+resident.getName(),
-							CivColor.LightGray+"to confirm this trade.");
+							CivColor.LightGreen+"Waiting for"+" "+CivColor.LightBlue+resident.getName(),
+							CivColor.LightGray+" "+"to confirm this trade.");
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.CURRENCY_NAME+" "+"Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else {
 					inv.setItem(i, signStack);
@@ -1596,21 +1596,21 @@ public class Resident extends SQLObject {
 					inv.setItem(i, guiStack);
 					
 				} else if ((i-start) == 0){ 
-					ItemStack guiStack = LoreGuiItem.build("Remove Coins", 
+					ItemStack guiStack = LoreGuiItem.build("Remove"+" "+CivSettings.CURRENCY_NAME, 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Gold+"Click to Remove 100 Coins.",
-							CivColor.Gold+"Shift-Click to Remove 1000 Coins.");
+							CivColor.Gold+"Click to Remove 100"+" "+CivSettings.CURRENCY_NAME,
+							CivColor.Gold+"Shift-Click to Remove 1000"+" "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 1) {
-					ItemStack guiStack = LoreGuiItem.build("Add Coins", 
+					ItemStack guiStack = LoreGuiItem.build("Add"+" "+CivSettings.CURRENCY_NAME, 
 							ItemManager.getId(Material.GOLD_INGOT), 0, 
-							CivColor.Gold+"Click to Add 100 Coins.",
-							CivColor.Gold+"Shift-Click to Add 1000 Coins.");
+							CivColor.Gold+"Click to Add 100"+" "+CivSettings.CURRENCY_NAME,
+							CivColor.Gold+"Shift-Click to Add 1000"+" "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.CURRENCY_NAME+" "+"Offered", 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				}
 				else {
@@ -1636,8 +1636,8 @@ public class Resident extends SQLObject {
 			}
 
 			
-			CivMessage.sendError(this, "Couldn't trade: "+e.getMessage());
-			CivMessage.sendError(resident, "Couldn't trade: "+e.getMessage());
+			CivMessage.sendError(this, "Couldn't trade:"+" "+e.getMessage());
+			CivMessage.sendError(resident, "Couldn't trade:"+" "+e.getMessage());
 			return null;
 		}
 				
@@ -1928,7 +1928,7 @@ public class Resident extends SQLObject {
 			return;
 		}
 		
-		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, "Templates for "+name);
+		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, "Templates for"+" "+name);
 		
 		for (Object obj : perks.values()) {
 			Perk p = (Perk)obj;

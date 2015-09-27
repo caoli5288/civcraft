@@ -50,8 +50,8 @@ public class Quarry extends Structure {
 
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>Quarry</u></b><br/>";
-		out += "Level: "+this.level;
+		String out = "<u><b>"+"Quarry"+"</u></b><br/>";
+		out += "Level:"+" "+this.level;
 		return out;
 	}
 	

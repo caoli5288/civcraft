@@ -27,6 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.avrgaming.civcraft.components.NonMemberFeeComponent;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
@@ -148,13 +149,13 @@ public class Store extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought "+amount+" "+itemName+" for "+ price+ " Coins.");
+					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
+					CivMessage.send(player, CivColor.Yellow + "Paid"+" "+ payToTown+" "+CivSettings.CURRENCY_NAME+" "+"in non-resident taxes.");
 				}
 			
 			}
@@ -166,13 +167,13 @@ public class Store extends Structure {
 
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>Store</u></b><br/>";
+		String out = "<u><b>"+"Store"+"</u></b><br/>";
 		if (this.materials.size() == 0) {
 			out += "Nothing stocked.";
 		} 
 		else {
 			for (StoreMaterial mat : this.materials) {
-				out += mat.name+" for "+mat.price+"<br/>";
+				out += mat.name+" "+"for"+" "+mat.price+"<br/>";
 			}
 		}
 		return out;

@@ -55,9 +55,9 @@ public class PlayerQuestionTask extends QuestionBaseTask implements Runnable {
 	
 	@Override
 	public void run() {	
-		CivMessage.send(askedPlayer, CivColor.LightGray+"Question from: "+CivColor.LightBlue+questionPlayer.getName());
+		CivMessage.send(askedPlayer, CivColor.LightGray+"Question from:"+" "+CivColor.LightBlue+questionPlayer.getName());
 		CivMessage.send(askedPlayer, CivColor.LightPurple+CivColor.BOLD+question);
-		CivMessage.send(askedPlayer, CivColor.LightGray+"Respond by typing "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" or "+CivColor.LightBlue+"/deny");
+		CivMessage.send(askedPlayer, CivColor.LightGray+"Respond by typing"+" "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" | "+CivColor.LightBlue+"/deny");
 		
 		try {
 			synchronized(this) {
@@ -74,8 +74,8 @@ public class PlayerQuestionTask extends QuestionBaseTask implements Runnable {
 			return;
 		}
 		
-		CivMessage.send(askedPlayer, CivColor.LightGray+"You failed to respond to the question from "+questionPlayer.getName()+" in time.");
-		CivMessage.send(questionPlayer, CivColor.LightGray+askedPlayer.getName()+" failed to answer the question in time.");
+		CivMessage.send(askedPlayer, CivColor.LightGray+"You failed to respond to the question from"+" "+questionPlayer.getName()+" "+"in time.");
+		CivMessage.send(questionPlayer, CivColor.LightGray+askedPlayer.getName()+" "+"failed to answer the question in time.");
 		cleanup();
 	}
 

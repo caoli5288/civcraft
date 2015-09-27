@@ -124,7 +124,7 @@ public class FoundWarCamp extends ItemComponent implements CallbackInterface {
 		CivMessage.sendHeading(player, "Ready for War! War Camp.");
 		CivMessage.send(player, CivColor.LightGreen+"Lets get down to buisness. ");
 		CivMessage.send(player, CivColor.LightGreen+"   -Your Civilization will be able to spawn here.");
-		CivMessage.send(player, CivColor.LightGreen+"   -Cannot be rebuilt for at least "+warTimeout+" mins.");
+		CivMessage.send(player, CivColor.LightGreen+"   -Cannot be rebuilt for at least"+" "+warTimeout+" "+"mins.");
 		CivMessage.send(player, " ");
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Do you want to place the War Camp here?");
 		CivMessage.send(player, CivColor.LightGray+"(To accept, type 'yes')");

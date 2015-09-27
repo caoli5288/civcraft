@@ -332,15 +332,15 @@ public class BlockListener implements Listener {
 					break;
 				case NOT_AT_WAR:
 					allowPVP = false;
-					denyMessage = "You cannot PvP with "+defender.getName()+" as you are not at war.";
+					denyMessage = "You cannot PvP with"+" "+defender.getName()+" "+"as you are not at war.";
 					break;
 				case NEUTRAL_IN_WARZONE:
 					allowPVP = false;
-					denyMessage = "You cannot PvP here with "+defender.getName()+" since you are a neutral in a war-zone.";
+					denyMessage = "You cannot PvP here with"+" "+defender.getName()+" "+"since you are a neutral in a war-zone.";
 					break;
 				case NON_PVP_ZONE:
 					allowPVP = false;
-					denyMessage = "You cannot PvP with "+defender.getName()+" since you are in a non-pvp zone.";
+					denyMessage = "You cannot PvP with"+" "+defender.getName()+" "+"since you are in a non-pvp zone.";
 					break;
 				}
 			}
@@ -631,7 +631,7 @@ public class BlockListener implements Listener {
 		if (sb != null) {
 			event.setCancelled(true);
 			CivMessage.sendError(event.getPlayer(), 
-					"This block belongs to a "+sb.getOwner().getDisplayName()+" and cannot be destroyed.");
+					"This block belongs to a"+" "+sb.getOwner().getDisplayName()+" "+"and cannot be destroyed.");
 			return;
 		}
 
@@ -641,7 +641,7 @@ public class BlockListener implements Listener {
 				if (resident.getCiv() != rb.getRoad().getCiv()) {
 					event.setCancelled(true);
 					CivMessage.sendError(event.getPlayer(), 
-							"Cannot place blocks "+(Road.HEIGHT-1)+" blocks above a road that does not belong to your civ.");
+							"Cannot place blocks"+" "+(Road.HEIGHT-1)+" "+"blocks above a road that does not belong to your civ.");
 				}
 			}
 			return;
@@ -650,7 +650,7 @@ public class BlockListener implements Listener {
 		CampBlock cb = CivGlobal.getCampBlock(bcoord);
 		if (cb != null && !cb.canBreak(event.getPlayer().getName())) {
 			event.setCancelled(true);
-			CivMessage.sendError(event.getPlayer(), "This block is part of camp "+cb.getCamp().getName()+" owned by "+cb.getCamp().getOwner().getName()+" and cannot be destroyed.");
+			CivMessage.sendError(event.getPlayer(), "This block is part of camp"+" "+cb.getCamp().getName()+" "+"owned by"+" "+cb.getCamp().getOwner().getName()+" "+"and cannot be destroyed.");
 			return;
 		}  		
 
@@ -761,7 +761,7 @@ public class BlockListener implements Listener {
 				return;
 			} else {	
 				event.setCancelled(true);
-				CivMessage.sendError(event.getPlayer(), "This block is part of camp "+cb.getCamp().getName()+" owned by "+cb.getCamp().getOwner().getName()+" and cannot be destroyed.");
+				CivMessage.sendError(event.getPlayer(), "This block is part of camp"+" "+cb.getCamp().getName()+" "+"owned by"+" "+cb.getCamp().getOwner().getName()+" "+"and cannot be destroyed.");
 				return;
 			}
 		}
@@ -795,7 +795,7 @@ public class BlockListener implements Listener {
 						event.setCancelled(true);
 						return;
 					} else {
-						CivMessage.send(event.getPlayer(), CivColor.LightGray+"We destroyed a block protected by a wall. This was allowed because we're a member of "+
+						CivMessage.send(event.getPlayer(), CivColor.LightGray+"We destroyed a block protected by a wall. This was allowed because we're a member of"+" "+
 								resident.getTown().getCiv().getName());
 						break;
 					}
@@ -844,7 +844,7 @@ public class BlockListener implements Listener {
 				Double percentValid = (double)(current) / (double)layer.max;
 
 				if (percentValid < Buildable.validPercentRequirement) {
-					CivMessage.sendError(event.getPlayer(), "Cannot break this block since it's supporting the "+buildable.getDisplayName()+" above it.");
+					CivMessage.sendError(event.getPlayer(), "Cannot break this block since it's supporting the"+" "+buildable.getDisplayName()+" "+"above it.");
 					event.setCancelled(true);
 					return;
 				}
@@ -1131,7 +1131,7 @@ public class BlockListener implements Listener {
 					resident.getTown().getCiv().getDiplomacyManager().atWarWith(tc.getTown().getCiv())) {
 				WarRegen.destroyThisBlock(event.getClickedBlock(), tc.getTown());
 			} else {
-				CivMessage.sendErrorNoRepeat(event.getPlayer(), "You do not have permission to interact with "+event.getClickedBlock().getType().toString()+" here.");
+				CivMessage.sendErrorNoRepeat(event.getPlayer(), "You do not have permission to interact with"+" "+event.getClickedBlock().getType().toString());
 			}
 		}
 
@@ -1149,7 +1149,7 @@ public class BlockListener implements Listener {
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
 			if (!camp.hasMember(event.getPlayer().getName())) {
-				CivMessage.sendError(event.getPlayer(), "You cannot use "+stack.getType().toString()+" in a camp you do not belong to.");
+				CivMessage.sendError(event.getPlayer(), "You cannot use"+" "+stack.getType().toString()+" "+"in a camp you do not belong to.");
 				event.setCancelled(true);
 				return;
 			}
@@ -1168,7 +1168,7 @@ public class BlockListener implements Listener {
 
 		if(!tc.perms.hasPermission(PlotPermissions.Type.ITEMUSE, resident)) {
 			event.setCancelled(true);
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "You do not have permission to use "+stack.getType().toString()+" here.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), "You do not have permission to use this"+" "+stack.getType().toString()+" ");
 		}
 
 		return;
@@ -1668,15 +1668,15 @@ public class BlockListener implements Listener {
 				case ALLOWED:
 					continue;
 				case NOT_AT_WAR:
-					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against "+defender.getName()+". You are not at war.");
+					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against"+" "+defender.getName()+". "+"You are not at war.");
 					event.setCancelled(true);
 					return;
 				case NEUTRAL_IN_WARZONE:
-					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against "+defender.getName()+". You a neutral in a war-zone.");
+					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against"+" "+defender.getName()+". "+"You a neutral in a war-zone.");
 					event.setCancelled(true);
 					return;
 				case NON_PVP_ZONE:
-					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against "+defender.getName()+". You are in a non-pvp zone.");
+					CivMessage.send(attacker, CivColor.Rose+"You cannot use potions against"+" "+defender.getName()+". "+"You are in a non-pvp zone.");
 					event.setCancelled(true);
 					return;
 				}

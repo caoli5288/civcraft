@@ -607,11 +607,11 @@ public class Structure extends Buildable {
 			throw new CivException("Internal database error.");
 		}		
 		
-		CivMessage.sendTown(getTown(), CivColor.LightGreen+getDisplayName()+" was unbuilt with the undo command.");
+		CivMessage.sendTown(getTown(), CivColor.LightGreen+getDisplayName()+" "+"was unbuilt with the undo command.");
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded "+refund+" Coins.");
+		CivMessage.sendTown(getTown(), "Town refunded"+" "+refund+" "+CivSettings.CURRENCY_NAME);
 		
 		this.unbindStructureBlocks();
 	}
@@ -666,13 +666,13 @@ public class Structure extends Buildable {
 		
 		double cost = getRepairCost();
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+getDisplayName());
+			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"to build a"+" "+getDisplayName());
 		}
 		
 		repairStructureForFree();
 		
 		getTown().getTreasury().withdraw(cost);
-		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a "+getDisplayName()+" at "+getCorner());
+		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a"+" "+getDisplayName()+" @ "+getCorner());
 	}
 
 	@Override

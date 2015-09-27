@@ -58,7 +58,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		UnitMaterial.setOwningTown(town, is);
 		
 		AttributeUtil attrs = new AttributeUtil(is);
-		attrs.addLore(CivColor.Rose+"Only Usable In Civ: "+CivColor.LightBlue+town.getCiv().getName());
+		attrs.addLore(CivColor.Rose+"Only Usable In Civ:"+" "+CivColor.LightBlue+town.getCiv().getName());
 		attrs.addLore(CivColor.Gold+"Right Click To Found Town");
 		attrs.addEnhancement("LoreEnhancementSoulBound", null, null);
 		attrs.addLore(CivColor.Gold+"Soulbound");
@@ -68,7 +68,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		
 		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make "+Unit.SETTLER_UNIT.getUnit().name+". Barracks chest is full! Make Room!");
+			throw new CivException("Cannot make"+" "+Unit.SETTLER_UNIT.getUnit().name+". "+"Barracks chest is full! Make Room!");
 		}
 
 	}
@@ -117,7 +117,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 			double dist = townhall.getCenterLocation().distance(new BlockCoord(event.getPlayer().getLocation()));
 			if (dist < minDistance) {
 				DecimalFormat df = new DecimalFormat();
-				CivMessage.sendError(player, "Cannot build town here. Too close to the town of "+town.getName()+". Distance is "+df.format(dist)+" and needs to be "+minDistance);
+				CivMessage.sendError(player, "Cannot build town here. Too close to the town of"+" "+town.getName()+". "+"Distance is"+" "+df.format(dist)+" "+"and needs to be"+" "+minDistance);
 				return;
 			}
 		}

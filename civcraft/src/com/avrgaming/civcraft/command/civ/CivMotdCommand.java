@@ -47,7 +47,7 @@ public class CivMotdCommand extends CommandBase {
 		civ.setMotd(motd);
 		civ.save();
 		
-		CivMessage.sendCiv(civ, "MOTD: "+motd);
+		CivMessage.sendCiv(civ, "MOTD:"+" "+motd);
 	}
 	
 	public void remove_cmd() throws CivException {

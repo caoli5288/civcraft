@@ -108,7 +108,7 @@ public class ShowRecipe implements GuiAction {
 			return;
 		}
 		
-		String title = craftMat.getName()+" Recipe";
+		String title = craftMat.getName()+" "+"Recipe";
 		if (title.length() > 32) {
 			title = title.substring(0, 32);
 		}
@@ -161,7 +161,7 @@ public class ShowRecipe implements GuiAction {
 		} else {
 			ConfigMaterialCategory cat = ConfigMaterialCategory.getCategory(craftMat.getConfigMaterial().categoryCivColortripped); 
 			if (cat != null) {					
-				ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, "Back to Category "+cat.name);
+				ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, "Back to Category"+" "+cat.name);
 				backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
 				backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
 				backButton = LoreGuiItem.setActionData(backButton, "invName", cat.name+" Recipes");

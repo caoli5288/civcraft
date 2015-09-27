@@ -127,7 +127,7 @@ public class EspionageMissionTask implements Runnable {
 				/* Process exposure penalities */
 				if (target.processSpyExposure(resident)) {
 					CivMessage.global(CivColor.Yellow+"INTERNATIONAL INCIDENT!"+CivColor.White+" "+
-							player.getName()+" was caught trying to perform a "+mission.name+" spy mission in "+
+							player.getName()+" was caught trying to perform a"+" "+mission.name+" "+"spy mission in"+" "+
 							target.getName()+"!");
 					CivMessage.send(player, CivColor.Rose+"You've been compromised! (Exposure got too high) Spy unit was destroyed!");
 					Unit.removeUnit(player);
@@ -136,9 +136,9 @@ public class EspionageMissionTask implements Runnable {
 				}
 				
 				if ((secondsLeft % 15) == 0) {
-					CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+""+secondsLeft+" seconds remain");
+					CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+""+secondsLeft+" "+"seconds remain");
 				} else if (secondsLeft < 15) {
-					CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+""+secondsLeft+" seconds remain");
+					CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+""+secondsLeft+" "+"seconds remain");
 				}
 				
 			}

@@ -22,6 +22,7 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantLock;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.endgame.EndGameCheckTask;
 import com.avrgaming.civcraft.event.DailyEvent;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -129,7 +130,7 @@ public class DailyTimer implements Runnable {
 				if (civ.getTreasury().inDebt()) {
 					civ.incrementDaysInDebt();
 				}
-				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" Coins in civ upkeep costs.");
+				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" "+CivSettings.CURRENCY_NAME+" in civ upkeep costs.");
 				civ.save();
 			}
 			catch (Exception e) {
@@ -148,7 +149,7 @@ public class DailyTimer implements Runnable {
 				}
 				
 				t.save();
-				CivMessage.sendTown(t, "Paid "+total+" Coins in upkeep costs.");
+				CivMessage.sendTown(t, "Paid "+total+" "+CivSettings.CURRENCY_NAME+" in upkeep costs.");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -174,7 +175,7 @@ public class DailyTimer implements Runnable {
 					
 					double taxesToCiv = total*taxrate;
 					townTotal -= taxesToCiv;
-					CivMessage.sendTown(t, "Collected "+townTotal+" Coins in resident taxes."); 
+					CivMessage.sendTown(t, "Collected "+townTotal+" "+CivSettings.CURRENCY_NAME+" in resident taxes."); 
 					t.depositTaxed(townTotal);	
 					
 					if (t.getDepositCiv().getId() == civ.getId()) {
@@ -194,7 +195,7 @@ public class DailyTimer implements Runnable {
 			
 			
 			//TODO make a better messaging system...
-			CivMessage.sendCiv(civ, "Collected "+total+" town taxes.");
+			CivMessage.sendCiv(civ, "Collected "+total+" "+CivSettings.CURRENCY_NAME+" in town taxes.");
 		}
 	
 	}

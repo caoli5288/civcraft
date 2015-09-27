@@ -41,9 +41,9 @@ public class TownEventCommand extends CommandBase {
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
 
-			CivMessage.sendHeading(sender, "Current Event: "+event.configRandomEvent.name);
-			CivMessage.send(sender, CivColor.Green+"Started On: "+CivColor.LightGreen+sdf.format(event.getStartDate()));
-			CivMessage.send(sender, CivColor.Green+"End Date:"+CivColor.LightGreen+sdf.format(event.getEndDate()));
+			CivMessage.sendHeading(sender, "Current Event:"+" "+event.configRandomEvent.name);
+			CivMessage.send(sender, CivColor.Green+"Started On:"+" "+CivColor.LightGreen+sdf.format(event.getStartDate()));
+			CivMessage.send(sender, CivColor.Green+"End Date:"+" "+CivColor.LightGreen+sdf.format(event.getEndDate()));
 			if (event.isActive()) {
 				CivMessage.send(sender, CivColor.LightGray+"Event has been activated.");
 			} else {

@@ -110,28 +110,28 @@ public class Mine extends Structure {
 		Result result = this.consume(task);
 		switch (result) {
 		case STARVE:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" mine's production "+
-					CivColor.Rose+"fell. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"mine's production "+
+					CivColor.Rose+"fell."+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		case LEVELDOWN:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A mine ran out of redstone and "+
-					CivColor.Rose+"lost"+CivColor.LightGreen+" a level. It is now level "+getConsumeComponent().getLevel());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A mine ran out of redstone and"+" "+
+					CivColor.Rose+"lost"+CivColor.LightGreen+" "+"a level. It is now level"+" "+getConsumeComponent().getLevel());
 			break;
 		case STAGNATE:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+
-					getConsumeComponent().getLevel()+" mine "+CivColor.Yellow+"stagnated "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+
+					getConsumeComponent().getLevel()+" "+"mine"+" "+CivColor.Yellow+"stagnated"+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		case GROW:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" mine's production "+
-					CivColor.Green+"rose. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"mine's production"+" "+
+					CivColor.Green+"rose."+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		case LEVELUP:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A mine "+CivColor.Green+"gained"+CivColor.LightGreen+
-					" a level. It is now level "+getConsumeComponent().getLevel());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A mine"+" "+CivColor.Green+"gained"+CivColor.LightGreen+
+					" "+"a level. It is now level"+" "+getConsumeComponent().getLevel());
 			break;
 		case MAXED:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" mine is "+
-					CivColor.Green+"maxed. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"mine is"+" "+
+					CivColor.Green+"maxed."+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		default:
 			break;

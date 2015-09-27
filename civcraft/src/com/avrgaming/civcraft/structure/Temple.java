@@ -76,7 +76,7 @@ public class Temple extends Structure {
 		}
 		
 		String out = "";
-		out += "Level: "+getConsumeComponent().getLevel()+" "+getConsumeComponent().getCountString();
+		out += "Level:"+" "+getConsumeComponent().getLevel()+" "+getConsumeComponent().getCountString();
 		return out;
 	}
 	
@@ -121,31 +121,31 @@ public class Temple extends Structure {
 		Result result = this.consume(task);
 		switch (result) {
 		case STARVE:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
-					CivColor.Rose+"fell. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"temple's production"+" "+
+					CivColor.Rose+"fell."+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			return;
 		case LEVELDOWN:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple's Altar ran out of mutton and "+
-					CivColor.Rose+"lost"+CivColor.LightGreen+" a level. It is now level "+getConsumeComponent().getLevel());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple's Altar ran out of mutton and"+" "+
+					CivColor.Rose+"lost"+CivColor.LightGreen+" "+"a level. It is now level"+" "+getConsumeComponent().getLevel());
 			return;
 		case STAGNATE:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+
-					getConsumeComponent().getLevel()+" temple "+CivColor.Yellow+"stagnated "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+
+					getConsumeComponent().getLevel()+" "+"temple"+" "+CivColor.Yellow+"stagnated"+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			return;
 		case GROW:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple's production "+
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"temple's production "+
 					CivColor.Green+"rose. "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		case LEVELUP:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple "+CivColor.Green+"gained"+CivColor.LightGreen+
-					" a level. It is now level "+getConsumeComponent().getLevel());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A temple"+" "+CivColor.Green+"gained"+CivColor.LightGreen+
+					" "+"a level. It is now level"+" "+getConsumeComponent().getLevel());
 			break;
 		case MAXED:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level "+getConsumeComponent().getLevel()+" temple is "+
-					CivColor.Green+"maxed. "+CivColor.LightGreen+getConsumeComponent().getCountString());
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+"A level"+" "+getConsumeComponent().getLevel()+" "+"temple is"+" "+
+					CivColor.Green+"maxed."+" "+CivColor.LightGreen+getConsumeComponent().getCountString());
 			break;
 		case UNKNOWN:
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivColor.LightGreen+"Something "+CivColor.DarkPurple+"unknown"+CivColor.LightGreen+" happened to a temple. It generates no Culture.");
+			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivColor.LightGreen+"Something"+" "+CivColor.DarkPurple+"unknown"+CivColor.LightGreen+" "+"happened to a temple. It generates no Culture.");
 			return;
 		default:
 			break;

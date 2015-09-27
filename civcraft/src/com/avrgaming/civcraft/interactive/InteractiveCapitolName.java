@@ -58,8 +58,8 @@ public class InteractiveCapitolName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredCapitolName = message;
-		CivMessage.send(player, CivColor.LightGreen+"The Civilization of "+CivColor.Yellow+resident.desiredCivName+
-				CivColor.LightGreen+"! And its capitol will be "+CivColor.Yellow+resident.desiredCapitolName+CivColor.LightGreen+"!");
+		CivMessage.send(player, CivColor.LightGreen+"The Civilization of "+""+CivColor.Yellow+resident.desiredCivName+
+				CivColor.LightGreen+"! "+"And its capitol will be "+""+CivColor.Yellow+resident.desiredCapitolName+CivColor.LightGreen+"!");
 		CivMessage.sendHeading(player, "Survey Results");
 		
 		class SyncTask implements Runnable {

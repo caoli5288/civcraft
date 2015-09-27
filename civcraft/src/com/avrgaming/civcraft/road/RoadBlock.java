@@ -160,7 +160,7 @@ public class RoadBlock extends SQLObject implements BuildableDamageBlock {
 			TaskMaster.syncTask(new StructureBlockHitEvent(player.getName(), this.getCoord(), this, player.getWorld()), 0);
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
-			CivMessage.send(player, CivColor.Rose+"Cannot damage the road owned by "+this.getOwner().getCiv().getName()+" until "+sdf.format(this.road.getNextRaidDate()));		
+			CivMessage.send(player, CivColor.Rose+"Cannot damage the road owned by"+" "+this.getOwner().getCiv().getName()+" "+"until"+" "+sdf.format(this.road.getNextRaidDate()));		
 		}
 	}
 

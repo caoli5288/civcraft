@@ -45,7 +45,7 @@ public class SpawnMobs extends RandomEventComponent {
 					Bukkit.getServer().getWorld(tc.getChunkCoord().getWorldname()).spawnEntity(loc, type);
 				}
 				
-				sendMessage(amount+" "+type.toString()+" have spawned in the vincitiy of "+
+				sendMessage(amount+" "+type.toString()+" "+"have spawned in the vincitiy of"+" "+
 					(tc.getChunkCoord().getX()*16)+",64,"+(tc.getChunkCoord().getZ()*16));
 			}
 		}

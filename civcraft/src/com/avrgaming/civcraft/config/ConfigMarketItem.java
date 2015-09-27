@@ -283,7 +283,7 @@ public class ConfigMarketItem {
 		double cost = getBuyCostForAmount(amount);
 		
 		if (coins < cost) {
-			throw new CivException("You do not have the required "+cost);
+			throw new CivException(CivSettings.localize.localizedString("config_marketItem_notEnoughCurrency")+" "+cost+" "+CivSettings.CURRENCY_NAME);
 		}
 				
 		for (int i = 0; i < amount; i++) {
@@ -308,7 +308,7 @@ public class ConfigMarketItem {
 			player.getWorld().dropItem(player.getLocation(), stack);
 		}
 		
-		CivMessage.sendSuccess(player, "Bought "+total_items+" "+this.name+" for "+cost+" Coins.");
+		CivMessage.sendSuccess(player, "Bought"+" "+total_items+" "+this.name+" "+"for"+" "+cost+" "+CivSettings.CURRENCY_NAME);
 		player.updateInventory();
 	}
 	
@@ -321,7 +321,7 @@ public class ConfigMarketItem {
 		inv.addInventory(player.getInventory());
 		
 		if (!inv.contains(custom_id, this.type_id, (short)this.data, amount)) {
-			throw new CivException("You do not have "+amount+" "+this.name+" to sell.");
+			throw new CivException("You do not have"+" "+amount+" "+this.name+" "+"to sell.");
 		}
 				
 		for (int i = 0; i < amount; i++) {			
@@ -332,11 +332,11 @@ public class ConfigMarketItem {
 		}
 		
 		if (!inv.removeItem(this.custom_id, this.type_id, (short)this.data, amount)) {
-			throw new CivException("Sorry, you don't have enough "+this.name+" in your inventory.");
+			throw new CivException("Sorry, you don't have enough"+" "+this.name+" "+"in your inventory.");
 		}
 		
 		resident.getTreasury().deposit(total_coins);	
-		CivMessage.sendSuccess(player, "Sold "+total_items+" "+this.name+" for "+total_coins+" Coins");
+		CivMessage.sendSuccess(player, "Sold"+" "+total_items+" "+this.name+" "+"for"+" "+total_coins+" "+CivSettings.CURRENCY_NAME);
 		player.updateInventory();
 	}
 	

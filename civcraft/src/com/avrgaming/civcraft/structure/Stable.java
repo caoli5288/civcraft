@@ -120,18 +120,18 @@ public class Stable extends Structure {
 				double paid;
 				if (resident.getTown() != getTown()) {
 					if (!resident.getTreasury().hasEnough(getItemCost(cost))) {
-						CivMessage.sendError(player, "You do not have the required "+getItemCost(cost)+" Coins.");
+						CivMessage.sendError(player, "You do not have the required"+" "+getItemCost(cost)+" "+CivSettings.CURRENCY_NAME);
 						return;
 					}
 					
 					
 					resident.getTreasury().withdraw(getItemCost(cost));
 					getTown().depositTaxed(getFeeToTown(cost));
-					CivMessage.send(player, CivColor.Yellow+"Paid "+getFeeToTown(cost)+" in non-resident fees.");
+					CivMessage.send(player, CivColor.Yellow+"Paid "+getFeeToTown(cost)+" "+CivSettings.CURRENCY_NAME+" in non-resident fees.");
 					paid = getItemCost(cost);
 				} else {
 					if (!resident.getTreasury().hasEnough(cost)) {
-						CivMessage.sendError(player, "You do not have the required "+cost+" Coins.");
+						CivMessage.sendError(player, "You do not have the required "+cost+" "+CivSettings.CURRENCY_NAME);
 						return;
 					}
 
@@ -155,7 +155,7 @@ public class Stable extends Structure {
 				((Horse)mod.getHorse()).setOwner(player);
 				((Horse)mod.getHorse()).setBaby();
 				
-				CivMessage.send(player, CivColor.LightGreen+"Paid "+paid+" Coins.");
+				CivMessage.send(player, CivColor.LightGreen+"Paid"+" "+paid+" "+CivSettings.CURRENCY_NAME);
 			}
 		}
 		
@@ -177,16 +177,16 @@ public class Stable extends Structure {
 				double paid;
 				if (resident.getTown() != getTown()) {
 					if (!resident.getTreasury().hasEnough(getItemCost(cost))) {
-						CivMessage.sendError(player, "You do not have the required "+getItemCost(cost)+" Coins.");
+						CivMessage.sendError(player, "You do not have the required"+" "+getItemCost(cost)+" "+CivSettings.CURRENCY_NAME);
 						return;
 					}
 					
 					resident.getTreasury().withdraw(getItemCost(cost));
-					CivMessage.send(player, CivColor.Yellow+"Paid "+getFeeToTown(cost)+" in non-resident fees.");
+					CivMessage.send(player, CivColor.Yellow+"Paid "+getFeeToTown(cost)+" "+CivSettings.CURRENCY_NAME+" in non-resident fees.");
 					paid = getItemCost(cost);
 				} else {
 					if (!resident.getTreasury().hasEnough(cost)) {
-						CivMessage.sendError(player, "You do not have the required "+cost+" Coins.");
+						CivMessage.sendError(player, "You do not have the required "+cost+" "+CivSettings.CURRENCY_NAME);
 						return;
 					}
 					
@@ -201,7 +201,7 @@ public class Stable extends Structure {
 					}
 				}
 				
-				CivMessage.send(player, CivColor.LightGreen+"Paid "+paid+" Coins.");
+				CivMessage.send(player, CivColor.LightGreen+"Paid"+" "+paid+" "+CivSettings.CURRENCY_NAME);
 			}
 			
 		}
@@ -214,7 +214,7 @@ public class Stable extends Structure {
 			if (item.item_id == 0) {
 				comp.addItem(new String[] {CivColor.LightGreen+item.name, "Buy For", ""+item.cost, "Fee:"+this.nonMemberFeeComponent.getFeeString()}, new buyHorseAction(item.horse_id, item.cost));
 			} else {
-				comp.addItem(new String[] {CivColor.LightGreen+item.name, "Buy For", ""+item.cost, "Fee: "+this.nonMemberFeeComponent.getFeeString()}, new buyItemAction(item.item_id, item.cost));			
+				comp.addItem(new String[] {CivColor.LightGreen+item.name, "Buy For", ""+item.cost, "Fee:"+this.nonMemberFeeComponent.getFeeString()}, new buyItemAction(item.item_id, item.cost));			
 			}
 		}
 	}
@@ -251,7 +251,7 @@ public class Stable extends Structure {
 	@Override
 	public void updateSignText() {
 		for (SignSelectionComponent comp : signSelectors.values()) {
-			comp.setMessageAllItems(3, "Fee: "+this.nonMemberFeeComponent.getFeeString());
+			comp.setMessageAllItems(3, "Fee:"+" "+this.nonMemberFeeComponent.getFeeString());
 		}
 	}
 	

@@ -11,6 +11,7 @@ import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -58,7 +59,7 @@ public class DisableXPListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerExpChange(PlayerExpChangeEvent event) {
 		Resident resident = CivGlobal.getResident(event.getPlayer());
-		CivMessage.send(resident, CivColor.LightGreen+"Picked up "+CivColor.Yellow+event.getAmount()+CivColor.LightGreen+" Coins.");
+		CivMessage.send(resident, CivColor.LightGreen+"You've Picked up"+" "+CivColor.Yellow+event.getAmount()+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
 		resident.getTreasury().deposit(event.getAmount());
 		
 		
