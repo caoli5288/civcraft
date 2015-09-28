@@ -33,16 +33,16 @@ public class MarketBuyCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/market buy";
-		displayName = "Market Buy";
+		displayName = CivSettings.localize.localizedString("cmd_market_buy_Name");
 		
-		commands.put("towns", "See what towns are for sale and buy them.");
-		commands.put("civs", "See what civs are for sale and buy them.");
+		commands.put("towns", CivSettings.localize.localizedString("cmd_market_buy_townsDesc"));
+		commands.put("civs", CivSettings.localize.localizedString("cmd_market_buy_civsDesc"));
 		
 	}
 	
 	private void list_towns_for_sale(Civilization ourCiv) {
 		
-		CivMessage.sendHeading(sender, "Towns For Sale");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_market_buy_townsHeading"));
 		for (Town town : CivGlobal.getTowns()) {
 			if (!town.isCapitol()) {
 				if (town.isForSale()) {
@@ -56,7 +56,7 @@ public class MarketBuyCommand extends CommandBase {
 	
 	private void list_civs_for_sale(Civilization ourCiv) {
 		
-		CivMessage.sendHeading(sender, "Civs For Sale");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_market_buy_civsHeading"));
 		for (Civilization civ : CivGlobal.getCivs()) {
 				if (civ.isForSale()) {
 					CivMessage.send(sender, civ.getName()+" - "+CivColor.Yellow+
@@ -71,35 +71,35 @@ public class MarketBuyCommand extends CommandBase {
 		
 		if (args.length < 2) {
 			list_towns_for_sale(senderCiv);
-			CivMessage.send(sender, "Use /market buy towns [town-name] to buy this town.");
+			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_market_buy_townsPrompt"));
 			return;
 		}
 		
 		Town town = getNamedTown(1);
 		
 		if (senderCiv.isForSale()) {
-			throw new CivException("Cannot buy a town when your civ is up for sale.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_ErrorCivForSale"));
 		}
 		
 		if (town.getCiv() == senderCiv) {
-			throw new CivException("Cannot buy a town already in your civ.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_townsOwned"));
 		}
 		
 		if (town.isCapitol()) {
-			throw new CivException("Cannot buy the capitol, you must buy the civilization instead.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_townCapitol"));
 		}
 		
 		if (!town.isForSale()) {
-			throw new CivException("Can only buy towns that are up for sale.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_NotForSale"));
 		}
 		
 		if (War.isWarTime() || War.isWithinWarDeclareDays()) {
-			throw new CivException("Can not buy towns during WarTime or within 3 days of WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_warOrClose"));
 		}
 		
 		senderCiv.buyTown(town);
-		CivMessage.global("Town of"+" "+town.getName()+" "+"has been bought and is now part of"+" "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, "Bought town"+" "+args[1]);
+		CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_market_buy_townsBroadcast")+" "+senderCiv.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_market_buy_townsSuccess")+" "+args[1]);
 	}
 	
 	
@@ -116,24 +116,24 @@ public class MarketBuyCommand extends CommandBase {
 		Civilization civBought = getNamedCiv(1);
 		
 		if (senderCiv.isForSale()) {
-			throw new CivException("Cannot buy a civ when your civ is up for sale.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_ErrorCivForSale"));
 		}
 		
 		if (civBought == senderCiv) {
-			throw new CivException("Cannot buy your own civ.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_civsOwned"));
 		}
 		
 		if (!civBought.isForSale()) {
-			throw new CivException("Can only buy civilizations that are up for sale.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_NotForSale"));
 		}
 		
 		if (War.isWarTime() || War.isWithinWarDeclareDays()) {
-			throw new CivException("Can not buy civs during WarTime or within 3 days of WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_market_buy_warOrClose"));
 		}
 		
 		senderCiv.buyCiv(civBought);
-		CivMessage.global(civBought.getName()+" "+"has been bought by"+" "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, "Bought civ"+" "+args[1]);
+		CivMessage.global(civBought.getName()+" "+CivSettings.localize.localizedString("cmd_market_buy_civsSuccess")+" "+senderCiv.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_market_buy_civsSuccess2")+" "+args[1]);
 	}
 	
 	

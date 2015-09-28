@@ -44,20 +44,20 @@ public class ResidentCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/resident";
-		displayName = "Resident";
+		displayName = CivSettings.localize.localizedString("cmd_res_Name");
 		
-		commands.put("info", "show your resident info");
-		commands.put("paydebt", "Pays off your current debt.");
-		commands.put("friend", "Manage friends.");
-		commands.put("toggle", "Toggles various resident specific settings.");
-		commands.put("show", "[name] shows resident info for the given resident.");
-		commands.put("resetspawn", "Resets your spawn point back to spawn town.");
-		commands.put("exchange", "[type] [amount] - Exchanges this type(iron,gold,diamond,emerald) of ingot at 30% of its value.");
-		commands.put("book", "Gives you a help book, if you don't already have one.");
-		commands.put("perks", "Displays your perks.");
-		commands.put("refresh", "Refreshes your perks.");
-		commands.put("timezone", "(timezone) Display your current timezone or change it to (timezone)");
-		commands.put("pvptimer", "Remove your PvP Timer. This is a permenant change and can not be undone.");
+		commands.put("info", CivSettings.localize.localizedString("cmd_res_infoDesc"));
+		commands.put("paydebt", CivSettings.localize.localizedString("cmd_res_paydebtDesc"));
+		commands.put("friend", CivSettings.localize.localizedString("cmd_res_friendDesc"));
+		commands.put("toggle", CivSettings.localize.localizedString("cmd_res_toggleDesc"));
+		commands.put("show", CivSettings.localize.localizedString("cmd_res_showDesc"));
+		commands.put("resetspawn", CivSettings.localize.localizedString("cmd_res_resetspawnDesc"));
+		commands.put("exchange", CivSettings.localize.localizedString("cmd_res_exchangeDesc"));
+		commands.put("book", CivSettings.localize.localizedString("cmd_res_bookDesc"));
+		commands.put("perks", CivSettings.localize.localizedString("cmd_res_perksDesc"));
+		commands.put("refresh", CivSettings.localize.localizedString("cmd_res_refreshDesc"));
+		commands.put("timezone", CivSettings.localize.localizedString("cmd_res_timezoneDesc"));
+		commands.put("pvptimer", CivSettings.localize.localizedString("cmd_res_pvptimerDesc"));
 		//commands.put("switchtown", "[town] - Allows you to instantly change your town to this town, if this town belongs to your civ.");
 	}
 	
@@ -65,11 +65,11 @@ public class ResidentCommand extends CommandBase {
 		Resident resident = getResident();
 		
 		if (!resident.isProtected()) {
-			CivMessage.sendError(sender, "You are not protected at this time.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_res_pvptimerNotActive"));
 		}
 		
 		resident.setisProtected(false);
-		CivMessage.sendSuccess(sender, "You are no longer protected.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_pvptimerSuccess"));
 	}
 	
 	public void timezone_cmd() throws CivException {
@@ -77,12 +77,12 @@ public class ResidentCommand extends CommandBase {
 		
 		if (args.length < 2) {
 ;
-			CivMessage.sendSuccess(sender, "Your current timezone is set to"+" "+resident.getTimezone());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_timezoneCurrent")+" "+resident.getTimezone());
 			return;
 		}
 		
 		if (args[1].equalsIgnoreCase("list")) {
-			CivMessage.sendHeading(sender, "Available TimeZones");
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_res_timezoneHeading"));
 			String out = "";
 			for (String zone : TimeZone.getAvailableIDs()) {
 				out += zone + ", ";
@@ -94,20 +94,20 @@ public class ResidentCommand extends CommandBase {
 		TimeZone timezone = TimeZone.getTimeZone(args[1]);
 		
 		if (timezone.getID().equals("GMT") && !args[1].equalsIgnoreCase("GMT")) {
-			CivMessage.send(sender, CivColor.LightGray+"We may not have recognized your timezone"+" \""+args[1]+"\" "+"if so, we'll set it to GMT.");
-			CivMessage.send(sender, CivColor.LightGray+"Type \"/resident timezone list\" to get a list of all available timezones.");
+			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_res_timezonenotFound1")+" \""+args[1]+"\" "+CivSettings.localize.localizedString("cmd_res_timezonenotFound2"));
+			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_res_timezoneNotFound3"));
 		}
 		
 		resident.setTimezone(timezone.getID());
 		resident.save();
-		CivMessage.sendSuccess(sender, "TimeZone has been set to"+" "+timezone.getID());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_timezoneSuccess")+" "+timezone.getID());
 	}
 	
 	public void refresh_cmd() throws CivException {
 		Resident resident = getResident();
 		resident.perks.clear();
 		resident.loadPerks();
-		CivMessage.sendSuccess(sender, "Reloaded your perks from the website.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_refreshSuccess"));
 	}
 	
 	public void perks_cmd() throws CivException {
@@ -135,7 +135,7 @@ public class ResidentCommand extends CommandBase {
 			}
 			
 			if (craftMat.getConfigId().equals("mat_tutorial_book")) {
-				throw new CivException("You already have a help book.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_res_bookHaveOne"));
 			}
 		}
 		
@@ -144,10 +144,10 @@ public class ResidentCommand extends CommandBase {
 		
 		HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(helpBook);
 		if (leftovers != null && leftovers.size() >= 1) {
-			throw new CivException("You cannot hold anything else. Get some space open in your inventory first.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_bookInvenFull"));
 		}
 		
-		CivMessage.sendSuccess(player, "Added a help book to your inventory!");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_res_bookSuccess"));
 	}
 	
 	/*
@@ -187,11 +187,11 @@ public class ResidentCommand extends CommandBase {
 	public void exchange_cmd() throws CivException {
 		Player player = getPlayer();
 		Resident resident = getResident();
-		String type = getNamedString(1, "Enter a type. E.g. iron, gold, diamond, emerald.");
+		String type = getNamedString(1, CivSettings.localize.localizedString("cmd_res_exchangePrompt"));
 		Integer amount = getNamedInteger(2);
 		
 		if (amount <= 0) {
-			throw new CivException("You must exchange a positive, non-zero amount.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_exchangeLessThan0"));
 		}
 		
 		type = type.toLowerCase();
@@ -216,7 +216,7 @@ public class ResidentCommand extends CommandBase {
 			rate = CivSettings.emerald_rate;
 			break;
 		default:
-			throw new CivException("Unknown exchange type"+" "+type+" "+"must be iron, gold, diamond, or emerald.");
+			throw new CivException("'"+type+"' "+CivSettings.localize.localizedString("cmd_res_exchangeInvalid"));
 		}
 
 		double exchangeRate;
@@ -224,7 +224,7 @@ public class ResidentCommand extends CommandBase {
 			exchangeRate = CivSettings.getDouble(CivSettings.civConfig, "global.exchange_rate");
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
-			throw new CivException("Internal configuration error!");
+			throw new CivException(CivSettings.localize.localizedString("internalException"));
 		}
 		
 		ItemStack stack = ItemManager.createItemStack(exchangeID, 1);
@@ -245,7 +245,7 @@ public class ResidentCommand extends CommandBase {
 		}
 		
 		if (total == 0) {
-			throw new CivException("You do not have any"+" "+type);
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_exchangeNotEnough")+" "+type);
 		}
 		
 		if (amount > total) {
@@ -257,7 +257,7 @@ public class ResidentCommand extends CommandBase {
 		double coins = amount*rate*exchangeRate;
 		
 		resident.getTreasury().deposit(coins);
-		CivMessage.sendSuccess(player, "Exchanged"+" "+amount+" "+type+" -> "+coins+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_res_exchangeSuccess")+" "+amount+" "+type+" -> "+coins+" "+CivSettings.CURRENCY_NAME);
 		
 	}
 	
@@ -265,12 +265,12 @@ public class ResidentCommand extends CommandBase {
 		Player player = getPlayer();
 		Location spawn = player.getWorld().getSpawnLocation();
 		player.setBedSpawnLocation(spawn, true);
-		CivMessage.sendSuccess(player, "You will now respawn at spawn.");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_res_resetspawnSuccess"));
 	}
 	
 	public void show_cmd() throws CivException {
 		if (args.length < 2) {
-			throw new CivException("Please enter the resident's name you wish to know about.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_showPrompt"));
 		}
 		
 		Resident resident = getNamedResident(1);
@@ -292,11 +292,11 @@ public class ResidentCommand extends CommandBase {
 		Resident resident = getResident();
 	
 		if (!resident.getTreasury().hasEnough(resident.getTreasury().getDebt())) {
-			throw new CivException("You do not have the required"+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" to pay off your debt.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_paydebtError1")+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_res_paydebtError2"));
 		}
 		
 
-		CivMessage.sendSuccess(sender, resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" paid towards your debt.");
+		CivMessage.sendSuccess(sender, resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_res_paydebtSuccess"));
 		resident.payOffDebt();
 	}
 	
@@ -306,43 +306,43 @@ public class ResidentCommand extends CommandBase {
 	}
 	
 	public static void show(CommandSender sender, Resident resident) {
-		CivMessage.sendHeading(sender, "Resident "+resident.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("Resident")+" "+resident.getName());
 		Date lastOnline = new Date(resident.getLastOnline());
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy h:mm:ss a z");
-		CivMessage.send(sender, CivColor.Green+"Last Online:"+CivColor.LightGreen+sdf.format(lastOnline));
-		CivMessage.send(sender, CivColor.Green+"Town:"+" "+CivColor.LightGreen+resident.getTownString());
-		CivMessage.send(sender, CivColor.Green+"Camp:"+" "+CivColor.LightGreen+resident.getCampString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_res_showLastOnline")+" "+CivColor.LightGreen+sdf.format(lastOnline));
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Town")+" "+CivColor.LightGreen+resident.getTownString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Camp")+" "+CivColor.LightGreen+resident.getCampString());
 		
 		if (sender.getName().equalsIgnoreCase(resident.getName()) || sender.isOp()) {
-			CivMessage.send(sender, CivColor.Green+"Personal Treasury:"+" "+CivColor.LightGreen+resident.getTreasury().getBalance()+" "+
-								  CivColor.Green+"Taxes Owed: "+CivColor.LightGreen+(resident.getPropertyTaxOwed()+resident.getFlatTaxOwed()));
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_res_showTreasure")+" "+CivColor.LightGreen+resident.getTreasury().getBalance()+" "+
+								  CivColor.Green+CivSettings.localize.localizedString("cmd_res_showTaxes")+" "+CivColor.LightGreen+(resident.getPropertyTaxOwed()+resident.getFlatTaxOwed()));
 			if (resident.hasTown()) {
 				if (resident.getSelectedTown() != null) {
-					CivMessage.send(sender, CivColor.Green+"Selected Town:"+" "+CivColor.LightGreen+resident.getSelectedTown().getName());
+					CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_res_showSelected")+" "+CivColor.LightGreen+resident.getSelectedTown().getName());
 				} else {
-					CivMessage.send(sender, CivColor.Green+"Selected Town:"+" "+CivColor.LightGreen+resident.getTown().getName());
+					CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_res_showSelected")+" "+CivColor.LightGreen+resident.getTown().getName());
 				}
 			}
 		}
 		
 		if (resident.getTreasury().inDebt()) {
-			CivMessage.send(resident, CivColor.Yellow+"In Debt"+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.send(resident, CivColor.Yellow+CivSettings.localize.localizedString("cmd_res_showDebt")+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (resident.getDaysTilEvict() > 0) {
-			CivMessage.send(resident, CivColor.Yellow+"Days till Eviction: "+resident.getDaysTilEvict());
+			CivMessage.send(resident, CivColor.Yellow+CivSettings.localize.localizedString("cmd_res_showEviction")+" "+resident.getDaysTilEvict());
 		}
 		
-		CivMessage.send(sender, CivColor.Green+"Groups:"+" "+resident.getGroupsString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Groups")+" "+resident.getGroupsString());
 		
 		try {
 			if (resident.isUsesAntiCheat()) {
-				CivMessage.send(sender, CivColor.LightGreen+"Online and currently using CivCraft's Anti-Cheat");
+				CivMessage.send(sender, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_res_showAC1"));
 			} else {
-				CivMessage.send(sender, CivColor.Rose+"Online but NOT validated by CivCraft's Anti-Cheat");
+				CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_res_showAC2"));
 			}
 		} catch (CivException e) {
-			CivMessage.send(sender, CivColor.LightGray+"Resident is not currently online.");
+			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_res_showOffline"));
 		}	
 	}
 	

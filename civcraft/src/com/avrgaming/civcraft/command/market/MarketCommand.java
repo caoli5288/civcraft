@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.market;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 
 public class MarketCommand extends CommandBase {
@@ -26,9 +27,9 @@ public class MarketCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/market";
-		displayName = "Market";	
+		displayName = CivSettings.localize.localizedString("cmd_market_Name");	
 				
-		commands.put("buy", "Buy things from the market, see whats for sale.");
+		commands.put("buy", CivSettings.localize.localizedString("cmd_market_buyDesc"));
 
 	}
 

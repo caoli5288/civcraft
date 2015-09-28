@@ -103,7 +103,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		try {
 			minDistance = CivSettings.getDouble(CivSettings.townConfig, "town.min_town_distance");
 		} catch (InvalidConfiguration e) {
-			CivMessage.sendError(player, "Internal configuration error.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("internalException"));
 			e.printStackTrace();
 			return;
 		}

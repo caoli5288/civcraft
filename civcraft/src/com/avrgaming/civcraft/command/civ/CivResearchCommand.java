@@ -37,13 +37,13 @@ public class CivResearchCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/civ research";
-		displayName = "Civ Research";
+		displayName = CivSettings.localize.localizedString("cmd_civ_research_name");
 		
-		commands.put("list", "List the available technologies we can research.");
-		commands.put("progress", "Shows progress on your current research.");
-		commands.put("on", "[tech] - Starts researching on this technology.");
-		commands.put("change", "[tech] - Stops researching our current tech, changes to this. You will lose all progress on your current tech.");
-		commands.put("finished", "Shows which technologies we already have.");
+		commands.put("list", CivSettings.localize.localizedString("cmd_civ_research_listDesc"));
+		commands.put("progress", CivSettings.localize.localizedString("cmd_civ_research_progressDesc"));
+		commands.put("on", CivSettings.localize.localizedString("cmd_civ_research_onDesc"));
+		commands.put("change", CivSettings.localize.localizedString("cmd_civ_research_changeDesc"));
+		commands.put("finished", CivSettings.localize.localizedString("cmd_civ_research_finishedDesc"));
 	}
 	
 	public void change_cmd() throws CivException {
@@ -51,37 +51,37 @@ public class CivResearchCommand extends CommandBase {
 		
 		if (args.length < 2) {
 			list_cmd();
-			throw new CivException("enter the name of the technology you want to change to.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_changePrompt"));
 		}
 		
 		String techname = combineArgs(stripArgs(args, 1));
 		ConfigTech tech = CivSettings.getTechByName(techname);
 		if (tech == null) {
-			throw new CivException("Couldn't find technology named"+" "+techname);
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotFound")+" "+techname);
 		}
 		
 		if (!civ.getTreasury().hasEnough(tech.cost)) {
-			throw new CivException("You do not have enough Coins to research"+" "+tech.name);
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotEnough1")+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_civ_research_NotEnough2")+" "+tech.name);
 		}
 		
 		if(!tech.isAvailable(civ)) {
-			throw new CivException("You cannot research this technology at this time.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotAllowedNow"));
 		}
 		
 		if (civ.getResearchTech() != null) {
 			civ.setResearchProgress(0);
-			CivMessage.send(sender, CivColor.Rose+"Progress on"+" "+civ.getResearchTech().name+" "+"has been lost.");
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_civ_research_lostProgress1")+" "+civ.getResearchTech().name+" "+CivSettings.localize.localizedString("cmd_civ_research_lostProgress2"));
 			civ.setResearchTech(null);
 		}
 	
 		civ.startTechnologyResearch(tech);
-		CivMessage.sendCiv(civ, "Our Civilization started researching"+" "+tech.name);
+		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("cmd_civ_research_start")+" "+tech.name);
 	}
 	
 	public void finished_cmd() throws CivException {
 		Civilization civ = getSenderCiv();
 		
-		CivMessage.sendHeading(sender, "Researched Technologies");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_finishedHeading"));
 		String out = "";
 		for (ConfigTech tech : civ.getTechs()) {
 			out += tech.name+", ";
@@ -93,44 +93,44 @@ public class CivResearchCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			throw new CivException("Enter the name of the technology you want to research.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_onPrompt"));
 		}
 		
 		Town capitol = CivGlobal.getTown(civ.getCapitolName());
 		if (capitol == null) {
-			throw new CivException("Couldn't find capitol town:"+" "+civ.getCapitolName()+"! "+"Internal Error!");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_missingCapitol")+" "+civ.getCapitolName()+"! "+CivSettings.localize.localizedString("internalCommandException"));
 		}
 	
 		TownHall townhall = capitol.getTownHall();
 		if (townhall == null) {
-			throw new CivException("Couldn't find your capitol's town hall. Cannot perform research without a town hall! ");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_missingTownHall"));
 		}
 		
 		if (!townhall.isActive()) {
-			throw new CivException("Town hall must be completed before you can begin research.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_incompleteTownHall"));
 		}
 		
 		String techname = combineArgs(stripArgs(args, 1));
 		ConfigTech tech = CivSettings.getTechByName(techname);
 		if (tech == null) {
-			throw new CivException("Couldn't find technology named"+" "+techname);
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotFound")+" "+techname);
 		}
 		
 		civ.startTechnologyResearch(tech);
-		CivMessage.sendSuccess(sender, "Started researching"+" "+tech.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_research_start")+" "+tech.name);
 	}
 	
 	public void progress_cmd() throws CivException {
 		Civilization civ = getSenderCiv();
 		
-		CivMessage.sendHeading(sender, "Currently Researching");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_current"));
 		
 		if (civ.getResearchTech() != null) {
 			int percentageComplete = (int)((civ.getResearchProgress() / civ.getResearchTech().beaker_cost)*100);		
-			CivMessage.send(sender, civ.getResearchTech().name+" "+"is"+" "+percentageComplete+"% "+"complete"+". ("+
+			CivMessage.send(sender, civ.getResearchTech().name+" "+CivSettings.localize.localizedString("is")+" "+percentageComplete+"% "+CivSettings.localize.localizedString("complete")+". ("+
 					civ.getResearchProgress()+" / "+civ.getResearchTech().beaker_cost+ " ) ");
 		} else {
-			CivMessage.send(sender, "Nothing currently researching.");
+			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_civ_research_NotAnything"));
 		}
 		
 	}
@@ -139,10 +139,10 @@ public class CivResearchCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		ArrayList<ConfigTech> techs = ConfigTech.getAvailableTechs(civ);
 		
-		CivMessage.sendHeading(sender, "Available Research");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_Available"));
 		for (ConfigTech tech : techs) {
-			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+"Cost:"+" "+
-					CivColor.Yellow+tech.cost+CivColor.LightGray+" "+"Beakers:"+" "+
+			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+CivSettings.localize.localizedString("Cost:")+" "+
+					CivColor.Yellow+tech.cost+CivColor.LightGray+" "+CivSettings.localize.localizedString("Beakers")+" "+
 					CivColor.Yellow+tech.beaker_cost);
 		}
 				
@@ -165,7 +165,7 @@ public class CivResearchCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (!civ.getLeaderGroup().hasMember(resident) && !civ.getAdviserGroup().hasMember(resident)) {
-			throw new CivException("Only civ leaders and advisers can access research.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_notLeader"));
 		}		
 	}
 

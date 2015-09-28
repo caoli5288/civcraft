@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.civ;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -30,17 +31,22 @@ public class CivMotdCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/civ motd";
-		displayName = "Civ Motd";
+		displayName = CivSettings.localize.localizedString("cmd_civ_motd_name");
 		
-		commands.put("set", "Set the Message of the Day");
-		commands.put("remove", "Remove the Message of the Day");
+		commands.put("set", CivSettings.localize.localizedString("cmd_civ_motd_setDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_civ_motd_removeDesc"));
 	}
 	
 	public void set_cmd() throws CivException {
+		Resident resident = getResident();
 		Civilization civ = getSenderCiv();
 		
+		if (!civ.getLeaderGroup().hasMember(resident) && !civ.getAdviserGroup().hasMember(resident)) {
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_motd_notallowed"));
+		}
+		
 		if (args.length < 2) {
-			throw new CivException("Please provide a message");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_motd_setPrompt"));
 		}
 		
 		String motd = combineArgs(this.stripArgs(args, 1));
@@ -51,11 +57,15 @@ public class CivMotdCommand extends CommandBase {
 	}
 	
 	public void remove_cmd() throws CivException {
-
+		Resident resident = getResident();
 		Civilization civ = getSenderCiv();
+		
+		if (!civ.getLeaderGroup().hasMember(resident) && !civ.getAdviserGroup().hasMember(resident)) {
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_motd_notallowed"));
+		}
 		civ.setMotd(null);
 		civ.save();
-		CivMessage.sendSuccess(sender, "Remove MOTD");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_motd_removeSuccess"));
 	}
 	
 	@Override
@@ -68,7 +78,7 @@ public class CivMotdCommand extends CommandBase {
 			CivMessage.send(resident, CivColor.LightPurple+"[Civ MOTD] "+CivColor.White+resident.getCiv().MOTD());
 		}
 		else {
-			CivMessage.send(resident, CivColor.LightPurple+"[Civ MOTD] "+CivColor.White+"None set");
+			CivMessage.send(resident, CivColor.LightPurple+"[Civ MOTD] "+CivColor.White+CivSettings.localize.localizedString("cmd_civ_motd_noneSet"));
 		}
 
 	}
@@ -80,12 +90,7 @@ public class CivMotdCommand extends CommandBase {
 
 	@Override
 	public void permissionCheck() throws CivException {
-		Resident resident = getResident();
-		Civilization civ = getSenderCiv();
-		
-		if (!civ.getLeaderGroup().hasMember(resident) && !civ.getAdviserGroup().hasMember(resident)) {
-			throw new CivException("Only civ leaders and advisers can change the Message of the Day.");
-		}		
+				
 	}
 
 }

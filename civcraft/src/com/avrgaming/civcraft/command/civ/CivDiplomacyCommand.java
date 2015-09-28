@@ -69,11 +69,11 @@ public class CivDiplomacyCommand extends CommandBase {
 		Civilization motherCiv = town.getMotherCiv();
 		
 		if (motherCiv == null) {
-			throw new CivException("Cannot capitulate unless captured by another civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_capitulateErrorNoMother"));
 		}
 		
 		if (!town.getMotherCiv().getLeaderGroup().hasMember(resident)) {
-			throw new CivException("You must be the leader of the captured civilization in order to capitulate.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_capitulateErrorNotLeader"));
 		}
 		
 		if (town.getMotherCiv().getCapitolName().equals(town.getName())) {
@@ -85,23 +85,23 @@ public class CivDiplomacyCommand extends CommandBase {
 
 		if (args.length < 3 || !args[2].equalsIgnoreCase("yes")) {
 			if (entireCiv) {
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Capitualting means that this civ will be DELETED and all of its towns will become a normal towns in "+
-						town.getCiv().getName()+" and can no longer revolt. Are you sure?");
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"If you're sure, type /civ dip capitulate "+town.getName()+" yes");
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm1")+" "+
+						town.getCiv().getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm2"));
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm3")+" "+town.getName()+" yes");
 			} else {
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Capitualting means that this town will become a normal town in "+town.getCiv().getName()+" and can no longer revolt. Are you sure?");
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"If you're sure, type /civ dip capitulate "+town.getName()+" yes");
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm1b")+" "+town.getCiv().getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm2"));
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm3")+" "+town.getName()+" yes");
 			}
 			return;
 		}
 		
 		if (entireCiv) {
-			requestMessage = CivColor.Yellow+ChatColor.BOLD+"The Civilization of "+motherCiv.getName()+" would like to capitulate. Bringing in more towns will increase civ-wide unhappiness. Do we accept?";
+			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+" "+motherCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest2");
 			capitulateResponse.from = town.getMotherCiv().getName();
 		} else {
 			capitulateResponse.from = "Town of "+town.getName();
-			requestMessage = CivColor.Yellow+ChatColor.BOLD+"The Town of "+town.getName()+" would like to capitulate. If we accept this town become ours and we"+
-					" will have to pay distance upkeep to it. Do we accept?";	
+			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest2b")+
+					" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest3");	
 		}
 		
 		capitulateResponse.playerName = resident.getName();
@@ -110,7 +110,7 @@ public class CivDiplomacyCommand extends CommandBase {
 		
 		CivGlobal.requestRelation(motherCiv, town.getCiv(), requestMessage,
 				INVITE_TIMEOUT, capitulateResponse);
-		CivMessage.sendSuccess(sender, "Sent capitulate request.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dip_capitulateSuccess"));
 		
 	}
 	
@@ -123,12 +123,12 @@ public class CivDiplomacyCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (town.getCiv() != civ) {
-			throw new CivException("This town does not belong to your civlization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_liberateNotInCiv"));
 		}
 
 		Civilization motherCiv = town.getMotherCiv();
 		if (motherCiv == null) {
-			throw new CivException("This town has not been captured, you cannot liberate it.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_liberateNotCaptured"));
 		}
 		
 		if (town.getName().equals(motherCiv.getCapitolName())) {
@@ -147,18 +147,18 @@ public class CivDiplomacyCommand extends CommandBase {
 			CivGlobal.removeConqueredCiv(motherCiv);
 			CivGlobal.addCiv(motherCiv);
 			motherCiv.save();	
-			CivMessage.global("The civilization of "+motherCiv.getName()+" has been liberated by the good graces of its owner "+civ.getName());
+			CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+" "+motherCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess1")+" "+civ.getName());
 		} else {
 			if (motherCiv.isConquered()) {
-				throw new CivException("The mother civilization of "+town.getName()+" is conquered. You cannot liberate this town at the moment.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_liberateError1")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateError2"));
 			}
 			
 			/* Liberate just the town. */
 			town.changeCiv(motherCiv);
 			town.setMotherCiv(null);
 			town.save();
-			CivMessage.global("The town of "+town.getName()+" has been liberated by the good graces of its owner "+civ.getName()+
-					". It has joined its homeland "+motherCiv.getName());
+			CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess1")+" "+civ.getName()+
+					". "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess2")+" "+motherCiv.getName());
 		}
 	}
 	
@@ -171,7 +171,7 @@ public class CivDiplomacyCommand extends CommandBase {
 	}
 	
 	public void global_cmd() {
-		CivMessage.sendHeading(sender, "Global Relations");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_globalHeading"));
 
 		for (Civilization civ : CivGlobal.getCivs()) {
 			for (Relation relation : civ.getDiplomacyManager().getRelations()) {
@@ -181,7 +181,7 @@ public class CivDiplomacyCommand extends CommandBase {
 	}
 	
 	public void wars_cmd() {
-		CivMessage.sendHeading(sender, "Wars");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_warsHeading"));
 		HashSet<String> usedRelations = new HashSet<String>();
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
@@ -189,7 +189,7 @@ public class CivDiplomacyCommand extends CommandBase {
 				if (relation.getStatus().equals(Status.WAR)) {
 					if (!usedRelations.contains(relation.getPairKey())) {
 						CivMessage.send(sender, 
-								CivColor.LightBlue+CivColor.BOLD+relation.getCiv().getName()+CivColor.Rose+" <-- WAR --> "+CivColor.LightBlue+CivColor.BOLD+relation.getOtherCiv().getName());						
+								CivColor.LightBlue+CivColor.BOLD+relation.getCiv().getName()+CivColor.Rose+" <-- "+CivSettings.localize.localizedString("WAR")+" --> "+CivColor.LightBlue+CivColor.BOLD+relation.getOtherCiv().getName());						
 						usedRelations.add(relation.getPairKey());
 					}
 				}
@@ -254,34 +254,34 @@ public class CivDiplomacyCommand extends CommandBase {
 				throw new CivException("Already"+" "+status.name()+" with "+otherCiv.getName());
 			}
 			
-			String message = CivColor.LightGreen+ChatColor.BOLD+ourCiv.getName()+" "+"has requested"+" ";
+			String message = CivColor.LightGreen+ChatColor.BOLD+ourCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_requestHasRequested")+" ";
 			switch (status) {
 			case NEUTRAL:
-				message += "a NEUTRAL relationship";
+				message += CivSettings.localize.localizedString("cmd_civ_dip_requestNeutral");
 				break;
 			case PEACE:
-				message += "a PEACE treaty";
+				message += CivSettings.localize.localizedString("cmd_civ_dip_requestPeace");
 				break;
 			case ALLY:
-				message += "an ALLY";
+				message += CivSettings.localize.localizedString("cmd_civ_dip_requestAlly");
 				
 				if (War.isWithinWarDeclareDays()) {
 					if (ourCiv.getDiplomacyManager().isAtWar() || otherCiv.getDiplomacyManager().isAtWar()) {
-						throw new CivException("Cannot make new allies within"+" "+War.getTimeDeclareDays()+" "+"before WarTime when one of you is at war.");
+						throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_requestErrorWar1")+" "+War.getTimeDeclareDays()+" "+CivSettings.localize.localizedString("cmd_civ_dip_requestErrorWar2"));
 					}
 				}
 				break;
 			case WAR:
 				if (!CivGlobal.isCasualMode()) {
-					throw new CivException("Can only request war in casual mode.");
+					throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_requestErrorCasual"));
 				}
 				
-				message += "a WAR";
+				message += CivSettings.localize.localizedString("cmd_civ_dip_requestWar");
 				break;
 			default:
-				throw new CivException("Options are 'neutral', 'peace', 'ally' or 'war'");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_requestPrompt"));
 			}
-			message += ". "+"Do we accept?";
+			message += ". "+CivSettings.localize.localizedString("cmd_civ_dip_requestQuestion");
 			
 			ChangeRelationResponse relationresponse = new ChangeRelationResponse();
 			relationresponse.fromCiv = ourCiv;
@@ -292,9 +292,9 @@ public class CivDiplomacyCommand extends CommandBase {
 					message,
 					INVITE_TIMEOUT, relationresponse);
 			
-			CivMessage.sendSuccess(sender, "Request sent.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dip_requestSuccess"));
 		} catch (IllegalArgumentException e) {
-			throw new CivException("Unknown relationship type, options are 'neutral', 'peace', 'ally' or 'war'");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_requestInvalid"));
 		}
 		
 	}
@@ -307,17 +307,17 @@ public class CivDiplomacyCommand extends CommandBase {
 		}
 		
 		if (args.length < 3) {
-			throw new CivException("Enter a civ name, followed by 'hostile', or 'war'.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declarePrompt"));
 		}
 		
 		Civilization otherCiv = getNamedCiv(1);
 		
 		if (ourCiv.getId() == otherCiv.getId()) {
-			throw new CivException("Cannot declare anything on your own civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareYourself"));
 		}
 		
 		if (otherCiv.isAdminCiv()) {
-			throw new CivException("Cannot declare war on an admin civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareAdmin"));
 		}
 		
 		try {
@@ -326,18 +326,18 @@ public class CivDiplomacyCommand extends CommandBase {
 			//boolean aidingAlly = false;
 
 			if (currentStatus == status) {
-				throw new CivException("Already"+" "+status.name()+" "+"with"+" "+otherCiv.getName());
+				throw new CivException(CivSettings.localize.localizedString("Already")+" "+status.name()+" "+CivSettings.localize.localizedString("with")+" "+otherCiv.getName());
 			}
 			
 			switch (status) {
 			case HOSTILE:
 				if (currentStatus == Relation.Status.WAR) {
-					throw new CivException("Cannot declare "+status.name()+" "+"when at war.");
+					throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareAtWar")+" "+status.name()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareAtWar2"));
 				}
 			break;
 			case WAR:
 				if (CivGlobal.isCasualMode()) {
-					throw new CivException("Cannot declare war in casual mode. Use '/civ dip request' instead.");
+					throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareCasual"));
 				}
 				
 				if (War.isWarTime()) {
@@ -347,22 +347,22 @@ public class CivDiplomacyCommand extends CommandBase {
 				if (War.isWithinWarDeclareDays()) {
 					if (War.isCivAggressorToAlly(otherCiv, ourCiv)) {
 						if (War.isWithinAllyDeclareHours()) {
-							throw new CivException("Too soon to next WarTime. Allies can only aid other allies within"+" "+War.getAllyDeclareHours()+" "+"hours before WarTime.");
+							throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar1")+" "+War.getAllyDeclareHours()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar2"));
 						} else {
 							//aidingAlly = true;
 						}
 					} else {		
-						throw new CivException("Too soon to next WarTime. Cannot declare"+" "+War.getTimeDeclareDays()+" "+"before WarTime.");
+						throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar3")+" "+War.getTimeDeclareDays()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar4"));
 					}
 				}
 				
 				if (ourCiv.getTreasury().inDebt()) {
-					throw new CivException("Cannot declare ware while our civilization is in debt.");
+					throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareInDebt"));
 				}
 				
 				break;
 			default:
-				throw new CivException("Options are hostile or war");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareInvalid"));
 			}
 			
 			CivGlobal.setRelation(ourCiv, otherCiv, status);
@@ -376,7 +376,7 @@ public class CivDiplomacyCommand extends CommandBase {
 			CivGlobal.setAggressor(ourCiv, otherCiv, ourCiv);
 						
 		} catch (IllegalArgumentException e) {
-			throw new CivException("Unknown relationship type, options hostile or war");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareUnknown"));
 		}
 	
 	}
@@ -393,7 +393,7 @@ public class CivDiplomacyCommand extends CommandBase {
 	}
 	
 	public void show(Civilization civ) {
-		CivMessage.sendHeading(sender, "Diplomatic Relations for"+" "+CivColor.Yellow+civ.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_dip_showHeading")+" "+CivColor.Yellow+civ.getName());
 		
 		for (Relation relation : civ.getDiplomacyManager().getRelations()) {
 			if (relation.getStatus() == Relation.Status.NEUTRAL) {
@@ -404,9 +404,9 @@ public class CivDiplomacyCommand extends CommandBase {
 		
 		int warCount = civ.getDiplomacyManager().getWarCount();
 		if (warCount != 0) {
-			CivMessage.send(sender, CivColor.Rose+"Your civilization is currently engaged in"+" "+warCount+" "+"wars.");
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_civ_dip_showSuccess1")+" "+warCount+" "+CivSettings.localize.localizedString("cmd_civ_dip_showSuccess2"));
 		}
-		CivMessage.send(sender, CivColor.LightGray+"Not shown means NEUTRAL.");
+		CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_civ_dip_showNeutral"));
 	}
 	
 	

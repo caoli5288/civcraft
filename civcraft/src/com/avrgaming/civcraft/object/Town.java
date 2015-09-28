@@ -846,7 +846,7 @@ public class Town extends SQLObject {
 				minDistanceEnemy = CivSettings.getDouble(CivSettings.townConfig, "town.min_town_distance_enemy");
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
-				throw new CivException("Internal configuration error.");
+				throw new CivException(CivSettings.localize.localizedString("internalException"));
 			}
 			
 			for (Town town : CivGlobal.getTowns()) {
@@ -1704,7 +1704,7 @@ public class Town extends SQLObject {
 			Integer maxTileImprovements  = level.tile_improvements;
 			if (this.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
 			{
-				maxTileImprovements *= 2;
+				maxTileImprovements += maxTileImprovements;
 			}
 			if (this.getTileImprovementCount() > maxTileImprovements) {
 				return false;

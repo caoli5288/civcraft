@@ -23,6 +23,7 @@ import java.sql.SQLException;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -37,13 +38,13 @@ public class TownGroupCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town group";
-		displayName = "Town Group";
+		displayName = CivSettings.localize.localizedString("cmd_town_group_name");
 		
-		commands.put("new", "[name] creates a new group.");
-		commands.put("delete", "Deletes an empty group.");
-		commands.put("remove", "[resident] [group] - removes [resident] from group [group]");
-		commands.put("add", "[resident] [group] - adds [resident] to group [group]");
-		commands.put("info", "Shows town group information");
+		commands.put("new", CivSettings.localize.localizedString("cmd_town_group_newDesc"));
+		commands.put("delete", CivSettings.localize.localizedString("cmd_town_group_deleteDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_town_group_removeDesc"));
+		commands.put("add", CivSettings.localize.localizedString("cmd_town_group_addDesc"));
+		commands.put("info", CivSettings.localize.localizedString("cmd_town_group_infoDesc"));
 	}
 	
 	public void delete_cmd() throws CivException {
@@ -52,11 +53,11 @@ public class TownGroupCommand extends CommandBase {
 		
 		try {			
 			if (grp.getMemberCount() > 0) {
-				throw new CivException("Group must have no members before being deleted.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_deleteNotEmpty"));
 			}
 			
 			if (town.isProtectedGroup(grp)) {
-				throw new CivException("Cannot delete a protected group.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_deleteProtected"));
 			}
 			
 			town.removeGroup(grp);
@@ -65,24 +66,24 @@ public class TownGroupCommand extends CommandBase {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal DB Error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}
 
-		CivMessage.sendSuccess(sender, "Deleted group"+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_group_deleteSuccess")+" "+args[1]);
 	}
 	
 	public void new_cmd() throws CivException {
 		if (args.length < 2) {
-			throw new CivException("You must specify a group name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_group_newPrompt"));
 		}
 		
 		Town town = getSelectedTown();	
 		if (town.hasGroupNamed(args[1])) {
-			throw new CivException("Town already has a group named"+" "+args[1]);
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_group_newExists")+" "+args[1]);
 		}
 		
 		if (PermissionGroup.isProtectedGroupName(args[1])) {
-			throw new CivException("Cannot use this group name, it is a protected group.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_group_newProtected"));
 		}
 		
 		try {
@@ -93,10 +94,10 @@ public class TownGroupCommand extends CommandBase {
 			town.save();
 			
 		} catch (InvalidNameException e) {
-			throw new CivException("Invalid name, please choose another.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_group_newInvalidName"));
 		}
 
-		CivMessage.sendSuccess(sender, "Created group"+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_group_newSuccess")+" "+args[1]);
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -107,22 +108,22 @@ public class TownGroupCommand extends CommandBase {
 				
 		if (grp == town.getMayorGroup()) {
 			if(!grp.hasMember(commandSenderResidnet)) {
-				throw new CivException("Only Mayors can remove members to the mayors group.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_removeOnlyMayor"));
 			} 
 			
 			if (grp.getMemberCount() == 1) {
-				throw new CivException("There must be at least one member in the mayors group.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_removeOneMayor"));
 			}
 		}
 		
 		grp.removeMember(oldMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, oldMember.getName()+" was removed from the"+" "+grp.getName()+" "+" group in town"+" "+town.getName());
+		CivMessage.sendSuccess(sender, oldMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess1")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+town.getName());
 		
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
-			CivMessage.send(newPlayer, CivColor.Rose+"You were removed from the "+grp.getName()+" "+"group in town"+" "+grp.getTown().getName());
+			CivMessage.send(newPlayer, CivColor.Rose+CivSettings.localize.localizedString("cmd_town_group_removeAlert")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+grp.getTown().getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -138,36 +139,36 @@ public class TownGroupCommand extends CommandBase {
 			
 			PermissionGroup leaderGrp = town.getCiv().getLeaderGroup();
 			if (leaderGrp == null) {
-				throw new CivException("ERROR: Couldn't find leader group for civ"+" "+town.getCiv()+" "+"contact an admin.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_addOddError")+" "+town.getCiv());
 			}
 			
 			if (!leaderGrp.hasMember(commandSenderResident)) {
-				throw new CivException("Only Mayors and civ Leaders can add members to the mayors group.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_town_group_addOnlyMayor"));
 			}
 		}
 		
 		if (grp.isProtectedGroup() && !newMember.hasTown()) {
-			throw new CivException(newMember.getName()+" is not a member of a town/civ so cannot be added to a protected group.");
+			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addNotInTown"));
 		}
 		
 		if (grp.isTownProtectedGroup() && newMember.getTown() != grp.getTown()) {
-			throw new CivException(newMember.getName()+" "+"belongs to town"+" "+newMember.getTown().getName()+
-					" "+"and cannot be added to a protected group in town"+" "+grp.getTown().getName());
+			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addError1")+" "+newMember.getTown().getName()+
+					" "+CivSettings.localize.localizedString("cmd_town_group_addError2")+" "+grp.getTown().getName());
 		}
 		
 		if (grp.isCivProtectedGroup() && newMember.getCiv() != grp.getCiv()) {
-			throw new CivException(newMember.getName()+" "+"belongs to civ"+" "+newMember.getCiv().getName()+
-					" "+"and cannot be added to a protected group in civ"+" "+grp.getCiv().getName());
+			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addError3")+" "+newMember.getCiv().getName()+
+					" "+CivSettings.localize.localizedString("cmd_town_group_addError4")+" "+grp.getCiv().getName());
 		}
 		
 		grp.addMember(newMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, newMember.getName()+" "+"was added to the "+grp.getName()+" group in town "+town.getName());
+		CivMessage.sendSuccess(sender, newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addSuccess1")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+town.getName());
 
 		try {
 			Player newPlayer = CivGlobal.getPlayer(newMember);
-			CivMessage.sendSuccess(newPlayer, "You were added to the"+" "+grp.getName()+" "+"group in town"+" "+grp.getTown().getName());
+			CivMessage.sendSuccess(newPlayer, CivSettings.localize.localizedString("cmd_town_group_addAlert")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+grp.getTown().getName());
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -179,10 +180,10 @@ public class TownGroupCommand extends CommandBase {
 		if (args.length >= 2) {
 			PermissionGroup grp = town.getGroupByName(args[1]);
 			if (grp == null) {
-				throw new CivException(town.getName()+" "+"has no group named"+" "+args[1]);
+				throw new CivException(town.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_infoInvalid")+" "+args[1]);
 			}
 			
-			CivMessage.sendHeading(sender, "Group("+town.getName()+"):"+args[1]);
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_group_infoHeading")+"("+town.getName()+"):"+args[1]);
 			
 			String residents = "";
 			for (Resident res : grp.getMemberList()) {
@@ -191,10 +192,10 @@ public class TownGroupCommand extends CommandBase {
 			CivMessage.send(sender, residents);
 			
 		} else {
-			CivMessage.sendHeading(sender, town.getName()+" Group Information");
+			CivMessage.sendHeading(sender, town.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_infoHeading2"));
 
 			for (PermissionGroup grp : town.getGroups()) {
-				CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" members)");
+				CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+CivSettings.localize.localizedString("Members")+")");
 			}		
 		}
 	}
