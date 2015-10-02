@@ -110,30 +110,57 @@ public class FarmChunk {
 		return block.getLightLevel();
 	}
 	
-	public void spawnMelonOrPumpkin(BlockSnapshot bs, CivAsyncTask task) throws InterruptedException {
+	public void spawnMelonOrPumpkin(BlockSnapshot bs, BlockCoord growMe, CivAsyncTask task) throws InterruptedException {
 		//search for a free spot
 		int[][] offset = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
 		BlockSnapshot freeBlock = null;
-		for (int i = 0; i < 4; i++) {
-			BlockSnapshot nextBlock;
-			try {
-				nextBlock = bs.getRelative(offset[i][0], 0, offset[i][1]);
-			} catch (InvalidBlockLocation e) {
-				// An invalid block location can occur if we try to grow 'off the chunk'
-				// this kind of growth is not valid, simply continue onward.
-				continue;
+		BlockSnapshot nextBlock = null;
+		
+		int xOff = 0;
+		int zOff = 0;
+		
+		Random rand = new Random();
+		int randChance = rand.nextInt(10);
+		if (randChance<= 7)
+			return;
+
+		int randInt = rand.nextInt(4);
+		xOff = offset[randInt][0];
+		zOff = offset[randInt][1];
+		try {
+			switch (randInt) {
+			case 0:
+				nextBlock = bs.getRelative(xOff, 0, zOff);
+				break;
+			case 1:
+				nextBlock = bs.getRelative(xOff, 0, zOff);
+				break;
+			case 2:
+				nextBlock = bs.getRelative(xOff, 0, zOff);
+				break;
+			case 3:
+				nextBlock = bs.getRelative(xOff, 0, zOff);
+				break;
 			}
-			
-			if (nextBlock.getTypeId() == CivData.AIR) {
-				freeBlock = nextBlock;
-			}
-			
-			if ((nextBlock.getTypeId() == CivData.MELON && 
-					bs.getTypeId() == CivData.MELON_STEM) ||
-					(nextBlock.getTypeId() == CivData.PUMPKIN &&
-					bs.getTypeId() == CivData.PUMPKIN_STEM)) {
-				return;
-			}
+		} catch (InvalidBlockLocation e) {
+			// An invalid block location can occur if we try to grow 'off the chunk'
+			// this kind of growth is not valid, simply continue onward.
+			return;
+		}
+		
+		if (nextBlock == null) {
+			return;
+		}
+		
+		if (nextBlock.getTypeId() == CivData.AIR) {
+			freeBlock = nextBlock;
+		}
+		
+		if ((nextBlock.getTypeId() == CivData.MELON && 
+				bs.getTypeId() == CivData.MELON_STEM) ||
+				(nextBlock.getTypeId() == CivData.PUMPKIN &&
+				bs.getTypeId() == CivData.PUMPKIN_STEM)) {
+			return;
 		}
 		
 		if (freeBlock == null) {
@@ -141,9 +168,9 @@ public class FarmChunk {
 		}
 		
 		if (bs.getTypeId() == CivData.MELON_STEM) {
-			addGrowBlock("world", freeBlock.getX(), freeBlock.getY(), freeBlock.getZ(), CivData.MELON, 0x0, true);
+			addGrowBlock("world", growMe.getX()+xOff, growMe.getY(), growMe.getZ()+zOff, CivData.MELON, 0x0, true);
 		} else {
-			addGrowBlock("world", freeBlock.getX(), freeBlock.getY(), freeBlock.getZ(), CivData.PUMPKIN, 0x0, true);
+			addGrowBlock("world", growMe.getX()+xOff, growMe.getY(), growMe.getZ()+zOff, CivData.PUMPKIN, 0x0, true);
 		}
 		return;
 	}
@@ -180,7 +207,7 @@ public class FarmChunk {
 			if (bs.getData() < 0x7) {
 				addGrowBlock("world", growMe.getX(), growMe.getY(), growMe.getZ(), bs.getTypeId(), bs.getData()+0x1, false);
 			} else if (bs.getData() == 0x7) {
-				spawnMelonOrPumpkin(bs, task);
+				spawnMelonOrPumpkin(bs, growMe, task);
 			}
 			break;
 		case CivData.COCOAPOD:	
@@ -237,7 +264,7 @@ public class FarmChunk {
 		Random rand = new Random();
 		for (int i = 0; i < numberOfCropsToGrow; i++) {
 			BlockCoord growMe = this.cropLocationCache.get(rand.nextInt(this.cropLocationCache.size()));
-			
+
 			int bsx = growMe.getX() % 16;
 			int bsy = growMe.getY();
 			int bsz  = growMe.getZ() % 16;
@@ -252,7 +279,11 @@ public class FarmChunk {
 			this.lastRandomInt = randInt;
 			if (randInt < chanceForLast) {
 				BlockCoord growMe = this.cropLocationCache.get(rand.nextInt(this.cropLocationCache.size()));
-				BlockSnapshot bs = new BlockSnapshot(growMe.getX() % 16, growMe.getY(), growMe.getZ() % 16, snapshot);
+				int bsx = growMe.getX() % 16;
+				int bsy = growMe.getY();
+				int bsz  = growMe.getZ() % 16;
+
+				BlockSnapshot bs = new BlockSnapshot(bsx, bsy, bsz, snapshot);
 
 				this.lastGrownCrops.add(growMe);
 				growBlock(bs, growMe, task);

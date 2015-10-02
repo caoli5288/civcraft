@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigBuildableInfo;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.interactive.InteractiveCampName;
@@ -40,27 +41,27 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
-		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Starts a Camp");
-		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");		
+		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+CivSettings.localize.localizedString("buildCamp_lore1"));
+		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+CivSettings.localize.localizedString("itemLore_RightClickToUse"));		
 		attrUtil.addEnhancement("LoreEnhancementSoulBound", null, null);
-		attrUtil.addLore(CivColor.Gold+"Soulbound");
+		attrUtil.addLore(CivColor.Gold+CivSettings.localize.localizedString("itemLore_Soulbound"));
 	}
 	
 	public void foundCamp(Player player) throws CivException {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (resident.hasTown()) {
-			throw new CivException("You cannot found a camp when you're a member of a town.");
+			throw new CivException(CivSettings.localize.localizedString("buildCamp_hasTown"));
 		}
 		
 		if (resident.hasCamp()) {
-			throw new CivException("You cannot found a camp when you're a member of another camp.");
+			throw new CivException(CivSettings.localize.localizedString("buildCamp_hasCamp"));
 		}
 			
 		/*
 		 * Build a preview for the Capitol structure.
 		 */
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Checking structure position...Please wait.");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("build_checking_position"));
 		ConfigBuildableInfo info = new ConfigBuildableInfo();
 		info.id = "camp";
 		info.displayName = "Camp";
@@ -121,11 +122,11 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 		}
 		Resident resident = CivGlobal.getResident(playerName);
 		
-		CivMessage.sendHeading(player, "Setting up Camp!");
-		CivMessage.send(player, CivColor.LightGreen+"You and your small band of travelers need a place to sleep for the night.");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("buildCamp_Heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("buildCamp_prompt1"));
 		CivMessage.send(player, " ");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"What shall your new camp be called?");
-		CivMessage.send(player, CivColor.LightGray+"(To cancel, type 'cancel')");
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildCamp_prompt2"));
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("build_cancel_prompt"));
 		
 		resident.setInteractiveMode(new InteractiveCampName());
 	}

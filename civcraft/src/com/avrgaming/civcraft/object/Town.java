@@ -1325,6 +1325,10 @@ public class Town extends SQLObject {
 	
 	public double payUpkeep() throws InvalidConfiguration {
 		double upkeep = 0;
+		if (this.getCiv().isAdminCiv())
+		{
+			return 0;
+		}
 		upkeep += this.getBaseUpkeep();
 		//upkeep += this.getSpreadUpkeep();
 		upkeep += this.getStructureUpkeep();

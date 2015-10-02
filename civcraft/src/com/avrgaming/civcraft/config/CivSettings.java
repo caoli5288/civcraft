@@ -225,7 +225,6 @@ public class CivSettings {
 		CivSettings.plugin = (CivCraft)plugin;
 		
 
-//		#TO-DO: Load configs
 		String languageFile = CivSettings.getStringBase("localization_file");
 		localize = new Localize(plugin, languageFile);
 

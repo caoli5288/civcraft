@@ -42,7 +42,7 @@ public class onLoadTask implements Runnable {
 		/* Run all post-build sync tasks first. */
 		Iterator<Entry<BlockCoord, Structure>> iter = CivGlobal.getStructureIterator();
 		while (iter.hasNext()) {
-			Structure struct = iter.next().getValue();			
+			Structure struct = iter.next().getValue();
 			try {	
 				Template tpl;
 				try {
@@ -63,7 +63,7 @@ public class onLoadTask implements Runnable {
 				}
 				
 				/* Re-run the post build on the command blocks we found. */
-				if (struct.isActive()) {
+				if (struct.isActive() && !struct.isPartOfAdminCiv()) {
 					PostBuildSyncTask.start(tpl, struct);
 				}
 			} catch (Exception e) {

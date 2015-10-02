@@ -835,7 +835,11 @@ public class Civilization extends SQLObject {
 	public double payUpkeep() throws InvalidConfiguration, CivException {
 		double upkeep = 0;
 		this.lastUpkeepPaidMap.clear();
-		
+
+		if (this.isAdminCiv())
+		{
+			return 0;
+		}
 		Town capitol = this.getTown(capitolName);
 		if (capitol == null) {
 			throw new CivException("Civilization found with no capitol!");

@@ -31,10 +31,10 @@ public class InteractiveRepairItem implements InteractiveResponse {
 			return;
 		}
 		
-		CivMessage.sendHeading(player, "Repair!");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Hello there! Would you like to repair your"+" "+craftMat.getName()+"?");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Looks like we can get you fixed up for"+" "+CivColor.Yellow+CivColor.BOLD+cost+" "+CivSettings.CURRENCY_NAME);
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"If that's ok, please type 'yes'. Type anything else to cancel.");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_repair_heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt1")+" "+craftMat.getName()+"?");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt2")+" "+CivColor.Yellow+CivColor.BOLD+cost+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt3"));
 		
 	}
 	
@@ -44,7 +44,7 @@ public class InteractiveRepairItem implements InteractiveResponse {
 		resident.clearInteractiveMode();
 
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.send(resident, CivColor.LightGray+"Repair cancelled.");
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("interactive_repair_canceled"));
 			return;
 		}
 		

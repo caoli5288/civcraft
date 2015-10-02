@@ -22,6 +22,7 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -40,13 +41,13 @@ public class InteractiveCivName implements InteractiveResponse {
 		}
 
 		if (message.equalsIgnoreCase("cancel")) {
-			CivMessage.send(player, "Civilization creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_civ_cancel"));
 			resident.clearInteractiveMode();
 			return;
 		}
 
 		if (!StringUtils.isAlpha(message)) {
-			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+"Civilization names must only contain letters(A-Z). Enter another name.");
+			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_civ_invalid"));
 			return;
 		}
 	
@@ -55,10 +56,10 @@ public class InteractiveCivName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredCivName = message;
-		CivMessage.send(player, CivColor.LightGreen+"The Civilization of"+" "+CivColor.Yellow+message+CivColor.LightGreen+"? "+"An awesome choice.");
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("interactive_civ_success1")+" "+CivColor.Yellow+message+CivColor.LightGreen+"? "+CivSettings.localize.localizedString("interactive_civ_success2"));
 		CivMessage.send(player, " ");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Now what should your capitol be called?");
-		CivMessage.send(player, CivColor.LightGray+"(To cancel type 'cancel')");
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_civ_success3"));
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("interactive_civ_tocancel"));
 		resident.setInteractiveMode(new InteractiveCapitolName());
 
 		return;

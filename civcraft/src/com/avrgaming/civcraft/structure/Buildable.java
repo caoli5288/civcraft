@@ -1391,6 +1391,10 @@ public abstract class Buildable extends SQLObject {
 		TaskMaster.syncTask(new PostBuildSyncTask(tpl, this));
 	}
 	
+	public boolean isPartOfAdminCiv() {
+		return (this.getCiv().isAdminCiv());
+	}
+	
 	public boolean isTownHall() {
 		return (this instanceof TownHall);
 	}

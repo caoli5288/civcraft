@@ -6,8 +6,6 @@ package localize;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -35,54 +33,83 @@ public class Localize {
 		}else{
 			this.languageFile = langFile;
 		}
+		this.reloadDefaultLocalizedStrings();
 		this.reloadLocalizedStrings();
 	}
 	public String getLanguageFile(){
 		return this.languageFile;
 	}
 	
-	public String localizedString(String pathToString){
-		Object value = this.getLocalizedStrings().get(pathToString);
-		if(value==null)return pathToString;
-		else return (String)this.getLocalizedStrings().get(pathToString);
+	public Boolean isDefault() {
+		Boolean nameCheck = (languageFile.equalsIgnoreCase("default_lang.yml"));
+		return nameCheck;
 	}
-	public void loadDefaultLanguageFiles(){
-		String oldLanguageFile = this.getLanguageFile();
-		
-		this.setLanguageFile("default_lang.yml");
-		this.getLocalizedStrings().options().copyDefaults(true);
-		this.saveLocalizedStrings();
-		
-		this.setLanguageFile(oldLanguageFile);
-		this.reloadLocalizedStrings();
+	
+	public String localizedString(String pathToString){
+		if (this.isDefault())
+		{
+			Object value = this.getDefaultLocalizedStrings().get(pathToString);
+			if(value==null)	return pathToString;
+			else return (String)value;
+		}
+		else {
+			Object value = this.getLocalizedStrings().get(pathToString);
+			if(value==null)
+			{
+				value = this.getDefaultLocalizedStrings().get(pathToString);
+				if(value==null)	return pathToString;
+				else return (String)value;
+			}
+			else return (String)value;
+		}
 	}
 	
 	private FileConfiguration localizedStrings = null;
-	private File localizedStringsFile = null;
+	private FileConfiguration defaultLocalizedStrings = null;
+	
+	public void reloadDefaultLocalizedStrings () {
+		String defaultLanguageFile = "default_lang.yml";
+		File defaultLocalizedStringsFile = new File(plugin.getDataFolder().getPath()+"/localization/"+defaultLanguageFile);
+		CivLog.warning("Configuration file:"+defaultLanguageFile+" in use. Updating to disk from Jar.");
+		try {
+			CivSettings.streamResourceToDisk("/localization/"+defaultLanguageFile);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
+		defaultLocalizedStrings = YamlConfiguration.loadConfiguration(defaultLocalizedStringsFile);
+		
+		CivLog.info("Loading Configuration file:"+defaultLanguageFile);
+		// read the config.yml into memory
+		YamlConfiguration cfg = new YamlConfiguration(); 
+		try {
+			cfg.load(defaultLocalizedStringsFile);
+		} catch (FileNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} catch (InvalidConfigurationException e1) {
+			e1.printStackTrace();
+		}
+		defaultLocalizedStrings.setDefaults(cfg);
+		
+	}
 	
 	public void reloadLocalizedStrings() {	
 		File localizedStringsFile = new File(plugin.getDataFolder().getPath()+"/localization/"+languageFile);
-		Boolean isDefault = (languageFile.equalsIgnoreCase("default_lang.yml"));
-		if (isDefault)
+		if (this.isDefault())
 		{
-			if (languageFile.equalsIgnoreCase("default_lang.yml"))
-			{
-			CivLog.warning("Configuration file:"+languageFile+" in use. Updating to disk from Jar.");
-			try {
-				CivSettings.streamResourceToDisk("/localization/"+languageFile);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if (defaultLocalizedStrings == null) {
+				localizedStrings = defaultLocalizedStrings;
 			}
-			}
+			return;	
 		} else if (!localizedStringsFile.exists()) {
 			
 			CivLog.warning("Configuration file:"+languageFile+" was missing. You must create this file in plugins/Civcraft/localization/");
 			CivLog.warning("Using default_lang.yml");
 			this.setLanguageFile("");
-			this.loadDefaultLanguageFiles();
 			return;
-			
 		}
 	    localizedStrings = YamlConfiguration.loadConfiguration(localizedStringsFile);
 		
@@ -92,34 +119,14 @@ public class Localize {
 		try {
 			cfg.load(localizedStringsFile);
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (InvalidConfigurationException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
         localizedStrings.setDefaults(cfg);
 		
-//	    localizedStringsFile = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/"+languageFile);
-//	    if (!localizedStringsFile.exists()) {
-//			CivLog.warning("Configuration file: "+languageFile+" was missing. Streaming to disk from Jar.");
-//			try {
-//				CivSettings.streamResourceToDisk("/data/"+languageFile);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	    localizedStrings = YamlConfiguration.loadConfiguration(localizedStringsFile);
-//	 
-//	    InputStream defConfigStream = plugin.getResource("default_lang.yml");
-//	    if (defConfigStream != null) {
-//	    	Reader defConfigReader = new InputStreamReader(defConfigStream);
-//	        YamlConfiguration defConfig = YamlConfiguration.loadConfiguration(defConfigReader);
-//	        localizedStrings.setDefaults(defConfig);
-//	    }
 	}
 	private FileConfiguration getLocalizedStrings() {
 	    if (localizedStrings == null) {
@@ -127,14 +134,12 @@ public class Localize {
 	    }
 	    return localizedStrings;
 	}
-	public void saveLocalizedStrings() {
-	    if (localizedStrings == null || localizedStringsFile == null) {
-	    return;
+	
+	private FileConfiguration getDefaultLocalizedStrings() {
+	    if (defaultLocalizedStrings == null) {
+	    	reloadDefaultLocalizedStrings();
 	    }
-	    try {
-	    	localizedStrings.save(localizedStringsFile);
-	    } catch (IOException ex) {
-	        Logger.getLogger(JavaPlugin.class.getName()).log(Level.SEVERE, "Could not save configuration to " + localizedStringsFile, ex);
-	    }
+	    return defaultLocalizedStrings;
 	}
+
 }

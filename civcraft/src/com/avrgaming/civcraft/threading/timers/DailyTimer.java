@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.NotreDame;
+import com.avrgaming.civcraft.structure.wonders.TheColossus;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.structure.wonders.Colosseum;
 import com.avrgaming.civcraft.threading.TaskMaster;
@@ -91,32 +92,36 @@ public class DailyTimer implements Runnable {
 	}
 	
 	private void payCivUpkeep() {
-		Wonder colossus = CivGlobal.getWonderByConfigId("w_colossus");
-		if (colossus != null) {
-			try { 
-				colossus.processCoinsFromCulture();
-			} catch (Exception e) {
-				e.printStackTrace();
+		
+		for (Wonder wonder : CivGlobal.getWonders())
+		{
+			if (wonder != null)
+			{
+				if (wonder.getConfigId().equals("w_colossus")) {
+					try { 
+						((TheColossus)wonder).processCoinsFromCulture();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if (wonder.getConfigId().equals("w_notre_dame")) {
+					try {
+						((NotreDame)wonder).processPeaceTownCoins();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if (wonder.getConfigId().equals("w_colosseum")) {
+					try {
+						((Colosseum)wonder).processCoinsFromColosseum();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		
-		Wonder notredame = CivGlobal.getWonderByConfigId("w_notre_dame");
-		if (notredame != null) {
-			try {
-				((NotreDame)notredame).processPeaceTownCoins();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
-		Wonder colosseum = CivGlobal.getWonderByConfigId("w_colosseum");
-		if (colosseum != null) {
-			try {
-				((Colosseum)colosseum).processCoinsFromColosseum();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
 			if (civ.isAdminCiv()) {

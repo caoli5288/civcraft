@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -27,12 +28,12 @@ public class InteractiveConfirmWeatherChange implements InteractiveResponse {
 				player.getWorld().setStorm(false);
 				player.getWorld().setThundering(false);
 				player.getWorld().setWeatherDuration((int) TimeTools.toTicks(20*60));
-				CivMessage.global(resident.getName()+" "+"has used a [Weather Change] token to change the weather to sunny!");
+				CivMessage.global(resident.getName()+" "+CivSettings.localize.localizedString("interactive_weather_success"));
 				perk.markAsUsed(resident);
 			} catch (CivException e) {
 			}
 		} else {
-			CivMessage.send(resident, "Weather Change cancelled.");
+			CivMessage.send(resident, CivSettings.localize.localizedString("interactive_weather_cancel"));
 		}
 		
 	}

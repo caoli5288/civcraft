@@ -17,9 +17,9 @@ public class StructureValidationChecker implements Runnable {
 		Iterator<Entry<BlockCoord, Structure>> structIter = CivGlobal.getStructureIterator();
 		while (structIter.hasNext()) {
 			Structure struct = structIter.next().getValue();
-			if (struct.getCiv().isAdminCiv()) {
-				continue;
-			}
+//			if (struct.getCiv().isAdminCiv() && struct.getCiv().getName().equals("Spawn") && (struct.getConfigId().equals("s_capitol") || struct.getConfigId().equals("s_bank") || struct.getConfigId().equals("s_grocer") || struct.getConfigId().equals("s_market"))) {
+//				continue;
+//			}
 			
 			if (War.isWarTime()) {
 				/* Don't do any work once it's war time. */

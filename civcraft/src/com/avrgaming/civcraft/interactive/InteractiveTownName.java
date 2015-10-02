@@ -24,6 +24,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.town.TownCommand;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -44,13 +45,13 @@ public class InteractiveTownName implements InteractiveResponse {
 		}
 
 		if (message.equalsIgnoreCase("cancel")) {
-			CivMessage.send(player, "Town creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_town_cancelled"));
 			resident.clearInteractiveMode();
 			return;
 		}
 		
 		if (!StringUtils.isAlpha(message)) {
-			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+"Town names must only contain letters(A-Z). Enter another name.");
+			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_town_nameInvalid"));
 			return;
 		}
 		
@@ -59,7 +60,7 @@ public class InteractiveTownName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredTownName = message;
-		CivMessage.send(player, CivColor.LightGreen+"The Town shall be called"+" "+CivColor.Yellow+resident.desiredTownName+CivColor.LightGreen+"!");
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("interactive_town_confirmName")+" "+CivColor.Yellow+resident.desiredTownName+CivColor.LightGreen+"!");
 		
 		class SyncTask implements Runnable {
 			Resident resident;
@@ -78,17 +79,17 @@ public class InteractiveTownName implements InteractiveResponse {
 					return;
 				}
 				
-				CivMessage.sendHeading(player, "Survey Results");
+				CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_town_surveyResults"));
 				CivMessage.send(player, TownCommand.survey(player.getLocation()));
 				
 				Location capLoc = resident.getCiv().getCapitolTownHallLocation();
 				if (capLoc == null) {
-					CivMessage.sendError(player, "Could not find the capitol town hall location. Make sure it's built before you build more towns...");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_town_noCapitol"));
 					resident.clearInteractiveMode();
 					return;
 				}
 				
-				CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Are you sure? Type 'yes' and I will create this Town. Type anything else, and I will forget the whole thing.");
+				CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_town_confirm"));
 				
 				resident.setInteractiveMode(new InteractiveConfirmTownCreation());				
 			}

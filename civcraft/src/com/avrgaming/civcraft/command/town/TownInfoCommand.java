@@ -571,20 +571,20 @@ public class TownInfoCommand extends CommandBase {
 		CivMessage.sendHeading(sender, town.getName()+" "+CivSettings.localize.localizedString("cmd_town_info_showHeading"));
 		ConfigTownLevel level = CivSettings.townLevels.get(town.getLevel());
 
-		CivMessage.send(sender, CivColor.Green+"Civilization:"+" "+CivColor.LightGreen+town.getCiv().getName());
-		CivMessage.send(sender, CivColor.Green+"Town Level:"+" "+CivColor.LightGreen+town.getLevel()+" ("+town.getLevelTitle()+") "+
-		CivColor.Green+"Score: "+CivColor.LightGreen+town.getScore());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Civilization")+" "+CivColor.LightGreen+town.getCiv().getName());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("TownLevel")+" "+CivColor.LightGreen+town.getLevel()+" ("+town.getLevelTitle()+") "+
+		CivColor.Green+CivSettings.localize.localizedString("Score:")+" "+CivColor.LightGreen+town.getScore());
 		
 		if (town.getMayorGroup() == null) {
-			CivMessage.send(sender, CivColor.Green+"Mayors:"+" "+CivColor.Rose+"NONE");
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Mayors")+" "+CivColor.Rose+CivSettings.localize.localizedString("none"));
 		} else {
-			CivMessage.send(sender, CivColor.Green+"Mayors:"+" "+CivColor.LightGreen+town.getMayorGroup().getMembersString());			
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Mayors")+" "+CivColor.LightGreen+town.getMayorGroup().getMembersString());			
 		}
 		
 		if (town.getAssistantGroup() == null) {
-			CivMessage.send(sender, CivColor.Green+"Assistants:"+" "+CivColor.Rose+"NONE");
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Assitants")+" "+CivColor.Rose+CivSettings.localize.localizedString("none"));
 		} else {
-			CivMessage.send(sender, CivColor.Green+"Assistants:"+" "+CivColor.LightGreen+town.getAssistantGroup().getMembersString());		
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Assitants")+" "+CivColor.LightGreen+town.getAssistantGroup().getMembersString());		
 		}
 		
 		if (resident == null || civ.hasResident(resident) || isAdmin) {
@@ -600,20 +600,20 @@ public class TownInfoCommand extends CommandBase {
 				color = CivColor.Rose;
 			}
 			
-			CivMessage.send(sender, CivColor.Green+"Plots:"+" "+CivColor.LightGreen+"("+town.getTownChunks().size()+"/"+town.getMaxPlots()+") "+
-									CivColor.Green+" "+"Tile Improvements:"+" "+CivColor.LightGreen+"("+color+town.getTileImprovementCount()+CivColor.LightGreen+"/"+maxTileImprovements+")");
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Plots")+" "+CivColor.LightGreen+"("+town.getTownChunks().size()+"/"+town.getMaxPlots()+") "+
+									CivColor.Green+" "+CivSettings.localize.localizedString("TileImprovements")+" "+CivColor.LightGreen+"("+color+town.getTileImprovementCount()+CivColor.LightGreen+"/"+maxTileImprovements+")");
 			
 			
 			
 			//CivMessage.send(sender, CivColor.Green+"Outposts: "+CivColor.LightGreen+town.getOutpostChunks().size()+" "+
-			CivMessage.send(sender, CivColor.Green+"Growth:"+" "+CivColor.LightGreen+df.format(town.getGrowth().total)+" " +
-									CivColor.Green+"Hammers:"+" "+CivColor.LightGreen+df.format(town.getHammers().total)+" "+
-									CivColor.Green+"Beakers:"+" "+CivColor.LightGreen+df.format(town.getBeakers().total));
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Growth:")+" "+CivColor.LightGreen+df.format(town.getGrowth().total)+" " +
+									CivColor.Green+CivSettings.localize.localizedString("Hammers")+CivColor.LightGreen+df.format(town.getHammers().total)+" "+
+									CivColor.Green+CivSettings.localize.localizedString("Beakers")+" "+CivColor.LightGreen+df.format(town.getBeakers().total));
 			
 			
-			CivMessage.send(sender, CivColor.Green+"Members:"+" "+CivColor.LightGreen+town.getResidentCount()+" "+
-									CivColor.Green+"Tax Rate:"+" "+CivColor.LightGreen+town.getTaxRateString()+" "+
-									CivColor.Green+"Flat Tax:"+" "+CivColor.LightGreen+town.getFlatTax()+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Members")+" "+CivColor.LightGreen+town.getResidentCount()+" "+
+									CivColor.Green+CivSettings.localize.localizedString("TaxRate")+" "+CivColor.LightGreen+town.getTaxRateString()+" "+
+									CivColor.Green+CivSettings.localize.localizedString("FlatTax")+" "+CivColor.LightGreen+town.getFlatTax()+" "+CivSettings.CURRENCY_NAME);
 			
 			HashMap<String,String> info = new HashMap<String, String>();
 //			info.put("Happiness", CivColor.White+"("+CivColor.LightGreen+"H"+CivColor.Yellow+town.getHappinessTotal()
@@ -626,8 +626,8 @@ public class TownInfoCommand extends CommandBase {
 			
 			
 			ConfigCultureLevel clc = CivSettings.cultureLevels.get(town.getCultureLevel());	
-			CivMessage.send(sender, CivColor.Green+"Culture:"+" "+CivColor.LightGreen+"Level: "+clc.level+" ("+town.getAccumulatedCulture()+"/"+clc.amount+")"+
-					CivColor.Green+" Online:"+" "+CivColor.LightGreen+town.getOnlineResidents().size());
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Culture")+" "+CivColor.LightGreen+CivSettings.localize.localizedString("Level")+" "+clc.level+" ("+town.getAccumulatedCulture()+"/"+clc.amount+")"+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Online")+" "+CivColor.LightGreen+town.getOnlineResidents().size());
 
 		}
 		
@@ -636,20 +636,20 @@ public class TownInfoCommand extends CommandBase {
 			for (BonusGoodie goodie : town.getBonusGoodies()) {
 				goodies += goodie.getDisplayName()+",";
 			}
-			CivMessage.send(sender, CivColor.Green+"Goodies:"+" "+CivColor.LightGreen+goodies);
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Goodies")+" "+CivColor.LightGreen+goodies);
 		}
 		
 		if (resident == null || town.isInGroup("mayors", resident) || town.isInGroup("assistants", resident) || 
 				civ.getLeaderGroup().hasMember(resident) || civ.getAdviserGroup().hasMember(resident) || isAdmin) {
 			try {
-				CivMessage.send(sender, CivColor.Green+"Treasury:"+" "+CivColor.LightGreen+town.getBalance()+CivColor.Green+" "+CivSettings.CURRENCY_NAME+" "+"Upkeep:"+" "+CivColor.LightGreen+town.getTotalUpkeep()*town.getGovernment().upkeep_rate);
+				CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Treasury")+" "+CivColor.LightGreen+town.getBalance()+CivColor.Green+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_town_info_structuresUpkeep")+" "+CivColor.LightGreen+town.getTotalUpkeep()*town.getGovernment().upkeep_rate);
 				Structure bank = town.getStructureByType("s_bank");
 				if (bank != null) { 
-					CivMessage.send(sender, CivColor.Green+"Interest Rate:"+" "+CivColor.LightGreen+df.format(((Bank)bank).getInterestRate()*100)+"%"+
-							CivColor.Green+" Principle: "+CivColor.LightGreen+town.getTreasury().getPrincipalAmount());
+					CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_town_info_showBankInterest")+" "+CivColor.LightGreen+df.format(((Bank)bank).getInterestRate()*100)+"%"+
+							CivColor.Green+" "+CivSettings.localize.localizedString("cmd_town_info_showBankPrinciple")+" "+CivColor.LightGreen+town.getTreasury().getPrincipalAmount());
 				} else {
-					CivMessage.send(sender, CivColor.Green+"Interest Rate:"+" "+CivColor.LightGreen+"N/A(No Bank)"+" "+
-							CivColor.Green+"Principal:"+" "+CivColor.LightGreen+"N/A(No Bank)");
+					CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_town_info_showBankInterest")+" "+CivColor.LightGreen+CivSettings.localize.localizedString("cmd_town_info_showBankNoBank")+" "+
+							CivColor.Green+CivSettings.localize.localizedString("cmd_town_info_showBankPrinciple")+" "+CivColor.LightGreen+CivSettings.localize.localizedString("cmd_town_info_showBankNoBank"));
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
@@ -658,24 +658,24 @@ public class TownInfoCommand extends CommandBase {
 		}
 		
 		if (town.inDebt()) {
-			CivMessage.send(sender, CivColor.Green+"Debt:"+" "+CivColor.Yellow+town.getDebt()+" "+CivSettings.CURRENCY_NAME);
-			CivMessage.send(sender, CivColor.Yellow+"Our town is in debt! Use '/town deposit' to pay it off.");
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Debt")+" "+CivColor.Yellow+town.getDebt()+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_town_info_showInDebt"));
 		}
 		
 		if (town.getMotherCiv() != null) {
-			CivMessage.send(sender, CivColor.Yellow+"We yearn for our old motherland of "+""+CivColor.LightPurple+town.getMotherCiv().getName()+CivColor.Yellow+"!");
+			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_town_info_showYearn")+" "+CivColor.LightPurple+town.getMotherCiv().getName()+CivColor.Yellow+"!");
 		}
 		
 		if (town.hasDisabledStructures()) {
-			CivMessage.send(sender, CivColor.Rose+"Town has some disabled structures. See /town info disabled.");
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_town_info_showDisabled"));
 		}
 		
 		if (isAdmin) {
 			TownHall townhall = town.getTownHall();
 			if (townhall == null) {
-				CivMessage.send(sender, CivColor.LightPurple+"NO TOWN HALL");
+				CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("cmd_town_info_showNoTownHall"));
 			} else {
-				CivMessage.send(sender, CivColor.LightPurple+"Location:"+" "+townhall.getCorner());
+				CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("Location")+" "+townhall.getCorner());
 			}
 			
 			String wars = "";
@@ -685,7 +685,7 @@ public class TownInfoCommand extends CommandBase {
 				}
 			}
 			
-			CivMessage.send(sender, CivColor.LightPurple+"Wars:"+" "+wars);
+			CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("cmd_town_info_showWars")+" "+wars);
 			
 		}
 		
@@ -705,7 +705,7 @@ public class TownInfoCommand extends CommandBase {
 	@Override
 	public void doDefaultAction() throws CivException {
 		show_info();
-		CivMessage.send(sender, CivColor.LightGray+"Subcommands available: See /town info help");
+		CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_town_info_showHelp"));
 	}
 
 	@Override

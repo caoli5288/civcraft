@@ -22,6 +22,7 @@ package com.avrgaming.civcraft.command.town;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Town;
@@ -39,18 +40,18 @@ public class TownSetCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town set";
-		displayName = "Town Set";
+		displayName = CivSettings.localize.localizedString("cmd_town_set_name");
 		
-		commands.put("taxrate", "Change the town's property tax rate.");
-		commands.put("flattax", "Change the town's flat tax on membership.");
-		commands.put("bankfee", "Change the town Bank's non member fee");
-		commands.put("storefee", "Change the town Store's non member fee");
-		commands.put("grocerfee", "Change the town Grocer's non member fee");
-		commands.put("libraryfee", "Change the town Library's non member fee");
-		commands.put("blacksmithfee", "Change the town Blacksmith's non member fee");
-		commands.put("stablefee", "Change the town Stable's non member fee");
+		commands.put("taxrate", CivSettings.localize.localizedString("cmd_town_set_taxrateDesc"));
+		commands.put("flattax", CivSettings.localize.localizedString("cmd_town_set_flattaxDesc"));
+		commands.put("bankfee", CivSettings.localize.localizedString("cmd_town_set_bankfeeDesc"));
+		commands.put("storefee", CivSettings.localize.localizedString("cmd_town_set_storefeeDesc"));
+		commands.put("grocerfee", CivSettings.localize.localizedString("cmd_town_set_grocerfeeDesc"));
+		commands.put("libraryfee", CivSettings.localize.localizedString("cmd_town_set_libraryfeeDesc"));
+		commands.put("blacksmithfee", CivSettings.localize.localizedString("cmd_town_set_blacksmithfeeDesc"));
+		commands.put("stablefee", CivSettings.localize.localizedString("cmd_town_set_stablefeeDesc"));
 		
-		commands.put("scoutrate", "[10/30/60] Change the rate at which scout towers report no player positions.");
+		commands.put("scoutrate", CivSettings.localize.localizedString("cmd_town_set_scoutrateDesc"));
 		
 	}
 	
@@ -60,19 +61,19 @@ public class TownSetCommand extends CommandBase {
 		
 		Structure struct = town.findStructureByConfigId("s_stable");
 		if (struct == null) {
-			throw new CivException("Your town does not own a Stable.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_stablefeeNone"));
 		}
 		
 		Stable stable = (Stable)struct;
 		
 		if (feeInt < Stable.FEE_MIN || feeInt > Stable.FEE_MAX) {
-			throw new CivException("Must be a number between 5% and 100%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_stablefeeRates"));
 		}
 	
 		stable.setNonResidentFee(((double)feeInt/100));
 		stable.updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set Stable fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 	}
 	
 	public void scoutrate_cmd() throws CivException {
@@ -80,7 +81,7 @@ public class TownSetCommand extends CommandBase {
 		Integer rate = getNamedInteger(1);
 		
 		if (rate != 10 && rate != 30 && rate != 60) {
-			throw new CivException("Reporting rate must be 10,30, or 60 seconds.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_scoutrateRates"));
 		}
 		
 		for (Structure struct : town.getStructures()) {
@@ -89,7 +90,7 @@ public class TownSetCommand extends CommandBase {
 			}
 		}
 		
-		CivMessage.sendSuccess(sender, "Set scout tower report interval to"+" "+rate+" "+"seconds.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_scoutrateSuccess")+" "+rate);
 	}
 	
 	public void blacksmithfee_cmd() throws CivException {
@@ -97,18 +98,18 @@ public class TownSetCommand extends CommandBase {
 		Integer feeInt = getNamedInteger(1);
 		
 		if (feeInt < 5 || feeInt > 15) {
-			throw new CivException("Must be a number between 5% and 15%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_rate5to15"));
 		}
 		
 		Structure struct = town.findStructureByConfigId("s_blacksmith");
 		if (struct == null) {
-			throw new CivException("Your town does not own a Blacksmith.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_blacksmithfeeNone"));
 		}
 
 		((Blacksmith)struct).setNonResidentFee(((double)feeInt/100));
 		((Blacksmith)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set Blacksmith fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 	}
 	
 	
@@ -117,18 +118,18 @@ public class TownSetCommand extends CommandBase {
 		Integer feeInt = getNamedInteger(1);
 		
 		if (feeInt < 5 || feeInt > 15) {
-			throw new CivException("Must be a number between 5% and 15%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_rate5to15"));
 		}
 		
 		Structure struct = town.findStructureByConfigId("s_library");
 		if (struct == null) {
-			throw new CivException("Your town does not own a library.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_libraryfeeNone"));
 		}
 
 		((Library)struct).setNonResidentFee(((double)feeInt/100));
 		((Library)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set library fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 	}
 	
 	public void grocerfee_cmd() throws CivException {
@@ -136,18 +137,18 @@ public class TownSetCommand extends CommandBase {
 		Integer feeInt = getNamedInteger(1);
 		
 		if (feeInt < 5 || feeInt > 15) {
-			throw new CivException("Must be a number between 5% and 15%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_rate5to15"));
 		}
 		
 		Structure struct = town.findStructureByConfigId("s_grocer");
 		if (struct == null) {
-			throw new CivException("Your town does not own a grocer.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_grocerfeeNone"));
 		}
 
 		((Grocer)struct).setNonResidentFee(((double)feeInt/100));
 		((Grocer)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set grocer fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 		
 	}
 	
@@ -156,18 +157,18 @@ public class TownSetCommand extends CommandBase {
 		Integer feeInt = getNamedInteger(1);
 		
 		if (feeInt < 5 || feeInt > 15) {
-			throw new CivException("Must be a number between 5% and 15%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_rate5to15"));
 		}
 		
 		Structure struct = town.findStructureByConfigId("s_store");
 		if (struct == null) {
-			throw new CivException("Your town does not own a store.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_storefeeNone"));
 		}
 		
 		((Store)struct).setNonResidentFee(((double)feeInt/100));
 		((Store)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set store fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 		
 	}
 	
@@ -176,18 +177,18 @@ public class TownSetCommand extends CommandBase {
 		Integer feeInt = getNamedInteger(1);
 		
 		if (feeInt < 5 || feeInt > 15) {
-			throw new CivException("Must be a number between 5% and 15%");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_rate5to15"));
 		}
 		
 		Structure struct = town.findStructureByConfigId("s_bank");
 		if (struct == null) {
-			throw new CivException("Your town does not own a bank.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_bankfeeNone"));
 		}
 		
 		((Bank)struct).setNonResidentFee(((double)feeInt/100));
 		((Bank)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, "Set bank fee rate to"+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
 		
 	}
 	
@@ -195,33 +196,33 @@ public class TownSetCommand extends CommandBase {
 		Town town = getSelectedTown();
 		
 		if (args.length < 2) {
-			throw new CivException("Please specify a tax rate.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_taxratePrompt"));
 		}
 		
 		try { 
 			town.setTaxRate(Double.valueOf(args[1])/100);
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is not a number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 		
 		town.quicksave();
-		CivMessage.sendTown(town, "Town changed property tax rate to"+" "+args[1]+"%");
+		CivMessage.sendTown(town, CivSettings.localize.localizedString("cmd_town_set_taxrateSuccess")+" "+args[1]+"%");
 	}
 
 	public void flattax_cmd() throws CivException {
 		Town town = getSelectedTown();	
 		if (args.length < 2) {
-			throw new CivException("Please specify a tax rate.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_set_taxratePrompt"));
 		}
 				
 		try { 
 			town.setFlatTax(Integer.valueOf(args[1]));
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is not a number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 		
 		town.quicksave();
-		CivMessage.send(town, "Town changed flat tax to"+" "+args[1]);
+		CivMessage.send(town, CivSettings.localize.localizedString("cmd_town_set_flattaxSuccess")+" "+args[1]);
 	}
 	
 	@Override
@@ -240,7 +241,7 @@ public class TownSetCommand extends CommandBase {
 		Player player = getPlayer();
 		
 		if (!town.playerIsInGroupName("mayors", player) && !town.playerIsInGroupName("assistants", player)) {
-			throw new CivException("Only mayors and assistants can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_claimNoPerm"));
 		}		
 	}
 

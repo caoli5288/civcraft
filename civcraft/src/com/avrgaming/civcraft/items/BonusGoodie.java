@@ -71,7 +71,7 @@ public class BonusGoodie extends LoreItem {
 		OUTPOSTLOCATION
 	}
 		
-	public static final String LORE_TYPE = "Bonus Goodie";
+	public static final String LORE_TYPE = CivSettings.localize.localizedString("bonusGoodie_SignHeading");
 	
 	/* Holder that holding this item. null if on the ground or in an itemframe*/
 	private InventoryHolderStorage holderStore = null; 

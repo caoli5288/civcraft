@@ -37,7 +37,7 @@ public class FoundWarCamp extends ItemComponent implements CallbackInterface {
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
 		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Deploys War Camp");
-		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");		
+		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+CivSettings.localize.localizedString("itemLore_RightClickToUse"));		
 	}
 	
 	public void foundCamp(Player player) throws CivException {

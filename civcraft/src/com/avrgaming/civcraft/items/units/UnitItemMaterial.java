@@ -37,6 +37,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -158,7 +159,7 @@ public class UnitItemMaterial extends LoreMaterial {
 			this.addLore(str);
 		}
 		
-		this.addLore(CivColor.Gold+"Soulbound");
+		this.addLore(CivColor.Gold+CivSettings.localize.localizedString("Soulbound"));
 	}
 
 	public int getSocketSlot() {

@@ -19,7 +19,7 @@ public class Catalyst extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
-		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Catalyst");
+		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+CivSettings.localize.localizedString("itemLore_Catalyst"));
 	}
 
 	public ItemStack getEnchantedItem(ItemStack stack) {

@@ -42,23 +42,23 @@ public class FoundCivilization extends ItemComponent implements CallbackInterfac
 	
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
-		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Founds a Civilization");
-		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");
+		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+CivSettings.localize.localizedString("foundCiv_lore1"));
+		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+CivSettings.localize.localizedString("itemLore_RightClickToUse"));
 		attrUtil.addEnhancement("LoreEnhancementSoulBound", null, null);
-		attrUtil.addLore(CivColor.Gold+"Soulbound");
+		attrUtil.addLore(CivColor.Gold+CivSettings.localize.localizedString("Soulbound"));
 	}
 	
 	public void foundCiv(Player player) throws CivException {
 		
 		Resident resident = CivGlobal.getResident(player);
 		if (resident == null) {
-			throw new CivException("You must be a registered resident to found a civ. This shouldn't happen. Contact an admin.");
+			throw new CivException(CivSettings.localize.localizedString("foundCiv_notResident"));
 		}
 			
 		/*
 		 * Build a preview for the Capitol structure.
 		 */
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Checking structure position...Please wait.");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("build_checking_position"));
 		ConfigBuildableInfo info = CivSettings.structures.get("s_capitol");
 		Buildable.buildVerifyStatic(player, info, player.getLocation(), this);	
 	}
@@ -113,14 +113,14 @@ public class FoundCivilization extends ItemComponent implements CallbackInterfac
 		
 		/* Save the location so we dont have to re-validate the structure position. */
 		resident.desiredTownLocation = player.getLocation();
-		CivMessage.sendHeading(player, "Founding A New Civ");
-		CivMessage.send(player, CivColor.LightGreen+"You and your small band of travelers have finally found the chosen land.");
-		CivMessage.send(player, CivColor.LightGreen+"While you are few, will your numbers will grow?");
-		CivMessage.send(player, CivColor.LightGreen+"Will you journey boldy forth into new frontiers?");
-		CivMessage.send(player, CivColor.LightGreen+"Can you build a Civilization that can stand the test of time?");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("foundCiv_Heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("foundCiv_Prompt1"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("foundCiv_Prompt2"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("foundCiv_Prompt3"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("foundCiv_Prompt4"));
 		CivMessage.send(player, " ");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"What shall your new Civilization be called?");
-		CivMessage.send(player, CivColor.LightGray+"(To cancel, type 'cancel')");
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("foundCiv_Prompt5"));
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("build_cancel_prompt"));
 		
 		resident.setInteractiveMode(new InteractiveCivName());
 	}

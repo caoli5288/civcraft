@@ -24,6 +24,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -39,15 +40,15 @@ public class TownOutlawCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town outlaw";
-		displayName = "Town Outlaw";
+		displayName = CivSettings.localize.localizedString("cmd_town_outlaw_name");
 		
-		commands.put("add", "[name] (Case Sensitive) - Adds this player to the outlaw list.");
-		commands.put("remove", "[name] (Case Sensitive) - Removes this player from the outlaw list.");
-		commands.put("list", "Lists all of the town's current outlaws.");
-		commands.put("addall", "[town] - Adds entire town to the outlaw list.");
-		commands.put("removeall", "[town] - Removes entire town from the outlaw list.");
-		commands.put("addallciv", "[civ] - Adds entire town to the outlaw list.");
-		commands.put("removeallciv", "[civ] - Removes entire town from the outlaw list.");
+		commands.put("add", CivSettings.localize.localizedString("cmd_town_outlaw_addDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_town_outlaw_removeDesc"));
+		commands.put("list", CivSettings.localize.localizedString("cmd_town_outlaw_listDesc"));
+		commands.put("addall",CivSettings.localize.localizedString("cmd_town_outlaw_addallDesc") );
+		commands.put("removeall", CivSettings.localize.localizedString("cmd_town_outlaw_removeallDesc"));
+		commands.put("addallciv", CivSettings.localize.localizedString("cmd_town_outlaw_addallcivDesc"));
+		commands.put("removeallciv", CivSettings.localize.localizedString("cmd_town_outlaw_removeallcivDesc"));
 	}
 	
 	public void addall_cmd() throws CivException {
@@ -58,13 +59,13 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+
-						town.getName()+"! "+"You have one minute to get out ...");
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+
+						town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
-		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
 	}
 	
 	public void removeall_cmd() throws CivException {
@@ -86,14 +87,14 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+
-						town.getName()+"! "+"You have one minute to get out ...");
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+
+						town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
 		}
-		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
 	}
 	
 	public void removeallciv_cmd() throws CivException {
@@ -112,21 +113,21 @@ public class TownOutlawCommand extends CommandBase {
 		Town town = getSelectedTown();
 		
 		if (args.length < 2) {
-			throw new CivException("Enter player name to declare as an outlaw.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_outlaw_addPrompt"));
 		}
 		
 		Resident resident = getNamedResident(1);
 		if (resident.getTown()== town) {
-			throw new CivException("Cannot declare one of your own town members as an outlaw.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_outlaw_addError"));
 		}
 		
 		try {
 			Player player = CivGlobal.getPlayer(args[1]);
-			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"You're going to be declared an outlaw in"+" "+town.getName()+"! "+"You have one minute to get out ...");			
+			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));			
 		} catch (CivException e) {
 		}	
 		
-		CivMessage.sendSuccess(sender, args[1]+" "+"will be an outlaw in 60 seconds.");
+		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
 		TaskMaster.asyncTask(new TownAddOutlawTask(args[1], town), 1000);	
 	}
 	
@@ -134,19 +135,19 @@ public class TownOutlawCommand extends CommandBase {
 		Town town = getSelectedTown();
 		
 		if (args.length < 2) {
-			throw new CivException("Enter player name to remove as an outlaw.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_outlaw_removePrompt"));
 		}
 		
 		town.removeOutlaw(args[1]);
 		town.save();
 		
-		CivMessage.sendSuccess(sender, args[1]+" "+"was removed from being an outlaw.");
+		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_removeSuccess"));
 	}
 	
 	public void list_cmd() throws CivException {
 		Town town = getSelectedTown();
 		
-		CivMessage.sendHeading(sender, "Town Outlaws");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_outlaw_listHeading"));
 		
 		String out = "";
 		for (String outlaw : town.outlaws) {

@@ -87,7 +87,7 @@ public class DisableTeleportEvent implements EventInterface {
 			
 			String line;
 			try {
-				CivMessage.globalHeading(CivColor.BOLD+"Teleportation is disabled until after War Time");
+				CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString(CivSettings.localize.localizedString("warteleportDisable")));
 				while ((line = br.readLine()) != null) {
 					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), line);
 				}
@@ -122,7 +122,7 @@ public class DisableTeleportEvent implements EventInterface {
 			String line;
 			try {
 
-				CivMessage.globalHeading(CivColor.BOLD+"Teleportation is now enabled.");
+				CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString("warteleportEnable"));
 				while ((line = br.readLine()) != null) {
 					Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), line);
 				}

@@ -90,7 +90,7 @@ public class ConfigTownUpgrade {
 		case "set_town_level":
 			if (town.getLevel() < Integer.valueOf(args[1].trim())) {
 				town.setLevel(Integer.valueOf(args[1].trim()));
-				CivMessage.global(town.getName()+" is now a "+town.getLevelTitle()+"!");
+				CivMessage.global(town.getName()+" "+CivSettings.localize.localizedString("townUpgrade_town")+" "+town.getLevelTitle()+"!");
 			}
 			break;
 		
@@ -102,7 +102,7 @@ public class ConfigTownUpgrade {
 					bank.setLevel(Integer.valueOf(args[1].trim()));
 					bank.updateSignText();
 					town.saved_bank_level = bank.getLevel();
-					CivMessage.sendTown(town, "The bank is now level"+" "+bank.getLevel());
+					CivMessage.sendTown(town, CivSettings.localize.localizedString("townUpgrade_bank")+" "+bank.getLevel());
 				}
 			}
 			break;
@@ -114,7 +114,7 @@ public class ConfigTownUpgrade {
 					bank.setInterestRate(Double.valueOf(args[1].trim()));
 					town.saved_bank_interest_amount = bank.getInterestRate();
 					DecimalFormat df = new DecimalFormat();
-					CivMessage.sendTown(town, "The bank is now provides a"+" "+df.format(bank.getInterestRate()*100)+"% "+"interest rate.");
+					CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_interest")+" "+df.format(bank.getInterestRate()*100)+"%.");
 				}
 			}
 			break;
@@ -125,7 +125,7 @@ public class ConfigTownUpgrade {
 				if (store.getLevel() < Integer.valueOf(args[1].trim())) {
 					store.setLevel(Integer.valueOf(args[1].trim()));
 					store.updateSignText();
-					CivMessage.sendTown(town, "The store is now level"+" "+store.getLevel());
+					CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_store")+" "+store.getLevel());
 				}
 			}
 			break;
@@ -145,7 +145,7 @@ public class ConfigTownUpgrade {
 				if (library.getLevel() < Integer.valueOf(args[1].trim())) {
 					library.setLevel(Integer.valueOf(args[1].trim()));
 					library.updateSignText();
-					CivMessage.sendTown(town, "The library is now level"+" "+library.getLevel());
+					CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_library")+" "+library.getLevel());
 				}
 			}
 			break;
@@ -156,7 +156,7 @@ public class ConfigTownUpgrade {
 				LibraryEnchantment enchant = new LibraryEnchantment(args[1].trim(), Integer.valueOf(args[2].trim()), Double.valueOf(args[3].trim()));
 				library.addEnchant(enchant);
 				library.updateSignText();
-				CivMessage.sendTown(town, "The library now offers the"+" "+args[1].trim()+" "+"enchantment at level"+" "+args[2]+"!");
+				CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_enchantment")+" "+args[1].trim()+" "+args[2]+"!");
 			}
 			break;
 		case "set_grocer_level":
@@ -166,7 +166,7 @@ public class ConfigTownUpgrade {
 				if (grocer.getLevel() < Integer.valueOf(args[1].trim())) {
 					grocer.setLevel(Integer.valueOf(args[1].trim()));
 					grocer.updateSignText();
-					CivMessage.sendTown(town, "The grocer is now level"+" "+grocer.getLevel());
+					CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_grocer")+" "+grocer.getLevel());
 				}
 			}
 			break;
@@ -189,7 +189,7 @@ public class ConfigTownUpgrade {
 			}
 			if (didUpgrade)
 			{
-				CivMessage.sendTown(town, "Our trommels are now level"+" "+trommelLevel);
+				CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_trommels")+" "+trommelLevel);
 			}
 			break;
 		case "set_quarry_level":
@@ -211,7 +211,7 @@ public class ConfigTownUpgrade {
 			}
 			if (didUpgradeQuarry)
 			{
-				CivMessage.sendTown(town, "Our quarries are now level"+" "+quarryLevel);
+				CivMessage.sendTown(town, CivSettings.localize.localizedString("townupgrade_quarries")+" "+quarryLevel);
 			}
 			break;
 		}

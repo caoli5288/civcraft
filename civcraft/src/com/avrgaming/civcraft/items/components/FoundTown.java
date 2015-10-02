@@ -25,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.interactive.InteractiveTownName;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -41,7 +42,7 @@ public class FoundTown extends ItemComponent implements CallbackInterface {
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
 		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Founds a Town");
-		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");			
+		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+CivSettings.localize.localizedString("itemLore_RightClickToUse"));			
 	}
 	
 	public void foundTown(Player player) throws CivException {

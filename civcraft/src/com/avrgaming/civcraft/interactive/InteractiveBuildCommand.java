@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.interactive;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -55,7 +56,7 @@ public class InteractiveBuildCommand implements InteractiveResponse {
 		}
 		
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.sendError(player, "Build cancelled.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_build_cancel"));
 			resident.clearInteractiveMode();
 			resident.undoPreview();
 			return;
@@ -63,12 +64,12 @@ public class InteractiveBuildCommand implements InteractiveResponse {
 		
 		
 		if (!buildable.validated) {
-			CivMessage.sendError(player, "Structure position is not yet validated, please wait.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_build_invalid"));
 			return;
 		}
 		
 		if (!buildable.isValid() && !player.isOp()) {
-			CivMessage.sendError(player, "Structure is in an invalid position. The blocks below would not support the structure.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_build_invalidNotOP"));
 			return;
 		}
 		

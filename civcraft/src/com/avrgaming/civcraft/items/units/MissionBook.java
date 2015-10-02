@@ -114,7 +114,7 @@ public class MissionBook extends UnitItemMaterial {
 			this.addLore(str);
 		}
 		this.addLore(CivColor.Yellow+mission.cost+" "+CivSettings.CURRENCY_NAME);
-		this.addLore(CivColor.Gold+"Soulbound");
+		this.addLore(CivColor.Gold+CivSettings.localize.localizedString("Soulbound"));
 	}
 	
 	@Override
