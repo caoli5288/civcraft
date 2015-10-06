@@ -29,6 +29,7 @@ import org.bukkit.block.Block;
 //import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 //import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -69,15 +70,15 @@ public class FishingBoat extends TradeOutpost {
 		/* Add trade good to town. */
 		TradeGood good = CivGlobal.getTradeGood(tradeGoodCoord);
 		if (good == null) {
-			throw new CivException("Couldn't find trade good at location:"+good);
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_notFound")+good);
 		}
 		
 		if (!good.getInfo().water) {
-			throw new CivException("Fishing boats can only be built on water goods.");
+			throw new CivException(CivSettings.localize.localizedString("fishingBoat_notWater"));
 		}
 		
 		if (good.getTown() != null) {
-			throw new CivException("Good is already claimed.");
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_alreadyClaimed"));
 		}
 		
 		good.setStruct(this);
@@ -192,7 +193,7 @@ public class FishingBoat extends TradeOutpost {
 		super.checkBlockPermissionsAndRestrictions(player, centerBlock, regionX, regionY, regionZ, savedLocation);
 		
 		if ((player.getLocation().getBlockY() - WATER_LEVEL) > TOLERANCE) {
-			throw new CivException("You must be close to the water's surface to build this structure.");
+			throw new CivException(CivSettings.localize.localizedString("fishingBoat_tooDeep"));
 		}
 		
 	}

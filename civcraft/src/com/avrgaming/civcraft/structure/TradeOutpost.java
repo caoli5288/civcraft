@@ -32,6 +32,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.items.BonusGoodie;
@@ -120,7 +121,7 @@ public class TradeOutpost extends Structure {
 		/* Add trade good to town. */
 		TradeGood good = CivGlobal.getTradeGood(tradeGoodCoord);
 		if (good == null) {
-			throw new CivException("Couldn't find trade good at location:"+good);
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_notFound")+good);
 		}
 		
 		if (good.getInfo().water) {
@@ -128,7 +129,7 @@ public class TradeOutpost extends Structure {
 		}
 		
 		if (good.getTown() != null) {
-			throw new CivException("Good is already claimed.");
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_alreadyClaimed"));
 		}
 		
 		good.setStruct(this);

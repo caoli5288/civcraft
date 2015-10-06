@@ -6,6 +6,7 @@ package localize;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.IllegalFormatException;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -78,7 +79,17 @@ public class Localize {
 	}
 	
 	private String compounded(String string, Object... args) {
-		return String.format((String)string,args);
+		try {
+			for(int arg = 0; arg < args.length; ++ arg)
+			{
+				Object replacementString = args[arg];
+				string = string.replace("[%"+arg+"]", ""+replacementString);
+	
+			}
+			return string;
+		} catch (IllegalFormatException e1) {
+			return string +" - ["+localizedString("stringFormattingError")+"]";
+		}
 	}
 	
 	private FileConfiguration localizedStrings = null;

@@ -133,7 +133,7 @@ public class Wall extends Structure {
 		refund /= HEIGHT;
 		refund = Math.round(refund);
 		this.getTown().getTreasury().deposit(refund);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+refund+" "+CivSettings.CURRENCY_NAME+" were refunded from wall construction.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("wall_undoRefund")+" "+refund+" "+CivSettings.CURRENCY_NAME);
 		try {
 			this.delete();
 		} catch (SQLException e) {
@@ -213,14 +213,14 @@ public class Wall extends Structure {
 		// Set the player into "place mode" which allows them to place down
 		// markers.
 		if (!this.getTown().hasTechnology(this.getRequiredTechnology())) {
-			throw new CivException("We don't have the technology yet.");
+			throw new CivException(CivSettings.localize.localizedString("wall_missingTech"));
 		}
 		
 		if (War.isWarTime()) {
-			throw new CivException("Cannot build walls during WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("wall_noBuildInWar"));
 		}
 		
-		MarkerPlacementManager.addToPlacementMode(player, this, "Wall Marker");		
+		MarkerPlacementManager.addToPlacementMode(player, this, CivSettings.localize.localizedString("wall_marketHeading"));		
 	}
 	
 	@Override
@@ -263,17 +263,17 @@ public class Wall extends Structure {
 		
 		CultureChunk cc = CivGlobal.getCultureChunk(next);
 		if (cc == null || cc.getTown().getCiv() != this.getTown().getCiv()) {
-			throw new CivException("Cannot build here, you need to build inside your culture.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_notInCulture"));
 		}
 		
 		if (locs.size() <= 1) {
-			CivMessage.send(player, CivColor.LightGray+"First location placed, place another to start building a wall.");
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("wall_firstLocation"));
 			return;
 		}
 		
 		// Validate our locations
 		if (locs.get(0).distance(locs.get(1)) > Wall.MAX_SEGMENT) {
-			throw new CivException("Can only build a wall in"+" "+Wall.MAX_SEGMENT+" "+"block segments, pick a closer location");
+			throw new CivException(CivSettings.localize.localizedString("var_wall_maxLength",Wall.MAX_SEGMENT));
 		}
 		
 		
@@ -305,12 +305,12 @@ public class Wall extends Structure {
 			}
 			this.wallBlocks.clear();
 			
-			throw new CivException("Cannot build, not enough to pay "+cost+" "+CivSettings.CURRENCY_NAME+" for wall of length "+verticalSegments+" blocks.");
+			throw new CivException(CivSettings.localize.localizedString("var_wall_cannotAfford",cost,CivSettings.CURRENCY_NAME,verticalSegments));
 		}
 		
 		this.getTown().getTreasury().withdraw(cost);
 		
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Paid"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"for"+" "+verticalSegments+""+" wall segments.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_wall_buildSuccess",cost,CivSettings.CURRENCY_NAME,verticalSegments));
 		
 		// build the blocks
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -330,7 +330,7 @@ public class Wall extends Structure {
 		Block b = loc.getBlock();
 		
 		if (ItemManager.getId(b) == CivData.CHEST) {
-			throw new CivException("Cannot build here, would destroy chest.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_chestInWay"));
 		}
 							
 		TownChunk tc = CivGlobal.getTownChunk(b.getLocation());
@@ -343,25 +343,25 @@ public class Wall extends Structure {
 		BlockCoord coord = new BlockCoord(b);
 		//not building a trade outpost, prevent protected blocks from being destroyed.
 		if (CivGlobal.getProtectedBlock(coord) != null) {
-			throw new CivException("Cannot build here, protected blocks in the way.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_protectedInWay"));
 		}
 
 		
 		if (CivGlobal.getStructureBlock(coord) != null) {
-			throw new CivException("Cannot build here, structure blocks in the way at"+" "+coord);
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay")+" "+coord);
 		}
 		
 	
 		if (CivGlobal.getFarmChunk(new ChunkCoord(coord.getLocation())) != null) {
-			throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_farmInWay"));
 		}
 		
 		if (loc.getBlockY() >= Wall.MAX_HEIGHT) {
-			throw new CivException("Cannot build here, wall is too high.");
+			throw new CivException(CivSettings.localize.localizedString("wall_build_tooHigh"));
 		}
 		
 		if (loc.getBlockY() <= 1) {
-			throw new CivException("Cannot build here, too close to bedrock.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 		
 		BlockCoord bcoord = new BlockCoord(loc);
@@ -369,7 +369,7 @@ public class Wall extends Structure {
 			bcoord.setY(y);
 			StructureBlock sb = CivGlobal.getStructureBlock(bcoord);
 			if (sb != null) {
-				throw new CivException("Cannot build here, this wall segment overlaps with a structure block belonging to a"+" "+sb.getOwner().getName()+" "+"structure.");
+				throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 			}
 		}
 		
@@ -442,7 +442,7 @@ public class Wall extends Structure {
 					
 			blockCount++; 
 			if (blockCount > Wall.RECURSION_LIMIT) {
-				throw new CivException("ERROR: Building wall blocks exceeded recusion limit! Halted to keep server alive.");
+				throw new CivException(CivSettings.localize.localizedString("wall_build_recursionHalt"));
 			}
 			
 			getVerticalWallSegment(player, locSecond, thisWallBlocks);
@@ -538,11 +538,11 @@ public class Wall extends Structure {
 		double cost = getRepairCost();
 		
 		if (!this.isValidWall()) {
-			throw new CivException("This wall is no longer valid and cannot be repaired. Walls can no longer overlap with protected structure blocks, demolish this wall instead.");
+			throw new CivException(CivSettings.localize.localizedString("wall_repair_invalid"));
 		}
 		
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"to build a"+" "+getDisplayName());
+			throw new CivException(CivSettings.localize.localizedString("var_wall_repair_tooPoor",cost,CivSettings.CURRENCY_NAME,getDisplayName()));
 		}
 		
 		setHitpoints(this.getMaxHitPoints());
@@ -556,7 +556,7 @@ public class Wall extends Structure {
 		
 		save();
 		getTown().getTreasury().withdraw(cost);
-		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a"+" "+getDisplayName()+" @ "+getCorner());
+		CivMessage.sendTown(getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_wall_repair_success",getDisplayName(),getCorner().toString()));
 	}
 	
 	@Override

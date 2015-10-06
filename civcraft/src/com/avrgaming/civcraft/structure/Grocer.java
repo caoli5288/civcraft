@@ -57,11 +57,11 @@ public class Grocer extends Structure {
 
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>Grocer</u></b><br/>";
+		String out = "<u><b>"+this.getDisplayName()+"</u></b><br/>";
 
 		for (int i = 0; i < level; i++) {
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(i+1);
-			out += "<b>"+grocerlevel.itemName+"</b> "+"Amount:"+" "+grocerlevel.amount+ " "+"Price:"+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+".<br/>";
+			out += "<b>"+grocerlevel.itemName+"</b> "+CivSettings.localize.localizedString("Amount")+" "+grocerlevel.amount+ " "+CivSettings.localize.localizedString("Price")+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+".<br/>";
 		}
 		
 		return out;
@@ -113,14 +113,14 @@ public class Grocer extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
+					CivMessage.send(player, CivColor.LightGreen + CivSettings.localize.localizedString("var_grocer_msgBought",amount,itemName,price+" "+CivSettings.CURRENCY_NAME));
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
-					CivMessage.send(player, CivColor.Yellow + "Paid"+" "+ payToTown+" "+CivSettings.CURRENCY_NAME+" "+"in non-resident taxes.");
+					CivMessage.send(player, CivColor.LightGreen + CivSettings.localize.localizedString("var_grocer_msgBought",amount,itemName,price,CivSettings.CURRENCY_NAME));
+					CivMessage.send(player, CivColor.Yellow + CivSettings.localize.localizedString("var_grocer_msgPaidTaxes",t.getName(),payToTown+" "+CivSettings.CURRENCY_NAME));
 				}
 			
 			}

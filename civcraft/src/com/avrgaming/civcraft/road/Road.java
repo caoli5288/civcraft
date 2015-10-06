@@ -223,7 +223,7 @@ public class Road extends Structure {
 		
 		double distance = locs.get(0).distance(locs.get(1));
 		if (distance > Road.MAX_SEGMENT) {
-			throw new CivException(CivSettings.localize.localizedString("road_tooLong1")+" "+Road.MAX_SEGMENT+" "+CivSettings.localize.localizedString("road_tooLong2"));
+			throw new CivException(CivSettings.localize.localizedString("var_road_tooLong",Road.MAX_SEGMENT));
 		}
 		
 		MarkerPlacementManager.removeFromPlacementMode(player, false);
