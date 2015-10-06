@@ -5,6 +5,7 @@ import gpl.AttributeUtil;
 
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.util.CivColor;
@@ -17,12 +18,12 @@ public class RightClickForItem extends ItemComponent {
 		String mat_id = this.getString("custom_id");
 		
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(mat_id);
-		attrUtil.addLore("Right click for"+" "+amount+" "+craftMat.getName());
+		attrUtil.addLore(CivSettings.localize.localizedString("rightClickFor")+" "+amount+" "+craftMat.getName());
 	}
 	
 	
 	public void onInteract(PlayerInteractEvent event) {
-		CivMessage.send(event.getPlayer(), CivColor.Rose+"Disabled for now...");
+		CivMessage.send(event.getPlayer(), CivColor.Rose+CivSettings.localize.localizedString("rightClickDisabled"));
 //		if (event.getAction().equals(Action.RIGHT_CLICK_AIR) || event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
 //			String amount = this.getString("amount");
 //			String mat_id = this.getString("custom_id");

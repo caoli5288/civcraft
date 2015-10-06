@@ -54,7 +54,7 @@ public class CampUpgradeCommand extends CommandBase {
 	private void list_upgrades(Camp camp) throws CivException {				
 		for (ConfigCampUpgrade upgrade : CivSettings.campUpgrades.values()) {
 			if (upgrade.isAvailable(camp)) {
-				CivMessage.send(sender, upgrade.name+CivColor.LightGray+CivSettings.localize.localizedString("Cost")+CivColor.Yellow+upgrade.cost);
+				CivMessage.send(sender, upgrade.name+" "+CivColor.LightGray+CivSettings.localize.localizedString("Cost")+" "+CivColor.Yellow+upgrade.cost);
 			}
 		}
 	}

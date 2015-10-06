@@ -24,6 +24,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.database.SQLUpdate;
 import com.avrgaming.civcraft.exception.InvalidNameException;
@@ -188,7 +189,7 @@ public class Relation extends SQLObject {
 		String color = CivColor.White;
 		String out = "";
 		
-		out = relation.name()+CivColor.White+" with "+this.other_civ.getName();
+		out = relation.name()+CivColor.White+" "+CivSettings.localize.localizedString("relation_with")+" "+this.other_civ.getName();
 		switch (relation) {
 		case NEUTRAL:
 			break;
@@ -217,7 +218,7 @@ public class Relation extends SQLObject {
 		String expireString = "";
 		if (this.expires != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/d/y k:m:s z");
-			expireString = CivColor.LightGray+" (Expires "+sdf.format(expires)+")";
+			expireString = CivColor.LightGray+" ("+CivSettings.localize.localizedString("relation_expires")+" "+sdf.format(expires)+")";
 		}
 		
 		return color+out+expireString;

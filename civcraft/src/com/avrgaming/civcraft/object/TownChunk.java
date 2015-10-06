@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.object;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import org.bukkit.ChatColor;
@@ -229,30 +230,30 @@ public class TownChunk extends SQLObject {
 
 	public static TownChunk claim(Town town, ChunkCoord coord, boolean outpost) throws CivException {
 		if (CivGlobal.getTownChunk(coord) != null) {
-			throw new CivException("This plot is already claimed.");
+			throw new CivException(CivSettings.localize.localizedString("town_chunk_errorClaimed"));
 		}
 		
 		double cost;	
 		cost = getNextPlotCost(town);
 		
 		if (!town.hasEnough(cost)) {
-			throw new CivException("The town does not have the required"+" "+cost+" "+CivSettings.CURRENCY_NAME+" to claim this plot.");
+			throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		CultureChunk cultureChunk = CivGlobal.getCultureChunk(coord);
 		if (cultureChunk == null || cultureChunk.getCiv() != town.getCiv()) {
-			throw new CivException("Cannot claim a town chunk when not in your culture.");
+			throw new CivException(CivSettings.localize.localizedString("town_chunk_claimOutsideCulture"));
 		}
 		
 		TownChunk tc = new TownChunk(town, coord);
 		
 		if (!outpost) {
 			if (!tc.isOnEdgeOfOwnership()) {
-				throw new CivException("Can only claim on the edge of town's ownership.");
+				throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooFar"));
 			}
 		
 			if (!town.canClaim()) {
-				throw new CivException("Town is unable to claim, doesn't have enough plots for this town level.");
+				throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooMany"));
 			}
 		}
 		
@@ -264,13 +265,14 @@ public class TownChunk extends SQLObject {
 				if (cc.getCiv() != town.getCiv()) {
 					double dist = coord.distance(cc.getChunkCoord());
 					if (dist <= min_distance) {
-						throw new CivException("Too close to the culture of"+" "+cc.getCiv().getName()+", "+"cannot claim here.");
+						DecimalFormat df = new DecimalFormat();
+						throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooClose")+" "+cc.getCiv().getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+min_distance);
 					}
 				}
 			}	
 		} catch (InvalidConfiguration e1) {
 			e1.printStackTrace();
-			throw new CivException("Internal configuration exception.");
+			throw new CivException(CivSettings.localize.localizedString("internalException"));
 		}
 		
 		//Test that we are not too far protruding from our own town chunks
@@ -291,7 +293,7 @@ public class TownChunk extends SQLObject {
 				town.addTownChunk(tc);
 			} catch (AlreadyRegisteredException e1) {
 				e1.printStackTrace();
-				throw new CivException("Internal Error Occurred.");
+				throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 	
 			}
 		} else {
@@ -299,13 +301,13 @@ public class TownChunk extends SQLObject {
 				town.addOutpostChunk(tc);
 			} catch (AlreadyRegisteredException e) {
 				e.printStackTrace();
-				throw new CivException("Internal Error Occurred.");
+				throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 			}
 		}
 		
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of"+" "+town.getName()+" "+"and has been disbaned!");
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("town_chunk_dibandCamp")+" "+town.getName());
 			camp.disband();
 		}
 		
@@ -321,7 +323,7 @@ public class TownChunk extends SQLObject {
 	public static TownChunk claim(Town town, Player player, boolean outpost) throws CivException {
 		double cost = getNextPlotCost(town);
 		TownChunk tc = claim(town, new ChunkCoord(player.getLocation()), outpost);
-		CivMessage.sendSuccess(player, "Claimed chunk at"+" "+tc.getChunkCoord()+" for "+CivColor.Yellow+cost+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("town_chunk_success")+" "+tc.getChunkCoord()+" -> "+CivColor.Yellow+cost+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
 		return tc;
 	}
 	
@@ -382,7 +384,7 @@ public class TownChunk extends SQLObject {
 		//This is only called when the town hall is built and needs to be claimed.
 		
 		if (CivGlobal.getTownChunk(coord) != null) {
-			throw new CivException("This plot is already claimed.");
+			throw new CivException(CivSettings.localize.localizedString("town_chunk_errorClaimed"));
 		}
 		
 		TownChunk tc = new TownChunk(town, coord);
@@ -391,13 +393,13 @@ public class TownChunk extends SQLObject {
 			town.addTownChunk(tc);
 		} catch (AlreadyRegisteredException e1) {
 			e1.printStackTrace();
-			throw new CivException("Internal Error Occurred.");
+			throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 
 		}
 	
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+"Our camp's land was claimed by the town of"+" "+town.getName()+" "+"and has been disbaned!");
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("town_chunk_dibandCamp")+" "+town.getName());
 			camp.disband();
 		}
 		
@@ -446,15 +448,15 @@ public class TownChunk extends SQLObject {
 		String out = "";
 		
 		if (this.perms.getOwner() != null) {
-			out += CivColor.LightGray+"[Owned by:"+" "+CivColor.LightGreen+this.perms.getOwner().getName()+CivColor.LightGray+"]";
+			out += CivColor.LightGray+"["+CivSettings.localize.localizedString("town_chunk_status_owned")+" "+CivColor.LightGreen+this.perms.getOwner().getName()+CivColor.LightGray+"]";
 		}
 		
 		if (this.perms.getOwner() == null && fromTc != null && fromTc.perms.getOwner() != null) {
-			out += CivColor.LightGray+"[Unowned]";
+			out += CivColor.LightGray+"["+CivSettings.localize.localizedString("town_chunk_status_unowned")+"]";
 		}
 		
 		if (this.isForSale()) {
-			out += CivColor.Yellow+"[For Sale: "+this.price+" "+CivSettings.CURRENCY_NAME+"]";
+			out += CivColor.Yellow+"["+CivSettings.localize.localizedString("town_chunk_status_forSale")+" "+this.price+" "+CivSettings.CURRENCY_NAME+"]";
 		}
 		
 		return out;
@@ -463,7 +465,7 @@ public class TownChunk extends SQLObject {
 	public void purchase(Resident resident) throws CivException {
 
 		if (!resident.getTreasury().hasEnough(this.price)) {
-			throw new CivException("You do not have the required"+" "+this.price+" "+CivSettings.CURRENCY_NAME+" to purchase this plot.");
+			throw new CivException(CivSettings.localize.localizedString("town_chunk_purchase_tooPoor")+" "+this.price+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (this.perms.getOwner() == null) {
@@ -533,7 +535,7 @@ public class TownChunk extends SQLObject {
 			tc.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal database error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}
 		
 	}

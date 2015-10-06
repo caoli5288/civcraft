@@ -134,22 +134,21 @@ public class CannonProjectile {
 										
 										if (!sb.getCiv().getDiplomacyManager().atWarWith(whoFired.getCiv())) {
 											if (player != null) {
-												CivMessage.sendError(player, "Cannot damage structures in civilizations we're not at war with.");
+												CivMessage.sendError(player, CivSettings.localize.localizedString("cannonProjectile_ErrorNotAtWar"));
 												return;
 											}
 										}
 										
 										sb.getOwner().onDamage(cannon.getDamage(), b.getWorld(), player, sb.getCoord(), sb);
-										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our"+" "+sb.getOwner().getDisplayName()+" @ ("+
+										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+sb.getOwner().getDisplayName()+" @ ("+
 												sb.getOwner().getCenterLocation().getX()+","+
 												sb.getOwner().getCenterLocation().getY()+","+
 												sb.getOwner().getCenterLocation().getZ()+")"+
-												" "+"was hit by a cannon!"+" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+												" "+CivSettings.localize.localizedString("cannonProjectile_hitAnnounce")+" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 									}
 									
-									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+"We've hit"+" "+sb.getOwner().getTown().getName()+"'s " +
-											 sb.getOwner().getDisplayName()+" "+"with a cannon!"+
-											" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("cannonProjectile_hitSuccess")+" "+sb.getOwner().getTown().getName()+"'s " +
+											 sb.getOwner().getDisplayName()+" "+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 								}
 							} else {
 								
@@ -170,7 +169,7 @@ public class CannonProjectile {
 			Player player = (Player)e;
 			player.damage(playerDamage);
 			if (player.isDead()) {
-				CivMessage.global(CivColor.LightGray+whoFired.getName()+" "+"obliterated"+" "+player.getName()+" "+"with a cannon blast!");
+				CivMessage.global(CivColor.LightGray+player.getName()+" "+CivSettings.localize.localizedString("cannonProjectile_userKilled")+" "+whoFired.getName());
 			}
 		}
 	}

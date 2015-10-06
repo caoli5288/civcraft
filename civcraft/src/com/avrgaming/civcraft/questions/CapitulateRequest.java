@@ -1,5 +1,6 @@
 package com.avrgaming.civcraft.questions;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
@@ -16,9 +17,9 @@ public class CapitulateRequest implements QuestionResponseInterface {
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
 			capitulator.capitulate();
-			CivMessage.global(from+" "+"has capitulated to"+" "+to);
+			CivMessage.global(from+" "+CivSettings.localize.localizedString("capitulateAccept")+" "+to);
 		} else {
-			CivMessage.send(playerName, CivColor.LightGray+to+" "+"declined our offer.");
+			CivMessage.send(playerName, CivColor.LightGray+to+" "+CivSettings.localize.localizedString("RequestDecline"));
 		}
 	}
 

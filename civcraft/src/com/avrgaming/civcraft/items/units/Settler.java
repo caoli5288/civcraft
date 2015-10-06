@@ -58,8 +58,8 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		UnitMaterial.setOwningTown(town, is);
 		
 		AttributeUtil attrs = new AttributeUtil(is);
-		attrs.addLore(CivColor.Rose+"Only Usable In Civ:"+" "+CivColor.LightBlue+town.getCiv().getName());
-		attrs.addLore(CivColor.Gold+"Right Click To Found Town");
+		attrs.addLore(CivColor.Rose+CivSettings.localize.localizedString("settler_Lore1")+" "+CivColor.LightBlue+town.getCiv().getName());
+		attrs.addLore(CivColor.Gold+CivSettings.localize.localizedString("settler_Lore2"));
 		attrs.addEnhancement("LoreEnhancementSoulBound", null, null);
 		attrs.addLore(CivColor.Gold+CivSettings.localize.localizedString("Soulbound"));
 		
@@ -68,7 +68,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		
 		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make"+" "+Unit.SETTLER_UNIT.getUnit().name+". "+"Barracks chest is full! Make Room!");
+			throw new CivException(CivSettings.localize.localizedString("settler_errorBarracksFull")+" "+Unit.SETTLER_UNIT.getUnit().name);
 		}
 
 	}
@@ -82,20 +82,20 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (resident == null || !resident.hasTown()) {
-			CivMessage.sendError(player, "You are not part of a civilization.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorNotRes"));
 			return;
 		}
 		
 		AttributeUtil attrs = new AttributeUtil(event.getItem());
 		String ownerIdString = attrs.getCivCraftProperty("owner_civ_id");
 		if (ownerIdString == null) {
-			CivMessage.sendError(player, "Cannot find owner civilization ID. This settler is broken. Report this to an admin.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorInvalidOwner"));
 			return;
 		}
 		
 		int civ_id = Integer.valueOf(ownerIdString);
 		if (civ_id != resident.getCiv().getId()) {
-			CivMessage.sendError(player, "You cannot use this settler unit. Your civilization is not the owner.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorNotOwner"));
 			return;
 		}
 		
@@ -117,7 +117,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 			double dist = townhall.getCenterLocation().distance(new BlockCoord(event.getPlayer().getLocation()));
 			if (dist < minDistance) {
 				DecimalFormat df = new DecimalFormat();
-				CivMessage.sendError(player, "Cannot build town here. Too close to the town of"+" "+town.getName()+". "+"Distance is"+" "+df.format(dist)+" "+"and needs to be"+" "+minDistance);
+				CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorTooClose")+" "+town.getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+minDistance);
 				return;
 			}
 		}
@@ -126,7 +126,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		/*
 		 * Build a preview for the Capitol structure.
 		 */
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Checking structure position...Please wait.");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("build_checking_position"));
 		ConfigBuildableInfo info = CivSettings.structures.get("s_townhall");
 		try {
 			Buildable.buildVerifyStatic(player, info, player.getLocation(), this);
@@ -146,11 +146,11 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		Resident resident = CivGlobal.getResident(playerName);
 		resident.desiredTownLocation = player.getLocation();
 		
-		CivMessage.sendHeading(player, "Founding A New Town");
-		CivMessage.send(player, CivColor.LightGreen+"This looks like a good place to settle!");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("settler_heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("settler_prompt1"));
 		CivMessage.send(player, " ");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"What shall your new Town be called?");
-		CivMessage.send(player, CivColor.LightGray+"(To cancel, type 'cancel')");
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("settler_prompt2"));
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("build_cancel_prompt"));
 		
 		resident.setInteractiveMode(new InteractiveTownName());
 	}

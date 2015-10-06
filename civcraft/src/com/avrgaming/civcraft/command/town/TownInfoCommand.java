@@ -607,7 +607,7 @@ public class TownInfoCommand extends CommandBase {
 			
 			//CivMessage.send(sender, CivColor.Green+"Outposts: "+CivColor.LightGreen+town.getOutpostChunks().size()+" "+
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Growth:")+" "+CivColor.LightGreen+df.format(town.getGrowth().total)+" " +
-									CivColor.Green+CivSettings.localize.localizedString("Hammers")+CivColor.LightGreen+df.format(town.getHammers().total)+" "+
+									CivColor.Green+CivSettings.localize.localizedString("Hammers")+" "+CivColor.LightGreen+df.format(town.getHammers().total)+" "+
 									CivColor.Green+CivSettings.localize.localizedString("Beakers")+" "+CivColor.LightGreen+df.format(town.getBeakers().total));
 			
 			

@@ -83,7 +83,7 @@ public class BonusGoodieManager implements Listener {
 			return;
 		}
 		
-		CivMessage.send(event.getPlayer(), CivColor.Purple+"Bonus Goodie:"+" "+CivColor.Yellow+goodie.getDisplayName());
+		CivMessage.send(event.getPlayer(), CivColor.Purple+CivSettings.localize.localizedString("bonusGoodie_heading")+" "+CivColor.Yellow+goodie.getDisplayName());
 		
 	}
 	
@@ -199,7 +199,7 @@ public class BonusGoodieManager implements Listener {
 			Player player;
 			try {
 				player = CivGlobal.getPlayer(event.getWhoClicked().getName());
-				CivMessage.sendError(player, "Cannot move bonus goodie into this container.");			
+				CivMessage.sendError(player, CivSettings.localize.localizedString("bonusGoodie_moveErrorContainer"));			
 			} catch (CivException e) {
 				//player not found or not online.
 			}
@@ -299,7 +299,7 @@ public class BonusGoodieManager implements Listener {
 			if (material instanceof UnitItemMaterial ||
 					material instanceof UnitMaterial) {
 				//Do not allow subordinate items into the frame.
-				CivMessage.sendError(event.getPlayer(), "You cannot place this item into an itemframe.");
+				CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("bonusGoodie_errorItemFrame"));
 				return;
 			}
 		}
@@ -313,8 +313,7 @@ public class BonusGoodieManager implements Listener {
 			if (frameStore != null) {
 				/* Make sure we're trying to place an item into the frame, test if the frame is empty. */
 				if (frame.getItem() == null || ItemManager.getId(frame.getItem()) == CivData.AIR) {
-					CivMessage.sendError(event.getPlayer(), 
-							"You cannot place a non-trade goodie items in a trade goodie item frame.");
+					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("bonusGoodie_errorNotGoodie"));
 					event.setCancelled(true);
 					return;
 				}
@@ -322,8 +321,7 @@ public class BonusGoodieManager implements Listener {
 		} else {
 			/* Trade goodie, make sure they only go into protect frames. */
 			if (frameStore == null) {
-				CivMessage.sendError(event.getPlayer(),
-						"You cannot place a trade gooide in a non-trade goodie item frame.");
+				CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("bonusGoodie_errorNotGoodie"));
 				event.setCancelled(true);
 				return;
 			}
@@ -425,16 +423,14 @@ public class BonusGoodieManager implements Listener {
 		
 		Resident resident = CivGlobal.getResident(player);
 		if (resident == null || !resident.hasTown() || resident.getCiv() != clickedFrame.getTown().getCiv()) {
-			CivMessage.sendError(player, 
-					"You must be a member of the owner civ to socket or unsocket trade goodies.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("bonusGoodie_errorNotInCiv"));
 			event.setCancelled(true);
 			return;
 		}
 		
 		if (!clickedFrame.getTown().getMayorGroup().hasMember(resident) && 
 				!clickedFrame.getTown().getAssistantGroup().hasMember(resident)) {
-			CivMessage.sendError(player, 
-					"You must be a mayor or assistant in order to socket or unsocket trade goodies.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("bonusGoodie_errorNoPerms"));
 			event.setCancelled(true);
 			return;
 		}
@@ -459,12 +455,12 @@ public class BonusGoodieManager implements Listener {
 			
 			player.getWorld().dropItemNaturally(frame.getLocation(), stack);
 			frame.setItem(ItemManager.createItemStack(CivData.AIR, 1));
-			CivMessage.send(player, CivColor.LightGray+"You unsocket the trade goodie from the frame.");
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("bonusGoodie_unsocket"));
 		} else if (goodie != null) {
 			//Item frame was empty, add goodie to it.
 			frame.setItem(player.getItemInHand());
 			player.getInventory().remove(player.getItemInHand());
-			CivMessage.send(player, CivColor.LightGray+"You socket the trade goodie into the frame");
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("bonusGoodie_socket"));
 			clickedFrame.getTown().onGoodiePlaceIntoFrame(clickedFrame, goodie);
 			
 			try {
@@ -512,7 +508,7 @@ public class BonusGoodieManager implements Listener {
 		}
 		
 		if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {				
-			CivMessage.sendError(event.getPlayer(), "Cannot use bonus goodie as a normal item.");
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("bonusGoodie_errorCannotUse"));
 			event.setCancelled(true);
 			return;
 		}
@@ -534,7 +530,7 @@ public class BonusGoodieManager implements Listener {
 		for (ItemStack stack : event.getInventory().getMatrix()) {
 			BonusGoodie goodie = CivGlobal.getBonusGoodie(stack);
 			if (goodie != null) {
-				CivMessage.sendError(player, "Cannot use bonus goodies in a crafting recipe.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("bonusGoodie_errorCannotCraft"));
 				event.setCancelled(true);
 			}
 		}

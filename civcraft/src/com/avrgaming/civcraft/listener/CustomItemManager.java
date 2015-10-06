@@ -85,7 +85,7 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
-		CivMessage.sendError(event.getEnchanter(), "Items cannot be enchanted with enchantment tables.");
+		CivMessage.sendError(event.getEnchanter(), CivSettings.localize.localizedString("customItem_NoEnchanting"));
 		event.setCancelled(true);
 	}
 	
@@ -804,7 +804,7 @@ public class CustomItemManager implements Listener {
 			}
 			if (!sentMessage) {
 				if (player != null) {
-					CivMessage.send(player, CivColor.LightGray+"Restricted vanilla items in your inventory have been removed.");
+					CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("customItem_restrictedItemsRemoved"));
 				}
 				sentMessage = true;
 			}
@@ -836,7 +836,7 @@ public class CustomItemManager implements Listener {
 				contents[i] = new ItemStack(Material.AIR);
 				foundBad = true;
 				if (!sentMessage) {
-					CivMessage.send(player, CivColor.LightGray+"Restricted vanilla items in your inventory have been removed.");
+					CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("customItem_restrictedItemsRemoved"));
 					sentMessage = true;
 				}
 			}		

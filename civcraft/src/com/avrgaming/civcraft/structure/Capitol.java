@@ -76,11 +76,11 @@ public class Capitol extends TownHall {
 			
 		if (this.respawnSign != null) {
 			try {
-				this.respawnSign.setText("Respawn At"+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(newIndex).getRespawnName());
+				this.respawnSign.setText(CivSettings.localize.localizedString("capitol_sign_respawnAt")+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(newIndex).getRespawnName());
 				index = newIndex;
 			} catch (IndexOutOfBoundsException e) {
 				if (respawnables.size() > 0) {
-					this.respawnSign.setText("Respawn At"+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(0).getRespawnName());
+					this.respawnSign.setText(CivSettings.localize.localizedString("capitol_sign_respawnAt")+"\n"+CivColor.Green+CivColor.BOLD+respawnables.get(0).getRespawnName());
 					index = 0;
 				}
 				//this.unitNameSign.setText(getUnitSignText(index));
@@ -116,7 +116,7 @@ public class Capitol extends TownHall {
 			if (index >= respawnables.size()) {
 				index = 0;
 				changeIndex(index);
-				CivMessage.sendError(resident, "Unable to find selected respawn point. We've reset the sign, please select respawn point again.");
+				CivMessage.sendError(resident, CivSettings.localize.localizedString("capitol_cannotRespawn"));
 				return;
 			}
 			
@@ -128,7 +128,7 @@ public class Capitol extends TownHall {
 				long secondsLeft = (resident.getLastKilledTime().getTime() + (respawnTimeSeconds*1000)) - now.getTime();
 				if (secondsLeft > 0) {
 					secondsLeft /= 1000; 
-					CivMessage.sendError(resident, CivColor.Rose+"Cannot respawn yet. You have"+" "+secondsLeft+" "+"seconds left.");
+					CivMessage.sendError(resident, CivColor.Rose+CivSettings.localize.localizedString("var_capitol_secondsLeftTillRespawn",secondsLeft));
 					return;
 				}
 			}
@@ -141,7 +141,7 @@ public class Capitol extends TownHall {
 				loc = revive.getLocation();
 			}
 			
-			CivMessage.send(player, CivColor.LightGreen+"Respawning...");
+			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("capitol_respawningAlert"));
 			player.teleport(loc);		
 			break;
 		}
@@ -169,7 +169,7 @@ public class Capitol extends TownHall {
 			ItemManager.setData(absCoord.getBlock(), commandBlock.getData());
 
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Next\nLocation");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("capitol_sign_nextLocation"));
 			structSign.setDirection(commandBlock.getData());
 			structSign.setAction("next");
 			structSign.update();
@@ -180,7 +180,7 @@ public class Capitol extends TownHall {
 			ItemManager.setTypeId(absCoord.getBlock(), commandBlock.getType());
 			ItemManager.setData(absCoord.getBlock(), commandBlock.getData());
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Prevous\nLocation");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("capitol_sign_previousLocation"));
 			structSign.setDirection(commandBlock.getData());
 			structSign.setAction("prev");
 			structSign.update();
@@ -191,7 +191,7 @@ public class Capitol extends TownHall {
 			ItemManager.setTypeId(absCoord.getBlock(), commandBlock.getType());
 			ItemManager.setData(absCoord.getBlock(), commandBlock.getData());
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("Capitol");
+			structSign.setText(CivSettings.localize.localizedString("capitol_sign_Capitol"));
 			structSign.setDirection(commandBlock.getData());
 			structSign.setAction("respawn");
 			structSign.update();
@@ -246,8 +246,8 @@ public class Capitol extends TownHall {
 			return;
 		}
 		
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivColor.BOLD+"Our civ's capitol cannot be supported by the blocks underneath!"+
-				" "+"It will take us an extra"+" "+invalid_respawn_penalty+" "+"mins to respawn during war if its not fixed in time!");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivColor.BOLD+CivSettings.localize.localizedString("capitol_cannotSupport1")+
+				" "+CivSettings.localize.localizedString("var_capitol_cannotSupport2",invalid_respawn_penalty));
 	}
 	
 	@Override

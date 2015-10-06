@@ -65,6 +65,8 @@ public class onLoadTask implements Runnable {
 				/* Re-run the post build on the command blocks we found. */
 				if (struct.isActive() && !struct.isPartOfAdminCiv()) {
 					PostBuildSyncTask.start(tpl, struct);
+				} else if (struct.isPartOfAdminCiv()){
+					PostBuildSyncTask.validate(tpl, struct);
 				}
 			} catch (Exception e) {
 				CivLog.error("-----ON LOAD EXCEPTION-----");

@@ -44,7 +44,7 @@ public class Localize {
 		Boolean nameCheck = (languageFile.equalsIgnoreCase("default_lang.yml"));
 		return nameCheck;
 	}
-	
+
 	public String localizedString(String pathToString){
 		if (this.isDefault())
 		{
@@ -62,6 +62,23 @@ public class Localize {
 			}
 			else return (String)value;
 		}
+	}
+	
+	public String localizedString(String pathToString, Object... args ){
+		String localString = localizedString(pathToString);
+		if (args.length >= 1)
+		{
+			if (localString.equalsIgnoreCase(pathToString))
+			{
+				return localString;
+			}
+			localString = compounded(localString, args);
+		}
+		return localString;
+	}
+	
+	private String compounded(String string, Object... args) {
+		return String.format((String)string,args);
 	}
 	
 	private FileConfiguration localizedStrings = null;

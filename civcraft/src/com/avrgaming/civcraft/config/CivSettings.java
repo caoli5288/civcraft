@@ -229,7 +229,7 @@ public class CivSettings {
 		localize = new Localize(plugin, languageFile);
 
 
-		CivLog.debug(localize.localizedString("welcome_string"));
+		CivLog.debug(localize.localizedString("welcome_string","test",1337,100.50));
 		CURRENCY_NAME = localize.localizedString("civ_currencyName");
 		
 		// Check for required data folder, if it's not there export it.

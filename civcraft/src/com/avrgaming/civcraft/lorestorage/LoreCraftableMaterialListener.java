@@ -44,7 +44,7 @@ public class LoreCraftableMaterialListener implements Listener {
 					return;
 				}
 				if (resultStack.getType().equals(Material.GOLDEN_APPLE)) {
-					CivMessage.sendError((Player)event.getWhoClicked(), "You cannot craft golden apples. Sorry.");
+					CivMessage.sendError((Player)event.getWhoClicked(), CivSettings.localize.localizedString("loreCraft_goldenApples"));
 					event.setCancelled(true);
 					return;
 				}
@@ -52,7 +52,7 @@ public class LoreCraftableMaterialListener implements Listener {
 				ConfigTechItem restrictedTechItem = CivSettings.techItems.get(ItemManager.getId(resultStack));
 				if (restrictedTechItem != null) {
 					ConfigTech tech = CivSettings.techs.get(restrictedTechItem.require_tech);
-					CivMessage.sendError(player, "Your civilization doesn't have the required technology"+" ("+tech.name+") "+"to craft this item.");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("loreCraft_missingTech")+" ("+tech.name+")");
 					event.setCancelled(true);
 					return;
 				}
@@ -61,7 +61,7 @@ public class LoreCraftableMaterialListener implements Listener {
 			}
 			
 			if (!craftMat.getConfigMaterial().playerHasTechnology(player)) {
-				CivMessage.sendError(player, "You do not have the required technology"+" ("+craftMat.getConfigMaterial().getRequireString()+") "+"to craft this item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("loreCraft_missingTech")+" ("+craftMat.getConfigMaterial().getRequireString()+")");
 				event.setCancelled(true);
 				return;
 			}

@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivMessage;
 
 public class AttrSource {
@@ -22,7 +23,7 @@ public class AttrSource {
 		ArrayList<String> out = new ArrayList<String>();
 		DecimalFormat df = new DecimalFormat();
 		
-		out.add(CivMessage.buildSmallTitle("Sources"));
+		out.add(CivMessage.buildSmallTitle(CivSettings.localize.localizedString("town_info_sources")));
 		
 		for (String source : sources.keySet()) {
 			out.add(sourceColor+source+": "+valueColor+df.format(sources.get(source)));
@@ -36,7 +37,7 @@ public class AttrSource {
 		DecimalFormat df = new DecimalFormat();
 		
 		if (rate != null) {			
-			out.add(CivMessage.buildSmallTitle("Rates"));
+			out.add(CivMessage.buildSmallTitle(CivSettings.localize.localizedString("town_info_rates")));
 			
 			for (String source : rate.sources.keySet()) {
 				out.add(sourceColor+source+": "+valueColor+df.format(rate.sources.get(source)*100)+"%");
@@ -49,7 +50,7 @@ public class AttrSource {
 		ArrayList<String> out = new ArrayList<String>();
 		DecimalFormat df = new DecimalFormat();
 		
-		out.add(CivMessage.buildSmallTitle("Totals"));
+		out.add(CivMessage.buildSmallTitle(CivSettings.localize.localizedString("town_info_totals")));
 		out.add(sourceColor+"Total: "+valueColor+df.format(this.total)+sourceColor);
 		return out;
 	}

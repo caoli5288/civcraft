@@ -337,7 +337,7 @@ public class Wall extends Structure {
 			
 		if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 			// Make sure we have permission to destroy any block in this area.
-			throw new CivException("Cannot build here, you need DESTROY permissions to the block at"+" "+b.getX()+","+b.getY()+","+b.getZ());
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_needPermissions")+" "+b.getX()+","+b.getY()+","+b.getZ());
 		}
 
 		BlockCoord coord = new BlockCoord(b);

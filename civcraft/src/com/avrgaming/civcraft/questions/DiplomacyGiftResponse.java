@@ -40,36 +40,36 @@ public class DiplomacyGiftResponse implements QuestionResponseInterface {
 				Town town = (Town)giftedObject;
 				
 				if (!toCiv.getTreasury().hasEnough(town.getGiftCost())) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+"We cannot accept the town of"+" "+town.getName()+" "+"as a gift because we do not have the required "+town.getGiftCost()+" "+CivSettings.CURRENCY_NAME);
-					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" cannot accept the town of"+" "+town.getName()+" "+"as a gift because they did not have the required"+" "+
+					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor")+" "+town.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor2")+" "+town.getGiftCost()+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor3")+" "+town.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor4")+" "+
 							town.getGiftCost()+" "+CivSettings.CURRENCY_NAME);
 					return;
 				}
 				
 				toCiv.getTreasury().withdraw(town.getGiftCost());
 				town.changeCiv(toCiv);
-				CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+"has accepted the offer of our town of"+" "+town.getName());
+				CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_accept")+" "+town.getName());
 				return;
 			} else if (giftedObject instanceof Civilization) {
 				int coins = fromCiv.getMergeCost();
 				
 				if (!toCiv.getTreasury().hasEnough(coins)) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+"We cannot accept the merge of"+" "+fromCiv.getName()+" "+"because we do not have the required "+coins+" "+CivSettings.CURRENCY_NAME);
-					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" "+"cannot accept the merge of"+" "+fromCiv.getName()+" "+"because they do not have the required "+coins+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor2")+" "+coins+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor3")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor4")+" "+coins+" "+CivSettings.CURRENCY_NAME);
 					return;
 				}
 				
 				toCiv.getTreasury().withdraw(coins);
-				CivMessage.sendCiv(fromCiv, CivColor.Yellow+toCiv.getName()+" "+"has accepted the offer, our civ is now merging with theirs!");
+				CivMessage.sendCiv(fromCiv, CivColor.Yellow+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_offerAccepted"));
 				toCiv.mergeInCiv(fromCiv);
-				CivMessage.global("The Civilization of "+fromCiv.getName()+" "+"has agreed to merge into the Civilizaiton of"+" "+toCiv.getName());
+				CivMessage.global(CivSettings.localize.localizedString("diplomacy_merge_SuccessAlert1")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_SuccessAlert2")+" "+toCiv.getName());
 				return;
 			} else {
-				CivLog.error("Unexpected object in gift response:"+giftedObject);
+				CivLog.error(CivSettings.localize.localizedString("diplomacy_merge_UnexpectedError")+" "+giftedObject);
 				return;
 			}
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+"declined our offer.");
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+CivSettings.localize.localizedString("RequestDecline"));
 		}
 		
 	}

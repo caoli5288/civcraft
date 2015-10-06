@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.object;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.structure.Buildable;
@@ -105,7 +106,7 @@ public class StructureBlock implements BuildableDamageBlock {
 				// Make sure the resident has a town
 				if (res.hasTown()) {
 					if (res.getTown().defeated) {
-						CivMessage.sendError(player, "Cannot damage structures when your town has been defeated.");
+						CivMessage.sendError(player, CivSettings.localize.localizedString("structBlock_errorDefeated"));
 						return false;
 					}
 					
@@ -118,9 +119,9 @@ public class StructureBlock implements BuildableDamageBlock {
 						}
 						
 						if (!this.isDamageable()) {
-							CivMessage.sendError(player, "Cannot damage this structure block. Choose another.");
+							CivMessage.sendError(player, CivSettings.localize.localizedString("structBlock_error1"));
 						} else if (CivGlobal.willInstantBreak(this.getCoord().getBlock().getType())) {
-							CivMessage.sendError(player, "Cannot damage structure with this block, try another.");								
+							CivMessage.sendError(player, CivSettings.localize.localizedString("structBlock_error2"));								
 						} else {
 							return true;
 						}

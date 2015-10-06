@@ -5,6 +5,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.object.Resident;
@@ -42,7 +43,7 @@ public class HeroChatListener implements Listener {
 				
 				Chatter you = Herochat.getChatterManager().getChatter(player);
 				if (!event.getSender().isInRange(you, event.getChannel().getDistance())) {
-					player.sendMessage(CivColor.White+event.getSender().getName()+"[Far]: "+event.getMessage());
+					player.sendMessage(CivColor.White+event.getSender().getName()+CivSettings.localize.localizedString("hc_prefix_far")+" "+event.getMessage());
 				}
 			}
 		}

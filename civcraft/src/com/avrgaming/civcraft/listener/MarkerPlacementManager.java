@@ -33,6 +33,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -49,7 +50,7 @@ public class MarkerPlacementManager implements Listener {
 	public static void addToPlacementMode(Player player, Structure structure, String markerName) throws CivException {
 
 		if (player.getItemInHand() != null && ItemManager.getId(player.getItemInHand()) != CivData.AIR) {
-			throw new CivException("You must not be holding anything to enter placement mode.");
+			throw new CivException(CivSettings.localize.localizedString("placement_errorHolding"));
 		}
 		
 		playersInPlacementMode.put(player.getName(), structure);
@@ -65,7 +66,7 @@ public class MarkerPlacementManager implements Listener {
 		stack.setItemMeta(meta);
 		player.setItemInHand(stack);
 		
-		CivMessage.send(player, "You're now in placement mode for a"+" "+structure.getDisplayName());
+		CivMessage.send(player, CivSettings.localize.localizedString("placement_enabled")+" "+structure.getDisplayName());
 	}
 	
 	public static void removeFromPlacementMode(Player player, boolean canceled) {
@@ -77,7 +78,7 @@ public class MarkerPlacementManager implements Listener {
 		playersInPlacementMode.remove(player.getName());
 		markers.remove(player.getName());
 		player.setItemInHand(ItemManager.createItemStack(CivData.AIR, 1));
-		CivMessage.send(player, "You're no longer in placement mode.");
+		CivMessage.send(player, CivSettings.localize.localizedString("placement_ended"));
 	}
 	
 	public static boolean isPlayerInPlacementMode(Player player) {

@@ -91,7 +91,7 @@ public class UnitItemMaterial extends LoreMaterial {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onItemDrop(PlayerDropItemEvent event) {
-		CivMessage.sendError(event.getPlayer(), "Cannot drop this item, belongs to the unit you are currently assigned.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitItem_cannotDrop"));
 		event.setCancelled(true);
 		event.getPlayer().updateInventory();
 	}
@@ -99,7 +99,7 @@ public class UnitItemMaterial extends LoreMaterial {
 	@Override
 	public void onItemCraft(CraftItemEvent event) {
 		try {
-			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), "Cannot craft with a unit item.");
+			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), CivSettings.localize.localizedString("unitItem_cannotCraft"));
 		} catch (CivException e) {
 			//player offline?
 		}

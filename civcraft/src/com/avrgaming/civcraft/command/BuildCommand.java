@@ -203,9 +203,9 @@ public class BuildCommand extends CommandBase {
 				
 				CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+
 						CivColor.Yellow+
-						CivSettings.localize.localizedString("Cost")+sinfo.cost+
-						CivSettings.localize.localizedString("Upkeep")+sinfo.upkeep+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+ 
-						CivSettings.localize.localizedString("Remaining")+leftString);
+						CivSettings.localize.localizedString("Cost")+" "+sinfo.cost+" "+
+						CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+" "+ 
+						CivSettings.localize.localizedString("Remaining")+" "+leftString);
 			}
 		}
 	}
@@ -225,9 +225,9 @@ public class BuildCommand extends CommandBase {
 				if (Wonder.isWonderAvailable(sinfo.id)) {				
 					CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+
 							CivColor.Yellow+
-							CivSettings.localize.localizedString("Cost")+sinfo.cost+
-							CivSettings.localize.localizedString("Upkeep")+sinfo.upkeep+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+ 
-							CivSettings.localize.localizedString("Remaining")+leftString);
+							CivSettings.localize.localizedString("Cost")+" "+sinfo.cost+" "+
+							CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+" "+
+							CivSettings.localize.localizedString("Remaining")+" "+leftString);
 				} else {
 					Wonder wonder = CivGlobal.getWonderByConfigId(sinfo.id);
 					CivMessage.send(sender, CivColor.LightGray+sinfo.displayName+" Cost: "+sinfo.cost+" - "+CivSettings.localize.localizedString("cmd_build_listWonderAlreadyBuild")+" "+

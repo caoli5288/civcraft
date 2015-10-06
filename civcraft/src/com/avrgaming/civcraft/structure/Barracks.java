@@ -83,7 +83,7 @@ public class Barracks extends Structure {
 		ArrayList<ConfigUnit> unitList = getTown().getAvailableUnits();
 		
 		if (unitList.size() == 0) {
-			return "\n"+CivColor.LightGray+"None"+"\n"+CivColor.LightGray+"Available";			
+			return "\n"+CivColor.LightGray+CivSettings.localize.localizedString("Nothing")+"\n"+CivColor.LightGray+CivSettings.localize.localizedString("Available");			
 		}
 		
 		ConfigUnit unit = unitList.get(index);
@@ -116,28 +116,28 @@ public class Barracks extends Structure {
 
 		ConfigUnit unit = unitList.get(index);
 		if (unit == null) {
-			throw new CivException("Unknown unit type.");
+			throw new CivException(CivSettings.localize.localizedString("barracks_unknownUnit"));
 		}
 		
 		if (unit.limit != 0 && unit.limit < getTown().getUnitTypeCount(unit.id)) {
-			throw new CivException("We've reached the maximum number of"+" "+unit.name+" "+"units we can have.");
+			throw new CivException(CivSettings.localize.localizedString("barracks_atLimit")+" "+unit.name);
 		}
 		
 		if (!getTown().getTreasury().hasEnough(unit.cost)) {
-			throw new CivException("Not enough Coins to train unit. We require "+unit.cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("barracks_tooPoor")+" "+unit.cost+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		if (!unit.isAvailable(getTown())) {
-			throw new CivException("This unit is unavailable.");
+			throw new CivException(CivSettings.localize.localizedString("barracks_unavailable"));
 		}
 		
 		if (this.trainingUnit != null) {
-			throw new CivException("Already training a"+" "+this.trainingUnit.name+".");
+			throw new CivException(CivSettings.localize.localizedString("barracks_inProgress")+" "+this.trainingUnit.name+".");
 		}
 		
 		if (unit.id.equals("u_settler")) {
 			if (!this.getCiv().getLeaderGroup().hasMember(whoClicked) && !this.getCiv().getAdviserGroup().hasMember(whoClicked)) {
-				throw new CivException("You must be an adivser to the civilization in order to build a Settler.");
+				throw new CivException(CivSettings.localize.localizedString("barracks_trainSettler_NoPerms"));
 			}
 		}
 		
@@ -147,7 +147,7 @@ public class Barracks extends Structure {
 		
 		this.setCurrentHammers(0.0);
 		this.setTrainingUnit(unit);
-		CivMessage.sendTown(getTown(), "We've begun training a"+" "+unit.name+"!");
+		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("barracks_begin")+" "+unit.name+"!");
 		this.updateTraining();
 	}
 	
@@ -173,7 +173,7 @@ public class Barracks extends Structure {
 				if (getTown().getAssistantGroup().hasMember(resident) || getTown().getMayorGroup().hasMember(resident)) {
 					train(resident);
 				} else {
-					throw new CivException("Only Mayors and Assistants may train units.");
+					throw new CivException(CivSettings.localize.localizedString("barracks_actionNoPerms"));
 				}
 				} catch (CivException e) {
 					CivMessage.send(player, CivColor.Rose+e.getMessage());
@@ -190,20 +190,20 @@ public class Barracks extends Structure {
 		try {
 			ItemStack inHand = player.getItemInHand();
 			if (inHand == null || inHand.getType().equals(Material.AIR)) {
-				throw new CivException("Must have an item in your hand in order to repair it.");
+				throw new CivException(CivSettings.localize.localizedString("barracks_repair_noItem"));
 			}
 			
 			if (inHand.getType().getMaxDurability() == 0) {
-				throw new CivException("Can only repair items that use durability.");
+				throw new CivException(CivSettings.localize.localizedString("barracks_repair_invalidItem"));
 			}
 			
 			if (inHand.getDurability() == 0) {
-				throw new CivException("This item is already at full health.");
+				throw new CivException(CivSettings.localize.localizedString("barracks_repair_atFull"));
 			}
 			
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(inHand);
 			if (craftMat == null) {
-				throw new CivException("Cannot repair this item.");
+				throw new CivException(CivSettings.localize.localizedString("barracks_repair_irreperable"));
 			}
 			
 			try {
@@ -226,7 +226,7 @@ public class Barracks extends Structure {
 				
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
-				throw new CivException("Internal configuration error");
+				throw new CivException(CivSettings.localize.localizedString("internalException"));
 			}
 			
 			
@@ -249,21 +249,21 @@ public class Barracks extends Structure {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (!resident.getTreasury().hasEnough(cost)) {
-			CivMessage.sendError(player, "Sorry, but you don't have the required"+" "+cost+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.sendError(player, CivSettings.localize.localizedString("barracks_repair_TooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
 			return;
 		}
 		
 		LoreCraftableMaterial craftMatInHand = LoreCraftableMaterial.getCraftMaterial(player.getItemInHand());
 		
 		if (!craftMatInHand.getConfigId().equals(craftMat.getConfigId())) {
-			CivMessage.sendError(player, "You're not holding the item that you started the repair with.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("barracks_repair_DifferentItem"));
 			return;
 		}
 		
 		resident.getTreasury().withdraw(cost);
 		player.getItemInHand().setDurability((short)0);
 		
-		CivMessage.sendSuccess(player, craftMat.getName()+" was repaired for "+cost+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, craftMat.getName()+" "+CivSettings.localize.localizedString("barracks_repair_Success")+" "+cost+" "+CivSettings.CURRENCY_NAME);
 		
 	}
 	
@@ -299,7 +299,7 @@ public class Barracks extends Structure {
 			ItemManager.setTypeId(absCoord.getBlock(), sb.getType());
 			ItemManager.setData(absCoord.getBlock(), sb.getData());
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Prev Unit");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("barracks_sign_previousUnit"));
 			structSign.setDirection(sb.getData());
 			structSign.setAction("prev");
 			structSign.update();
@@ -328,7 +328,7 @@ public class Barracks extends Structure {
 			ItemManager.setData(absCoord.getBlock(), sb.getData());
 
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Next Unit");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("barracks_sign_nextUnit"));
 			structSign.setDirection(sb.getData());
 			structSign.setAction("next");
 			structSign.update();
@@ -341,7 +341,7 @@ public class Barracks extends Structure {
 			ItemManager.setData(absCoord.getBlock(), sb.getData());
 
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Train");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("barracks_sign_train"));
 			structSign.setDirection(sb.getData());
 			structSign.setAction("train");
 			structSign.update();
@@ -369,7 +369,7 @@ public class Barracks extends Structure {
 			ItemManager.setData(absCoord.getBlock(), sb.getData());
 
 			structSign = new StructureSign(absCoord, this);
-			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+"Repair Item");
+			structSign.setText("\n"+ChatColor.BOLD+ChatColor.UNDERLINE+CivSettings.localize.localizedString("barracks_sign_repairItem"));
 			structSign.setDirection(sb.getData());
 			structSign.setAction("repair_item");
 			structSign.update();
@@ -420,7 +420,7 @@ public class Barracks extends Structure {
 			Method m = c.getMethod("spawn", Inventory.class, Town.class);
 			m.invoke(null, chest.getInventory(), this.getTown());
 			
-			CivMessage.sendTown(this.getTown(), "Completed a"+" "+unit.name+"!");
+			CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("barracks_completedTraining")+" "+unit.name+"!");
 			this.trainingUnit = null;
 			this.currentHammers = 0.0;
 			
@@ -430,7 +430,7 @@ public class Barracks extends Structure {
 				IllegalAccessException | IllegalArgumentException | NoSuchMethodException e) {
 			this.trainingUnit = null;
 			this.currentHammers = 0.0;
-			CivMessage.sendTown(getTown(), CivColor.Red+"ERROR couldn't find class?:"+e.getMessage());
+			CivMessage.sendTown(getTown(), CivColor.Red+CivSettings.localize.localizedString("barracks_errorUnknown")+e.getMessage());
 		} catch (InvocationTargetException e) {
 			CivMessage.sendTown(getTown(), CivColor.Rose+e.getCause().getMessage());
 			this.currentHammers -= 20.0;

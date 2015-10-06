@@ -6,6 +6,7 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.CivColor;
 
@@ -13,8 +14,8 @@ public class TutorialBook extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrs) {
-		attrs.addLore(CivColor.Gold+"CivCraft Info");
-		attrs.addLore(CivColor.Rose+"<Right Click to Open>");
+		attrs.addLore(CivColor.Gold+CivSettings.localize.localizedString("tutorialBook_lore1"));
+		attrs.addLore(CivColor.Rose+CivSettings.localize.localizedString("tutorialBook_lore2"));
 	}
 
 	

@@ -87,7 +87,6 @@ public class ACManager implements PluginMessageListener {
 	 */
 	public static void sendChallenge(Player player) {
 
-		CivLog.warning("Checking Player");
 		class SyncTask implements Runnable {
 			String name;
 			
@@ -106,7 +105,6 @@ public class ACManager implements PluginMessageListener {
 					
 					player.sendPluginMessage(CivCraft.getPlugin(), "CAC", buffer.array());
 				} catch (CivException e) {
-					CivLog.warning("Checking Player Failed");
 				}
 			}
 		}

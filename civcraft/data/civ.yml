@@ -61,45 +61,6 @@ global:
    # Attempt to validate structures to make sure they're not floating.
    structure_validation: 'true'
 
-platinum:
-### DAILY EVENTS ######
-      # amount of plat ervry day
-    - name: 'loginDaily'
-      amount: 5
-      occurs: 'daily'
-
-      # platinum for being in town during the upkeep tick
-    - name: 'inTownDuringUpkeep'
-      amount: 5
-      occurs: 'daily'
-
-### SPAM EVENTS (can happen whenever) ###
-
-    - name: 'winningWar'
-      amount: 25
-      occurs: 'any'
-    
-    - name: 'craft100Items'
-      amount: 1
-      occurs: 'any'
-
-    - name: 'randomEventSuccess'
-      amount: 25
-      occurs: 'any'
-    
-#### ACHEIVEMENTS (only once) ####
-     # amount of plat on first login with verification.
-    - name: 'loginFirstVerified'
-      amount: 50
-      occurs: 'once'
-    
-    - name: 'buildCamp'
-      amount: 150
-      occurs: 'once'
-    
-    - name: 'buildCiv'
-      amount: 200
-      occurs: 'once'
 civ:
     # Amount of coins required to start a civilization
     cost: 100000.0

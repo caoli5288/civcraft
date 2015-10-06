@@ -24,7 +24,7 @@ public class LoreEnhancementAttack extends LoreEnhancement {
 			e.printStackTrace();
 			m = 1;
 		}
-		return CivColor.Blue+"+"+(baseLevel*m)+" Attack";
+		return CivColor.Blue+"+"+(baseLevel*m)+" "+CivSettings.localize.localizedString("itemLore_Attack");
 	}
 	
 	@Override

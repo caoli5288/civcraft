@@ -828,7 +828,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Player already has a question pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_hasPendingRequest"));			
 		}
 		
 		task = new PlayerQuestionTask(toPlayer, fromPlayer, question, timeout, finishedFunction);
@@ -845,7 +845,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Leaders of civ already have a question pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivLeaderQuestionTask(toCiv, fromPlayer, question, timeout, finishedFunction);
@@ -919,10 +919,10 @@ public class CivGlobal {
 	public static Player getPlayer(String name) throws CivException {
 		Resident res = CivGlobal.getResident(name);
 		if (res == null)
-			throw new CivException("No resident named"+name);
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_noResident")+" "+name);
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player == null)
-			throw new CivException("No player named "+name);
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_noPlayer")+" "+name);
 		return player;	
 	}
 	
@@ -1461,22 +1461,22 @@ public class CivGlobal {
 		civ.getDiplomacyManager().setRelation(otherCiv, status, null);
 		otherCiv.getDiplomacyManager().setRelation(civ, status, null);
 		
-		String out = civ.getName()+" "+"is now"+" ";
+		String out = civ.getName()+" "+CivSettings.localize.localizedString("civGlobal_relation_isNow")+" ";
 		switch (status) {
 		case NEUTRAL:
-			out += "NEUTRAL with"+" ";
+			out += CivSettings.localize.localizedString("civGlobal_relation_Neutral")+" ";
 			break;
 		case HOSTILE:
-			out += CivColor.Yellow+"HOSTILE"+CivColor.White+" "+"towards"+" ";
+			out += CivColor.Yellow+CivSettings.localize.localizedString("civGlobal_relation_Hostile")+CivColor.White+" ";
 			break;
 		case WAR:
-			out += "at "+CivColor.Rose+"WAR"+CivColor.White+" "+"with"+" ";
+			out += CivColor.Rose+CivSettings.localize.localizedString("civGlobal_relation_War")+" ";
 			break;
 		case PEACE:
-			out += "at PEACE with"+" ";
+			out += CivSettings.localize.localizedString("civGlobal_relation_Peace")+" ";
 			break;
 		case ALLY:
-			out += CivColor.LightGreen+"ALLIED"+CivColor.White+" "+"with"+" ";
+			out += CivColor.LightGreen+CivSettings.localize.localizedString("civGlobal_relation_Allied")+" ";
 			break;
 		default:
 			break;
@@ -1494,7 +1494,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Civilization already has an offer pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivQuestionTask(toCiv, fromCiv, question, timeout, finishedFunction);
@@ -1511,7 +1511,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Civilization already has an offer pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivQuestionTask(toCiv, fromCiv, question, timeout, finishedFunction);

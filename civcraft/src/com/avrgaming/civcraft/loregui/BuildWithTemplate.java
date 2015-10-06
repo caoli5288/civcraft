@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -51,7 +52,7 @@ public class BuildWithTemplate implements GuiAction {
 					resident.pendingBuildable.buildPlayerPreview(player, player.getLocation(), tpl);					
 
 				} else {
-					CivLog.error("Couldn't activate perk:"+perk_id+" cause it wasn't found in perks hashmap.");
+					CivLog.error(perk_id+" "+CivSettings.localize.localizedString("loreGui_perkActivationFailed"));
 				}
 			} else {
 				/* Use the default template. */
@@ -71,7 +72,7 @@ public class BuildWithTemplate implements GuiAction {
 		} catch (CivException e) {
 			CivMessage.sendError(player, e.getMessage());
 		} catch (IOException e) {
-			CivMessage.sendError(player, "Internal IO Error.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("internalIOException"));
 			e.printStackTrace();
 		}
 		player.closeInventory();

@@ -99,9 +99,9 @@ public class PlayerListener implements Listener {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (resident.getItemMode().equals("all")) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up"+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("customItem_Pickup")+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
 		} else if (resident.getItemMode().equals("rare") && rare) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You've picked up"+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("customItem_Pickup")+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
 		}
 	}
 	
@@ -139,7 +139,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+"[Denied]"+" "+CivColor.White+"You're not allowed to Teleport into Civ"+" ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"] "+"unless you are allied with them.");
+							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("teleportDeniedCiv")+" ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"]");
 							return;
 						}
 					}
@@ -154,7 +154,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+"[Denied]"+" "+CivColor.White+"You're not allowed to Teleport into Camp"+" ["+CivColor.Green+toCamp.getName()+CivColor.White+"] "+"unless you are a member of that camp.");
+							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("teleportDeniedCamp")+" ["+CivColor.Green+toCamp.getName()+CivColor.White+"]");
 							return;
 						}
 					
@@ -305,7 +305,7 @@ public class PlayerListener implements Listener {
 						//PlayerReviveTask reviveTask = new PlayerReviveTask(player, townhall.getRespawnTime(), townhall, event.getRespawnLocation());
 						resident.setLastKilledTime(new Date());
 						event.setRespawnLocation(respawn.getCenteredLocation());
-						CivMessage.send(player, CivColor.LightGray+"You've respawned in the War Room since it's WarTime and you're at war.");
+						CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("playerListen_repawnInWarRoom"));
 						
 						//TaskMaster.asyncTask("", reviveTask, 0);
 					}
@@ -405,13 +405,13 @@ public class PlayerListener implements Listener {
 	public void onPlayerPortalEvent(PlayerPortalEvent event) {
 		if(event.getCause().equals(TeleportCause.END_PORTAL)) {
 			event.setCancelled(true);
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "The End portal is disabled on this server.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("playerListen_endDisabled"));
 			return;
 		}
 		
 		if (event.getCause().equals(TeleportCause.NETHER_PORTAL)) {
 			event.setCancelled(true);
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "The Nether is disabled on this server.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("playerListen_netherDisabled"));
 			return;
 		}
 	}
@@ -438,7 +438,7 @@ public class PlayerListener implements Listener {
 					event.getBucket().equals(Material.LAVA)) {
 				
 				if (!resident.hasTown() || (resident.getTown().getCiv() != cc.getCiv())) {
-					CivMessage.sendError(event.getPlayer(), "You cannot place lava inside another civ's culture.");
+					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_placeLavaDenied"));
 					event.setCancelled(true);
 					return;
 				}
@@ -493,7 +493,7 @@ public class PlayerListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW) 
 	public void onConsume(PlayerItemConsumeEvent event) {
 		if (ItemManager.getId(event.getItem()) == CivData.GOLDEN_APPLE) {
-			CivMessage.sendError(event.getPlayer(), "You cannot use golden apples.");
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("itemUse_errorGoldenApple"));
 			event.setCancelled(true);
 			return;
 		}
@@ -502,7 +502,7 @@ public class PlayerListener implements Listener {
 			ConfigTechPotion pot = CivSettings.techPotions.get(Integer.valueOf(event.getItem().getDurability()));
 			if (pot != null) {
 				if (!pot.hasTechnology(event.getPlayer())) {
-					CivMessage.sendError(event.getPlayer(), "You cannot use"+" "+pot.name+" "+"potions. You do not have the technology yet.");
+					CivMessage.sendError(event.getPlayer(), pot.name+" "+CivSettings.localize.localizedString("playerListen_potionNoTech"));
 					event.setCancelled(true);
 					return;
 				}
@@ -510,7 +510,7 @@ public class PlayerListener implements Listener {
 					event.setCancelled(false);
 				}
 			} else {
-				CivMessage.sendError(event.getPlayer(), "You cannot use this type of potion.");
+				CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_denyUse"));
 				event.setCancelled(true);
 			}
 		}
@@ -581,8 +581,7 @@ public class PlayerListener implements Listener {
 			Resident defenderResident = CivGlobal.getResident(defender);
 			if (defenderResident.isCombatInfo()) {	
 				if (attacker != null) {
-					CivMessage.send(defender, CivColor.LightGray+"   "+"[Combat] Took"+" "+CivColor.Rose+damage+
-							" "+"damage"+" "+CivColor.LightGray+" "+"from"+" "+CivColor.LightPurple+attacker.getName());				
+					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivColor.LightPurple+attacker.getName()+ " "+CivSettings.localize.localizedString("playerListen_combatDefend")+" "+CivColor.Rose+damage);				
 				} else {
 					String entityName = null;
 					
@@ -594,8 +593,7 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(defender, CivColor.LightGray+"   "+"[Combat] Took"+" "+CivColor.Rose+damage+
-							" "+"damage"+" "+CivColor.LightGray+" "+"from a"+" "+entityName);
+					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+entityName+ " "+CivSettings.localize.localizedString("playerListen_combatDefend")+" "+CivColor.Rose+damage);
 				}
 			}
 		}
@@ -604,7 +602,7 @@ public class PlayerListener implements Listener {
 			Resident attackerResident = CivGlobal.getResident(attacker);
 			if (attackerResident.isCombatInfo()) {
 				if (defender != null) {
-					CivMessage.send(attacker, CivColor.LightGray+"   "+"[Combat] Gave"+" "+CivColor.LightGreen+damage+CivColor.LightGray+" "+"damage to"+" "+CivColor.LightPurple+defender.getName());
+					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivColor.LightPurple+defender.getName()+CivColor.LightGray+" "+CivSettings.localize.localizedString("playerListen_attack")+" "+CivColor.LightGreen+damage);
 				} else {
 					String entityName = null;
 					
@@ -616,7 +614,7 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(attacker, CivColor.LightGray+"   "+"[Combat] Gave"+" "+CivColor.LightGreen+damage+CivColor.LightGray+" "+"damage to a"+" "+entityName);
+					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+entityName+CivColor.LightGray+" "+CivSettings.localize.localizedString("playerListen_attack")+" "+CivColor.LightGreen+damage);
 				}
 			}
 		}
