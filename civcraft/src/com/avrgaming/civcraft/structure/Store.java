@@ -80,7 +80,7 @@ public class Store extends Structure {
 	
 	public void addStoreMaterial(StoreMaterial mat) throws CivException {
 		if (materials.size() >= 4) {
-			throw new CivException("Store is full.");
+			throw new CivException(CivSettings.localize.localizedString("store_isFull"));
 		}
 		materials.add(mat);
 	}
@@ -109,10 +109,7 @@ public class Store extends Structure {
 				return;
 			}
 			
-			sign.setText("Buy 64\n"+
-		             mat.name+"\n"+
-				     "For "+(int)mat.price+" Coins\n"+
-		             getNonResidentFeeString());
+			sign.setText(CivSettings.localize.localizedString("var_store_sign_buy",mat.name,((int)mat.price+" "+CivSettings.CURRENCY_NAME),getNonResidentFeeString()));
 			sign.update();
 			count++;
 		}
@@ -120,7 +117,7 @@ public class Store extends Structure {
 		// We've finished with all of the materials, update the empty signs to show correct text.
 		for (; count < getSigns().size(); count++) {
 			StructureSign sign = getSignFromSpecialId(count);
-			sign.setText("Store Self\nEmpty");
+			sign.setText(CivSettings.localize.localizedString("store_sign_empty"));
 			sign.update();
 		}
 	}
@@ -132,7 +129,7 @@ public class Store extends Structure {
 			StoreMaterial mat = this.materials.get(special_id);
 			sign_buy_material(player, mat.name, mat.type, mat.data, 64, mat.price);
 		} else {
-			CivMessage.send(player, CivColor.Rose+"Store shelf empty, stock it using /town upgrade.");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("store_buy_empty"));
 		}
 	}
 	
@@ -149,13 +146,13 @@ public class Store extends Structure {
 				if (t == this.getTown()) {
 					// Pay no taxes! You're a member.
 					resident.buyItem(itemName, id, data, price, amount);
-					CivMessage.send(player, CivColor.LightGreen + "Bought"+" "+amount+" "+itemName+" "+"for"+" "+ price+ " "+CivSettings.CURRENCY_NAME);
+					CivMessage.send(player, CivColor.LightGreen + CivSettings.localize.localizedString("var_market_buy",amount,itemName,price,CivSettings.CURRENCY_NAME));
 					return;
 				} else {
 					// Pay non-resident taxes
 					resident.buyItem(itemName, id, data, price + payToTown, amount);
 					getTown().depositDirect(payToTown);
-					CivMessage.send(player, CivColor.Yellow + "Paid"+" "+ payToTown+" "+CivSettings.CURRENCY_NAME+" "+"in non-resident taxes.");
+					CivMessage.send(player, CivColor.Yellow + CivSettings.localize.localizedString("var_taxes_paid",payToTown,CivSettings.CURRENCY_NAME));
 				}
 			
 			}
@@ -167,13 +164,13 @@ public class Store extends Structure {
 
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>"+"Store"+"</u></b><br/>";
+		String out = "<u><b>"+this.getDisplayName()+"</u></b><br/>";
 		if (this.materials.size() == 0) {
-			out += "Nothing stocked.";
+			out += CivSettings.localize.localizedString("store_dynmap_nothingStocked");
 		} 
 		else {
 			for (StoreMaterial mat : this.materials) {
-				out += mat.name+" "+"for"+" "+mat.price+"<br/>";
+				out += CivSettings.localize.localizedString("var_store_dynmap_item",mat.name,mat.price)+"<br/>";
 			}
 		}
 		return out;

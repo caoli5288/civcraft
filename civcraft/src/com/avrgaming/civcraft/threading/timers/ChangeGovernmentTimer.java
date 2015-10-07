@@ -68,7 +68,7 @@ public class ChangeGovernmentTimer implements Runnable {
 				if (CivGlobal.hasTimeElapsed(se, anarchyHours*duration)) {
 
 					civ.setGovernment(se.value);
-					CivMessage.global(civ.getName()+" "+"has emerged from anarchy and has adopted"+" "+CivSettings.governments.get(se.value).displayName);
+					CivMessage.global(CivSettings.localize.localizedString("var_gov_emergeFromAnarchy",civ.getName(),CivSettings.governments.get(se.value).displayName));
 					
 					CivGlobal.getSessionDB().delete_all(key);
 					civ.save();

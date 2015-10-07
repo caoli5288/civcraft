@@ -57,7 +57,7 @@ public class Structure extends Buildable {
 		// Disallow duplicate structures with the same hash.
 		Structure struct = CivGlobal.getStructure(this.getCorner());
 		if (struct != null) {
-			throw new CivException("There is a structure already here.");
+			throw new CivException(CivSettings.localize.localizedString("structure_alreadyExistsHere"));
 		}
 	}
 	
@@ -596,7 +596,7 @@ public class Structure extends Buildable {
 	public void processUndo() throws CivException {
 		
 		if (isTownHall()) {
-			throw new CivException("Cannot undo town halls or a capitols, build a new town hall using '/build town hall' or '/build capitol' to move it.");
+			throw new CivException(CivSettings.localize.localizedString("structure_move_notCaporHall"));
 		}
 	
 		try {
@@ -604,14 +604,14 @@ public class Structure extends Buildable {
 			getTown().removeStructure(this);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal database error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}		
 		
-		CivMessage.sendTown(getTown(), CivColor.LightGreen+getDisplayName()+" "+"was unbuilt with the undo command.");
+		CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_structure_undo_success",getDisplayName()));
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded"+" "+refund+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("var_structure_undo_refund",this.getTown().getName(),refund,CivSettings.CURRENCY_NAME));
 		
 		this.unbindStructureBlocks();
 	}
@@ -654,25 +654,25 @@ public class Structure extends Buildable {
 		try {
 			repairFromTemplate();
 		} catch (CivException | IOException e) {
-			throw new CivException("Internal template error.");
+			throw new CivException(CivSettings.localize.localizedString("internalIOException"));
 		}
 		save();
 	}
 	
 	public void repairStructure() throws CivException {
 		if (this instanceof TownHall) {
-			throw new CivException("Town halls and capitols cannot be repaired.");
+			throw new CivException(CivSettings.localize.localizedString("structure_repair_notCaporHall"));
 		}
 		
 		double cost = getRepairCost();
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the"+" "+cost+" "+CivSettings.CURRENCY_NAME+" "+"to build a"+" "+getDisplayName());
+			throw new CivException(CivSettings.localize.localizedString("var_structure_repair_tooPoor",getTown().getName(),cost,CivSettings.CURRENCY_NAME,getDisplayName()));
 		}
 		
 		repairStructureForFree();
 		
 		getTown().getTreasury().withdraw(cost);
-		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a"+" "+getDisplayName()+" @ "+getCorner());
+		CivMessage.sendTown(getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_structure_repair_success",getTown().getName(),getDisplayName(),getCorner()));
 	}
 
 	@Override

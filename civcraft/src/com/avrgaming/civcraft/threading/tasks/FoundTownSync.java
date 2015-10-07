@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.threading.tasks;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -52,7 +53,7 @@ public class FoundTownSync implements Runnable {
 		}
 
 		//CivMessage.sendSuccess(sender, "Town "+args[1]+" has been founded.");
-		CivMessage.global(resident.desiredTownName+" has been founded by "+resident.getCiv().getName()+"!");
+		CivMessage.global(CivSettings.localize.localizedString("var_FoundTownSync_Success",resident.desiredTownName,resident.getCiv().getName()));
 	}
 
 }

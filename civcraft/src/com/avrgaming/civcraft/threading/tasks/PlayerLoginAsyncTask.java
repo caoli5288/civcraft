@@ -76,8 +76,8 @@ public class PlayerLoginAsyncTask implements Runnable {
 			 */
 			if (CivGlobal.getResidentViaUUID(getPlayer().getUniqueId()) != resident) {
 				TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, 
-						"Your user ID on record does not match the player name you're attempting to log in with."+
-						"If you changed your name, please change it back or contact an admin to request a name change."));
+						CivSettings.localize.localizedString("PlayerLoginAsync_usernameChange1")+
+						CivSettings.localize.localizedString("PlayerLoginAsync_usernameChange2")));
 				return;
 			}
 	
@@ -86,7 +86,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 				try {
 					resident = new Resident(getPlayer().getUniqueId(), getPlayer().getName());
 				} catch (InvalidNameException e) {
-					TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, "You have an invalid name. Sorry."));
+					TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, CivSettings.localize.localizedString("PlayerLoginAsync_usernameInvalid")));
 					return;
 				}
 				
@@ -102,8 +102,8 @@ public class PlayerLoginAsyncTask implements Runnable {
 					e1.printStackTrace();
 					return;
 				}
-				CivMessage.send(resident, CivColor.LightGray+"You have a PvP timer enabled for"+" "+mins+" "+"mins. You cannot attack or be attacked until it expires.");
-				CivMessage.send(resident, CivColor.LightGray+"To remove it, type /resident pvptimer");
+				CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("var_PlayerLoginAsync_pvpTimerPropmt1",mins));
+				CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_pvpTimerPropmt2"));
 	
 			} 
 			
@@ -117,8 +117,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 				resident.setUUID(getPlayer().getUniqueId());
 				CivLog.info("Resident named:"+resident.getName()+" was acquired by UUID:"+resident.getUUIDString());
 			} else if (!resident.getUUID().equals(getPlayer().getUniqueId())) {
-				TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, 
-						"You're attempting to log in with a name already in use. Please change your name."));
+				TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, CivSettings.localize.localizedString("PlayerLoginAsync_usernameInUse")));
 				return;
 			}
 			
@@ -130,7 +129,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 				if (getPlayer().isOp() || getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
 					//Allowed to connect since player is OP or mini admin.
 				} else if (!resident.hasTown() || !resident.getTown().getCiv().getDiplomacyManager().isAtWar()) {
-					TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, "Only players in civilizations at war can connect right now. Sorry."));
+					TaskMaster.syncTask(new PlayerKickBan(getPlayer().getName(), true, false, CivSettings.localize.localizedString("PlayerLoginAsync_onlyWarriorsAllowed")));
 					return;
 				}
 			}
@@ -161,11 +160,11 @@ public class PlayerLoginAsyncTask implements Runnable {
 						
 						if (resident.getLastOnline() < War.getStart().getTime()) {
 							resident.teleportHome();
-							CivMessage.send(resident, CivColor.LightGray+"You've been teleported back to your home since you've logged into enemy during WarTime.");
+							CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_loginDuringWar"));
 						}
 					}
 					
-					CivMessage.sendCiv(cc.getCiv(), color+getPlayer().getDisplayName()+"("+relationName+")"+" has logged-in to our borders.");
+					CivMessage.sendCiv(cc.getCiv(), CivSettings.localize.localizedString("var_PlayerLoginAsync_inBorderAlert",(color+getPlayer().getDisplayName()+"("+relationName+")")));
 				}
 			}
 					
@@ -183,53 +182,53 @@ public class PlayerLoginAsyncTask implements Runnable {
 				String perkMessage = "";
 				if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
 					resident.giveAllFreePerks();
-					perkMessage = "You have access to the Following Perks:"+" ";
+					perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+" ";
 				} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
 					if (getPlayer().hasPermission(CivSettings.MINI_ADMIN) || getPlayer().hasPermission(CivSettings.FREE_PERKS)) {
 						resident.giveAllFreePerks();
-						perkMessage = "You have access to the Following Perks"+": ";
+						perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+": ";
 						perkMessage += "Weather"+", ";
 					}
 				}
 				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
 				{
 					resident.giveAllArcticPerks();
-					perkMessage += "Arctic"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Arctic")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ATLANTEAN_PERKS))
 				{
 					resident.giveAllAtlanteanPerks();
-					perkMessage += "Atlantean"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Atlantean")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.AZTEC_PERKS))
 				{
 					resident.giveAllAztecPerks();
-					perkMessage += "Aztec"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Aztec")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
 				{
 					resident.giveAllCultistPerks();
-					perkMessage += "Cultist"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Cultist")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
 				{
 					resident.giveAllEgyptianPerks();
-					perkMessage += "Egyptian"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Egyptian")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
 				{
 					resident.giveAllElvenPerks();
-					perkMessage += "Elven"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Elven")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
 				{
 					resident.giveAllHellPerks();
-					perkMessage += "Hell"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Hell")+", ";
 				}
 				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
 				{
 					resident.giveAllRomanPerks();
-					perkMessage += "Roman"+", ";
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
 				}
 
 				if (getPlayer().hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
@@ -238,7 +237,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 					perkMessage += "Night Lights"+", ";
 				}
 
-				perkMessage += "Apply them with /res perks";
+				perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");
 				
 				CivMessage.send(resident, CivColor.LightGreen+perkMessage);
 			} catch (InvalidConfiguration e) {
@@ -284,7 +283,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 				
 				ArrayList<SessionEntry> deathEvents = CivGlobal.getSessionDB().lookup("pvplogger:death:"+resident.getName());
 				if (deathEvents.size() != 0) {
-					CivMessage.send(resident, CivColor.Rose+CivColor.BOLD+"You were killed while offline because you logged out while in PvP!");
+					CivMessage.send(resident, CivColor.Rose+CivColor.BOLD+CivSettings.localize.localizedString("PlayerLoginAsync_killedWhilePVPLogged"));
 					class SyncTask implements Runnable {
 						String playerName; 
 						
@@ -312,7 +311,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 			}
 			
 			if (EndConditionDiplomacy.canPeopleVote()) {
-				CivMessage.send(resident, CivColor.LightGreen+"The Council of Eight is built! Use /civ vote to vote for your favorite Civilization!");
+				CivMessage.send(resident, CivColor.LightGreen+CivSettings.localize.localizedString("PlayerLoginAsync_councilOf8"));
 			}
 			Civilization civ = resident.getCiv();
 			if (civ != null)

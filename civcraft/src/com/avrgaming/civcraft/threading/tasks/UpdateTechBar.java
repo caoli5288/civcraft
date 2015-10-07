@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.threading.tasks;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Town;
@@ -109,14 +110,14 @@ public class UpdateTechBar extends CivAsyncTask {
 				sb.specialType = Type.LITERAL;
 								
 				if (civ.getResearchTech() != null) {			
-					sb.message[0] = "Researching";
+					sb.message[0] = CivSettings.localize.localizedString("Researching");
 					sb.message[1] = "";
 					sb.message[2] = civ.getResearchTech().name;
 					sb.message[3] = "";
 				} else {
-					sb.message[0] = "Researching";
+					sb.message[0] = CivSettings.localize.localizedString("Researching");
 					sb.message[1] = "";
-					sb.message[2] = "Nothing";
+					sb.message[2] = CivSettings.localize.localizedString("Nothing");
 					sb.message[3] = "";			
 				}
 				sbs.add(sb);
@@ -135,16 +136,16 @@ public class UpdateTechBar extends CivAsyncTask {
 				if (civ.getResearchTech() != null) {
 					percentageDone = Math.round(percentageDone*100);
 				
-					sb.message[0] = "Percent";
-					sb.message[1] = "Complete";
+					sb.message[0] = CivSettings.localize.localizedString("UpdateTechBar_sign_Percent");
+					sb.message[1] = CivSettings.localize.localizedString("UpdateTechBar_sign_Complete");
 					sb.message[2] = ""+percentageDone+"%";
 					sb.message[3] = "";
 					
 				} else {
-					sb.message[0] = "Use";
+					sb.message[0] = CivSettings.localize.localizedString("UpdateTechBar_sign_Use");
 					sb.message[1] = "/civ research";
-					sb.message[2] = "to start";
-					sb.message[3] = "";				
+					sb.message[2] = CivSettings.localize.localizedString("UpdateTechBar_sign_toStart");
+					sb.message[3] = CivSettings.localize.localizedString("UpdateTechBar_sign_Researching");				
 				}
 				sbs.add(sb);
 

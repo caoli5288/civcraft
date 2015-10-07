@@ -113,7 +113,7 @@ public class TradeOutpost extends Structure {
 			}
 		}
 		
-		throw new CivException("Cannot demolish when bonus goodie is not in item frame.");
+		throw new CivException(CivSettings.localize.localizedString("tradeOutpost_demolish_missingGoodie"));
 	}
 	
 	public void build_trade_outpost(Location centerLoc) throws CivException {
@@ -125,7 +125,7 @@ public class TradeOutpost extends Structure {
 		}
 		
 		if (good.getInfo().water) {
-			throw new CivException("Trade Outposts cannot be built on water goods.");
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_notOnWater"));
 		}
 		
 		if (good.getTown() != null) {
@@ -146,13 +146,13 @@ public class TradeOutpost extends Structure {
 		/* this.good is set by the good's load function or by the onBuild function. */
 		TradeGood good = this.good;
 		if (good == null) {
-			throw new CivException("Couldn't find trade good at location:"+" "+good);
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_build_noGoodie")+" "+good);
 		}
 		
 		/* Build the 'trade good tower' */
 		/* This is always set on post build using the post build sync task. */
 		if (tradeOutpostTower == null) {
-			throw new CivException("Couldn't find trade outpost tower.");
+			throw new CivException(CivSettings.localize.localizedString("tradeOutpost_build_noTower"));
 		}
 		
 		Location centerLoc = tradeOutpostTower.getLocation();
@@ -289,10 +289,10 @@ public class TradeOutpost extends Structure {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal database error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		} catch (InvalidNameException e) {
 			e.printStackTrace();
-			throw new CivException("Invalid name exception.");
+			throw new CivException(CivSettings.localize.localizedString("stringFormattingError"));
 		}
 	}
 	

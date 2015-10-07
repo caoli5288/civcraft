@@ -124,7 +124,7 @@ public class Bank extends Structure {
 	}
 	
 	private String getNonResidentFeeString() {
-		return "Fee: "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
+		return CivSettings.localize.localizedString("bank_sign_fee")+" "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
 	}
 	
 	private String getSignItemPrice(int signId) {
@@ -190,7 +190,7 @@ public class Bank extends Structure {
 			DecimalFormat df = new DecimalFormat();
 			resident.getTreasury().deposit((double)((int)((coins*count)*exchange_rate)));
 			CivMessage.send(player,
-					CivColor.LightGreen + CivSettings.localize.localizedString("bank_Exchanged")+" "+count+" "+itemName+" "+CivSettings.localize.localizedString("bank_for")+" "+ df.format((coins*count)*exchange_rate)+ " "+CivSettings.CURRENCY_NAME);	
+					CivColor.LightGreen + CivSettings.localize.localizedString("var_bank_exchanged",count,itemName,(df.format((coins*count)*exchange_rate)),CivSettings.CURRENCY_NAME));	
 			return;
 		}
 		
@@ -205,8 +205,8 @@ public class Bank extends Structure {
 			this.getTown().depositDirect(giveToTown);
 			resident.getTreasury().deposit(giveToPlayer);
 		
-		CivMessage.send(player, CivColor.LightGreen + CivSettings.localize.localizedString("bank_Exchanged")+" "+count+" "+itemName+" "+CivSettings.localize.localizedString("bank_for")+" "+ giveToPlayer+ " "+CivSettings.CURRENCY_NAME);
-		CivMessage.send(player,CivColor.Yellow+" "+CivSettings.localize.localizedString("bank_paid")+" "+giveToTown+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("bank_nonResidentTaxes"));
+		CivMessage.send(player, CivColor.LightGreen + CivSettings.localize.localizedString("var_bank_exchanged",count,itemName,giveToPlayer,CivSettings.CURRENCY_NAME));
+		CivMessage.send(player,CivColor.Yellow+" "+CivSettings.localize.localizedString("var_taxes_paid",giveToTown,CivSettings.CURRENCY_NAME));
 		return;
 		
 	}

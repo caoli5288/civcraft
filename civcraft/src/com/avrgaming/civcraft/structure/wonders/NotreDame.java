@@ -75,7 +75,7 @@ public class NotreDame extends Wonder {
 
 	public void processPeaceTownCoins() {
 		double totalCoins = 0;
-		
+		int peacefulTowns = 0;
 		double coinsPerTown = this.getTown().getBuffManager().getEffectiveInt("buff_notre_dame_coins_from_peace");
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
@@ -86,12 +86,12 @@ public class NotreDame extends Wonder {
 			if (civ.getDiplomacyManager().isAtWar()) {
 				continue;
 			}
-			
+			peacefulTowns++;
 			totalCoins += (coinsPerTown*civ.getTowns().size());
 		}
 		
 		this.getTown().depositTaxed(totalCoins);
-		CivMessage.sendTown(this.getTown(), "Generated"+" "+totalCoins+" "+CivSettings.CURRENCY_NAME+" from the peaceful towns of the world!");	
+		CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("var_NotreDame_generatedCoins",totalCoins,CivSettings.CURRENCY_NAME,peacefulTowns));	
 		
 	}
 

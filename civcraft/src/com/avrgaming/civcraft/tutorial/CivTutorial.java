@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigMaterial;
 import com.avrgaming.civcraft.config.ConfigMaterialCategory;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
@@ -30,7 +31,7 @@ public class CivTutorial {
 	
 	public static void showTutorialInventory(Player player) {	
 		if (tutorialInventory == null) {
-			tutorialInventory = Bukkit.getServer().createInventory(player, 9*3, "CivCraft Tutorial");
+			tutorialInventory = Bukkit.getServer().createInventory(player, 9*3, CivSettings.localize.localizedString("tutorial_gui_heading"));
 		
 	
 			tutorialInventory.addItem(LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+"What is CivCraft?", ItemManager.getId(Material.WORKBENCH), 0, 

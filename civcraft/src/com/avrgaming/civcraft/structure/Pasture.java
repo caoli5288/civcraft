@@ -68,17 +68,17 @@ public class Pasture extends Structure {
 	public boolean processMobBreed(Player player, EntityType type) {
 				
 		if (!this.isActive()) {
-			CivMessage.sendError(player, "Pasture is destroyed or currently building. Cannot breed yet.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("pasture_destroyed"));
 			return false;
 		}
 		
 		if (this.getMobCount() >= this.getMobMax()) {
-			CivMessage.sendError(player, "Pasture is the maximum number of mobs that it can support. Slaughter some before you breed.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("pasture_isFull"));
 			return false;
 		}
 		
 		if ((getPendingBreeds() + this.getMobCount()) >= this.getMobMax()) {
-			CivMessage.sendError(player, "Pasture has too many breed events pending. Pasture is probably at the maximum number of mobs it can support. Slaughter some before you breed.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("pasture_TooMuchorIsFull",CivSettings.localize.localizedString("pasture_isFull")));
 			return false;
 		}
 		

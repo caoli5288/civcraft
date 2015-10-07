@@ -440,7 +440,7 @@ public class Template {
 		line = reader.readLine();
 		if (line == null) {
 			reader.close();
-			throw new CivException("Invalid template file:"+filepath);
+			throw new CivException(CivSettings.localize.localizedString("template_invalidFile")+" "+filepath);
 		}
 		
 		String split[] = line.split(";");
@@ -484,7 +484,7 @@ public class Template {
 		dir = invertDirection(dir); //We want the direction the building should be facing, not the player.
 
 		if (dir == null) {
-			throw new CivException("Unknown direction.");
+			throw new CivException(CivSettings.localize.localizedString("template_unknwonDirection"));
 		}
 	}
 	
@@ -561,7 +561,7 @@ public class Template {
 		line = reader.readLine();
 		if (line == null) {
 			reader.close();
-			throw new CivException("Invalid template file:"+filepath);
+			throw new CivException(CivSettings.localize.localizedString("template_invalidFile")+" "+filepath);
 		}
 		
 		String split[] = line.split(";");

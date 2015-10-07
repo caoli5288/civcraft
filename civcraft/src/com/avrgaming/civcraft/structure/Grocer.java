@@ -143,8 +143,8 @@ public class Grocer extends Structure {
 			}
 			ConfigGrocerLevel grocerlevel = CivSettings.grocerLevels.get(count+1);
 			
-			sign.setText("Buy"+"\n"+grocerlevel.itemName+"\n"+
-						 "For"+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+"\n"+
+			sign.setText(CivSettings.localize.localizedString("grocer_sign_buy")+"\n"+grocerlevel.itemName+"\n"+
+						 CivSettings.localize.localizedString("grocer_sign_for")+" "+grocerlevel.price+" "+CivSettings.CURRENCY_NAME+"\n"+
 					     getNonResidentFeeString());
 			
 			sign.update();
@@ -156,7 +156,7 @@ public class Grocer extends Structure {
 				CivLog.error("sign from special id was null, id:"+count);
 				return;
 			}
-			sign.setText("Grocer Shelf"+"\n"+"Empty");
+			sign.setText(CivSettings.localize.localizedString("grocer_sign_empty"));
 			sign.update();
 		}
 		
@@ -170,7 +170,7 @@ public class Grocer extends Structure {
 			sign_buy_material(player, grocerlevel.itemName, grocerlevel.itemId, 
 					(byte)grocerlevel.itemData, grocerlevel.amount, grocerlevel.price);
 		} else {
-			CivMessage.send(player, CivColor.Rose+"Grocer shelf empty, stock it using /town upgrade.");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("grocer_sign_needUpgrade"));
 		}
 	}
 	

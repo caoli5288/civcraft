@@ -66,7 +66,7 @@ public abstract class Wonder extends Buildable {
 		// Disallow duplicate structures with the same hash.
 		Wonder wonder = CivGlobal.getWonder(this.getCorner());
 		if (wonder != null) {
-			throw new CivException("There is a wonder already here.");
+			throw new CivException(CivSettings.localize.localizedString("wonder_alreadyExistsHere"));
 		}
 	}
 
@@ -214,16 +214,15 @@ public abstract class Wonder extends Buildable {
 			this.undoFromTemplate();
 		} catch (IOException e1) {
 			e1.printStackTrace();
-			CivMessage.sendTown(getTown(), CivColor.Rose+"Couldn't find undo data! Destroying structure instead.");
+			CivMessage.sendTown(getTown(), CivColor.Rose+CivSettings.localize.localizedString("wonder_undo_error"));
 			this.fancyDestroyStructureBlocks();
 		}
 		
-		CivMessage.global("The"+" "+CivColor.LightGreen+this.getDisplayName()+CivColor.White+" "+"has been unbuilt by"+" "+this.getTown().getName()
-				+"("+this.getTown().getCiv().getName()+") "+"with the undo command.");
+		CivMessage.global(CivSettings.localize.localizedString("var_wonder_undo_broadcast",(CivColor.LightGreen+this.getDisplayName()+CivColor.White),this.getTown().getName(),this.getTown().getCiv().getName()));
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded "+refund+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("var_structure_undo_refund",this.getTown().getName(),refund,CivSettings.CURRENCY_NAME));
 		
 		this.unbindStructureBlocks();
 		
@@ -232,7 +231,7 @@ public abstract class Wonder extends Buildable {
 			getTown().removeWonder(this);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal database error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}
 	}
 
@@ -269,7 +268,7 @@ public abstract class Wonder extends Buildable {
 		
 		this.save();
 		CivGlobal.addWonder(this);
-		CivMessage.global(this.getCiv().getName()+" "+"has started construction of"+" "+this.getDisplayName()+" "+"in the town of"+" "+this.getTown().getName());
+		CivMessage.global(CivSettings.localize.localizedString("var_wonder_startedByCiv",this.getCiv().getName(),this.getDisplayName(),this.getTown().getName()));
 	}
 
 
@@ -292,7 +291,7 @@ public abstract class Wonder extends Buildable {
 	public void onDestroy() {
 		if (!CivGlobal.isCasualMode()) {
 			//can be overriden in subclasses.
-			CivMessage.global(this.getDisplayName()+" in "+this.getTown().getName()+" "+"has been destroyed! Any town may now build it again!");
+			CivMessage.global(CivSettings.localize.localizedString("var_wonder_destroyed",this.getDisplayName(),this.getTown().getName()));
 			try {
 				this.getTown().removeWonder(this);
 				this.fancyDestroyStructureBlocks();
@@ -395,7 +394,7 @@ public abstract class Wonder extends Buildable {
 			}
 			break;
 		default:
-			throw new CivException("Unknown wonder type "+id);
+			throw new CivException(CivSettings.localize.localizedString("wonder_unknwon_type")+" "+id);
 		}
 		
 		wonder.loadSettings();
@@ -482,7 +481,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerCulture*cultureCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colossus generated"+" "+CivColor.Yellow+total+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME+" from culture.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("var_colossus_generatedCoins",(CivColor.Yellow+total+CivColor.LightGreen),CivSettings.CURRENCY_NAME,cultureCount));
 	}
 	
 	public void processCoinsFromColosseum() {
@@ -496,7 +495,7 @@ public abstract class Wonder extends Buildable {
 		double total = coinsPerTown*townCount;
 		this.getCiv().getTreasury().deposit(total);
 		
-		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+"The Colosseum generated"+" "+CivColor.Yellow+total+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME+" from ticket sales.");
+		CivMessage.sendCiv(this.getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("var_colosseum_generatedCoins",(CivColor.Yellow+total+CivColor.LightGreen),CivSettings.CURRENCY_NAME,townCount));
 	}
 	
 }

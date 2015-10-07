@@ -649,7 +649,7 @@ public class Town extends SQLObject {
 			
 			double bonus = culturePerTown*townCount;
 			
-			CivMessage.sendTown(this, CivColor.LightGreen+"The Globe Theatre generated"+" "+CivColor.Yellow+bonus+CivColor.LightGreen+" "+"culture from shows.");
+			CivMessage.sendTown(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_town_GlobeTheatreCulture",CivColor.Yellow+bonus+CivColor.LightGreen,townCount));
 
 			fromStructures += bonus;
 		}
@@ -2526,7 +2526,7 @@ public class Town extends SQLObject {
 
 	public void depositFromResident(Double amount, Resident resident) throws CivException {
 		if (!resident.getTreasury().hasEnough(amount)) {
-			throw new CivException(CivSettings.localize.localizedString("config_marketItem_notEnoughCurrency")+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_config_marketItem_notEnoughCurrency",(amount+" "+CivSettings.CURRENCY_NAME)));
 		}
 		
 		if (this.inDebt()) {

@@ -135,7 +135,7 @@ public class DailyTimer implements Runnable {
 				if (civ.getTreasury().inDebt()) {
 					civ.incrementDaysInDebt();
 				}
-				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" "+CivSettings.CURRENCY_NAME+" in civ upkeep costs.");
+				CivMessage.sendCiv(civ, CivColor.Yellow+CivSettings.localize.localizedString("var_daily_civUpkeep",total,CivSettings.CURRENCY_NAME));
 				civ.save();
 			}
 			catch (Exception e) {
@@ -154,7 +154,8 @@ public class DailyTimer implements Runnable {
 				}
 				
 				t.save();
-				CivMessage.sendTown(t, "Paid "+total+" "+CivSettings.CURRENCY_NAME+" in upkeep costs.");
+				CivMessage.sendTown(t, CivColor.Yellow+CivSettings.localize.localizedString("var_daily_townUpkeep",total,CivSettings.CURRENCY_NAME));
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -180,7 +181,7 @@ public class DailyTimer implements Runnable {
 					
 					double taxesToCiv = total*taxrate;
 					townTotal -= taxesToCiv;
-					CivMessage.sendTown(t, "Collected "+townTotal+" "+CivSettings.CURRENCY_NAME+" in resident taxes."); 
+					CivMessage.sendTown(t, CivSettings.localize.localizedString("var_daily_residentTaxes",townTotal,CivSettings.CURRENCY_NAME)); 
 					t.depositTaxed(townTotal);	
 					
 					if (t.getDepositCiv().getId() == civ.getId()) {
@@ -200,7 +201,7 @@ public class DailyTimer implements Runnable {
 			
 			
 			//TODO make a better messaging system...
-			CivMessage.sendCiv(civ, "Collected "+total+" "+CivSettings.CURRENCY_NAME+" in town taxes.");
+			CivMessage.sendCiv(civ, CivSettings.localize.localizedString("var_daily_townTaxes",total,CivSettings.CURRENCY_NAME));
 		}
 	
 	}

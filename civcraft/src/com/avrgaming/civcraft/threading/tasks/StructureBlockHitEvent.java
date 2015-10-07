@@ -24,6 +24,7 @@ import net.minecraft.server.v1_8_R3.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
@@ -81,13 +82,13 @@ public class StructureBlockHitEvent implements Runnable {
 			}
 			
 			if (damage > 1) {
-				CivMessage.send(player, CivColor.LightGray+"Punchout does"+" "+(damage-1)+" "+"extra damage!");
+				CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_StructureBlockHitEvent_punchoutDmg",(damage-1)));
 			}
 				
 			dmgBlock.getOwner().onDamage(damage, world, player, dmgBlock.getCoord(), dmgBlock);
 		} else {
 			CivMessage.sendErrorNoRepeat(player, 
-					"This block belongs to a"+" "+dmgBlock.getOwner().getDisplayName()+" "+"and cannot be destroyed right now.");
+					CivSettings.localize.localizedString("var_StructureBlockHitEvent_Invulnerable",dmgBlock.getOwner().getDisplayName()));
 		}
 	}
 }

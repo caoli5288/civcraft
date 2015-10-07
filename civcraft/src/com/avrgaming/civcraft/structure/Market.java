@@ -106,12 +106,12 @@ public class Market extends Structure {
 		Resident resident = CivGlobal.getResident(player);
 
 		if (resident == null) {
-			CivMessage.sendError(player, "You're not registerd?? what??");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("market_invalidPlayer"));
 			return;
 		}
 		
 		if (item == null) {
-			CivMessage.sendError(player, "ERROR: Unknown item. Market ID:"+id);
+			CivMessage.sendError(player, CivSettings.localize.localizedString("market_invalidID")+id);
 			return;
 		}
 		
@@ -154,34 +154,34 @@ public class Market extends Structure {
 		switch (sign.getAction().toLowerCase()) {
 		case "sellbig":
 			s = (Sign)sign.getCoord().getBlock().getState();
-			s.setLine(0, ChatColor.BOLD+"Sell Bulk");
+			s.setLine(0, ChatColor.BOLD+CivSettings.localize.localizedString("market_sign_sellBulk"));
 			s.setLine(1, item.name);
 			s.setLine(2, itemColor+item.getSellCostForAmount(BULK_AMOUNT)+" "+CivSettings.CURRENCY_NAME);
-			s.setLine(3, "Amount "+""+BULK_AMOUNT);
+			s.setLine(3, CivSettings.localize.localizedString("var_market_sign_amount",BULK_AMOUNT));
 			s.update();
 			break;
 		case "sell":
 			s = (Sign)sign.getCoord().getBlock().getState();
-			s.setLine(0, ChatColor.BOLD+"Sell");
+			s.setLine(0, ChatColor.BOLD+CivSettings.localize.localizedString("market_sign_sell"));
 			s.setLine(1, item.name);
 			s.setLine(2, itemColor+item.getSellCostForAmount(1)+" "+CivSettings.CURRENCY_NAME);
-			s.setLine(3, "Amount"+" 1");
+			s.setLine(3, CivSettings.localize.localizedString("var_market_sign_amount",1));
 			s.update();
 			break;
 		case "buy":
 			s = (Sign)sign.getCoord().getBlock().getState();
-			s.setLine(0, ChatColor.BOLD+"Buy");
+			s.setLine(0, ChatColor.BOLD+CivSettings.localize.localizedString("market_sign_buy"));
 			s.setLine(1, item.name);
 			s.setLine(2, itemColor+item.getBuyCostForAmount(1)+" "+CivSettings.CURRENCY_NAME);
-			s.setLine(3, "Amount"+" 1");
+			s.setLine(3, CivSettings.localize.localizedString("var_market_sign_amount",1));
 			s.update();
 			break;
 		case "buybig":
 			s = (Sign)sign.getCoord().getBlock().getState();
-			s.setLine(0, ChatColor.BOLD+"Buy Bulk");
+			s.setLine(0, ChatColor.BOLD+CivSettings.localize.localizedString("market_sign_buyBulk"));
 			s.setLine(1, item.name);
 			s.setLine(2, itemColor+item.getBuyCostForAmount(BULK_AMOUNT)+" "+CivSettings.CURRENCY_NAME);
-			s.setLine(3, "Amount"+" "+BULK_AMOUNT);
+			s.setLine(3, CivSettings.localize.localizedString("var_market_sign_amount",BULK_AMOUNT));
 			s.update();
 			break;
 		}

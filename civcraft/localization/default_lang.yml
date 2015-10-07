@@ -24,7 +24,7 @@ civ_currencyName: "Coins"
 internalException: "Internal configuration error"
 internalIOException: "Internal IO error"
 internalCommandException: "Internal Command error"
-internalDatabaseException: "Internal Database Exception"
+internalDatabaseException: "Internal Database Exception, Contact an Admin"
 FileNotFound: "File Not found:"
 stringFormattingError: "String Formatting Error Occurred, Contact an Admin"
 
@@ -155,6 +155,7 @@ Current: "Current:"
 Deleting: "Deleting:"
 ofType: "type:"
 SetTo: "Set to:"
+TipHeading: "Tip:"
 
 structureRepairStart: "Reparing"
 structureRepairComplete: "Structure repair finished."
@@ -323,7 +324,7 @@ cmd_econ_clearedAllDebtSuccess: "Cleared all debt"
 cmd_econ_ProvideNameAndNumberPrompt: "Provide a name and a amount"
 cmd_econ_Subtracted: "Subtracted"
 
-config_marketItem_notEnoughCurrency: "You do not have the required"
+var_config_marketItem_notEnoughCurrency: "You do not have the required [%0]"
 
 #---- GlobalChat Command ----
 cmd_gc_notResident: "You are not a resident? Relogin please.."
@@ -2090,7 +2091,9 @@ resident_tradeWait1: "Waiting for"
 resident_tradeWait2: "to confirm this trade."
 resident_tradeOffered: "Offered"
 resident_tradeYourConfirm: "Your Confirm"
+resident_tradeNotconfirmed: "Confirm"
 resident_tradeClicktoConfirm: "<Click to Confirm Trade>"
+resident_tradeClicktoUnConfirm: "<Click to UnConfirm Trade>"
 resident_tradeRemove: "Remove"
 resident_tradeAdd: "Add"
 resident_tradeRemove100: "Click to Remove 100"
@@ -2107,6 +2110,14 @@ resident_perksGuiTheseTemplates: "These Templates"
 resident_perksGui_clickToActivate: "<Click To Activate>"
 resident_perksGui_templatesHeading: "Templates for"
 resident_paid: "You've recieved"
+var_resident_hasConfirmedTrade: "[%0] has confirmed the trade."
+var_resident_hasNotConfirmedTrade1: "Waiting for [%0]"
+resident_hasNotConfirmedTrade1: "to confirm this trade."
+resident_trade_doesnothaveenough: "does not have enough"
+resident_trade_success: "Transaction Successful."
+var_resident_trade_gave: "Gave [%0] to [%1]"
+var_resident_trade_Receive: "Received [%0] from [%1]"
+var_resident_trade_cancelled: "[%0] has closed the trading window."
 
 # =========================== Structure Block Messages =========================
 structBlock_errorDefeated: "Cannot damage structures when your town has been defeated."
@@ -2191,6 +2202,7 @@ town_chunk_purchase_tooPoor: "You cannot purchase this plot as you do not have t
 town_chunk_status_owned: "Owned by:"
 town_chunk_status_unowned: "Unowned"
 town_chunk_status_forSale: "For Sale:"
+var_town_GlobeTheatreCulture: "The Globe Theatre generated [%0] culture from shows for [%1] towns."
 
 # =========================== Command Request Messages =========================
 capitulateAccept: "has capitulated to"
@@ -2307,6 +2319,9 @@ cannonProjectile_userKilled: "was obliterated by a cannon blast from"
 
 
 # =========================== Civcraft/strcutre Messages =========================
+# Paid 100 Coins in non-resident taxes."
+var_taxes_paid: "Paid [%0] [%1] in non-resident taxes."
+
 #---- Bank ----
 bank_itemName_iron: "Iron"
 bank_itemName_gold: "Gold"
@@ -2318,15 +2333,13 @@ bank_itemName_diamondBlock: "Diamond Block"
 bank_itemName_emeraldBlock: "Emerald Block"
 bank_itemName_stuff: "stuff"
 bank_notEnoughInHand: "You do not holding enough"
-bank_Exchanged: "Exchanged"
-bank_for: "for"
-bank_paid: "Paid"
-bank_nonResidentTaxes: "in non-resident taxes."
+var_bank_exchanged: "Exchanged [%0] [%1] for [%2] [%3]"
 bank_invalidItem: "You cannot exchange this item at the bank."
 bank_dynmapName: "Bank"
 bank_greed: "Your goodie buff 'Greed' has increased the interest our town generated."
 bank_interestMsg1: "Our town earned"
 bank_interestMsg2: "from interest on a principal of"
+bank_sign_fee: "Fee:"
 
 #---- Barracks ----
 barracks_unknownUnit: "Unknown unit type."
@@ -2406,6 +2419,7 @@ buildable_cannotSupport: "cannot be supported by the blocks underneath!"
 buildable_cannotSupportDamage: "damaged! HP is now"
 buildable_validationPrompt: "Fix the blocks on this layer then run '/build validatenearest' to fix it."
 buildable_tooCloseToCannonTower: "Cannot build here. Too close to another Cannon Tower at"
+buildable_Water_notValidWaterSpot: "You must be close to the water's surface to build this structure."
 
 #---- Capitol.java ----
 capitol_sign_respawnAt: "Respawn At"
@@ -2428,7 +2442,7 @@ var_cottage_status_stagnated: "stagnated [%0]"
 # "Something Unknown happened to a cottage. It generated zero Coins"
 var_cottage_starved_unknwon: "Something Unknown happened to a cottage. It generated zero [%0]"
 # "A level 2 cottage grew (10/16) and generated 150 Coins! (Paid 10 in Taxes to CivName)"
-var_cottage_grew_base: "A level [%0] cottage %s and generated [%1] [%2]! [%3]"
+var_cottage_grew_base: "A level [%0] cottage [%1] and generated [%2] [%3]! [%4]"
 var_cottage_grew_taxes: "(Paid [%0] in taxes to [%1])"
 var_cottage_grew: "grew [%0]"
 var_cottage_grew_lvlUp: "leveled up"
@@ -2443,10 +2457,136 @@ fishingBoat_tooDeep: "You must be close to the water's surface to build this str
 var_grocer_msgBought: "Bought [%0] [%1] for [%2]"
 # "Paid the town of Spawn 50 Coins in non-resident taxes"
 var_grocer_msgPaidTaxes: "Paid the town of %s %s in non-resident taxes"
+#These are for the grocer signs.
+grocer_sign_buy: "Buy"
+grocer_sign_for: "For"
+grocer_sign_empty: "Grocer Shelf\nEmpty"
+grocer_sign_needUpgrade: "Grocer shelf empty, stock it using /town upgrade."
+
+#---- Library.java ----
+library_enchant_nonEnchantable: "This item is not a custom civcraft item and cannot recieve this enhancement."
+library_enchant_hasEnchant: "You already have this enchantment at this level, or better."
+library_enchant_cannotEnchant: "You cannot enchant this item with this enchantment."
+library_enchant_hasEnchantment: "You already have this enchantment on this item."
+library_enchant_itemNotInHand: "You must have the item you wish to enchant in hand."
+library_enchant_notReady: "Library enchantment not ready."
+# "You cannot afford that, you need 100 Coins"
+var_library_enchant_cannotAfford: "You cannot afford that, you need [%0] [%1]"
+var_library_enchantment_added: "Enchanted With [%0]!"
+library_enchantment_success: "Enchant Success!"
+library_dynmap_nothingStocked: "Nothing stocked."
+# "Enchantment for Cost"
+var_library_dynmap_item: "[%0] for [%1]"
+library_full: "Library is full."
+
+#---- Market ----
+market_invalidPlayer: "Unable to find your resident file. Please relog and try again."
+market_invalidID: "ERROR: Unknown item. Market ID:"
+market_sign_sellBulk: "Sell Bulk"
+market_sign_sell: "Sell"
+market_sign_buy: "Buy"
+market_sign_buyBulk: "Buy Bulk"
+var_market_sign_amount: "Amount [%0]"
+# "Bought 64 Logs for 120 Coins"
+var_market_buy: "Bought [%0] [%1] for [%2] [%3]"
+# Sorry, but you do not have 64 Logs to sell.""
+var_market_sell_notEnough: "Sorry, but you do not have [%0] [%1] to sell."
+# Sold 64 logs for 60 Coins.
+var_market_sell: "Sold [%0] [%1] for [%2] [%3]"
+
+#---- Mine.java ----
+var_mine_productionFell: "A level [%0] mine's production fell. [%1]"
+var_mine_lostalvl: "A mine ran out of redstone and lost a level. It is now level [%0]"
+var_mine_stagnated: "A level [%0] mine's production stagnated. [%1]"
+var_mine_productionGrew: "A level [%0] mine's production rose. [%1]"
+var_mine_lvlUp: "A mine gained a level. It is now level [%0]"
+var_mine_maxed: "A level [%0] mine is maxed. [%1]"
+
+#---- Pasture ----
+pasture_destroyed: "Pasture is destroyed or currently building. Cannot breed yet."
+pasture_isFull: "Pasture is at the maximum number of mobs that it can support. Humanely slaughter some animals before you breed more."
+pasture_TooMuchorIsFull: "Pasture has too many breed events pending. [%0]"
+
+#---- ScoutTower.java ----
+scoutTower_debug_inspectingPlayer: "Inspecting player:"
+scoutTower_debug_notOnline: "Player is not Online?"
+scoutTower_debug_isOP: "player is op"
+scoutTower_debug_alreadyAnnounced: "already announced:"
+scoutTower_debug_sameCiv: "same civ"
+acoutTower_debug_ally: "ally or peace"
+scoutTower_debug_wrongWorld: "wrong world"
+scoutTower_isOutlaw: "OUTLAW"
+var_scoutTower_detection: "Scout tower detected [%0] at ([%1]) in [%2]"
+scoutTower_debug_emptyCache: "Proximity cache was empty"
+
+#---- Stable.java ----
+stable_townNoHorses: "Town does not have any horses. Socket a horse trade good in the town hall."
+stable_unknownHorse: "Unknown horse ID."
+var_stable_buySuccess: "Paid [%0] [%1]"
+stable_sign_buyFor: "Buy For:"
+stable_sign_previousUnit: "Prev Breed"
+stable_sign_nextUnit: "Next Breed"
+
+#---- Store.java ----
+store_isFull: "Store is Full."
+var_store_sign_buy: "Buy 64\n[%0]\nFor [%1]\n[%2]"
+store_sign_empty: "Store Self\nEmpty"
+store_buy_empty: "Store shelf empty, stock it using /town upgrade."
+store_dynmap_nothingStocked: "Nothing stocked."
+var_store_dynmap_item: "[%0] for [%1]"
+
+#---- Structure.java ----
+structure_alreadyExistsHere: "There is a structure already here."
+structure_move_notCaporHall: "Cannot undo town halls or a capitols, build a new town hall using '/build town hall' or '/build capitol' to move it."
+var_structure_undo_success: "[%0] was unbuilt with the undo command."
+var_structure_undo_refund: "The Town of [%0] was refunded [%1] [%2]"
+structure_repair_notCaporHall: "Town halls and capitols cannot be repaired."
+var_structure_repair_tooPoor: "The town of [%0] cannot afford the [%1] [%2] to build a [%3]"
+var_structure_repair_success: "The town of [%0] has repaired the [%1] located at [%2]"
+
+#---- Temple.java ----
+var_temple_productionFell: "A level [%0] temple's production fell. [%1]"
+var_temple_lostalvl: "A temple's altar ran out of mutton and lost a level. It is now level [%0]"
+var_temple_stagnated: "A level [%0] temple's production stagnated. [%1]"
+var_temple_productionGrew: "A level [%0] temple's production rose. [%1]"
+var_temple_lvlUp: "A temple gained a level. It is now level [%0]"
+var_temple_maxed: "A level [%0] temple is maxed. [%1]"
+temple_unknown: "A level [%0] temple is maxed. [%1]"
+
+#---- TownHall.java ----
+var_townHall_dynmap_heading: "Town hall of [%0]"
+townHall_dynmap_cultureLevel: "Culture Level:"
+townHall_dynmap_flatTax: "Flat Tax:"
+townHall_dynmap_propertyTax: "Property Tax:"
+var_townHall_destroyed_isCap: "The Civilization of [%0] has been conquered by [%1]!"
+var_townHall_victoryOverItem: "Victory Over [%0]!"
+var_townHall_victoryOverItem_withCannon: "Victory Over [%0] via Cannons!"
+var_townHall_destroyed: "The Town of [%0] in [%1] has been conquered by [%2]!"
+townHall_controlBlockDestroyed: "One of our Town Hall's Control Points has been destroyed!"
+var_townHall_didDestroyCB: "We've destroyed a control block in the town of [%0]!"
+var_townHall_civMsg_controlBlockDestroyed: "A control block in the town of [%0] has been destroyed!"
+var_townHall_damagedControlBlock: "Damaged Control Block [%0]"
+townHall_cbUnderAttack: "One of our Town Hall's Control Points is under attack!"
+townHall_damageCB_invalid: "Cannot damage control blocks due to missing/invalid Town Hall or Capitol structure."
+townHall_damageCB_destroyed: "Control Block already destroyed."
+var_townHall_damage_notCB: "Cannot damage [%0], go after the control points!"
+townHall_preBuild_outsideBorder: "Cannot rebuild your town hall outside of your town borders."
+townHall_preBuild_duringWar: "Cannot rebuild your town hall during war time."
+var_townHall_preBuild_Success: "Your old [%0] was demolished to make way for your new one."
+var_townHall_invalidPunish: "Our town hall cannot be supported by the blocks underneath! It will take us an extra [%0] minutes to respawn during war if it is not fixed in time"
+var_townHall_cannonHit_destroyCB: "Our [%0] has been hit by a cannon and a control block was set to [%1] HP!"
+var_townHall_cannonHit_regen: "Our [%0] has regenerated [%1] HP! If it drops to zero, we will lose another control block."
+var_townHall_cannonHit_destroyed: "Our [%0] is out of hitpoints and control points. Walls can be destroyed by cannon and TNT blasts."
+var_townHall_cannonHit: "Our [%0] has been hit by a cannon. HP remaining: [%1]"
+var_townHall_tntHit: "Our [%0] has been hit by TNT. HP remaining: [%1]"
 
 #---- TradeOutpost.java ----
 tradeOutpost_notFound: "Couldn't find trade good at location:"
 tradeOutpost_alreadyClaimed: "Good is already claimed."
+tradeOutpost_demolish_missingGoodie: "Cannot demolish when bonus goodie is not in item frame."
+tradeOutpost_notOnWater: "Trade Outposts cannot be built on water goods."
+tradeOutpost_build_noGoodie: "Couldn't find trade good at location:"
+tradeOutpost_build_noTower: "Couldn't find trade outpost tower."
 
 #---- Wall.java ----
 wall_undoRefund: "Wall Undo complete. Refunded:"
@@ -2454,6 +2594,7 @@ wall_missingTech: "We don't have the technology yet."
 wall_noBuildInWar: "Cannot build walls during WarTime."
 wall_marketHeading: "Wall Marker"
 wall_firstLocation: "First location placed, place another to start building a wall."
+
 # "Can only build a wall in 100.0 block segments, pick a closer location"
 var_wall_maxLength: "Can only build a wall in [%0] block segments, pick a closer location"
 var_wall_cannotAfford: "You cannot afford to pay [%0] [%1] for a wall %d blocks long."
@@ -2463,6 +2604,167 @@ wall_build_recursionHalt: "ERROR: Building wall blocks exceeded recusion limit! 
 wall_repair_invalid: "This wall is no longer valid and cannot be repaired. Walls can no longer overlap with protected structure blocks, demolish this wall instead."
 var_wall_repair_tooPoor: "Your town cannot afford the [%0] [%1] to repair this [%2]"
 var_wall_repair_success: "The town has repaird a [%0] at location [%1]"
+
+# =========================== Wonder Messages =========================
+var_greatLibrary_nonMember: "Only members of [%0] may use the Great Library"
+var_NotreDame_generatedCoins: "Generated [%0] [%1] from the [%2] peaceful towns of the world!"
+wonder_alreadyExistsHere: "There is a wonder already here."
+wonder_undo_error: "Couldn't find undo data! Destroying structure instead."
+var_wonder_undo_broadcast: "The [%0] has been unbuild by the town of [%1] in the civilization of [%2] with the undo command!"
+var_wonder_startedByCiv: "The Civilization of [%0] has started construction of [%1] in the town of [%2]!"
+var_wonder_destroyed: "The [%0] owned by the town of [%1] has been destroyed! Any town may not build it again."
+wonder_unknwon_type: "Unknown wonder type:"
+var_colossus_generatedCoins: "The Colossus generated [%0] [%1] from [%2] culture chunks across the civ."
+var_colosseum_generatedCoins: "The Colosseum generated [%0] [%1] from ticket sales in [%2] towns across the world."
+
+# =========================== StructureValidatior Messages =========================
+var_structureValidator_layerInvalid: "Layer: [%0] is [%1]% ([%2]) valid. It needs to be at least [%3]%."
+structureValidator_isOP: "Since you're OP we'll let you build here anyway."
+structureValidator_isValid: "Structure position is valid."
+
+# =========================== Template Messages =========================
+template_invalidFile: "Invalid template file:"
+template_unknwonDirection: "Unknown direction."
+
+# =========================== Async Tasks Messages =========================
+#---- BuildAsyncTask ----
+var_buildAsync_wonderHaltedConquered: "Wonder construction halted while we are conquered by [%0]!"
+var_buildAsync_wonderHaltedOtherConstruction: "Wonder construction halted while we are constructing a [%0]!"
+buildAsync_wonderHaltedNoTownHall: "Wonder construction halted while you have no town hall."
+var_buildAsync_progressWonder: "[%0] in [%1] is [%2]% complete!"
+var_buildAsync_progressOther: "The [%0] is now [%1]% complete."
+var_buildAsync_destroyed: "The [%0] was destroyed while it was building!"
+var_buildAsync_completed: "The town of [%0] has completed a [%1]!"
+var_buildAsync_wonderFarAway: "You can no longer build [%0] since it was built in a far away land"
+var_buildAsync_wonderRefund: "Your town was refunded 50% ([%0] [%1]) of the cost to build the wonder."
+
+#---- CivLeaderQuestionTask ----
+civleaderQtast_prompt1: "Question from"
+civleaderQtast_prompt2: "Respond with '/accept' or '/deny'"
+civleaderQtast_interrupted: "Task interrupted before a response could be given."
+civleaderQtast_noResponse: "No Response from civilization leaders"
+civQtast_prompt2: "Respond by typing '/civ dip respond yes' or '/civ dip respond no'"
+var_civQtast_offerExpired: "The offer from [%0] has expired."
+var_civQtast_NoResponse: "[%0] gave no response to our offer."
+
+#---- CultureProcessAsync ----
+var_cultureProcess_townGrow: "The Town of [%0] expanded [%1] chunks."
+
+#----EspionageMissionTask ----
+espionage_missionStarted: "Mission Started."
+var_espionage_missionFailedAlert: "INTERNATIONAL INCIDENT! [%0] was caught trying to perform a [%1] mission in [%2]!"
+espionage_missionFailed: "You've been compromised! (Exposure got too high) Spy unit was destroyed!"
+var_espionage_secondsRemain: "[%0] seconds remain."
+espionage_missionAborted: "You've left the civ borders. Mission Aborted."
+
+#---- FoundTownSync ----
+var_FoundTownSync_Success: "The town of [%0] has been founded in the Civilization of [%1]!"
+
+#---- playerChunkNotify ----
+playerChunkNotify_enterWilderness: "Entering Wilderness - "
+var_playerChunkNotify_EnterTown: "Entering the town of [%0] [%1]. "
+var_playerChunkNotify_EnterOutpost: "Entering an Outpost of the town of [%0] [%1]. "
+var_playerChunkNotify_enterCamp: "Entering the camp called [%0] - "
+var_playerChunkNotify_enteredBorderAlert: "[%0] has entered our borders!"
+
+#---- PlayerLoginAsync ----
+PlayerLoginAsync_usernameChange1: "Your user ID on record does not match the player name you're attempting to log in with."
+PlayerLoginAsync_usernameChange2: "If you changed your name, please change it back or contact an admin to request a name change."
+PlayerLoginAsync_usernameInvalid: "You have an invalid name. Sorry."
+var_PlayerLoginAsync_pvpTimerPropmt1: "You have a PvP protection timer enabled for [%0] minutes. You cannot attack or be attacked until it expires."
+PlayerLoginAsync_pvpTimerPropmt2: "To remove it, type '/resident pvptimer'"
+PlayerLoginAsync_usernameInUse: "You're attempting to log in with a name already in use. Please change your name."
+PlayerLoginAsync_onlyWarriorsAllowed: "Only players in civilizations at war can connect right now. Sorry."
+PlayerLoginAsync_loginDuringWar: "You've been teleported back to your home since you've logged into enemy during WarTime."
+var_PlayerLoginAsync_inBorderAlert: "[%0] has logged-in within our borders"
+PlayerLoginAsync_perksMsg1: "You have access to the Following Perks:"
+PlayerLoginAsync_perk_Atlantean: "Atlantean"
+PlayerLoginAsync_perk_Arctic: "Arctic"
+PlayerLoginAsync_perk_Aztec: "Aztec"
+PlayerLoginAsync_perk_Cultist: "Cultist"
+PlayerLoginAsync_perk_Egyptian: "Egyptian"
+PlayerLoginAsync_perk_Elven: "Elven"
+PlayerLoginAsync_perk_Hell: "Hell"
+PlayerLoginAsync_perk_Roman: "Roman"
+PlayerLoginAsync_perksMsg2: "Apply them with /res perks"
+PlayerLoginAsync_killedWhilePVPLogged: "You were killed while offline because you logged out while in PvP!"
+PlayerLoginAsync_councilOf8: "The Council of Eight is built! Use '/civ vote' to vote for your favorite Civilization!"
+
+#---- PlayerQuestionTask ----
+var_PlayerQuestionTask_failedInTime: "You failed to respond to the question from [%0] in time."
+
+#---- PlayerReviveTask ----
+var_PlayerReviveTask_repawnIn: "You will respawn in [%0] seconds."
+PlayerReviveTask_respawning: "Respawning..."
+
+#---- StructureBlockHitEvent ----
+var_StructureBlockHitEvent_punchoutDmg: "Punchout does [%0] extra damage!"
+var_StructureBlockHitEvent_Invulnerable: "This block belongs to a [%0] and cannot be destroyed right now."
+
+#---- TownAddOutlawTask ----
+var_TownAddOutlawTask_Notify: "The town of [%0] now considers you an outlaw. Their towers will fire upon you if you go near them!"
+var_TownAddOutlawTask_Message: "[%0] is now considered an outlaw in this town!"
+
+#---- UpdateTechBar ----
+UpdateTechBar_sign_Percent: "Percent"
+UpdateTechBar_sign_Complete: "Complete"
+UpdateTechBar_sign_Use: "Use"
+UpdateTechBar_sign_toStart: "to start"
+UpdateTechBar_sign_Researching: "Researching"
+
+# =========================== Timer Messages =========================
+beaker_ErrorNoCapitol: "ERROR: your capitol name is not set right! No research is progressing. Contact an admin."
+var_beaker_noCapitol: "ERROR: Couldn't find your capitol town named [%0]! No research is progressing. Contact an admin."
+beaker_noCapitolHall: "Your captial doesn't have a town hall! You are not generating any beakers."
+
+var_gov_emergeFromAnarchy: "The Civilization of [%0] has emerged from anarchy and has adopted [%1]!"
+
+var_daily_civUpkeep: "Paid [%0] [%1] in civ upkeep costs."
+var_daily_townUpkeep: "Paid [%0] [%1] in town upkeep costs."
+var_daily_residentTaxes: "Collected [%0] [%1] in resident taxes."
+var_daily_townTaxes: "Collected [%0] [%1] in town taxes."
+
+effectEvent_noTownHall: "Your town does not have a town hall! Structures have no effect!"
+var_effectEvent_convertBeakers: "Converted [%0] beakers into [%1] culture as we are not research any new technologies."
+var_effectEvent_generatedCulture: "Generated [%0] culture."
+
+var_syncTrade_payout: "Generated [%0] from trade. [%0]"
+
+
+# =========================== Tutorial Messages =========================
+# These are for the '/res book' that all players start with.
+# These will be the first things most players read when they get into the game.
+# tutorial_gui_heading max length of 32
+tutorial_gui_heading: "A CivCraft Tutorial"
+# tutorial_workbench_heading
+# tutorial_workbench_Line1
+# tutorial_workbench_Line
+# tutorial_workbench_Line
+# tutorial_workbench_Line
+# tutorial_workbench_Line
+# tutorial_workbench_Line
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
+# tutorial_
 
 # =========================== War Messages =========================
 war_overlordAnnounce: "Welcome our new overlords"

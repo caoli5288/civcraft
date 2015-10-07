@@ -24,6 +24,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -126,7 +127,7 @@ public class TradeGoodSignCleanupTask implements Runnable {
 			
 		}
 		
-		CivMessage.send(player, "Finished.");
+		CivMessage.send(player, CivSettings.localize.localizedString("Finished"));
 	}
 
 }

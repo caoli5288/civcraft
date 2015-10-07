@@ -91,19 +91,19 @@ public class GreatLibrary extends Wonder {
 			switch (sign.getAction().toLowerCase()) {
 			case "0":
 				enchant = CivSettings.enchants.get("ench_fire_aspect");
-				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" Coins.");
+				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" "+CivSettings.CURRENCY_NAME);
 				break;
 			case "1":
 				enchant = CivSettings.enchants.get("ench_fire_protection");
-				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" Coins.");
+				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" "+CivSettings.CURRENCY_NAME);
 				break;
 			case "2":
 				enchant = CivSettings.enchants.get("ench_flame");
-				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" Coins.");				
+				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" "+CivSettings.CURRENCY_NAME);				
 				break;			
 			case "3":
 				enchant = CivSettings.enchants.get("ench_punchout");
-				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" Coins.");
+				sign.setText(enchant.name+"\n\n"+CivColor.LightGreen+enchant.cost+" "+CivSettings.CURRENCY_NAME);
 				break;
 			}
 			
@@ -121,7 +121,7 @@ public class GreatLibrary extends Wonder {
 		}
 		
 		if (!resident.hasTown() || resident.getCiv() != this.getCiv()) {
-			CivMessage.sendError(player, "Only members of "+this.getCiv().getName()+" may use The Great Library.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_greatLibrary_nonMember",this.getCiv().getName()));
 			return;
 		}
 		
@@ -131,13 +131,13 @@ public class GreatLibrary extends Wonder {
 		switch (sign.getAction()) {
 		case "0": /* fire aspect */
 			if (!Enchantment.FIRE_ASPECT.canEnchantItem(hand)) {
-				CivMessage.sendError(player, "You cannot put this enchantment on this item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 				return;
 			}
 			
 			configEnchant = CivSettings.enchants.get("ench_fire_aspect");
 			if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-				CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+configEnchant.cost+" Coins.");
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_library_enchant_cannotAfford",configEnchant.cost,CivSettings.CURRENCY_NAME));
 				return;
 			}
 			
@@ -146,13 +146,13 @@ public class GreatLibrary extends Wonder {
 			break;
 		case "1": /* fire protection */
 			if (!Enchantment.PROTECTION_FIRE.canEnchantItem(hand)) {
-				CivMessage.sendError(player, "You cannot put this enchantment on this item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 				return;	
 			}
 			
 			configEnchant = CivSettings.enchants.get("ench_fire_protection");
 			if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-				CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+configEnchant.cost+" Coins.");
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_library_enchant_cannotAfford",configEnchant.cost,CivSettings.CURRENCY_NAME));
 				return;
 			}
 			
@@ -161,13 +161,13 @@ public class GreatLibrary extends Wonder {
 			break;
 		case "2": /* flame */
 			if (!Enchantment.ARROW_FIRE.canEnchantItem(hand)) {
-				CivMessage.sendError(player, "You cannot put this enchantment on this item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 				return;	
 			}
 			
 			configEnchant = CivSettings.enchants.get("ench_flame");
 			if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-				CivMessage.send(player, CivColor.Rose+"You do not have enough, you need"+" "+configEnchant.cost+" "+CivSettings.CURRENCY_NAME);
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_library_enchant_cannotAfford",configEnchant.cost,CivSettings.CURRENCY_NAME));
 				return;
 			}
 			
@@ -184,17 +184,17 @@ public class GreatLibrary extends Wonder {
 				configEnchant = CivSettings.enchants.get("ench_punchout");
 				
 				if (!LoreMaterial.isCustom(hand)) {					
-					CivMessage.sendError(player, "This item is not a custom civcraft item and cannot recieve this enhancement.");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_nonEnchantable"));
 					return;
 				}
 				
 				if (LoreMaterial.hasEnhancement(hand, configEnchant.enchant_id)) {
-					CivMessage.sendError(player, "You already have this enhancement on this item.");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_hasEnchantment"));
 					return;
 				}
 				
 				if (!resident.getTreasury().hasEnough(configEnchant.cost)) {
-					CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need"+" "+configEnchant.cost+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_library_enchant_cannotAfford",configEnchant.cost,CivSettings.CURRENCY_NAME));
 					return;
 				}
 				
@@ -203,7 +203,7 @@ public class GreatLibrary extends Wonder {
 				player.setItemInHand(newItem);
 				break;
 			default:
-				CivMessage.sendError(player, "You can only add this enchantment to pickaxes.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 				return;	
 			}
 			break;
@@ -211,7 +211,7 @@ public class GreatLibrary extends Wonder {
 			return;
 		}
 		
-		CivMessage.sendSuccess(player, "Enchant Success!");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("library_enchantment_success"));
 	}
 
 }
