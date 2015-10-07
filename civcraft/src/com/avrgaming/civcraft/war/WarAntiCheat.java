@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.anticheat.ACManager;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -37,7 +38,7 @@ public class WarAntiCheat {
 			onWarTimePlayerCheck(resident);
 		}
 		
-		CivMessage.global(CivColor.LightGray+"All 'at war' players not using CivCraft's Anti-Cheat have been expelled during WarTime.");
+		CivMessage.global(CivColor.LightGray+CivSettings.localize.localizedString("war_kick_atWarNoAnticheat"));
 	}
 	
 	public static void onWarTimePlayerCheck(Resident resident) {
@@ -52,8 +53,8 @@ public class WarAntiCheat {
 		try {
 			if (!resident.isUsesAntiCheat()) {
 				TaskMaster.syncTask(new PlayerKickBan(resident.getName(), true, false, 
-						"Kicked: You are required to have CivCraft's Anti-Cheat plugin installed to participate in WarTime."+
-						"Visit https://www.minetexas.com/ to get it."));
+						CivSettings.localize.localizedString("war_kick_needAnticheat1")+
+						CivSettings.localize.localizedString("war_kick_needAntiCheat2")));
 			}
 		} catch (CivException e) {
 		}

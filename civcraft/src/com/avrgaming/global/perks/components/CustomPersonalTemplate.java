@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigBuildableInfo;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -15,7 +16,7 @@ public class CustomPersonalTemplate extends PerkComponent {
 	
 	@Override
 	public void onActivate(Resident resident) {
-		CivMessage.send(resident, CivColor.LightGreen+"No need to activate this perk. Always active =)");
+		CivMessage.send(resident, CivColor.LightGreen+CivSettings.localize.localizedString("customTemplate_personal"));
 	}
 	
 

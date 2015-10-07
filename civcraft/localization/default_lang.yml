@@ -91,6 +91,7 @@ with: "with"
 current: "current"
 is: "is"
 has: "has"
+Map: "Map"
 
 #These are Single Descriptors, usually stat headings for infomations for Civilizations or residents.
 Amount: "Amount:"
@@ -2736,35 +2737,100 @@ var_syncTrade_payout: "Generated [%0] from trade. [%0]"
 # These will be the first things most players read when they get into the game.
 # tutorial_gui_heading max length of 32
 tutorial_gui_heading: "A CivCraft Tutorial"
-# tutorial_workbench_heading
-# tutorial_workbench_Line1
-# tutorial_workbench_Line
-# tutorial_workbench_Line
-# tutorial_workbench_Line
-# tutorial_workbench_Line
-# tutorial_workbench_Line
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
-# tutorial_
+tutorial_workbench_heading: "What is CivCraft?"
+tutorial_workbench_Line1: "CivCraft is a game about building civilizations set in a large,"
+tutorial_workbench_Line2: "persistent world filled with players."
+tutorial_workbench_Line3: "Players start out as nomads, gathering"
+tutorial_workbench_Line4: "resources and making allies until they can build a camp."
+tutorial_workbench_Line5: "Gather more resources and allies and found a civilization!"
+tutorial_workbench_Line6: "Research technology! Build structures! Conquer the world!"
+tutorial_compass_heading: "Explore"
+tutorial_compass_Line1: "Venture outward from spawn into the wild"
+tutorial_compass_Line2: "and find a spot to settle. You may encounter"
+tutorial_compass_Line3: "trade resources, and other player towns which"
+tutorial_compass_Line4: "will infulence your decision on where to settle."
+tutorial_compass_Line5: "Different biomes generate different resources."
+tutorial_diamondOre_heading: "Resources and Materials"
+tutorial_diamondOre_Line1: "CivCraft contains many new custom items."
+tutorial_diamondOre_Line2: "These items are crafted using a crafting bench"
+tutorial_diamondOre_Line3: "and combining many more normal Minecraft items"
+tutorial_diamondOre_Line4: "into higher tier items. Certain items like iron, gold,"
+var_tutorial_diamondOre_Line5: "diamonds and emeralds can be exchanged for [%0] at Bank"
+var_tutorial_diamondOre_Line6: "structures. [%0] can be traded for materials at the Market"
+tutorial_Fence_heading: "Towns"
+tutorial_Fence_Line1: "Towns can be created by players to protect"
+tutorial_Fence_Line2: "areas from outsiders. Inside a town the owners are"
+tutorial_Fence_Line3: "free to build creatively without interference from griefers"
+var_tutorial_Fence_Line4: "Towns cost materials to create and [%0] to maintain."
+tutorial_Fence_Line5: "Towns can build functional structures which allow it's"
+tutorial_Fence_Line6: "residents access to more features. Towns can only be built"
+tutorial_Fence_Line7: "inside of a civilization."
+tutorial_goldHelmet_heading: "Civilizations"
+tutorial_goldHelmet_Line1: "Civilizations are collections of towns"
+tutorial_goldHelmet_Line2: "All towns inside of the civilization share technology"
+tutorial_goldHelmet_Line3: "which is researched by the civ. Many items and structures"
+tutorial_goldHelmet_Line4: "in CivCraft are only obtainable through the use of technology"
+tutorial_goldHelmet_Line5: "Founding your own civ is a lot of work, you must be a natural"
+tutorial_goldHelmet_Line6: "leader and bring people together in order for your civ to survive"
+tutorial_goldHelmet_Line7: "and flourish."
+tutorial_firework_heading: "Casual War!"
+tutorial_firework_Line1: "War allows civilizations to settle their differences."
+tutorial_firework_Line2: "In casual mode, Civs have to the option to request war from"
+tutorial_firework_Line3: "each other. The winner of a war is awarded a trophy which can be"
+tutorial_firework_Line4: "displayed in an item frame for bragging rights."
+tutorial_firework_Line5: "After a civilization is defeated in war, war must be requested again."
+tutorial_ironSword_heading: "War!"
+tutorial_ironSword_Line1: "War allows civilizations to settle their differences."
+tutorial_ironSword_Line2: "Normally, all structures inside a civilization are protected"
+tutorial_ironSword_Line3: "from damage. However civs have to the option to declare war on"
+tutorial_ironSword_Line4: "each other and do damage to each other's structures, and even capture"
+tutorial_ironSword_Line5: "towns from each other. Each weekend, WarTime is enabled for two hours"
+tutorial_ironSword_Line6: "during which players at war must defend their civ and conquer their enemies."
+tutorial_bookAndQuill_heading: "More Info?"
+tutorial_bookAndQuill_Line1: "There is much more information you will require for your"
+tutorial_bookAndQuill_Line2: "journey into CivCraft. Please visit the wiki at "
+tutorial_bookAndQuill_Line3: "http://wiki.minetexas.com/"
+tutorial_bookAndQuill_Line4: "For more detailed information about CivCraft and it's features."
+tutorial_campQuest_heading: "QUEST: Build a Camp"
+tutorial_campQuest_Line1: "First things first, in order to start your journey"
+tutorial_campQuest_Line2: "you must first build a camp. Camps allow you to store"
+tutorial_campQuest_Line3: "your materials safely, and allow you to obtain leadership"
+tutorial_campQuest_Line4: "tokens which can be crafted into a civ. The recipe for a camp is below."
+tutorial_civQuest_heading: "QUEST: Found a Civ"
+tutorial_civQuest_Line1: "Next, you'll want to start a civilization."
+tutorial_civQuest_Line2: "To do this, you must first obtain leadership tokens"
+tutorial_civQuest_Line3: "by feeding bread to your camp's longhouse."
+tutorial_civQuest_Line4: "Once you have enough leadership tokens."
+tutorial_civQuest_Line5: "You can craft the founding flag item below."
+tutorial_needRecipe_heading: "Need to know a recipe?"
+tutorial_needRecipe_Line1: "Type /res book to obtain the tutorial book"
+tutorial_needRecipe_Line2: "and then click on 'Crafting Recipies'"
+tutorial_needRecipe_Line3: "Every new item in CivCraft is listed here"
+tutorial_needRecipe_Line4: "along with how to craft them."
+tutorial_needRecipe_Line5: "Good luck!"
+tutorial_clickForRecipe: "Click For Recipe"
+tutorial_customRecipesHeading: "CivCraft Custom Item Recipes"
+tutorial_lore_items: "Items"
+tutorial_lore_clickToOpen: "<Click To Open>"
+tutorial_lore_recipes: "Recipes"
+tutorial_lore_backToCategories: "Back to Categories"
+tutorial_lore_CivcraftInfo: "CivCraft Information"
+tutorial_lore_civInfoShort: "CivCraft Info"
+tutorial_lore_clicktoView: "<Click To View>"
+tutorial_lore_craftingRecipes: "Crafting Recipes"
+
+#---- Perks ----
+customTemplate_noTown: "This template but be bound to a town and you're not currently in one!"
+customTemplatE_alreadyBound: "Cannot bind this template, the town already has this template."
+customTemplate_personal: "No need to activate this perk. Always active =)"
+PerkComponent_notValidated: "You're not verified!? Please contact an admin."
+weather_isSunny: "Weather is already sunny!"
+weather_heading: "Changing the Weather to Sunny"
+weather_confirmPrompt: "Are you sure you want the weather to be sunny?"
+weather_confirmPrompt2: "If so type 'yes', type anything else to cancel."
+
+#---- RenameCivOrTown ----
+RenameCivOrTown_NotResident: "You must be part of a civilization or town in order to rename it."
 
 # =========================== War Messages =========================
 war_overlordAnnounce: "Welcome our new overlords"
@@ -2778,6 +2844,15 @@ war_wartimeBeginHeading: "WarTime Has Started"
 war_wartimeBeginOutOfPosition: "You've been teleported back to your town hall. WarTime has started and you were in enemy territory."
 warteleportDisable: "Teleportation is disabled until after War Time"
 warteleportEnable: "Teleportation is now enabled."
+war_over_announceConquered: "Conquered:"
+war_over_announceKills: "kills"
+war_mustUseTNT: "Must use TNT to break blocks in at-war civilization cultures during WarTime."
+war_onlyBuildCertainBlocks: "Can only place grass, dirt, and TNT blocks in at-war civilization cultures during WarTime."
+war_canAlsoPlaceBridgeBlocks: "You can also place Iron, Gold, Diamond, or Emerald Blocks during war, and they will not fall like sand."
+var_war_tntMsg: "Our [%0] at location [%1] was hit by TNT. HP is now ([%2])"
+war_kick_atWarNoAnticheat: "All 'at war' players not using CivCraft's Anti-Cheat have been expelled during WarTime."
+war_kick_needAnticheat1: "Kicked: You are required to have CivCraft's Anti-Cheat plugin installed to participate in WarTime."
+war_kick_needAntiCheat2: "Visit https://www.minetexas.com/ to get it."
 
 # =========================== PVP Timer =========================
 pvpListenerError: "You are unable to damage players while protected."

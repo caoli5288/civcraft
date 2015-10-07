@@ -1,6 +1,7 @@
 package com.avrgaming.global.perks.components;
 
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.interactive.InteractiveRenameCivOrTown;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -11,7 +12,7 @@ public class RenameCivOrTown extends PerkComponent {
 	public void onActivate(Resident resident) {
 		
 		if (!resident.hasTown()) {
-			CivMessage.sendError(resident, "You must be part of a civilization or town in order to rename it.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("RenameCivOrTown_NotResident"));
 			return;
 		}
 		

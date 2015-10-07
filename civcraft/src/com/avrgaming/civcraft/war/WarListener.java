@@ -91,7 +91,7 @@ public class WarListener implements Listener {
 			return;
 		}
 		
-		CivMessage.sendError(event.getPlayer(), "Must use TNT to break blocks in at-war civilization cultures during WarTime.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_mustUseTNT"));
 		event.setCancelled(true);
 	}
 	
@@ -151,7 +151,8 @@ public class WarListener implements Listener {
 				return;
 			}
 		
-		CivMessage.sendError(event.getPlayer(), "Can only place grass, dirt, and TNT blocks in at-war civilization cultures during WarTime.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_onlyBuildCertainBlocks"));
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_canAlsoPlaceBridgeBlocks"));
 		event.setCancelled(true);
 	}
 	
@@ -252,11 +253,11 @@ public class WarListener implements Listener {
 											}
 										} else {
 											sb.getOwner().onDamage(structureDamage, b.getWorld(), null, sb.getCoord(), sb);
-											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our"+" "+sb.getOwner().getDisplayName()+" @ ("+
+											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("var_war_tntMsg",sb.getOwner().getDisplayName(),(
 													sb.getOwner().getCenterLocation().getX()+","+
 													sb.getOwner().getCenterLocation().getY()+","+
-													sb.getOwner().getCenterLocation().getZ()+")"+
-													" "+"was hit by TNT! ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+													sb.getOwner().getCenterLocation().getZ()+")"),
+													(sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints())));
 										}
 									}
 								} else {
