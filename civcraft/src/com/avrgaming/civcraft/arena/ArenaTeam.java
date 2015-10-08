@@ -167,7 +167,7 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 			Collections.sort(teamRankings);			
 			CivMessage.sendSuccess(leader, CivSettings.localize.localizedString("arena_createTeamPrompt")+" "+name);
 		} catch (InvalidNameException e) {
-			throw new CivException("("+name+") "+CivSettings.localize.localizedString("arena_createInvalid"));
+			throw new CivException(CivSettings.localize.localizedString("arena_createInvalid",name));
 		}
 	}
 	
@@ -192,7 +192,7 @@ public class ArenaTeam extends SQLObject implements Comparable<ArenaTeam> {
 			int max_team_size = CivSettings.getInteger(CivSettings.arenaConfig, "max_team_size");
 			
 			if (team.teamMembers.size() >= max_team_size) {
-				throw new CivException(CivSettings.localize.localizedString("arena_maxPlayers")+" "+max_team_size);
+				throw new CivException(CivSettings.localize.localizedString("var_arena_maxPlayers",max_team_size));
 			}
 			
 		} catch (InvalidConfiguration e) {

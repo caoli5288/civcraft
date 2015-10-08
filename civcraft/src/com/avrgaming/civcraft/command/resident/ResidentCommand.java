@@ -306,7 +306,7 @@ public class ResidentCommand extends CommandBase {
 	}
 	
 	public static void show(CommandSender sender, Resident resident) {
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("Resident")+" "+resident.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_Resident",resident.getName()));
 		Date lastOnline = new Date(resident.getLastOnline());
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd/yy h:mm:ss a z");
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_res_showLastOnline")+" "+CivColor.LightGreen+sdf.format(lastOnline));

@@ -126,9 +126,8 @@ public class CivResearchCommand extends CommandBase {
 		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_current"));
 		
 		if (civ.getResearchTech() != null) {
-			int percentageComplete = (int)((civ.getResearchProgress() / civ.getResearchTech().beaker_cost)*100);		
-			CivMessage.send(sender, civ.getResearchTech().name+" "+CivSettings.localize.localizedString("is")+" "+percentageComplete+"% "+CivSettings.localize.localizedString("complete")+". ("+
-					civ.getResearchProgress()+" / "+civ.getResearchTech().beaker_cost+ " ) ");
+			int percentageComplete = (int)((civ.getResearchProgress() / civ.getResearchTech().beaker_cost)*100);
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_research_current",civ.getResearchTech().name,percentageComplete,(civ.getResearchProgress()+" / "+civ.getResearchTech().beaker_cost)));
 		} else {
 			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_civ_research_NotAnything"));
 		}

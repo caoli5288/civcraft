@@ -101,7 +101,7 @@ public class PlotPermCommand extends CommandBase {
 		
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, node.getType()+" "+CivSettings.localize.localizedString("cmd_plot_perm_setSuccess")+" "+on+" "+CivSettings.localize.localizedString("for")+" "+args[2]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_perm_setSuccess",node.getType(),on,args[2]));
 	}
 	
 	private void showPermCmdHelp() {

@@ -48,7 +48,7 @@ public class AdminLagCommand extends CommandBase {
 		Integer blocks = this.getNamedInteger(1);
 		
 		SyncBuildUpdateTask.UPDATE_LIMIT = blocks;
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_blockupdateSet")+" "+blocks);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_lag_blockupdateSet",blocks));
 	}
 	
 	public void score_cmd() {

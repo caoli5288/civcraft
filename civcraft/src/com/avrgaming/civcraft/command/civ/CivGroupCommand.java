@@ -143,11 +143,10 @@ public class CivGroupCommand extends CommandBase {
 			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_group_listHeading"));
 
 			PermissionGroup grp = civ.getLeaderGroup();
-			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+CivSettings.localize.localizedString("Members")+")");
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_group_listGroup",grp.getName()+CivColor.LightGray,grp.getMemberCount()));
 					
 			grp = civ.getAdviserGroup();
-			CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+CivSettings.localize.localizedString("Members")+")");
-
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_group_listGroup",grp.getName()+CivColor.LightGray,grp.getMemberCount()));
 		}
 	}
 	

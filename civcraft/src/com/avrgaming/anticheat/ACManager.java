@@ -321,7 +321,7 @@ public class ACManager implements PluginMessageListener {
 					if (modArray[0].equals("net.minecraft.client.main.Main")) {
 						modArray[0] = "Minecraft Client";
 					}
-					throw new CivException(modArray[0]+" ("+modArray[1]+") "+CivSettings.localize.localizedString("ac_failedAuthCheck"));
+					throw new CivException(CivSettings.localize.localizedString("var_ac_failedAuthCheck",modArray[0],modArray[1]));
 				}
 			}
 		}

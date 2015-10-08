@@ -251,7 +251,7 @@ public class CivDiplomacyCommand extends CommandBase {
 			Relation.Status currentStatus = ourCiv.getDiplomacyManager().getRelationStatus(otherCiv);
 
 			if (currentStatus == status) {
-				throw new CivException("Already"+" "+status.name()+" with "+otherCiv.getName());
+				throw new CivException(CivSettings.localize.localizedString("var_AlreadyStatusWithCiv",status.name(),otherCiv.getName()));
 			}
 			
 			String message = CivColor.LightGreen+ChatColor.BOLD+ourCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_requestHasRequested")+" ";
@@ -326,13 +326,13 @@ public class CivDiplomacyCommand extends CommandBase {
 			//boolean aidingAlly = false;
 
 			if (currentStatus == status) {
-				throw new CivException(CivSettings.localize.localizedString("Already")+" "+status.name()+" "+CivSettings.localize.localizedString("with")+" "+otherCiv.getName());
+				throw new CivException(CivSettings.localize.localizedString("var_AlreadyStatusWithCiv",status.name(),otherCiv.getName()));
 			}
 			
 			switch (status) {
 			case HOSTILE:
 				if (currentStatus == Relation.Status.WAR) {
-					throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareAtWar")+" "+status.name()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareAtWar2"));
+					throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_dip_declareAtWar",status.name()));
 				}
 			break;
 			case WAR:
@@ -347,12 +347,12 @@ public class CivDiplomacyCommand extends CommandBase {
 				if (War.isWithinWarDeclareDays()) {
 					if (War.isCivAggressorToAlly(otherCiv, ourCiv)) {
 						if (War.isWithinAllyDeclareHours()) {
-							throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar1")+" "+War.getAllyDeclareHours()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar2"));
+							throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_dip_declareTooCloseToWar1",War.getAllyDeclareHours()));
 						} else {
 							//aidingAlly = true;
 						}
 					} else {		
-						throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar3")+" "+War.getTimeDeclareDays()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar4"));
+						throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_dip_declareTooCloseToWar2",War.getTimeDeclareDays()));
 					}
 				}
 				
@@ -393,7 +393,7 @@ public class CivDiplomacyCommand extends CommandBase {
 	}
 	
 	public void show(Civilization civ) {
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_dip_showHeading")+" "+CivColor.Yellow+civ.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_civ_dip_showHeading",CivColor.Yellow+civ.getName()));
 		
 		for (Relation relation : civ.getDiplomacyManager().getRelations()) {
 			if (relation.getStatus() == Relation.Status.NEUTRAL) {
@@ -404,7 +404,7 @@ public class CivDiplomacyCommand extends CommandBase {
 		
 		int warCount = civ.getDiplomacyManager().getWarCount();
 		if (warCount != 0) {
-			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_civ_dip_showSuccess1")+" "+warCount+" "+CivSettings.localize.localizedString("cmd_civ_dip_showSuccess2"));
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("var_cmd_civ_dip_showSuccess1",warCount));
 		}
 		CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_civ_dip_showNeutral"));
 	}

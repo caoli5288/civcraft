@@ -414,7 +414,7 @@ public class TownCommand extends CommandBase {
 		Resident resident = getResident();
 		
 		if (!grp.hasMember(resident)) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_town_leavegroupNotIn1")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_permGroupErrorNoReulstInTown")+" "+town.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_leavegroupNotIn1",grp.getName(),town.getName()));
 		}
 		
 		if (grp == town.getMayorGroup() && grp.getMemberCount() == 1) {
@@ -427,7 +427,7 @@ public class TownCommand extends CommandBase {
 		
 		grp.removeMember(resident);
 		grp.save();
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_leavegroupSuccess")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_permGroupErrorNoReulstInTown")+" "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_leavegroupSuccess",grp.getName(),town.getName()));
 	}
 
 	public void outlaw_cmd() {
@@ -478,7 +478,7 @@ public class TownCommand extends CommandBase {
 		synchronized(CivGlobal.townScores) {
 			int i = 1;
 			for (Integer score : CivGlobal.townScores.descendingKeySet()) {
-				CivMessage.send(sender, i+") "+CivColor.Gold+CivGlobal.townScores.get(score).getName()+CivColor.White+" - "+score+" "+CivSettings.localize.localizedString("points"));
+				CivMessage.send(sender, i+") "+CivColor.Gold+CivGlobal.townScores.get(score).getName()+CivColor.White+" - "+score);
 				i++;
 				if (i > 5) {
 					break;
@@ -529,14 +529,14 @@ public class TownCommand extends CommandBase {
 			} catch (CivException e) {
 				//Player not online.
 			}
-			CivMessage.sendTown(town, residentToKick.getName()+" "+CivSettings.localize.localizedString("cmd_town_evictSuccess1")+" "+resident.getName());
+			CivMessage.sendTown(town, CivSettings.localize.localizedString("var_cmd_town_evictSuccess1",residentToKick.getName(),resident.getName()));
 			return;
 		}
 		
 		residentToKick.setDaysTilEvict(CivSettings.GRACE_DAYS);
 		residentToKick.warnEvict();
 		residentToKick.save();
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_evictAlert2")+" "+CivSettings.GRACE_DAYS+" "+CivSettings.localize.localizedString("days"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_evictAlert2",args[1],CivSettings.GRACE_DAYS));
 	}
 	
 	public void show_cmd() throws CivException {
@@ -825,7 +825,7 @@ public class TownCommand extends CommandBase {
 	public void members_cmd() throws CivException {
 		Town town = this.getSelectedTown();
 		
-		CivMessage.sendHeading(sender, town.getName()+" "+CivSettings.localize.localizedString("Members"));
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_town_membersHeading",town.getName()));
 		String out = "";
 		for (Resident res : town.getResidents()) {
 			out += res.getName() + ", ";

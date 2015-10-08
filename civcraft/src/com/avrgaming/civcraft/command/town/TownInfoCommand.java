@@ -215,7 +215,7 @@ public class TownInfoCommand extends CommandBase {
 		ArrayList<String> out = new ArrayList<String>();
 
 		for (Buff buff : town.getBuffManager().getAllBuffs()) {
-			out.add(CivColor.Green+CivSettings.localize.localizedString("Buffs")+" "+CivColor.LightGreen+buff.getDisplayName()+CivColor.Green+" "+CivSettings.localize.localizedString("from")+" "+CivColor.LightGreen+buff.getSource());
+			out.add(CivColor.Green+CivSettings.localize.localizedString("var_BuffsFrom",(CivColor.LightGreen+buff.getDisplayName()+CivColor.Green),CivColor.LightGreen+buff.getSource()));
 		}
 		
 		CivMessage.send(sender, out);

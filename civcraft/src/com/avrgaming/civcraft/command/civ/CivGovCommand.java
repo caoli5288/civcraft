@@ -68,7 +68,7 @@ public class CivGovCommand extends CommandBase {
 		
 		for (ConfigGovernment gov : govs) {
 			if (gov == civ.getGovernment()) {
-				CivMessage.send(sender, CivColor.Gold+gov.displayName+" "+"("+CivSettings.localize.localizedString("current")+")");
+				CivMessage.send(sender, CivColor.Gold+gov.displayName+" "+"("+CivSettings.localize.localizedString("currentGovernment")+")");
 			} else {
 				CivMessage.send(sender, CivColor.Green+gov.displayName);
 			}

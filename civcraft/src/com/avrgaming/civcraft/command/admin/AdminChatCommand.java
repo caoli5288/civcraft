@@ -174,7 +174,7 @@ public class AdminChatCommand extends CommandBase {
 		}
 		
 		CivGlobal.banWords.add(args[1]);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_chat_banwordadded",args[1]));
 	}
 	
 	public void banwordremove_cmd() throws CivException {
@@ -183,7 +183,7 @@ public class AdminChatCommand extends CommandBase {
 		}
 		
 		CivGlobal.banWords.remove(args[1]);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("removed")+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_chat_banwordremoved",args[1]));
 	}
 	
 	public void banwordtoggle() throws CivException {

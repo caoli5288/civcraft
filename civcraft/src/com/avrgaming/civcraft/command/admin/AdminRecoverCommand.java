@@ -73,7 +73,7 @@ public class AdminRecoverCommand extends CommandBase {
 			if (resident.debugTown != null && !resident.debugTown.equals("")) {
 				Town town = CivGlobal.getTown(resident.debugTown);
 				if (town == null) {
-					CivLog.error( CivSettings.localize.localizedString("admcd_recover_FixTownError1")+" "+resident.debugTown+" "+CivSettings.localize.localizedString("adcmd_recover_FixTownError2")+" "+resident.getName()+" "+CivSettings.localize.localizedString("adcmd_recover_fixTownError3"));
+					CivLog.error( CivSettings.localize.localizedString("var_admcd_recover_FixTownError1",resident.debugTown,resident.getName()));
 					continue;
 				}
 				
@@ -161,21 +161,21 @@ public class AdminRecoverCommand extends CommandBase {
 		for (Resident resident : CivGlobal.getResidents()) {
 			resident.saveNow();
 		}
-		CivMessage.sendSuccess(sender, CivGlobal.getResidents().size()+" "+CivSettings.localize.localizedString("adcmd_recover_forcesaveResSuccss"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forcesaveResSuccss",CivGlobal.getResidents().size()));
 	}
 	
 	public void forcesavetowns_cmd() throws SQLException {
 		for (Town town : CivGlobal.getTowns()) {
 			town.saveNow();
 		}
-		CivMessage.sendSuccess(sender, CivGlobal.getTowns().size()+" "+CivSettings.localize.localizedString("adcmd_recover_forceSaveTownsSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forceSaveTownsSuccess",CivGlobal.getTowns().size()));
 	}
 	
 	public void forcesavecivs_cmd() throws SQLException {
 		for (Civilization civ : CivGlobal.getCivs()) {
 			civ.saveNow();
 		}
-		CivMessage.sendSuccess(sender, CivGlobal.getCivs().size()+" "+CivSettings.localize.localizedString("adcmd_recover_forceSaveCivsSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forceSaveCivsSuccess",CivGlobal.getCivs().size()));
 	}
 	
 	public void listorphanmayors_cmd() {
@@ -211,7 +211,7 @@ public class AdminRecoverCommand extends CommandBase {
 			}
 			
 			if (capitol.getMayorGroup() == null) {
-				CivMessage.send(sender, CivSettings.localize.localizedString("Town")+" "+capitol.getName()+" "+CivSettings.localize.localizedString("adcmd_recover_fixMayorsError"));
+				CivMessage.send(sender, CivSettings.localize.localizedString("var_adcmd_recover_fixMayorsError",capitol.getName()));
 				continue;
 			}
 			

@@ -182,7 +182,7 @@ public abstract class CommandBase implements CommandExecutor {
 		Player player = getPlayer();
 		Resident res = CivGlobal.getResident(player);
 		if (res == null) {
-			throw new CivException(CivSettings.localize.localizedString("Resident")+" "+player.getName()+" "+CivSettings.localize.localizedString("CouldNotBeFound"));
+			throw new CivException(CivSettings.localize.localizedString("var_Resident_CouldNotBeFound",player.getName()));
 		}
 		return res;
 	}
@@ -208,7 +208,7 @@ public abstract class CommandBase implements CommandExecutor {
 					try {
 						res.getSelectedTown().validateResidentSelect(res);
 					} catch (CivException e) {
-						CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("cmd_townDeselectedInvalid")+" "+res.getSelectedTown().getName()+", "+CivSettings.localize.localizedString("cmd_townDeselectedInvalid2")+" "+res.getTown().getName());
+						CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_cmd_townDeselectedInvalid",res.getSelectedTown().getName(),res.getTown().getName()));
 						res.setSelectedTown(res.getTown());
 						return res.getTown();
 					}
@@ -281,7 +281,7 @@ public abstract class CommandBase implements CommandExecutor {
 		
 		if (town.getMayorGroup() == null || town.getAssistantGroup() == null || 
 				civ.getLeaderGroup() == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_townOrCivMissingGroup1")+"("+town.getName()+") "+CivSettings.localize.localizedString("cmd_townOrCivMissingGroup2")+"("+civ.getName()+") "+CivSettings.localize.localizedString("cmd_townOrCivMissingGroup3"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_townOrCivMissingGroup1",town.getName(),civ.getName()));
 		}
 		
 		if (!town.getMayorGroup().hasMember(resident) && !town.getAssistantGroup().hasMember(resident) &&
@@ -596,7 +596,7 @@ public abstract class CommandBase implements CommandExecutor {
 		
 		PermissionGroup grp = CivGlobal.getPermissionGroupFromName(town, args[index]);
 		if (grp == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" "+args[index]+" "+CivSettings.localize.localizedString("cmd_permGroupErrorNoReulstInTown")+" "+town.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults",args[index],town.getName()));
 		}
 		
 		return grp;

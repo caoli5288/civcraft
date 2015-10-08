@@ -109,7 +109,7 @@ public class CampCommand extends CommandBase {
 		Camp camp = this.getCurrentCamp();
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
 
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("Camp")+" "+camp.getName()+" "+CivSettings.localize.localizedString("Info"));
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_camp_infoHeading",camp.getName()));
 		HashMap<String,String> info = new HashMap<String, String>();
 		info.put(CivSettings.localize.localizedString("Owner"), camp.getOwnerName());
 		info.put(CivSettings.localize.localizedString("Members"), ""+camp.getMembers().size());

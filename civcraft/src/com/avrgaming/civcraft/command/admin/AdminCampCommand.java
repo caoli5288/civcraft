@@ -77,7 +77,7 @@ public class AdminCampCommand extends CommandBase {
 			camp.setNextRaidDate(next);
 			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_camp_setRaidTimeSuccess"));
 		} catch (ParseException e) {
-			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("adcmd_camp_setRaidTimeFailedFormat"));
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_camp_setRaidTimeFailedFormat",args[2]));
 		}
 		
 	}

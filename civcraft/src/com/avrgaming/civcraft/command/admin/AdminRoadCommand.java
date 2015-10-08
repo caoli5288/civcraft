@@ -36,7 +36,7 @@ public class AdminRoadCommand extends CommandBase {
 		Buildable buildable = town.getNearestBuildable(player.getLocation());
 		Road road;
 		if (!(buildable instanceof Road)) {
-			throw new CivException( CivSettings.localize.localizedString("adcmd_road_setRaidTimeNotRoad")+" "+buildable.getDisplayName());
+			throw new CivException( CivSettings.localize.localizedString("var_adcmd_road_setRaidTimeNotRoad",buildable.getDisplayName()));
 		}
 		
 		road = (Road)buildable;
@@ -50,7 +50,7 @@ public class AdminRoadCommand extends CommandBase {
 			road.setNextRaidDate(next);
 			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_road_setRaidTimeEnterTime"));
 		} catch (ParseException e) {
-			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("adcmd_road_setRaidTimeError"));
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_road_setRaidTimeError",args[2]));
 		}
 		
 	}

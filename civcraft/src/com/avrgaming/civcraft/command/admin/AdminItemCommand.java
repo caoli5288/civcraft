@@ -86,7 +86,7 @@ public class AdminItemCommand extends CommandBase {
 				LoreEnhancement enh = enhancements.get(str);
 				ItemStack stack = LoreMaterial.addEnhancement(inHand, enh);
 				player.setItemInHand(stack);
-				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_item_enhanceSuccess")+" "+name);
+				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_item_enhanceSuccess",name));
 				return;
 			}
 		}

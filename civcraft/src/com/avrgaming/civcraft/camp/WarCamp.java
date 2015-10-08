@@ -98,7 +98,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					}
 					
 					if (resident.getCiv().getWarCamps().size() >= warCampMax) {
-						throw new CivException(warCampMax+" "+CivSettings.localize.localizedString("warcamp_maxReached"));
+						throw new CivException(CivSettings.localize.localizedString("var_warcamp_maxReached",warCampMax));
 					}
 					
 					ItemStack stack = player.getItemInHand();
@@ -251,7 +251,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 		
 		int minsLeft = this.isWarCampCooldownLeft();
 		if (minsLeft > 0) {
-			throw new CivException(minsLeft+" "+CivSettings.localize.localizedString("warcamp_oncooldown"));
+			throw new CivException(CivSettings.localize.localizedString("var_warcamp_oncooldown",minsLeft));
 		}
 		
 		if (!player.isOp()) {

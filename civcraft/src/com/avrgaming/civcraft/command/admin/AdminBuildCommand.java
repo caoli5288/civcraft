@@ -108,7 +108,7 @@ public class AdminBuildCommand extends CommandBase {
 		Buildable buildable = town.getNearestBuildable(player.getLocation());
 		
 		if (args.length < 3 || !args[2].equalsIgnoreCase("yes")) {
-			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("adcmd_build_wouldValidate")+buildable.getDisplayName()+" @ "+buildable.getCorner()+" "+CivSettings.localize.localizedString("cmd_areYouSure")+" '/ad validatenearest [town] yes' "+CivSettings.localize.localizedString("cmd_toConfirm"));
+			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_adcmd_build_wouldValidate",buildable.getDisplayName(),buildable.getCorner()));
 			return;
 		}
 		
@@ -124,7 +124,7 @@ public class AdminBuildCommand extends CommandBase {
 		Buildable struct = town.getNearestStrucutreOrWonderInprogress(player.getLocation());
 		
 		if (args.length < 3 || !args[2].equalsIgnoreCase("yes")) {
-			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("adcmd_build_wouldDestroy")+struct.getDisplayName()+" @ "+struct.getCorner()+" "+CivSettings.localize.localizedString("cmd_areYouSure")+" '/ad destroynearest [town] yes' "+CivSettings.localize.localizedString("cmd_toConfirm"));
+			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_adcmd_build_wouldDestroy",struct.getDisplayName(),struct.getCorner()));
 			return;
 		}
 		
@@ -173,9 +173,8 @@ public class AdminBuildCommand extends CommandBase {
 		}
 		
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("adcmd_build_repairConfirmPrompt")+" "+CivColor.Yellow+nearest.getDisplayName()+
-					CivColor.LightGreen+" @ "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" ?");
-			CivMessage.send(player, CivColor.LightGray+"'/ad build repair yes' "+CivSettings.localize.localizedString("cmd_toConfirm"));
+			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_adcmd_build_repairConfirmPrompt",CivColor.Yellow+nearest.getDisplayName(),nearest.getCorner()));
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("adcmd_build_toConfirm"));
 			return;
 		}
 		
@@ -183,7 +182,7 @@ public class AdminBuildCommand extends CommandBase {
 			nearest.repairFromTemplate();
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new CivException("IO error. Couldn't find template file:"+nearest.getSavedTemplatePath()+" ?");
+			throw new CivException(CivSettings.localize.localizedString("interactive_refresh_exception")+nearest.getSavedTemplatePath()+" ?");
 		}
 		CivMessage.sendSuccess(player, nearest.getDisplayName()+" "+CivSettings.localize.localizedString("Repaired"));
 		
@@ -254,8 +253,7 @@ public class AdminBuildCommand extends CommandBase {
 		if (args.length < 3) {
 			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_build_unbuildHeading"));
 			for (Structure struct : town.getStructures()) {
-				CivMessage.send(sender, struct.getDisplayName()+" type: "+CivColor.Yellow+struct.getCorner().toString()+
-						CivColor.White+" "+CivSettings.localize.localizedString("adcmd_build_demolishtoDemolish"));
+				CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_build_demolish",struct.getDisplayName(),CivColor.Yellow+struct.getCorner().toString()+CivColor.White));
 			}
 			return;
 		}

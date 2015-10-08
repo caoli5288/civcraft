@@ -48,11 +48,11 @@ public class TradeCommand extends CommandBase {
 		}
 		
 		if (traderPlayer.getLocation().distance(residentPlayer.getLocation()) > max_trade_distance) {
-			throw new CivException(resident.getName()+" "+CivSettings.localize.localizedString("cmd_trade_tooFarError"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_trade_tooFarError",resident.getName()));
 		}
 		
 		if (TradeInventoryListener.tradeInventories.containsKey(TradeInventoryListener.getTradeInventoryKey(resident))) {
-			throw new CivException(resident.getName()+" "+CivSettings.localize.localizedString("cmd_trade_alreadyTradingError"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_trade_alreadyTradingError",resident.getName()));
 		}
 		
 		TradeRequest tradeRequest = new TradeRequest();

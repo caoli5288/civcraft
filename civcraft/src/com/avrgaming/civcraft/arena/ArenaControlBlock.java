@@ -51,8 +51,8 @@ public class ArenaControlBlock {
 			arena.onControlBlockDestroy(teamID, resident.getTeam());
 
 		} else {
-			CivMessage.sendTeam(resident.getTeam(), CivColor.LightGreen+resident.getName()+" "+CivSettings.localize.localizedString("arena_playerHitControlBlock")+" ("+curHP+" / "+maxHP+")");
-			CivMessage.sendTeam(arena.getTeamFromID(teamID), CivColor.Rose+CivSettings.localize.localizedString("arena_announceHitControlBlock") +" "+resident.getName()+" ("+curHP+" / "+maxHP+")");
+			CivMessage.sendTeam(resident.getTeam(), CivSettings.localize.localizedString("var_arena_playerHitControlBlock",CivColor.LightGreen+resident.getName(),(curHP+" / "+maxHP)));
+			CivMessage.sendTeam(arena.getTeamFromID(teamID), CivColor.Rose+CivSettings.localize.localizedString("var_arena_announceHitControlBlock",resident.getName(),(curHP+" / "+maxHP)));
 		}
 		
 	}

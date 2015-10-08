@@ -59,7 +59,7 @@ public class PayCommand implements CommandExecutor {
 			try {
 				amount = Double.valueOf(args[1]);
 				if (!resident.getTreasury().hasEnough(amount)) {
-					throw new CivException(CivSettings.localize.localizedString("cmd_pay_InsufficentFunds")+" "+CivSettings.CURRENCY_NAME);
+					throw new CivException(CivSettings.localize.localizedString("var_cmd_pay_InsufficentFunds",CivSettings.CURRENCY_NAME));
 				}
 			} catch (NumberFormatException e) {
 				throw new CivException(CivSettings.localize.localizedString("EnterNumber"));
@@ -73,11 +73,11 @@ public class PayCommand implements CommandExecutor {
 			resident.getTreasury().withdraw(amount);
 			payTo.getTreasury().deposit(amount);
 			
-			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_pay_PaidSuccess")+" "+payTo.getName()+" "+amount+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_pay_PaidSuccess",amount,CivSettings.CURRENCY_NAME,payTo.getName()));
 			
 			try {
 				Player payToPlayer = CivGlobal.getPlayer(payTo);
-				CivMessage.sendSuccess(payToPlayer, resident.getName()+CivSettings.localize.localizedString("cmd_pay_PaidReceiverSuccess")+" "+amount+" "+CivSettings.CURRENCY_NAME);
+				CivMessage.sendSuccess(payToPlayer, CivSettings.localize.localizedString("var_cmd_pay_PaidReceiverSuccess",resident.getName(),amount,CivSettings.CURRENCY_NAME));
 			} catch (CivException e) {
 				// player not online, forget it.
 			}

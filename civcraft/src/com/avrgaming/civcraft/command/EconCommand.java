@@ -144,7 +144,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			resident.getTreasury().deposit(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_added",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -164,7 +164,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			resident.getTreasury().deposit(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_give",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -184,7 +184,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			resident.getTreasury().setBalance(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("Set")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_set",args[1],args[2],CivSettings.CURRENCY_NAME));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -204,7 +204,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			resident.getTreasury().withdraw(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_econ_Subtracted")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_Subtracted",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -224,7 +224,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			town.getTreasury().deposit(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_added",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -244,7 +244,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			town.getTreasury().setBalance(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_set",args[1],args[2],CivSettings.CURRENCY_NAME));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -264,7 +264,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			town.getTreasury().withdraw(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_Subtracted",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -284,7 +284,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			civ.getTreasury().deposit(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_added",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -304,7 +304,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			civ.getTreasury().setBalance(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_set",args[1],args[2],CivSettings.CURRENCY_NAME));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
@@ -324,7 +324,7 @@ public class EconCommand extends CommandBase {
 			
 			Double amount = Double.valueOf(args[2]);
 			civ.getTreasury().withdraw(amount);
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("added")+" "+args[2]+" -> "+args[1]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_econ_Subtracted",args[2],CivSettings.CURRENCY_NAME,args[1]));
 			
 		} catch (NumberFormatException e) {
 			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));

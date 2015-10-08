@@ -227,9 +227,9 @@ public class CivInfoCommand extends CommandBase {
 			for (SessionEntry entry : entries) {
 				if (civ == EndGameCondition.getCivFromSessionData(entry.value)) {
 					Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
-					CivMessage.send(sender, CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+" "+CivSettings.localize.localizedString("is")+" "+
-					CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White+" "+CivSettings.localize.localizedString("cmd_civ_victoryDays")+" "+CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+
-					CivColor.White+" "+CivSettings.localize.localizedString("cmd_civ_victory"));
+					
+					CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictory",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
+							CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White,CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
 					break;
 				}
 			}
@@ -237,15 +237,15 @@ public class CivInfoCommand extends CommandBase {
 		
 		Integer votes = EndConditionDiplomacy.getVotesFor(civ);
 		if (votes > 0) {
-			CivMessage.send(sender, CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+" "+CivSettings.localize.localizedString("has")+" "+
-					CivColor.LightPurple+CivColor.BOLD+votes+CivColor.White+" "+CivSettings.localize.localizedString("cmd_civ_votesHeading"));
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_votesHeading",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
+					CivColor.LightPurple+CivColor.BOLD+votes+CivColor.White));
 		}
 		
 		Double beakers = EndConditionScience.getBeakersFor(civ);
 		if (beakers > 0) {
 			DecimalFormat df = new DecimalFormat("#.#");
-			CivMessage.send(sender, CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+" "+CivSettings.localize.localizedString("has")+" "+
-					CivColor.LightPurple+CivColor.BOLD+df.format(beakers)+CivColor.White+" "+CivSettings.localize.localizedString("cmd_civ_info_showBeakersTowardEnlight"));			
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_info_showBeakersTowardEnlight",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
+					CivColor.LightPurple+CivColor.BOLD+df.format(beakers)+CivColor.White));			
 		}
 		
 		String out = CivColor.Green+CivSettings.localize.localizedString("Towns")+" ";

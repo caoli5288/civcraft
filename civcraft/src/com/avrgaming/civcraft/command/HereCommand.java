@@ -43,13 +43,13 @@ public class HereCommand implements CommandExecutor {
 			
 			CultureChunk cc = CivGlobal.getCultureChunk(coord);
 			if (cc != null) {
-				CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("cmd_here_inCiv")+
-						CivColor.Yellow+cc.getCiv().getName()+CivColor.LightPurple+" "+CivSettings.localize.localizedString("cmd_here_inCivTown")+" "+CivColor.Yellow+cc.getTown().getName());
+				CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("var_cmd_here_inCivAndTown",
+						CivColor.Yellow+cc.getCiv().getName()+CivColor.LightPurple,CivColor.Yellow+cc.getTown().getName()));
 			}
 			
 			TownChunk tc = CivGlobal.getTownChunk(coord);
 			if (tc != null) {
-				CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_here_inTown")+" "+CivColor.LightGreen+tc.getTown().getName());
+				CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("var_cmd_here_inTown",CivColor.LightGreen+tc.getTown().getName()));
 				if (tc.isOutpost()) {
 					CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_here_outPost"));
 				}

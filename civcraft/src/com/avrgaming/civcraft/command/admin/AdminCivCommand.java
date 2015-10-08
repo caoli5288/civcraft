@@ -102,7 +102,7 @@ public class AdminCivCommand extends CommandBase {
 		Civilization civ = getNamedCiv(1);
 		Integer votes = getNamedInteger(2);
 		EndConditionDiplomacy.setVotes(civ, votes);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setVotesSuccess")+" "+civ.getName()+" -> "+votes);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_setVotesSuccess",civ.getName(),votes));
 	}
 	
 	public void conquered_cmd() throws CivException {
@@ -124,7 +124,7 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		if (civ == null) {
-			throw new CivException (CivSettings.localize.localizedString("adcmd_civ_NoCivByThatNane")+" "+conquerCiv);
+			throw new CivException (CivSettings.localize.localizedString("var_adcmd_civ_NoCivByThatNane",conquerCiv));
 		}
 		
 		civ.setConquered(false);
@@ -141,7 +141,7 @@ public class AdminCivCommand extends CommandBase {
 		
 		if (args.length < 3) {
 			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("adcmd_civ_bankruptConfirmPrompt"));
-			CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_civ_bankruptConfirmCmd")+" /civ bankrupt yes");
+			CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_civ_bankruptConfirmCmd"));
 		}
 		
 		civ.getTreasury().setBalance(0);
@@ -157,7 +157,7 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		civ.save();
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_bankruptSuccess")+" "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_bankruptSuccess",civ.getName()));
 	}
 	
 	public void setgov_cmd() throws CivException {
@@ -176,7 +176,7 @@ public class AdminCivCommand extends CommandBase {
 		CivGlobal.getSessionDB().delete_all(key);
 		
 		civ.setGovernment(gov.id);
-		CivMessage.global(civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_setGovSuccessBroadcast")+" "+CivSettings.governments.get(gov.id).displayName);
+		CivMessage.global(CivSettings.localize.localizedString("var_adcmd_civ_setGovSuccessBroadcast",civ.getName(),CivSettings.governments.get(gov.id).displayName));
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setGovSuccess"));
 		
 	}
@@ -190,7 +190,7 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		newciv.mergeInCiv(oldciv);
-		CivMessage.global(CivSettings.localize.localizedString("adcmd_civ_mergeSuccess")+" "+oldciv.getName()+" -> "+newciv.getName());
+		CivMessage.global(CivSettings.localize.localizedString("var_adcmd_civ_mergeSuccess",oldciv.getName(),newciv.getName()));
 	}
 	
 	public void info_cmd() throws CivException {
@@ -233,7 +233,7 @@ public class AdminCivCommand extends CommandBase {
 			CivGlobal.setAggressor(civ, otherCiv, civ);
 			CivGlobal.setAggressor(otherCiv, civ, civ);
 		}
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_setrelationSuccess")+" "+civ.getName()+" & "+otherCiv.getName()+" -> "+status.name());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_setrelationSuccess",civ.getName(),otherCiv.getName(),status.name()));
 		
 	}
 	
@@ -255,7 +255,7 @@ public class AdminCivCommand extends CommandBase {
 		
 		civ.setAdminCiv(!civ.isAdminCiv());
 		civ.save();
-		CivMessage.sendSuccess(sender, civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_toggleAdminCivSuccess")+" "+civ.isAdminCiv());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_toggleAdminCivSuccess",civ.getName(),civ.isAdminCiv()));
 	}
 	
 	public void beakerrate_cmd() throws CivException {
@@ -265,7 +265,7 @@ public class AdminCivCommand extends CommandBase {
 		civ.setBaseBeakers(amount);
 		civ.save();
 
-		CivMessage.sendSuccess(sender, civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_beakerRateSuccess")+" "+amount);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_beakerRateSuccess",civ.getName(),amount));
 	}
 	
 	public void givetech_cmd() throws CivException {
@@ -281,13 +281,13 @@ public class AdminCivCommand extends CommandBase {
 		}
 		
 		if (civ.hasTechnology(tech.id)) {
-			throw new CivException(civ.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_giveTechAlreadyhas")+" "+tech.id);
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_civ_giveTechAlreadyhas",civ.getName(),tech.id));
 		}
 		
 		civ.addTech(tech);
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, tech.name+" "+CivSettings.localize.localizedString("adcmd_civ_giveTechSuccess")+" "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_giveTechSuccess",tech.name,civ.getName()));
 		
 	}
 	
@@ -298,9 +298,9 @@ public class AdminCivCommand extends CommandBase {
 		if (civ.getAdviserGroup().hasMember(resident)) {
 			civ.getAdviserGroup().removeMember(resident);
 			civ.save();
-			CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmAdvisorSuccess")+" "+civ.getName());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_rmAdvisorSuccess",resident.getName(),civ.getName()));
 		} else {
-			CivMessage.sendError(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmAdvisorNotInGroup")+" "+civ.getName());
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("var_adcmd_civ_rmAdvisorNotInGroup",resident.getName(),civ.getName()));
 		}
 	}
 	
@@ -311,9 +311,9 @@ public class AdminCivCommand extends CommandBase {
 		if (civ.getLeaderGroup().hasMember(resident)) {
 			civ.getLeaderGroup().removeMember(resident);
 			civ.save();
-			CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmLeaderSuccess")+" "+civ.getName());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_rmLeaderSuccess",resident.getName(),civ.getName()));
 		} else {
-			CivMessage.sendError(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_rmLeaderNotInGroup")+" "+civ.getName());
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("var_adcmd_civ_rmLeaderNotInGroup",resident.getName(),civ.getName()));
 		}
 	}
 	
@@ -325,7 +325,7 @@ public class AdminCivCommand extends CommandBase {
 		civ.getAdviserGroup().save();
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_addAdvisorSuccess")+" "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_civ_addAdvisorSuccess",resident.getName(),civ.getName()));
 	}
 
 	public void addleader_cmd() throws CivException {
@@ -336,7 +336,7 @@ public class AdminCivCommand extends CommandBase {
 		civ.getLeaderGroup().save();
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_civ_addLeaderSuccess")+" "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_civ_addLeaderSuccess",resident.getName(),civ.getName()));
 	}
 	
 	public void disband_cmd() throws CivException {

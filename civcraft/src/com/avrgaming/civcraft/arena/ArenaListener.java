@@ -49,7 +49,7 @@ public class ArenaListener implements Listener {
 		if (resident.isInsideArena()) {
 			if (resident.getCurrentArena() != null) {
 				
-				CivMessage.sendArena(resident.getCurrentArena(), event.getPlayer().getName()+" "+ CivSettings.localize.localizedString("arena_playerJoined"));
+				CivMessage.sendArena(resident.getCurrentArena(), CivSettings.localize.localizedString("var_arena_playerJoined",event.getPlayer().getName()));
 				
 				class SyncTask implements Runnable {
 					String name;
@@ -111,7 +111,7 @@ public class ArenaListener implements Listener {
 		}
 		
 		/* Player is leaving an active arena. Let everyone know. */
-		CivMessage.sendArena(ArenaManager.activeArenas.get(worldName), event.getPlayer().getName()+" "+CivSettings.localize.localizedString("arena_playerLeft"));
+		CivMessage.sendArena(ArenaManager.activeArenas.get(worldName), CivSettings.localize.localizedString("var_arena_playerLeft",event.getPlayer().getName()));
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -252,7 +252,7 @@ public class ArenaListener implements Listener {
 						long secondsLeft = (now.getTime() - resident.getLastKilledTime().getTime()) / 1000;
 						secondsLeft = 30 - secondsLeft;
 						
-						CivMessage.sendError(resident, CivSettings.localize.localizedString("arena_respawningIn") +" "+secondsLeft+" "+CivSettings.localize.localizedString("arena_respawnInSeconds"));
+						CivMessage.sendError(resident, CivSettings.localize.localizedString("var_arena_respawningIn",secondsLeft));
 						TaskMaster.syncTask(this, TimeTools.toTicks(1));
 					} else {
 						BlockCoord revive = arena.getRandomReviveLocation(resident);

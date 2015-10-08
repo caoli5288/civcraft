@@ -708,7 +708,7 @@ public class CivSettings {
 				if (returnUpgrade == null) {
 					returnUpgrade = upgrade;
 				} else {
-					throw new CivException(name+" "+CivSettings.localize.localizedString("cmd_notSpecificUpgrade"));
+					throw new CivException(CivSettings.localize.localizedString("var_cmd_notSpecificUpgrade",name));
 				}
 			}
 		}
@@ -733,7 +733,7 @@ public class CivSettings {
 				if (returnUpgrade == null) {
 					returnUpgrade = upgrade;
 				} else {
-					throw new CivException(name+" "+CivSettings.localize.localizedString("cmd_notSpecificUpgrade"));
+					throw new CivException(CivSettings.localize.localizedString("var_cmd_notSpecificUpgrade",name));
 				}
 			}
 		}

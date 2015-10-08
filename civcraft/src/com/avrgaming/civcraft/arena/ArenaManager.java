@@ -257,7 +257,7 @@ public class ArenaManager implements Runnable {
 
 			
 			if (!resident.isUsesAntiCheat()) {
-				throw new CivException(resident.getName()+ CivSettings.localize.localizedString("arena_errorMissingAntiCheat"));
+				throw new CivException(CivSettings.localize.localizedString("var_arena_errorMissingAntiCheat",resident.getName()));
 			}
 		}
 		
@@ -559,9 +559,7 @@ public class ArenaManager implements Runnable {
 			
 		}
 		
-		CivMessage.sendArena(arena, CivColor.LightGreen+CivColor.BOLD+winner.getName()+
-									CivColor.RESET+" "+CivSettings.localize.localizedString("arena_hasDefeated")+" "+
-									CivColor.Rose+CivColor.BOLD+loser.getName());
+		CivMessage.sendArena(arena, CivSettings.localize.localizedString("var_arena_hasDefeated",CivColor.LightGreen+CivColor.BOLD+winner.getName(),CivColor.Rose+CivColor.BOLD+loser.getName()));
 		CivMessage.sendArena(arena, CivSettings.localize.localizedString("arena_leavingIn10"));
 		TaskMaster.syncTask(new SyncTask(arena, loser, winner), TimeTools.toTicks(10));
 	}

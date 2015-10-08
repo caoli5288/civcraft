@@ -71,10 +71,10 @@ public class BuildCommand extends CommandBase {
 		}
 		
 		if (buildable.isIgnoreFloating()) {
-			throw new CivException(buildable.getDisplayName()+" "+CivSettings.localize.localizedString("cmd_build_validateNearestExempt"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_build_validateNearestExempt",buildable.getDisplayName()));
 		}
 		
-		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_build_validateNearestSuccess")+" "+buildable.getDisplayName()+" @ "+buildable.getCenterLocation()+"...");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_build_validateNearestSuccess",buildable.getDisplayName(),buildable.getCenterLocation()));
 		buildable.validate(player);
 	}
 	
@@ -99,17 +99,17 @@ public class BuildCommand extends CommandBase {
 		}
 		
 		if (!nearest.isDestroyed()) {
-			throw new CivException (nearest.getDisplayName()+" @ "+nearest.getCorner()+" "+CivSettings.localize.localizedString("cmd_build_repairNotDestroyed"));
+			throw new CivException (CivSettings.localize.localizedString("var_cmd_build_repairNotDestroyed",nearest.getDisplayName(),nearest.getCorner()));
 		}
 		
 		if (!town.getCiv().hasTechnology(nearest.getRequiredTechnology())) {
-			throw new CivException (CivSettings.localize.localizedString("cmd_build_repairMissingTech")+" "+nearest.getDisplayName()+" @ "+nearest.getCorner());
+			throw new CivException (CivSettings.localize.localizedString("var_cmd_build_repairMissingTech",nearest.getDisplayName(),nearest.getCorner()));
 		}
 	
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_build_repairConfirmPrompt")+" "+CivColor.Yellow+nearest.getDisplayName()+
-					CivColor.LightGreen+" @ "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" for "+CivColor.Yellow+nearest.getRepairCost()+" "+CivSettings.CURRENCY_NAME+"?");
-			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("cmd_areYouSure")+" /build repairnearest yes");
+			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_cmd_build_repairConfirmPrompt",
+					CivColor.Yellow+nearest.getDisplayName()+CivColor.LightGreen,CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen,CivColor.Yellow+nearest.getRepairCost()+CivColor.LightGreen,CivColor.Yellow+CivSettings.CURRENCY_NAME+CivColor.LightGreen));
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("cmd_build_repairConfirmPrompt2"));
 			return;
 		}
 		
@@ -128,9 +128,9 @@ public class BuildCommand extends CommandBase {
 		}
 		
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_build_demolishNearestConfirmPrompt")+" "+CivColor.Yellow+nearest.getDisplayName()+
-					CivColor.LightGreen+" at "+CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen+" ?");
-			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("cmd_areYouSure")+" /build demolishnearest yes");
+			CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_cmd_build_demolishNearestConfirmPrompt",CivColor.Yellow+nearest.getDisplayName()+CivColor.LightGreen,
+					CivColor.Yellow+nearest.getCorner()+CivColor.LightGreen));
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("cmd_build_demolishNearestConfirmPrompt2"));
 						
 			nearest.flashStructureBlocks();
 			return;
@@ -148,8 +148,7 @@ public class BuildCommand extends CommandBase {
 		if (args.length < 2) {
 			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_build_demolishHeader"));
 			for (Structure struct : town.getStructures()) {
-				CivMessage.send(sender, struct.getDisplayName()+" "+CivSettings.localize.localizedString("ofType")+" "+CivColor.Yellow+struct.getCorner().toString()+
-						CivColor.White+" "+CivSettings.localize.localizedString("cmd_build_demolishPrompt"));
+				CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_build_demolish",struct.getDisplayName(),CivColor.Yellow+struct.getCorner().toString()+CivColor.White));
 			}
 			return;
 		}
@@ -230,8 +229,7 @@ public class BuildCommand extends CommandBase {
 							CivSettings.localize.localizedString("Remaining")+" "+leftString);
 				} else {
 					Wonder wonder = CivGlobal.getWonderByConfigId(sinfo.id);
-					CivMessage.send(sender, CivColor.LightGray+sinfo.displayName+" Cost: "+sinfo.cost+" - "+CivSettings.localize.localizedString("cmd_build_listWonderAlreadyBuild")+" "+
-							wonder.getTown().getName()+"("+wonder.getTown().getCiv().getName()+")");
+					CivMessage.send(sender, CivColor.LightGray+sinfo.displayName+" Cost: "+sinfo.cost+" - "+CivSettings.localize.localizedString("var_cmd_build_listWonderAlreadyBuild",wonder.getTown().getName(),wonder.getTown().getCiv().getName()));
 				}
 			}
 		}

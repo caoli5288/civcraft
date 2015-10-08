@@ -684,6 +684,8 @@ structures:
     components:
         - name: 'AttributeStatic'
           type: 'direct'
+          attribute: 'CULTURE'
+          value: '200.0'
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'HAPPINESS'

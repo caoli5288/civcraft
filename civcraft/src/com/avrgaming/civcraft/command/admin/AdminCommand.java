@@ -147,7 +147,7 @@ public class AdminCommand extends CommandBase {
 		for (SessionEntry entry : entries) {
 			if (EndGameCondition.getCivFromSessionData(entry.value) == civ) {
 				CivGlobal.getSessionDB().delete(entry.request_id, entry.key);
-				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_clearEndGameSuccess")+" "+civ.getName());
+				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_clearEndGameSuccess",civ.getName()));
 			}
 		}		
 	}
@@ -259,7 +259,7 @@ public class AdminCommand extends CommandBase {
 		
 		ConfigUnit unit = CivSettings.units.get(args[1]);
 		if (unit == null) {
-			throw new CivException( CivSettings.localize.localizedString("adcmd_spawnUnitInvalid")+" "+args[1]);
+			throw new CivException( CivSettings.localize.localizedString("var_adcmd_spawnUnitInvalid",args[1]));
 		}
 		
 		Player player = getPlayer();
@@ -286,7 +286,7 @@ public class AdminCommand extends CommandBase {
 		}
 
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_spawnUnitSuccess")+" "+unit.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_spawnUnitSuccess",unit.name));
 	}
 	
 	public void server_cmd() {

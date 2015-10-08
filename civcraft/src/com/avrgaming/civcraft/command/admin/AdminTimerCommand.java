@@ -48,7 +48,7 @@ public class AdminTimerCommand extends CommandBase {
 		
 		EventTimer timer = EventTimer.timers.get(args[1]);
 		if (timer == null) {
-			throw new CivException(CivSettings.localize.localizedString("adcmd_timer_runInvalid")+" "+args[1]);
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_timer_runInvalid",args[1]));
 		}
 		
 		Calendar next;
@@ -75,7 +75,7 @@ public class AdminTimerCommand extends CommandBase {
 		String timerName = args[1];
 		EventTimer timer = EventTimer.timers.get(timerName);
 		if (timer == null) {
-			throw new CivException( CivSettings.localize.localizedString("adcmd_timer_runInvalid")+""+args[1]);
+			throw new CivException( CivSettings.localize.localizedString("var_adcmd_timer_runInvalid",args[1]));
 		}
 		
 		String dateStr = args[2];

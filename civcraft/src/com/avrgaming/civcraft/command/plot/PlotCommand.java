@@ -201,7 +201,7 @@ public class PlotCommand extends CommandBase {
 		}
 		
 		tc.purchase(resident);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_buySuccess")+" "+tc.getChunkCoord()+" "+CivSettings.localize.localizedString("for")+" "+tc.getValue()+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_buySuccess",tc.getChunkCoord(),tc.getValue(),CivSettings.CURRENCY_NAME));
 	}
 	
 	public void fs_cmd() throws CivException {
@@ -225,7 +225,7 @@ public class PlotCommand extends CommandBase {
 			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
 		
-		CivMessage.sendTown(tc.getTown(), CivSettings.localize.localizedString("cmd_plot_sellSuccess1")+" "+tc.getCenterString()+" "+CivSettings.localize.localizedString("cmd_plot_sellSuccess2")+" "+args[1]+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendTown(tc.getTown(), CivSettings.localize.localizedString("var_cmd_plot_sellSuccess1",tc.getCenterString(),args[1],CivSettings.CURRENCY_NAME));
 	}
 	
 	
@@ -334,7 +334,7 @@ public class PlotCommand extends CommandBase {
 	private void showPriceInfo(TownChunk tc) {
 		String out = "";
 		if (tc.isForSale()) {
-			out += CivColor.Yellow+" ["+CivSettings.localize.localizedString("cmd_plot_showPrice")+" "+tc.getPrice()+" "+CivSettings.CURRENCY_NAME+"] ";
+			out += CivColor.Yellow+CivSettings.localize.localizedString("var_cmd_plot_showPrice",tc.getPrice(),CivSettings.CURRENCY_NAME);
 		}
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Value")+" "+CivColor.LightGreen+tc.getValue()+out);
 	}

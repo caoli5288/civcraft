@@ -195,7 +195,7 @@ public class TownGroupCommand extends CommandBase {
 			CivMessage.sendHeading(sender, town.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_infoHeading2"));
 
 			for (PermissionGroup grp : town.getGroups()) {
-				CivMessage.send(sender, grp.getName()+CivColor.LightGray+" ("+grp.getMemberCount()+" "+CivSettings.localize.localizedString("Members")+")");
+				CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_group_listGroup",grp.getName()+CivColor.LightGray,grp.getMemberCount()));
 			}		
 		}
 	}

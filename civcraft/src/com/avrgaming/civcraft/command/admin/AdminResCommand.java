@@ -57,7 +57,7 @@ public class AdminResCommand extends CommandBase {
 		
 		Resident newResident = CivGlobal.getResident(newName);
 		if (newResident != null) {
-			throw new CivException(newResident.getName()+" "+CivSettings.localize.localizedString("adcmd_res_renameExists")+" "+resident.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_res_renameExists",newResident.getName(),resident.getName()));
 		}
 		
 		/* Create a dummy resident to make sure name is valid. */
@@ -106,7 +106,7 @@ public class AdminResCommand extends CommandBase {
 			for (Enchantment ench2 : Enchantment.values()) {
 				out += ench2.getName()+",";
 			}
-			throw new CivException(CivSettings.localize.localizedString("adcmd_res_enchantInvalid1")+" "+enchant+" "+CivSettings.localize.localizedString("Options")+" "+out);
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_res_enchantInvalid1",enchant,out));
 		}
 		
 		stack.addUnsafeEnchantment(ench, level);
@@ -125,7 +125,7 @@ public class AdminResCommand extends CommandBase {
 		}
 		
 		resident.save();
-		CivMessage.sendSuccess(sender, resident.getName()+CivSettings.localize.localizedString("adcmd_res_cleartownSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_res_cleartownSuccess",resident.getName()));
 
 	}
 	
@@ -141,7 +141,7 @@ public class AdminResCommand extends CommandBase {
 		
 		camp.save();
 		resident.save();
-		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_res_setcampSuccess")+" "+camp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_res_setcampSuccess",resident.getName(),camp.getName()));
 	}
 	
 	
@@ -168,7 +168,7 @@ public class AdminResCommand extends CommandBase {
 		
 		town.save();
 		resident.save();
-		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("adcmd_res_setTownSuccess")+" "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_res_setTownSuccess",resident.getName(),town.getName()));
 	}
 	
 	@Override
