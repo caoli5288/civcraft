@@ -451,7 +451,8 @@ public class Blacksmith extends Structure {
 			// If this stack was successfully withdrawn, delete it from the DB.
 			if (leftovers.size() == 0) {
 				CivGlobal.getSessionDB().delete(se.request_id, se.key);
-				CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_civ_withdrawSuccess")+" "+amount+" "+CivData.getDisplayName(itemId));
+				CivMessage.send(player, CivSettings.localize.localizedString("var_cmd_civ_withdrawSuccess",amount,CivData.getDisplayName(itemId)));
+
 				break;
 			} else {
 				// We do not have space in our inventory, inform the player.

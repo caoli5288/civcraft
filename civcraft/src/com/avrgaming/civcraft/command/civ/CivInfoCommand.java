@@ -56,7 +56,7 @@ public class CivInfoCommand extends CommandBase {
 	public void online_cmd() throws CivException {
 		Civilization civ = getSenderCiv();
 		
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_info_onlineHeading")+" "+civ.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_civ_info_onlineHeading",civ.getName()));
 		String out = "";
 		for (Resident resident : civ.getOnlineResidents()) {
 			out += resident.getName()+" ";
@@ -144,10 +144,10 @@ public class CivInfoCommand extends CommandBase {
 	
 			Town town = civ.getTown(args[1]);
 			if (town == null) {
-				throw new CivException(CivSettings.localize.localizedString("cmd_civ_info_upkeepTownInvalid")+" "+args[1]);
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_info_upkeepTownInvalid",args[1]));
 			}
 			
-			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_info_upkeepTownHeading1")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_info_upkeepTownHeading2"));
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_civ_info_upkeepTownHeading1",town.getName()));
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Base")+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "base"));
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Distance")+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distance"));
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("DistanceUpkeep")+" "+CivColor.LightGreen+civ.getUpkeepPaid(town, "distanceUpkeep"));
@@ -186,7 +186,7 @@ public class CivInfoCommand extends CommandBase {
 		}
 		
 		
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_info_showHeading")+" "+civ.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_civ_info_showHeading",civ.getName()));
 		
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Score")+" "+CivColor.LightGreen+civ.getScore()+
 				CivColor.Green+" "+CivSettings.localize.localizedString("Towns")+" "+CivColor.LightGreen+civ.getTownCount());

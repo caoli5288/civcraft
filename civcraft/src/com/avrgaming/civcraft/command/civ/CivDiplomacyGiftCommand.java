@@ -93,8 +93,8 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivRequest1")+
-						" "+CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivRequest2")+" "+fromCiv.getMergeCost()+" "+CivSettings.CURRENCY_NAME+". "+CivSettings.localize.localizedString("cmd_civ_dip_requestQuestion"), dipResponse);
+				CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dipgift_entirecivRequest1",fromCiv.getName())+
+						" "+CivSettings.localize.localizedString("var_cmd_civ_dipgift_entirecivRequest2",fromCiv.getMergeCost(),CivSettings.CURRENCY_NAME), dipResponse);
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivSuccess"));
 	}
 	
@@ -138,8 +138,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+fromCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dipgift_townRequest1")+" "+giftedTown.getName()+" "
-				+CivSettings.localize.localizedString("cmd_civ_dipgift_townRequest2")+" "+giftedTown.getGiftCost()+CivSettings.CURRENCY_NAME+". "+CivSettings.localize.localizedString("cmd_civ_dip_requestQuestion"), dipResponse);
+				CivSettings.localize.localizedString("var_cmd_civ_dipgift_townRequest1",fromCiv.getName(),giftedTown.getName(),giftedTown.getGiftCost(),CivSettings.CURRENCY_NAME), dipResponse);
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivSuccess"));
 		
 	}

@@ -98,8 +98,8 @@ public class MarketBuyCommand extends CommandBase {
 		}
 		
 		senderCiv.buyTown(town);
-		CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_market_buy_townsBroadcast")+" "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_market_buy_townsSuccess")+" "+args[1]);
+		CivMessage.global(CivSettings.localize.localizedString("var_cmd_market_buy_townsBroadcast",town.getName(),senderCiv.getName()));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_market_buy_townsSuccess",args[1]));
 	}
 	
 	
@@ -132,8 +132,8 @@ public class MarketBuyCommand extends CommandBase {
 		}
 		
 		senderCiv.buyCiv(civBought);
-		CivMessage.global(civBought.getName()+" "+CivSettings.localize.localizedString("cmd_market_buy_civsSuccess")+" "+senderCiv.getName());
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_market_buy_civsSuccess2")+" "+args[1]);
+		CivMessage.global(CivSettings.localize.localizedString("var_cmd_market_buy_civsSuccess",civBought.getName(),senderCiv.getName()));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_market_buy_civsSuccess2",args[1]));
 	}
 	
 	

@@ -90,7 +90,7 @@ public class ConfigCampUpgrade {
 			CivMessage.sendCamp(camp, CivSettings.localize.localizedString("camp_upgrade_garden"));
 			break;
 		default:
-			CivLog.warning(this.action+" "+CivSettings.localize.localizedString("camp_upgrade_unknown")+" "+this.id);
+			CivLog.warning(CivSettings.localize.localizedString("var_camp_upgrade_unknown",this.action,this.id));
 			break;
 		}
 	}

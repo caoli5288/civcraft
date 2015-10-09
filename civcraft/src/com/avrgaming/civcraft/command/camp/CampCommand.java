@@ -132,7 +132,7 @@ public class CampCommand extends CommandBase {
 		Resident resident = getNamedResident(1);
 		
 		if (!resident.hasCamp() || resident.getCamp() != camp) {
-			throw new CivException(resident.getName()+" "+CivSettings.localize.localizedString("cmd_camp_removeNotInCamp"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_camp_removeNotInCamp",resident.getName()));
 		}
 		
 		if (resident.getCamp().getOwner() == resident) {
@@ -140,7 +140,7 @@ public class CampCommand extends CommandBase {
 		}
 		
 		camp.removeMember(resident);
-		CivMessage.sendSuccess(sender, resident.getName()+" "+CivSettings.localize.localizedString("cmd_camp_removeSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_removeSuccess",resident.getName()));
 	}
 	
 	public void add_cmd() throws CivException {
@@ -163,10 +163,10 @@ public class CampCommand extends CommandBase {
 		join.sender = player;
 		
 		CivGlobal.questionPlayer(player, CivGlobal.getPlayer(resident), 
-				player.getName()+" "+CivSettings.localize.localizedString("cmd_camp_addInvite")+" "+camp.getName()+"?",
+				CivSettings.localize.localizedString("var_cmd_camp_addInvite",player.getName(),camp.getName()),
 				INVITE_TIMEOUT, join);
 		
-		CivMessage.sendSuccess(player, resident.getName()+" "+CivSettings.localize.localizedString("cmd_camp_addSuccess"));
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_camp_addSuccess",resident.getName()));
 	}
 	
 	public void setowner_cmd() throws CivException {
@@ -175,15 +175,15 @@ public class CampCommand extends CommandBase {
 		Resident newLeader = getNamedResident(1);
 		
 		if (!camp.hasMember(newLeader.getName())) {
-			throw new CivException(newLeader.getName()+" "+CivSettings.localize.localizedString("cmd_camp_removeNotInCamp"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_camp_removeNotInCamp",newLeader.getName()));
 		}
 		
 		camp.setOwner(newLeader);
 		camp.save();
 		
 		Player player = CivGlobal.getPlayer(newLeader);
-		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_camp_setownerMsg")+" "+camp.getName());
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_camp_setownerSuccess")+" "+newLeader.getName());
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_camp_setownerMsg",camp.getName()));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_setownerSuccess",newLeader.getName()));
 		
 	}
 	
@@ -201,7 +201,7 @@ public class CampCommand extends CommandBase {
 		
 		camp.removeMember(resident);
 		camp.save();
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_camp_leaveSuccess")+" "+camp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_leaveSuccess",camp.getName()));
 	}
 	
 	public void new_cmd() throws CivException {

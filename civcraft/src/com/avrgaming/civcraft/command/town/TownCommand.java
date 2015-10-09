@@ -337,7 +337,7 @@ public class TownCommand extends CommandBase {
 		}
 		
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_capitulatePrompt1")+" "+town.getCiv().getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm2"));
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_town_capitulatePrompt1",town.getCiv().getName()));
 			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_capitulateConfirm"));
 			return;
 		}
@@ -660,8 +660,7 @@ public class TownCommand extends CommandBase {
 		} catch (NumberFormatException e) {
 			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
-		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_withdrawSuccess")+" "+args[1]+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_withdrawSuccess",args[1],CivSettings.CURRENCY_NAME));
 	}
 	
 	public void deposit_cmd() throws CivException {
@@ -684,7 +683,7 @@ public class TownCommand extends CommandBase {
 			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_despositSuccess")+" "+args[1]+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_despositSuccess",args[1],CivSettings.CURRENCY_NAME));
 	}
 	
 	public void add_cmd() throws CivException {

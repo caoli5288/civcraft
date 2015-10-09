@@ -85,31 +85,28 @@ public class CivDiplomacyCommand extends CommandBase {
 
 		if (args.length < 3 || !args[2].equalsIgnoreCase("yes")) {
 			if (entireCiv) {
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm1")+" "+
-						town.getCiv().getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm2"));
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm3")+" "+town.getName()+" yes");
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_capitulateConfirm1",town.getCiv().getName()));
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_capitulateConfirm3",town.getName()));
 			} else {
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm1b")+" "+town.getCiv().getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm2"));
-				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateConfirm3")+" "+town.getName()+" yes");
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_capitulateConfirm1b",town.getCiv().getName()));
+				CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_capitulateConfirm3",town.getName()));
 			}
 			return;
 		}
 		
 		if (entireCiv) {
-			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+" "+motherCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest2");
+			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_capitulateRequest1",motherCiv.getName());
 			capitulateResponse.from = town.getMotherCiv().getName();
 		} else {
 			capitulateResponse.from = "Town of "+town.getName();
-			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest2b")+
-					" "+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest3");	
+			requestMessage = CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b",town.getName());	
 		}
 		
 		capitulateResponse.playerName = resident.getName();
 		capitulateResponse.capitulator = town;
 		capitulateResponse.to = town.getCiv().getName();
 		
-		CivGlobal.requestRelation(motherCiv, town.getCiv(), requestMessage,
-				INVITE_TIMEOUT, capitulateResponse);
+		CivGlobal.requestRelation(motherCiv, town.getCiv(), requestMessage,INVITE_TIMEOUT, capitulateResponse);
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dip_capitulateSuccess"));
 		
 	}
@@ -147,18 +144,17 @@ public class CivDiplomacyCommand extends CommandBase {
 			CivGlobal.removeConqueredCiv(motherCiv);
 			CivGlobal.addCiv(motherCiv);
 			motherCiv.save();	
-			CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1")+" "+motherCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess1")+" "+civ.getName());
+			CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_liberateSuccess1",motherCiv.getName(),civ.getName()));
 		} else {
 			if (motherCiv.isConquered()) {
-				throw new CivException(CivSettings.localize.localizedString("cmd_civ_liberateError1")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateError2"));
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_liberateError1",town.getName()));
 			}
 			
 			/* Liberate just the town. */
 			town.changeCiv(motherCiv);
 			town.setMotherCiv(null);
 			town.save();
-			CivMessage.global(CivSettings.localize.localizedString("cmd_civ_dip_capitulateRequest1b")+" "+town.getName()+" "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess1")+" "+civ.getName()+
-					". "+CivSettings.localize.localizedString("cmd_civ_liberateSuccess2")+" "+motherCiv.getName());
+			CivMessage.global(CivSettings.localize.localizedString("var_cmd_town_liberateSuccess",town.getName(),civ.getName(),motherCiv.getName()));
 		}
 	}
 	
@@ -254,7 +250,7 @@ public class CivDiplomacyCommand extends CommandBase {
 				throw new CivException(CivSettings.localize.localizedString("var_AlreadyStatusWithCiv",status.name(),otherCiv.getName()));
 			}
 			
-			String message = CivColor.LightGreen+ChatColor.BOLD+ourCiv.getName()+" "+CivSettings.localize.localizedString("cmd_civ_dip_requestHasRequested")+" ";
+			String message = CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dip_requestHasRequested",ourCiv.getName())+" ";
 			switch (status) {
 			case NEUTRAL:
 				message += CivSettings.localize.localizedString("cmd_civ_dip_requestNeutral");
@@ -267,7 +263,7 @@ public class CivDiplomacyCommand extends CommandBase {
 				
 				if (War.isWithinWarDeclareDays()) {
 					if (ourCiv.getDiplomacyManager().isAtWar() || otherCiv.getDiplomacyManager().isAtWar()) {
-						throw new CivException(CivSettings.localize.localizedString("cmd_civ_dip_requestErrorWar1")+" "+War.getTimeDeclareDays()+" "+CivSettings.localize.localizedString("cmd_civ_dip_requestErrorWar2"));
+						throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_dip_requestErrorWar1",War.getTimeDeclareDays()));
 					}
 				}
 				break;

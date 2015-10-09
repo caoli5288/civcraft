@@ -85,7 +85,7 @@ public class CampUpgradeCommand extends CommandBase {
 		
 		ConfigCampUpgrade upgrade = CivSettings.getCampUpgradeByNameRegex(camp, combinedArgs);
 		if (upgrade == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_camp_upgrade_buyInvalid")+" "+combinedArgs);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_camp_upgrade_buyInvalid",combinedArgs));
 		}
 		
 		if (camp.hasUpgrade(upgrade.id)) {
@@ -93,7 +93,7 @@ public class CampUpgradeCommand extends CommandBase {
 		}
 		
 		camp.purchaseUpgrade(upgrade);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_camp_upgrade_buySuccess")+" "+upgrade.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_upgrade_buySuccess",upgrade.name));
 	}
 	
 	@Override

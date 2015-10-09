@@ -56,7 +56,7 @@ public class AdminWarCommand extends CommandBase {
 				Resident resident = CivGlobal.getResident(player);
 				
 				if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
-					CivMessage.send(sender, player.getName()+" "+CivSettings.localize.localizedString("adcmd_war_onlywarriorsSkippedAdmin"));
+					CivMessage.send(sender, CivSettings.localize.localizedString("var_adcmd_war_onlywarriorsSkippedAdmin",player.getName()));
 					continue;
 				}
 				

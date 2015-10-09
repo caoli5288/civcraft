@@ -53,7 +53,7 @@ public class CivGovCommand extends CommandBase {
 		}
 		
 		if (!gov.isAvailable(civ)) {
-			throw new CivException(gov.displayName+" "+CivSettings.localize.localizedString("cmd_civ_gov_changeNotHere"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_gov_changeNotHere",gov.displayName));
 		}
 		
 		civ.changeGovernment(civ, gov, false);

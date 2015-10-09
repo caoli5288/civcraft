@@ -55,7 +55,7 @@ public class CivGroupCommand extends CommandBase {
 		} else if (groupName.equalsIgnoreCase("advisers")) {
 			grp = civ.getAdviserGroup();
 		} else {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_group_removeInvalid")+" "+groupName);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_group_removeInvalid",groupName));
 		}
 		
 		if (grp == civ.getLeaderGroup() && !grp.hasMember(resident)) {
@@ -63,7 +63,7 @@ public class CivGroupCommand extends CommandBase {
 		}
 		
 		if (!grp.hasMember(oldMember)) {
-			throw new CivException(oldMember.getName()+" "+CivSettings.localize.localizedString("cmd_civ_group_removeNotInGroup"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_group_removeNotInGroup",oldMember.getName()));
 		}
 		
 		if (grp == civ.getLeaderGroup() && resident == oldMember) {
@@ -72,10 +72,10 @@ public class CivGroupCommand extends CommandBase {
 		
 		grp.removeMember(oldMember);	
 		grp.save();
-		CivMessage.sendSuccess(sender, oldMember.getName()+" "+CivSettings.localize.localizedString("cmd_civ_group_removeSuccess")+" "+groupName);	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_group_removeSuccess",oldMember.getName(),groupName));	
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
-			CivMessage.send(newPlayer, CivColor.Rose+CivSettings.localize.localizedString("cmd_civ_group_removeNotify1")+" "+groupName+" "+CivSettings.localize.localizedString("cmd_civ_group_removeNotify2")+" "+civ.getName());
+			CivMessage.send(newPlayer, CivColor.Rose+CivSettings.localize.localizedString("var_cmd_civ_group_removeNotify1",groupName,civ.getName()));
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -93,7 +93,7 @@ public class CivGroupCommand extends CommandBase {
 		} else if (groupName.equalsIgnoreCase("advisers")) {
 			grp = civ.getAdviserGroup();
 		} else {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_group_removeInvalid")+" "+groupName);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_group_removeInvalid",groupName));
 		}
 		
 		if (grp == civ.getLeaderGroup() && !grp.hasMember(resident)) {
@@ -107,11 +107,11 @@ public class CivGroupCommand extends CommandBase {
 		grp.addMember(newMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, newMember.getName()+" "+CivSettings.localize.localizedString("cmd_civ_group_addSuccess")+" "+groupName);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_group_addSuccess",newMember.getName(),groupName));
 
 		try {
 			Player newPlayer = CivGlobal.getPlayer(newMember);
-			CivMessage.sendSuccess(newPlayer, CivSettings.localize.localizedString("cmd_civ_group_addNotify")+" "+groupName+" "+CivSettings.localize.localizedString("cmd_civ_group_removeNotify2")+" "+civ.getName());
+			CivMessage.sendSuccess(newPlayer, CivSettings.localize.localizedString("var_cmd_civ_group_addNotify",groupName,civ.getName()));
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -128,7 +128,7 @@ public class CivGroupCommand extends CommandBase {
 			} else if (args[1].equalsIgnoreCase("advisers")) {
 				grp = civ.getAdviserGroup();
 			} else {
-				throw new CivException(CivSettings.localize.localizedString("cmd_civ_group_removeInvalid")+" "+args[1]);
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_group_removeInvalid",args[1]));
 			}
 			
 			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_group_listGroup")+" "+args[1]);
