@@ -270,7 +270,7 @@ public class War {
 					Civilization winner = defeatedTowns.get(townName);
 					
 					town.onDefeat(winner);
-					CivMessage.sendTown(town, CivColor.LightBlue+CivSettings.localize.localizedString("war_overlordAnnounce")+" "+winner.getName());
+					CivMessage.sendTown(town, CivColor.LightBlue+CivSettings.localize.localizedString("var_war_overlordAnnounce",winner.getName()));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -289,7 +289,7 @@ public class War {
 					}
 					
 					Civilization winner = defeatedCivs.get(civName);
-					CivMessage.sendCiv(civ, CivColor.LightBlue+CivColor.LightBlue+CivSettings.localize.localizedString("war_overlordAnnounce")+" "+winner.getName());
+					CivMessage.sendCiv(civ, CivColor.LightBlue+CivColor.LightBlue+CivSettings.localize.localizedString("var_war_overlordAnnounce",winner.getName()));
 					civ.onDefeat(winner);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -314,8 +314,7 @@ public class War {
 					}
 					
 					Civilization winner = defeatedCivs.get(civName);
-					CivMessage.sendCiv(winner, " "+CivSettings.localize.localizedString("war_defeatedMsg1")+" "+civName+". "+CivSettings.localize.localizedString("war_defeatedMsg2"));
-					CivMessage.sendCiv(civ, " "+CivSettings.localize.localizedString("war_victoryMsg1")+" "+civName+". "+CivSettings.localize.localizedString("war_victoryMsg2"));
+					CivMessage.global(CivSettings.localize.localizedString("var_war_defeatedMsg1",winner,civ));
 					CivGlobal.setRelation(winner, civ, Status.NEUTRAL);				
 				} catch (Exception e) {
 					e.printStackTrace();

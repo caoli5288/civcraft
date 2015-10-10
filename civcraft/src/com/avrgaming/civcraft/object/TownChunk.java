@@ -237,7 +237,7 @@ public class TownChunk extends SQLObject {
 		cost = getNextPlotCost(town);
 		
 		if (!town.hasEnough(cost)) {
-			throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_town_chunk_claimTooPoor",cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		CultureChunk cultureChunk = CivGlobal.getCultureChunk(coord);
@@ -266,7 +266,7 @@ public class TownChunk extends SQLObject {
 					double dist = coord.distance(cc.getChunkCoord());
 					if (dist <= min_distance) {
 						DecimalFormat df = new DecimalFormat();
-						throw new CivException(CivSettings.localize.localizedString("town_chunk_claimTooClose")+" "+cc.getCiv().getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+min_distance);
+						throw new CivException(CivSettings.localize.localizedString("var_town_chunk_claimTooClose",cc.getCiv().getName(),df.format(dist),min_distance));
 					}
 				}
 			}	
@@ -307,7 +307,7 @@ public class TownChunk extends SQLObject {
 		
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("town_chunk_dibandCamp")+" "+town.getName());
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_town_chunk_dibandCamp",town.getName()));
 			camp.disband();
 		}
 		
@@ -323,7 +323,7 @@ public class TownChunk extends SQLObject {
 	public static TownChunk claim(Town town, Player player, boolean outpost) throws CivException {
 		double cost = getNextPlotCost(town);
 		TownChunk tc = claim(town, new ChunkCoord(player.getLocation()), outpost);
-		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("town_chunk_success")+" "+tc.getChunkCoord()+" -> "+CivColor.Yellow+cost+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_town_chunk_success",tc.getChunkCoord(),CivColor.Yellow+cost+CivColor.LightGreen,CivSettings.CURRENCY_NAME));
 		return tc;
 	}
 	
@@ -399,7 +399,7 @@ public class TownChunk extends SQLObject {
 	
 		Camp camp = CivGlobal.getCampFromChunk(coord);
 		if (camp != null) {
-			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("town_chunk_dibandCamp")+" "+town.getName());
+			CivMessage.sendCamp(camp, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_town_chunk_dibandCamp",town.getName()));
 			camp.disband();
 		}
 		
@@ -465,7 +465,7 @@ public class TownChunk extends SQLObject {
 	public void purchase(Resident resident) throws CivException {
 
 		if (!resident.getTreasury().hasEnough(this.price)) {
-			throw new CivException(CivSettings.localize.localizedString("town_chunk_purchase_tooPoor")+" "+this.price+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_town_chunk_purchase_tooPoor",this.price,CivSettings.CURRENCY_NAME));
 		}
 		
 		if (this.perms.getOwner() == null) {

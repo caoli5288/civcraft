@@ -180,7 +180,7 @@ public class Bank extends Structure {
 		int count = resident.takeItemsInHand(itemId, 0);
 		if (count == 0)
 		{
-			throw new CivException(CivSettings.localize.localizedString("bank_notEnoughInHand")+" "+itemName);
+			throw new CivException(CivSettings.localize.localizedString("var_bank_notEnoughInHand",itemName));
 		}
 		
 		Town usersTown = resident.getTown();
@@ -389,7 +389,7 @@ public class Bank extends Structure {
 		newCoins = Math.floor(newCoins);
 		
 		if (newCoins != 0) {
-			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("bank_interestMsg1")+" "+newCoins+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("bank_interestMsg2")+" "+principal+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_bank_interestMsg1",newCoins,CivSettings.CURRENCY_NAME,principal));
 			this.getTown().getTreasury().deposit(newCoins);
 			
 		}

@@ -189,8 +189,8 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		ArenaTeam.removeMember(team.getName(), resident);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_leaveSuccess")+" "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" "+CivSettings.localize.localizedString("cmd_team_leftMessage"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_leaveSuccess",team.getName()));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("var_cmd_team_leftMessage",resident.getName()));
 	}
 	
 	public void disband_cmd() throws CivException {
@@ -207,7 +207,7 @@ public class TeamCommand  extends CommandBase {
 		String teamName = resident.getTeam().getName();
 		ArenaTeam.deleteTeam(teamName);
 		ArenaTeam.arenaTeams.remove(teamName);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_disbandSuccess")+" "+teamName);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_disbandSuccess",teamName));
 	}
 	
 	public void add_cmd() throws CivException {
@@ -219,7 +219,7 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		if (member.hasTeam()) {
-			throw new CivException(member.getName()+" "+CivSettings.localize.localizedString("cmd_team_addHasTeam"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_team_addHasTeam",member.getName()));
 		}
 		
 		if (resident.getTeam().getCurrentArena() != null) {
@@ -230,7 +230,7 @@ public class TeamCommand  extends CommandBase {
 			Player player = CivGlobal.getPlayer(member);
 			
 			if (member.isProtected()) {
-				throw new CivException(player.getName()+" "+CivSettings.localize.localizedString("cmd_team_addProtected"));
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_team_addProtected",player.getName()));
 			}
 			
 			ArenaTeam team = resident.getTeam();
@@ -240,14 +240,14 @@ public class TeamCommand  extends CommandBase {
 			join.sender = (Player)sender;
 					
 			CivGlobal.questionPlayer(CivGlobal.getPlayer(resident), player, 
-					CivSettings.localize.localizedString("cmd_team_addRequest")+" "+team.getName()+"?",
+					CivSettings.localize.localizedString("var_cmd_team_addRequest",team.getName()),
 					30000, join);
 			
 		} catch (CivException e) {
 			throw new CivException(e.getMessage());
 		}
 				
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_addInvite")+" "+member.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_addInvite",member.getName()));
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -263,8 +263,8 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		ArenaTeam.removeMember(resident.getTeam().getName(), member);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_removeSuccess")+" "+member.getName());
-		CivMessage.sendTeam(resident.getTeam(), member.getName()+" "+CivSettings.localize.localizedString("cmd_team_leftMessage"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_removeSuccess",member.getName()));
+		CivMessage.sendTeam(resident.getTeam(), CivSettings.localize.localizedString("var_cmd_team_leftMessage",member.getName()));
 
 	}
 	
@@ -283,15 +283,15 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		if (!team.hasMember(member)) {
-			throw new CivException(member.getName()+" "+CivSettings.localize.localizedString("cmd_team_changeleaderNotInTeam"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_team_changeleaderNotInTeam",member.getName()));
 		}
 		
 		team.setLeader(member);
 		team.save();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_changeleaderSuccess1")+" "+member.getName());
-		CivMessage.sendSuccess(member, CivSettings.localize.localizedString("cmd_team_changeleaderSuccess2")+" "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" "+CivSettings.localize.localizedString("cmd_team_changeleaderSuccess3")+" "+member.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess1",member.getName()));
+		CivMessage.sendSuccess(member, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess2",team.getName()));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess3",resident.getName(),member.getName()));
 		
 	}
 	

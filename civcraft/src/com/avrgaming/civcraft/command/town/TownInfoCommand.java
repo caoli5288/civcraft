@@ -200,7 +200,7 @@ public class TownInfoCommand extends CommandBase {
 	public void online_cmd() throws CivException {
 		Town town = getSelectedTown();
 		
-		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_info_onlineHeading")+" "+town.getName());
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_town_info_onlineHeading",town.getName()));
 		String out = "";
 		for (Resident resident : town.getOnlineResidents()) {
 			out += resident.getName()+" ";
@@ -663,7 +663,7 @@ public class TownInfoCommand extends CommandBase {
 		}
 		
 		if (town.getMotherCiv() != null) {
-			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_town_info_showYearn")+" "+CivColor.LightPurple+town.getMotherCiv().getName()+CivColor.Yellow+"!");
+			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("var_cmd_town_info_showYearn",CivColor.LightPurple+town.getMotherCiv().getName()+CivColor.Yellow));
 		}
 		
 		if (town.hasDisabledStructures()) {

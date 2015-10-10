@@ -123,7 +123,7 @@ public class PlotCommand extends CommandBase {
 		tc.perms.setOwner(resident);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_setownerSuccess")+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_setownerSuccess",args[1]));
 		
 	}
 	
@@ -141,13 +141,13 @@ public class PlotCommand extends CommandBase {
 		
 		PermissionGroup grp = tc.getTown().getGroupByName(args[1]);
 		if (grp == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_plot_removegroupInvalid")+" "+args[1]);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_plot_removegroupInvalid",args[1]));
 		}
 		
 		tc.perms.removeGroup(grp);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_removegroupSuccess")+" "+grp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_removegroupSuccess",grp.getName()));
 	}
 	
 	public void cleargroups_cmd() throws CivException {
@@ -175,13 +175,13 @@ public class PlotCommand extends CommandBase {
 		
 		PermissionGroup grp = tc.getTown().getGroupByName(args[1]);
 		if (grp == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_plot_removegroupInvalid")+" "+args[1]);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_plot_removegroupInvalid",args[1]));
 		}
 		
 		tc.perms.addGroup(grp);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_addgroupSuccess")+" "+grp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_addgroupSuccess",grp.getName()));
 	}
 	
 	public void buy_cmd() throws CivException {
@@ -258,7 +258,7 @@ public class PlotCommand extends CommandBase {
 				tc.perms.setMobs(true);
 			}
 			
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_toggleMobs")+" "+tc.perms.isMobs());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_toggleMobs",tc.perms.isMobs()));
 			
 		} else if (args[1].equalsIgnoreCase("fire")) {
 			if (tc.perms.isFire()) {
@@ -266,7 +266,7 @@ public class PlotCommand extends CommandBase {
 			} else {
 				tc.perms.setFire(true);
 			}
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_toggleFire")+" "+tc.perms.isFire());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_toggleFire",tc.perms.isFire()));
 		}
 		tc.save();
 	}

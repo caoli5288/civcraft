@@ -59,13 +59,12 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+
-						town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_town_outlaw_addAllAlert1",town.getName()));
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_outlaw_addallalert3",args[1]));
 	}
 	
 	public void removeall_cmd() throws CivException {
@@ -87,14 +86,13 @@ public class TownOutlawCommand extends CommandBase {
 			
 			try {
 				Player player = CivGlobal.getPlayer(args[1]);
-				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+
-						town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));
+				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_town_outlaw_addAllAlert1",town.getName()));
 			} catch (CivException e) {
 			}
 			TaskMaster.asyncTask(new TownAddOutlawTask(resident.getName(), town), 1000);
 		}
 		}
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_outlaw_addallalert3",args[1]));
 	}
 	
 	public void removeallciv_cmd() throws CivException {
@@ -123,11 +121,11 @@ public class TownOutlawCommand extends CommandBase {
 		
 		try {
 			Player player = CivGlobal.getPlayer(args[1]);
-			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_town_outlaw_addAllAlert1")+" "+town.getName()+"! "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert2"));			
+			CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_town_outlaw_addAllAlert1",town.getName()));			
 		} catch (CivException e) {
 		}	
 		
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_addallalert3"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_outlaw_addallalert3",args[1]));
 		TaskMaster.asyncTask(new TownAddOutlawTask(args[1], town), 1000);	
 	}
 	
@@ -141,7 +139,7 @@ public class TownOutlawCommand extends CommandBase {
 		town.removeOutlaw(args[1]);
 		town.save();
 		
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_town_outlaw_removeSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_outlaw_removeSuccess",args[1]));
 	}
 	
 	public void list_cmd() throws CivException {

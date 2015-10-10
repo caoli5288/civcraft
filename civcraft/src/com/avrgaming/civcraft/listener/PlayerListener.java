@@ -99,9 +99,9 @@ public class PlayerListener implements Listener {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (resident.getItemMode().equals("all")) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("customItem_Pickup")+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name));
 		} else if (resident.getItemMode().equals("rare") && rare) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("customItem_Pickup")+" "+CivColor.LightPurple+event.getItem().getItemStack().getAmount()+" "+name);
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name));
 		}
 	}
 	
@@ -139,7 +139,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("teleportDeniedCiv")+" ["+CivColor.Green+cc.getCiv().getName()+CivColor.White+"]");
+							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("var_teleportDeniedCiv",CivColor.Green+cc.getCiv().getName()+CivColor.White));
 							return;
 						}
 					}
@@ -154,7 +154,7 @@ public class PlayerListener implements Listener {
 						{
 							CivLog.debug("Cancelled Event "+event.getEventName()+" with cause: "+event.getCause());
 						event.setCancelled(true);
-							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("teleportDeniedCamp")+" ["+CivColor.Green+toCamp.getName()+CivColor.White+"]");
+							CivMessage.send(resident, CivColor.Red+CivSettings.localize.localizedString("teleportDeniedPrefix")+" "+CivColor.White+CivSettings.localize.localizedString("var_teleportDeniedCamp",CivColor.Green+toCamp.getName()+CivColor.White));
 							return;
 						}
 					
@@ -502,7 +502,7 @@ public class PlayerListener implements Listener {
 			ConfigTechPotion pot = CivSettings.techPotions.get(Integer.valueOf(event.getItem().getDurability()));
 			if (pot != null) {
 				if (!pot.hasTechnology(event.getPlayer())) {
-					CivMessage.sendError(event.getPlayer(), pot.name+" "+CivSettings.localize.localizedString("playerListen_potionNoTech"));
+					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("var_playerListen_potionNoTech",pot.name));
 					event.setCancelled(true);
 					return;
 				}
@@ -581,7 +581,7 @@ public class PlayerListener implements Listener {
 			Resident defenderResident = CivGlobal.getResident(defender);
 			if (defenderResident.isCombatInfo()) {	
 				if (attacker != null) {
-					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivColor.LightPurple+attacker.getName()+ " "+CivSettings.localize.localizedString("playerListen_combatDefend")+" "+CivColor.Rose+damage);				
+					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_combatDefend",CivColor.LightPurple+attacker.getName()+CivColor.LightGray,CivColor.Rose+damage+CivColor.LightGray));				
 				} else {
 					String entityName = null;
 					
@@ -593,7 +593,7 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+entityName+ " "+CivSettings.localize.localizedString("playerListen_combatDefend")+" "+CivColor.Rose+damage);
+					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_combatDefend",CivColor.LightPurple+entityName+CivColor.LightGray,CivColor.Rose+damage+CivColor.LightGray));
 				}
 			}
 		}
@@ -602,7 +602,7 @@ public class PlayerListener implements Listener {
 			Resident attackerResident = CivGlobal.getResident(attacker);
 			if (attackerResident.isCombatInfo()) {
 				if (defender != null) {
-					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivColor.LightPurple+defender.getName()+CivColor.LightGray+" "+CivSettings.localize.localizedString("playerListen_attack")+" "+CivColor.LightGreen+damage);
+					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_attack",CivColor.LightPurple+defender.getName()+CivColor.LightGray,CivColor.LightGreen+damage+CivColor.LightGray));
 				} else {
 					String entityName = null;
 					
@@ -614,7 +614,7 @@ public class PlayerListener implements Listener {
 						entityName = event.getDamager().getType().toString();
 					}
 					
-					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+entityName+CivColor.LightGray+" "+CivSettings.localize.localizedString("playerListen_attack")+" "+CivColor.LightGreen+damage);
+					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_attack",CivColor.LightPurple+entityName+CivColor.LightGray,CivColor.LightGreen+damage+CivColor.LightGray));
 				}
 			}
 		}

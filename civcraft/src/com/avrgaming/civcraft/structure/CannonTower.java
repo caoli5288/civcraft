@@ -101,7 +101,7 @@ public class CannonTower extends Structure {
 						BlockCoord center = struct.getCenterLocation();
 						double distance = center.distance(this.getCenterLocation());
 						if (distance <= build_distance) {
-							throw new CivException(CivSettings.localize.localizedString("buildable_tooCloseToCannonTower")+" ("+center.getX()+","+center.getY()+","+center.getZ()+")");
+							throw new CivException(CivSettings.localize.localizedString("var_buildable_tooCloseToCannonTower",(center.getX()+","+center.getY()+","+center.getZ())));
 						}
 					}
 				}

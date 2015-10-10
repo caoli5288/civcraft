@@ -97,7 +97,7 @@ public class TownGroupCommand extends CommandBase {
 			throw new CivException(CivSettings.localize.localizedString("cmd_town_group_newInvalidName"));
 		}
 
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_group_newSuccess")+" "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_group_newSuccess",args[1]));
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -119,11 +119,11 @@ public class TownGroupCommand extends CommandBase {
 		grp.removeMember(oldMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, oldMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess1")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+town.getName());
+		CivMessage.sendSuccess(sender, oldMember.getName()+" "+CivSettings.localize.localizedString("var_cmd_town_group_removeSuccess1",grp.getName(),town.getName()));
 		
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
-			CivMessage.send(newPlayer, CivColor.Rose+CivSettings.localize.localizedString("cmd_town_group_removeAlert")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+grp.getTown().getName());
+			CivMessage.send(newPlayer, CivColor.Rose+CivSettings.localize.localizedString("var_cmd_town_group_removeAlert",grp.getName(),grp.getTown().getName()));
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -148,27 +148,25 @@ public class TownGroupCommand extends CommandBase {
 		}
 		
 		if (grp.isProtectedGroup() && !newMember.hasTown()) {
-			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addNotInTown"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_group_addNotInTown",newMember.getName()));
 		}
 		
 		if (grp.isTownProtectedGroup() && newMember.getTown() != grp.getTown()) {
-			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addError1")+" "+newMember.getTown().getName()+
-					" "+CivSettings.localize.localizedString("cmd_town_group_addError2")+" "+grp.getTown().getName());
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_group_addError1",newMember.getName(),newMember.getTown().getName(),grp.getTown().getName()));
 		}
 		
 		if (grp.isCivProtectedGroup() && newMember.getCiv() != grp.getCiv()) {
-			throw new CivException(newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addError3")+" "+newMember.getCiv().getName()+
-					" "+CivSettings.localize.localizedString("cmd_town_group_addError4")+" "+grp.getCiv().getName());
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_group_addError3",newMember.getName(),newMember.getCiv().getName(),grp.getCiv().getName()));
 		}
 		
 		grp.addMember(newMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, newMember.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_addSuccess1")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_group_addSuccess1",newMember.getName(),grp.getName(),town.getName()));
 
 		try {
 			Player newPlayer = CivGlobal.getPlayer(newMember);
-			CivMessage.sendSuccess(newPlayer, CivSettings.localize.localizedString("cmd_town_group_addAlert")+" "+grp.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_removeSuccess2")+" "+grp.getTown().getName());
+			CivMessage.sendSuccess(newPlayer, CivSettings.localize.localizedString("var_cmd_town_group_addAlert",grp.getName(),grp.getTown().getName()));
 		} catch (CivException e) {
 			/* player not online. forget the exception*/
 		}
@@ -180,7 +178,7 @@ public class TownGroupCommand extends CommandBase {
 		if (args.length >= 2) {
 			PermissionGroup grp = town.getGroupByName(args[1]);
 			if (grp == null) {
-				throw new CivException(town.getName()+" "+CivSettings.localize.localizedString("cmd_town_group_infoInvalid")+" "+args[1]);
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_town_group_infoInvalid",town.getName(),args[1]));
 			}
 			
 			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_group_infoHeading")+"("+town.getName()+"):"+args[1]);

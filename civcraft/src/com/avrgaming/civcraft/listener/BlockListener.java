@@ -332,15 +332,15 @@ public class BlockListener implements Listener {
 					break;
 				case NOT_AT_WAR:
 					allowPVP = false;
-					denyMessage = CivSettings.localize.localizedString("pvpError1")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpNotAtWar");
+					denyMessage = CivSettings.localize.localizedString("var_pvpError1",defender.getName());
 					break;
 				case NEUTRAL_IN_WARZONE:
 					allowPVP = false;
-					denyMessage = CivSettings.localize.localizedString("pvpError2")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpNeutralZone");
+					denyMessage = CivSettings.localize.localizedString("var_pvpError2",defender.getName());
 					break;
 				case NON_PVP_ZONE:
 					allowPVP = false;
-					denyMessage = CivSettings.localize.localizedString("pvpError1")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpZone1");
+					denyMessage = CivSettings.localize.localizedString("var_pvpError3",defender.getName());
 					break;
 				}
 			}
@@ -1668,15 +1668,15 @@ public class BlockListener implements Listener {
 				case ALLOWED:
 					continue;
 				case NOT_AT_WAR:
-					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("itemUse_potionError")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpNotAtWar"));
+					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("var_itemUse_potionError1",defender.getName()));
 					event.setCancelled(true);
 					return;
 				case NEUTRAL_IN_WARZONE:
-					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("itemUse_potionError")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpNeutralZone"));
+					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("var_itemUse_potionError2",defender.getName()));
 					event.setCancelled(true);
 					return;
 				case NON_PVP_ZONE:
-					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("itemUse_potionError")+" "+defender.getName()+" "+CivSettings.localize.localizedString("pvpZone1"));
+					CivMessage.send(attacker, CivColor.Rose+CivSettings.localize.localizedString("var_itemUse_potionError3",defender.getName()));
 					event.setCancelled(true);
 					return;
 				}

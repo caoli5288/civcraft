@@ -18,9 +18,9 @@ public class HammerRate extends RandomEventComponent {
 		DecimalFormat df = new DecimalFormat();
 		
 		if (rate > 1.0) {
-			sendMessage(CivSettings.localize.localizedString("re_hammers_increase")+" "+df.format((rate - 1.0)*100)+"% "+CivSettings.localize.localizedString("re_hammers_unforseenEvent"));
+			sendMessage(CivSettings.localize.localizedString("var_re_hammers_increase",df.format((rate - 1.0)*100)));
 		} else {
-			sendMessage(CivSettings.localize.localizedString("re_hammers_decrease")+" "+df.format((1.0 - rate)*100)+"% "+CivSettings.localize.localizedString("re_hammers_unforseenEvent"));
+			sendMessage(CivSettings.localize.localizedString("var_re_hammers_decrease",df.format((1.0 - rate)*100)));
 		}
 	}
 

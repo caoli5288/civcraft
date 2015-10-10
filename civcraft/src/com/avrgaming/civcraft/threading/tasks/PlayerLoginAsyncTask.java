@@ -176,74 +176,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 			//TODO send town board messages?
 			//TODO set default modes?
 			resident.showWarnings(getPlayer());
-			resident.loadPerks();
-			try {
-
-				String perkMessage = "";
-				if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
-					resident.giveAllFreePerks();
-					perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+" ";
-				} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
-					if (getPlayer().hasPermission(CivSettings.MINI_ADMIN) || getPlayer().hasPermission(CivSettings.FREE_PERKS)) {
-						resident.giveAllFreePerks();
-						perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+": ";
-						perkMessage += "Weather"+", ";
-					}
-				}
-				if (getPlayer().hasPermission(CivSettings.ARCTIC_PERKS))
-				{
-					resident.giveAllArcticPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Arctic")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.ATLANTEAN_PERKS))
-				{
-					resident.giveAllAtlanteanPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Atlantean")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.AZTEC_PERKS))
-				{
-					resident.giveAllAztecPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Aztec")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.CULTIST_PERKS))
-				{
-					resident.giveAllCultistPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Cultist")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.EGYPTIAN_PERKS))
-				{
-					resident.giveAllEgyptianPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Egyptian")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.ELVEN_PERKS))
-				{
-					resident.giveAllElvenPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Elven")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.HELL_PERKS))
-				{
-					resident.giveAllHellPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Hell")+", ";
-				}
-				if (getPlayer().hasPermission(CivSettings.ROMAN_PERKS))
-				{
-					resident.giveAllRomanPerks();
-					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
-				}
-
-				if (getPlayer().hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
-				{
-					resident.giveAllNightLightsPerks();
-					perkMessage += "Night Lights"+", ";
-				}
-
-				perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");
-				
-				CivMessage.send(resident, CivColor.LightGreen+perkMessage);
-			} catch (InvalidConfiguration e) {
-				e.printStackTrace();
-			}
-
+			resident.loadPerks(getPlayer());
 			
 			/* Send Anti-Cheat challenge to player. */
 			if (ACManager.isEnabled())

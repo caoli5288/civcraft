@@ -697,15 +697,14 @@ public class Cannon extends Buildable {
 		if (hitpoints <= 0) {
 			destroy();
 			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("cannon_onHit_Destroyed"));
-			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("cannon_onHit_DestroyAlert")+" "+
-					cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ());
+			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("var_cannon_onHit_DestroyAlert",
+					cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()));
 			return;
 		}
 		
 		CivMessage.send(event.getPlayer(), CivColor.Yellow+CivSettings.localize.localizedString("cannon_onHit_doDamage")+" ("+this.hitpoints+"/"+maxHitpoints+")");
-		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+CivSettings.localize.localizedString("cannon_onHit_doDamageAlert")+" "+
-				cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
-				" ("+hitpoints+"/"+maxHitpoints+")");
+		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+CivSettings.localize.localizedString("var_cannon_onHit_doDamageAlert",hitpoints+"/"+maxHitpoints,
+				cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()));
 	}
 	
 	private void launchExplodeFirework(Location loc) {

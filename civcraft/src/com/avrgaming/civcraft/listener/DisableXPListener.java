@@ -64,7 +64,7 @@ public class DisableXPListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onPlayerExpChange(PlayerExpChangeEvent event) {
 		Resident resident = CivGlobal.getResident(event.getPlayer());
-		CivMessage.send(resident, CivColor.LightGreen+CivSettings.localize.localizedString("customItem_Pickup")+" "+CivColor.Yellow+event.getAmount()+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.send(resident, CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.Yellow+event.getAmount()+CivColor.LightGreen,CivSettings.CURRENCY_NAME));
 		resident.getTreasury().deposit(event.getAmount());
 		
 		

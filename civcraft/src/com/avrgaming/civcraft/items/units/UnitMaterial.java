@@ -227,7 +227,7 @@ public class UnitMaterial extends LoreMaterial {
 		
 		ConfigUnit unit = Unit.getPlayerUnit(event.getPlayer());
 		if (unit != null) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_errorHave1")+" "+unit.name);
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 			event.setCancelled(true);
 		} else {
 			// Reposition item to the last quickbar slot
@@ -322,7 +322,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, CivSettings.localize.localizedString("unitMaterial_errorHave1")+" "+unit.name);
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
@@ -371,7 +371,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, CivSettings.localize.localizedString("unitMaterial_errorHave1")+" "+unit.name);
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();

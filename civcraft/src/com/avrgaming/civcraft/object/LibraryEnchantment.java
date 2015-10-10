@@ -38,7 +38,7 @@ public class LibraryEnchantment {
 		if (enchant == null)  {
 			enhancement = LoreEnhancement.enhancements.get(name);
 			if (enhancement == null) {
-				throw new CivException(CivSettings.localize.localizedString("libraryEnchantError1")+" "+name+". "+CivSettings.localize.localizedString("libraryEnchantError2"));
+				throw new CivException(CivSettings.localize.localizedString("libraryEnchantError1",name));
 			}
 		}
 		level = lvl;

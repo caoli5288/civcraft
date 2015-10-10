@@ -140,15 +140,15 @@ public class CannonProjectile {
 										}
 										
 										sb.getOwner().onDamage(cannon.getDamage(), b.getWorld(), player, sb.getCoord(), sb);
-										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+sb.getOwner().getDisplayName()+" @ ("+
+										CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("cannonProjectile_hitAnnounce",sb.getOwner().getDisplayName(),
 												sb.getOwner().getCenterLocation().getX()+","+
 												sb.getOwner().getCenterLocation().getY()+","+
-												sb.getOwner().getCenterLocation().getZ()+")"+
-												" "+CivSettings.localize.localizedString("cannonProjectile_hitAnnounce")+" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+												sb.getOwner().getCenterLocation().getZ())
+												+" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 									}
 									
-									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("cannonProjectile_hitSuccess")+" "+sb.getOwner().getTown().getName()+"'s " +
-											 sb.getOwner().getDisplayName()+" "+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+									CivMessage.sendCiv(whoFired.getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("var_cannonProjectile_hitSuccess",sb.getOwner().getTown().getName(),sb.getOwner().getDisplayName())+
+											" ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
 								}
 							} else {
 								
@@ -169,7 +169,7 @@ public class CannonProjectile {
 			Player player = (Player)e;
 			player.damage(playerDamage);
 			if (player.isDead()) {
-				CivMessage.global(CivColor.LightGray+player.getName()+" "+CivSettings.localize.localizedString("cannonProjectile_userKilled")+" "+whoFired.getName());
+				CivMessage.global(CivColor.LightGray+CivSettings.localize.localizedString("var_cannonProjectile_userKilled",player.getName(),whoFired.getName()));
 			}
 		}
 	}

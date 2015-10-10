@@ -66,7 +66,7 @@ public class MarkerPlacementManager implements Listener {
 		stack.setItemMeta(meta);
 		player.setItemInHand(stack);
 		
-		CivMessage.send(player, CivSettings.localize.localizedString("placement_enabled")+" "+structure.getDisplayName());
+		CivMessage.send(player, CivSettings.localize.localizedString("var_placement_enabled",structure.getDisplayName()));
 	}
 	
 	public static void removeFromPlacementMode(Player player, boolean canceled) {

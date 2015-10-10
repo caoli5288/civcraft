@@ -46,7 +46,7 @@ public class ResidentFriendCommand extends CommandBase {
 		Resident friendToAdd = getNamedResident(1);
 		
 		resident.addFriend(friendToAdd);
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_res_friend_addSuccess"));	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_friend_addSuccess",args[1]));	
 		resident.save();
 	}
 	
@@ -60,13 +60,13 @@ public class ResidentFriendCommand extends CommandBase {
 		Resident friendToRemove = getNamedResident(1);
 		
 		resident.removeFriend(friendToRemove);
-		CivMessage.sendSuccess(sender, args[1]+" "+CivSettings.localize.localizedString("cmd_res_friend_removeSuccess"));	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_friend_removeSuccess",args[1]));	
 		resident.save();
 	}
 	
 	public void list_cmd() throws CivException {
 		Resident resident = getResident();
-		CivMessage.sendHeading(sender, resident.getName()+" "+CivSettings.localize.localizedString("cmd_res_friend_listHeading"));
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_res_friend_listHeading",resident.getName()));
 		
 		String out = "";
 		for (String res : resident.getFriends()) {

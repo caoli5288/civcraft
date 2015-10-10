@@ -40,36 +40,35 @@ public class DiplomacyGiftResponse implements QuestionResponseInterface {
 				Town town = (Town)giftedObject;
 				
 				if (!toCiv.getTreasury().hasEnough(town.getGiftCost())) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor")+" "+town.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor2")+" "+town.getGiftCost()+" "+CivSettings.CURRENCY_NAME);
-					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor3")+" "+town.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_ErrorTooPoor4")+" "+
-							town.getGiftCost()+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("var_diplomacy_gift_ErrorTooPoor",town.getName(),town.getGiftCost(),CivSettings.CURRENCY_NAME));
+					CivMessage.sendCiv(fromCiv, CivColor.Rose+CivSettings.localize.localizedString("var_diplomacy_gift_ErrorTooPoor2",toCiv.getName(),town.getName(),town.getGiftCost(),CivSettings.CURRENCY_NAME));
 					return;
 				}
 				
 				toCiv.getTreasury().withdraw(town.getGiftCost());
 				town.changeCiv(toCiv);
-				CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_gift_accept")+" "+town.getName());
+				CivMessage.sendCiv(fromCiv, CivColor.LightGray+CivSettings.localize.localizedString("var_diplomacy_gift_accept",toCiv.getName(),town.getName()));
 				return;
 			} else if (giftedObject instanceof Civilization) {
 				int coins = fromCiv.getMergeCost();
 				
 				if (!toCiv.getTreasury().hasEnough(coins)) {
-					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor2")+" "+coins+" "+CivSettings.CURRENCY_NAME);
-					CivMessage.sendCiv(fromCiv, CivColor.Rose+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor3")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_ErrorTooPoor4")+" "+coins+" "+CivSettings.CURRENCY_NAME);
+					CivMessage.sendCiv(toCiv, CivColor.Rose+CivSettings.localize.localizedString("var_diplomacy_merge_ErrorTooPoor",fromCiv.getName(),coins,CivSettings.CURRENCY_NAME));
+					CivMessage.sendCiv(fromCiv, CivColor.Rose+CivSettings.localize.localizedString("var_diplomacy_merge_ErrorTooPoor2",toCiv.getName(),fromCiv.getName(),coins,CivSettings.CURRENCY_NAME));
 					return;
 				}
 				
 				toCiv.getTreasury().withdraw(coins);
-				CivMessage.sendCiv(fromCiv, CivColor.Yellow+toCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_offerAccepted"));
+				CivMessage.sendCiv(fromCiv, CivColor.Yellow+CivSettings.localize.localizedString("var_diplomacy_merge_offerAccepted",toCiv.getName()));
 				toCiv.mergeInCiv(fromCiv);
-				CivMessage.global(CivSettings.localize.localizedString("diplomacy_merge_SuccessAlert1")+" "+fromCiv.getName()+" "+CivSettings.localize.localizedString("diplomacy_merge_SuccessAlert2")+" "+toCiv.getName());
+				CivMessage.global(CivSettings.localize.localizedString("var_diplomacy_merge_SuccessAlert1",fromCiv.getName(),toCiv.getName()));
 				return;
 			} else {
 				CivLog.error(CivSettings.localize.localizedString("diplomacy_merge_UnexpectedError")+" "+giftedObject);
 				return;
 			}
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+CivSettings.localize.localizedString("RequestDecline"));
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+CivSettings.localize.localizedString("var_RequestDecline",toCiv.getName()));
 		}
 		
 	}

@@ -18,10 +18,10 @@ public class TownNewRequest implements QuestionResponseInterface {
 	@Override
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
-			CivMessage.send(civ, CivColor.LightGreen+CivSettings.localize.localizedString("newTown_accepted1")+" "+leader.getName()+" "+CivSettings.localize.localizedString("netTown_accepted2")+" "+name);
+			CivMessage.send(civ, CivColor.LightGreen+CivSettings.localize.localizedString("newTown_accepted1",leader.getName(),name));
 			TaskMaster.syncTask(new FoundTownSync(resident));
 		} else {
-			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("newTown_declined"));
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("var_newTown_declined",leader.getName()));
 		}		
 	}
 

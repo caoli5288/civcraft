@@ -61,7 +61,7 @@ public class EndConditionScience extends EndGameCondition {
 	public boolean finalWinCheck(Civilization civ) {
 		Civilization rival = getMostAccumulatedBeakers();
 		if (rival != civ) {
-			CivMessage.global(civ.getName()+" "+CivSettings.localize.localizedString("end_scienceError")+" "+rival.getName());
+			CivMessage.global(CivSettings.localize.localizedString("var_end_scienceError",civ.getName(),rival.getName()));
 			return false;
 		}
 		

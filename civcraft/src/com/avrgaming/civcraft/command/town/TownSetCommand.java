@@ -73,7 +73,7 @@ public class TownSetCommand extends CommandBase {
 		stable.setNonResidentFee(((double)feeInt/100));
 		stable.updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 	}
 	
 	public void scoutrate_cmd() throws CivException {
@@ -90,7 +90,7 @@ public class TownSetCommand extends CommandBase {
 			}
 		}
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_scoutrateSuccess")+" "+rate);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_scoutrateSuccess",rate));
 	}
 	
 	public void blacksmithfee_cmd() throws CivException {
@@ -109,7 +109,7 @@ public class TownSetCommand extends CommandBase {
 		((Blacksmith)struct).setNonResidentFee(((double)feeInt/100));
 		((Blacksmith)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 	}
 	
 	
@@ -129,7 +129,7 @@ public class TownSetCommand extends CommandBase {
 		((Library)struct).setNonResidentFee(((double)feeInt/100));
 		((Library)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 	}
 	
 	public void grocerfee_cmd() throws CivException {
@@ -148,7 +148,7 @@ public class TownSetCommand extends CommandBase {
 		((Grocer)struct).setNonResidentFee(((double)feeInt/100));
 		((Grocer)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 		
 	}
 	
@@ -168,7 +168,7 @@ public class TownSetCommand extends CommandBase {
 		((Store)struct).setNonResidentFee(((double)feeInt/100));
 		((Store)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 		
 	}
 	
@@ -188,7 +188,7 @@ public class TownSetCommand extends CommandBase {
 		((Bank)struct).setNonResidentFee(((double)feeInt/100));
 		((Bank)struct).updateSignText();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_set_feeSuccess")+" "+feeInt+"%");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_set_feeSuccess",feeInt));
 		
 	}
 	
@@ -206,7 +206,7 @@ public class TownSetCommand extends CommandBase {
 		}
 		
 		town.quicksave();
-		CivMessage.sendTown(town, CivSettings.localize.localizedString("cmd_town_set_taxrateSuccess")+" "+args[1]+"%");
+		CivMessage.sendTown(town, CivSettings.localize.localizedString("var_cmd_town_set_taxrateSuccess",args[1]));
 	}
 
 	public void flattax_cmd() throws CivException {
@@ -222,7 +222,7 @@ public class TownSetCommand extends CommandBase {
 		}
 		
 		town.quicksave();
-		CivMessage.send(town, CivSettings.localize.localizedString("cmd_town_set_flattaxSuccess")+" "+args[1]);
+		CivMessage.send(town, CivSettings.localize.localizedString("var_cmd_town_set_flattaxSuccess",args[1]));
 	}
 	
 	@Override

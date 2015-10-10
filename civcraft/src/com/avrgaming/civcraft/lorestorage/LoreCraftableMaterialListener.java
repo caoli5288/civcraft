@@ -52,7 +52,7 @@ public class LoreCraftableMaterialListener implements Listener {
 				ConfigTechItem restrictedTechItem = CivSettings.techItems.get(ItemManager.getId(resultStack));
 				if (restrictedTechItem != null) {
 					ConfigTech tech = CivSettings.techs.get(restrictedTechItem.require_tech);
-					CivMessage.sendError(player, CivSettings.localize.localizedString("loreCraft_missingTech")+" ("+tech.name+")");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("var_loreCraft_missingTech",tech.name));
 					event.setCancelled(true);
 					return;
 				}
@@ -61,7 +61,7 @@ public class LoreCraftableMaterialListener implements Listener {
 			}
 			
 			if (!craftMat.getConfigMaterial().playerHasTechnology(player)) {
-				CivMessage.sendError(player, CivSettings.localize.localizedString("loreCraft_missingTech")+" ("+craftMat.getConfigMaterial().getRequireString()+")");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_loreCraft_missingTech",craftMat.getConfigMaterial().getRequireString()));
 				event.setCancelled(true);
 				return;
 			}

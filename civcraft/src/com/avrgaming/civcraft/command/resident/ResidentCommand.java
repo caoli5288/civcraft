@@ -94,19 +94,19 @@ public class ResidentCommand extends CommandBase {
 		TimeZone timezone = TimeZone.getTimeZone(args[1]);
 		
 		if (timezone.getID().equals("GMT") && !args[1].equalsIgnoreCase("GMT")) {
-			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_res_timezonenotFound1")+" \""+args[1]+"\" "+CivSettings.localize.localizedString("cmd_res_timezonenotFound2"));
+			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("var_cmd_res_timezonenotFound1",args[1]));
 			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_res_timezoneNotFound3"));
 		}
 		
 		resident.setTimezone(timezone.getID());
 		resident.save();
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_timezoneSuccess")+" "+timezone.getID());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_timezoneSuccess",timezone.getID()));
 	}
 	
 	public void refresh_cmd() throws CivException {
 		Resident resident = getResident();
 		resident.perks.clear();
-		resident.loadPerks();
+		resident.loadPerks(getPlayer());
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_res_refreshSuccess"));
 	}
 	
@@ -216,7 +216,7 @@ public class ResidentCommand extends CommandBase {
 			rate = CivSettings.emerald_rate;
 			break;
 		default:
-			throw new CivException("'"+type+"' "+CivSettings.localize.localizedString("cmd_res_exchangeInvalid"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_res_exchangeInvalid",type));
 		}
 
 		double exchangeRate;
@@ -257,7 +257,7 @@ public class ResidentCommand extends CommandBase {
 		double coins = amount*rate*exchangeRate;
 		
 		resident.getTreasury().deposit(coins);
-		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("cmd_res_exchangeSuccess")+" "+amount+" "+type+" -> "+coins+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_res_exchangeSuccess",amount,type,coins,CivSettings.CURRENCY_NAME));
 		
 	}
 	
@@ -292,11 +292,11 @@ public class ResidentCommand extends CommandBase {
 		Resident resident = getResident();
 	
 		if (!resident.getTreasury().hasEnough(resident.getTreasury().getDebt())) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_res_paydebtError1")+" "+resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_res_paydebtError2"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_res_paydebtError1",resident.getTreasury().getDebt(),CivSettings.CURRENCY_NAME));
 		}
 		
 
-		CivMessage.sendSuccess(sender, resident.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_res_paydebtSuccess"));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_paydebtSuccess",resident.getTreasury().getDebt(),CivSettings.CURRENCY_NAME));
 		resident.payOffDebt();
 	}
 	

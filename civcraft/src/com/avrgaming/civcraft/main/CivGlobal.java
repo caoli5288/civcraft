@@ -919,10 +919,10 @@ public class CivGlobal {
 	public static Player getPlayer(String name) throws CivException {
 		Resident res = CivGlobal.getResident(name);
 		if (res == null)
-			throw new CivException(CivSettings.localize.localizedString("civGlobal_noResident")+" "+name);
+			throw new CivException(CivSettings.localize.localizedString("var_civGlobal_noResident",name));
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player == null)
-			throw new CivException(CivSettings.localize.localizedString("civGlobal_noPlayer")+" "+name);
+			throw new CivException(CivSettings.localize.localizedString("var_civGlobal_noPlayer",name));
 		return player;	
 	}
 	
@@ -1461,28 +1461,27 @@ public class CivGlobal {
 		civ.getDiplomacyManager().setRelation(otherCiv, status, null);
 		otherCiv.getDiplomacyManager().setRelation(civ, status, null);
 		
-		String out = civ.getName()+" "+CivSettings.localize.localizedString("civGlobal_relation_isNow")+" ";
+		String out = "";
 		switch (status) {
 		case NEUTRAL:
-			out += CivSettings.localize.localizedString("civGlobal_relation_Neutral")+" ";
+			out += CivColor.LightGray+CivSettings.localize.localizedString("civGlobal_relation_Neutral")+CivColor.White;
 			break;
 		case HOSTILE:
-			out += CivColor.Yellow+CivSettings.localize.localizedString("civGlobal_relation_Hostile")+CivColor.White+" ";
+			out += CivColor.Yellow+CivSettings.localize.localizedString("civGlobal_relation_Hostile")+CivColor.White;
 			break;
 		case WAR:
-			out += CivColor.Rose+CivSettings.localize.localizedString("civGlobal_relation_War")+" ";
+			out += CivColor.Rose+CivSettings.localize.localizedString("civGlobal_relation_War")+CivColor.White;
 			break;
 		case PEACE:
-			out += CivSettings.localize.localizedString("civGlobal_relation_Peace")+" ";
+			out += CivColor.LightGreen+CivSettings.localize.localizedString("civGlobal_relation_Peace")+CivColor.White;
 			break;
 		case ALLY:
-			out += CivColor.LightGreen+CivSettings.localize.localizedString("civGlobal_relation_Allied")+" ";
+			out += CivColor.Green+CivSettings.localize.localizedString("civGlobal_relation_Allied")+CivColor.White;
 			break;
 		default:
 			break;
 		}
-		out += otherCiv.getName();
-		CivMessage.global(out);
+		CivMessage.global(CivSettings.localize.localizedString("var_civGlobal_relation_isNow",civ.getName(),out,otherCiv.getName()));
 	}
 
 	public static void requestRelation(Civilization fromCiv, Civilization toCiv, String question, 

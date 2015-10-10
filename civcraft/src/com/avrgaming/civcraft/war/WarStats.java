@@ -74,7 +74,7 @@ public class WarStats {
 			}
 		}
 		
-		return CivColor.LightGreen+CivColor.BOLD+out+CivColor.LightGray+" ("+mostKills+" "+CivSettings.localize.localizedString("war_over_announceKills")+")";
+		return CivColor.LightGreen+CivColor.BOLD+out+CivColor.LightGray+" ("+CivSettings.localize.localizedString("var_war_over_announceKills",mostKills)+")";
 	}
 	
 	public static List<String> getCapturedCivs() {

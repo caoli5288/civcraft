@@ -184,7 +184,7 @@ public class MissionBook extends UnitItemMaterial {
 			if (CivGlobal.isCasualMode()) {
 				if (!cc.getCiv().getDiplomacyManager().isHostileWith(resident.getCiv()) &&
 					!cc.getCiv().getDiplomacyManager().atWarWith(resident.getCiv())) {
-					throw new CivException(CivSettings.localize.localizedString("missionBook_errorCasualNotWar")+" "+cc.getCiv().getName());
+					throw new CivException(CivSettings.localize.localizedString("var_missionBook_errorCasualNotWar",cc.getCiv().getName()));
 				}
 			}
 			
@@ -206,7 +206,7 @@ public class MissionBook extends UnitItemMaterial {
 		try {
 			Resident resident = CivGlobal.getResident(playerName);
 			if (!resident.getTown().getTreasury().hasEnough(mission.cost)) {
-				throw new CivException(mission.cost+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("missionBook_errorTooPoor"));
+				throw new CivException(CivSettings.localize.localizedString("var_missionBook_errorTooPoor",mission.cost,CivSettings.CURRENCY_NAME));
 			}
 			
 			switch (mission.id) {
@@ -265,8 +265,7 @@ public class MissionBook extends UnitItemMaterial {
 			
 			if (next < compromise_rate) {
 				CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_caughtHeading")+CivColor.White+" "+
-						player.getName()+" "+CivSettings.localize.localizedString("missionBook_caughtmsg1")+" "+mission.name+" "+CivSettings.localize.localizedString("missionBook_caughtmsg2")+" "+
-						target.getName()+"!");
+						CivSettings.localize.localizedString("var_missionBook_caughtmsg1",player.getName(),mission.name,target.getName()));
 				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("missionBook_caughtAlert1")+" ("+CivSettings.localize.localizedString("missionBook_caughtRolled")+" "+next+" vs "+compromise_rate+") "+CivSettings.localize.localizedString("missionBook_spyDestroyed"));
 				Unit.removeUnit(player);
 				result += ", "+CivSettings.localize.localizedString("missionBook_spyCompromised");
@@ -305,7 +304,7 @@ public class MissionBook extends UnitItemMaterial {
 		
 		double distance = player.getLocation().distance(buildable.getCorner().getLocation());
 		if (distance > mission.range) {
-			throw new CivException(buildable.getDisplayName()+" "+CivSettings.localize.localizedString("missionBook_sabatoge_errorTooFar"));
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_sabatoge_errorTooFar",buildable.getDisplayName()));
 		}
 		
 		if (buildable instanceof Structure) {
@@ -314,7 +313,7 @@ public class MissionBook extends UnitItemMaterial {
 			}
 			
 			if (buildable.isDestroyed()) {
-				throw new CivException(buildable.getDisplayName()+" "+CivSettings.localize.localizedString("missionBook_sabatoge_errorDestroyed"));
+				throw new CivException(CivSettings.localize.localizedString("var_missionBook_sabatoge_errorDestroyed",buildable.getDisplayName()));
 			}
 		}
 		
@@ -330,7 +329,7 @@ public class MissionBook extends UnitItemMaterial {
 		}
 		
 		if (processMissionResult(player, cc.getTown(), mission, failMod, 1.0)) {
-			CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_sabatoge_alert1")+CivColor.White+" "+CivSettings.localize.localizedString("missionBook_sabatoge_alert2")+" "+cc.getTown().getName()+"'s "+buildable.getDisplayName()+" "+CivSettings.localize.localizedString("missionBook_sabatoge_alert3"));
+			CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_sabatoge_alert1")+CivColor.White+" "+CivSettings.localize.localizedString("missionBook_sabatoge_alert2",buildable.getDisplayName(),cc.getTown().getName()));
 			buildable.setHitpoints(0);
 			buildable.fancyDestroyStructureBlocks();
 			buildable.save();
@@ -452,15 +451,14 @@ public class MissionBook extends UnitItemMaterial {
 						}
 					}
 					
-					CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_sabatoge_alert1")+CivColor.White+" "+CivSettings.localize.localizedString("missionBook_poison_alert1")+" "+tc.getTown().getName()+
-							" "+CivSettings.localize.localizedString("missionBook_poison_alert2"));
+					CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_sabatoge_alert1")+CivColor.White+" "+CivSettings.localize.localizedString("var_missionBook_poison_alert1",tc.getTown().getName()));
 				}
 			} catch (InvalidConfiguration e) {
 				e.printStackTrace();
 				throw new CivException(CivSettings.localize.localizedString("internalException"));
 			}
 			
-			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("missionBook_poison_success1")+" "+posion_ticks+" "+CivSettings.localize.localizedString("missionBook_poison_success2"));
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_missionBook_poison_success1",posion_ticks));
 		}
 	}
 	

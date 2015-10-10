@@ -120,11 +120,11 @@ public class Barracks extends Structure {
 		}
 		
 		if (unit.limit != 0 && unit.limit < getTown().getUnitTypeCount(unit.id)) {
-			throw new CivException(CivSettings.localize.localizedString("barracks_atLimit")+" "+unit.name);
+			throw new CivException(CivSettings.localize.localizedString("var_barracks_atLimit",unit.name));
 		}
 		
 		if (!getTown().getTreasury().hasEnough(unit.cost)) {
-			throw new CivException(CivSettings.localize.localizedString("barracks_tooPoor")+" "+unit.cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_barracks_tooPoor",unit.name,unit.cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		if (!unit.isAvailable(getTown())) {
@@ -132,7 +132,7 @@ public class Barracks extends Structure {
 		}
 		
 		if (this.trainingUnit != null) {
-			throw new CivException(CivSettings.localize.localizedString("barracks_inProgress")+" "+this.trainingUnit.name+".");
+			throw new CivException(CivSettings.localize.localizedString("var_barracks_inProgress",this.trainingUnit.name));
 		}
 		
 		if (unit.id.equals("u_settler")) {
@@ -147,7 +147,7 @@ public class Barracks extends Structure {
 		
 		this.setCurrentHammers(0.0);
 		this.setTrainingUnit(unit);
-		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("barracks_begin")+" "+unit.name+"!");
+		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("var_barracks_begin",unit.name));
 		this.updateTraining();
 	}
 	
@@ -249,7 +249,7 @@ public class Barracks extends Structure {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (!resident.getTreasury().hasEnough(cost)) {
-			CivMessage.sendError(player, CivSettings.localize.localizedString("barracks_repair_TooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_barracks_repair_TooPoor",cost,CivSettings.CURRENCY_NAME));
 			return;
 		}
 		
@@ -263,7 +263,7 @@ public class Barracks extends Structure {
 		resident.getTreasury().withdraw(cost);
 		player.getItemInHand().setDurability((short)0);
 		
-		CivMessage.sendSuccess(player, craftMat.getName()+" "+CivSettings.localize.localizedString("barracks_repair_Success")+" "+cost+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_barracks_repair_Success",craftMat.getName(),cost,CivSettings.CURRENCY_NAME));
 		
 	}
 	
@@ -420,7 +420,7 @@ public class Barracks extends Structure {
 			Method m = c.getMethod("spawn", Inventory.class, Town.class);
 			m.invoke(null, chest.getInventory(), this.getTown());
 			
-			CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("barracks_completedTraining")+" "+unit.name+"!");
+			CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("var_barracks_completedTraining",unit.name));
 			this.trainingUnit = null;
 			this.currentHammers = 0.0;
 			

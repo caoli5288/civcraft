@@ -33,7 +33,7 @@ public class InteractiveBuildableRefresh implements InteractiveResponse {
 		}
 		
 		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_refresh_Heading"));
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_refresh_prompt1")+" "+buildable.getDisplayName()+"?");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_refresh_prompt1",buildable.getDisplayName()));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_refresh_prompt2"));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_refresh_prompt3"));
 		
@@ -64,7 +64,7 @@ public class InteractiveBuildableRefresh implements InteractiveResponse {
 					try {
 						buildable.repairFromTemplate();
 						buildable.getTown().markLastBuildableRefeshAsNow();
-						CivMessage.sendSuccess(resident, buildable.getDisplayName()+" "+CivSettings.localize.localizedString("interactive_refresh_success"));
+						CivMessage.sendSuccess(resident, CivSettings.localize.localizedString("var_interactive_refresh_success",buildable.getDisplayName()));
 					} catch (IOException e) {
 						e.printStackTrace();
 						throw new CivException(CivSettings.localize.localizedString("interactive_refresh_exception")+" "+buildable.getSavedTemplatePath()+" ?");

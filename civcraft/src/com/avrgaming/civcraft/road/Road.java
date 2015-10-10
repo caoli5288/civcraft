@@ -132,7 +132,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		this.getTown().getTreasury().deposit(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("road_undoComplete")+" "+totalCost+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_road_undoComplete",totalCost,CivSettings.CURRENCY_NAME));
 		
 		try {
 			this.delete();
@@ -253,7 +253,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		if (!this.getTown().getTreasury().hasEnough(totalCost)) {
-			throw new CivException(CivSettings.localize.localizedString("road_tooPoor")+" "+totalCost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_road_tooPoor",totalCost,CivSettings.CURRENCY_NAME));
 		}
 		
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -296,7 +296,7 @@ public class Road extends Structure {
 		
 		/* Register structure in global tables. */
 		this.getTown().getTreasury().withdraw(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("road_success")+" "+CivColor.Yellow+totalCost+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_road_success",CivColor.Yellow+totalCost+CivColor.LightGreen,CivSettings.CURRENCY_NAME));
 		this.getTown().addStructure(this);
 		CivGlobal.addStructure(this);
 		this.getTown().lastBuildableBuilt = this;
@@ -339,11 +339,11 @@ public class Road extends Structure {
 			bcoord.setY(startCoord.getY() + i);
 			
 			if (ItemManager.getId(bcoord.getBlock()) == CivData.CHEST) {
-				throw new CivException(CivSettings.localize.localizedString("road_validate_wouldDestroyChest")+" "+bcoord.toString());
+				throw new CivException(CivSettings.localize.localizedString("var_road_validate_wouldDestroyChest",bcoord.toString()));
 			}
 			
 			if (CivGlobal.getProtectedBlock(bcoord) != null) {
-				throw new CivException(CivSettings.localize.localizedString("road_validate_protectedBlock")+" "+bcoord.toString());
+				throw new CivException(CivSettings.localize.localizedString("var_road_validate_protectedBlock",bcoord.toString()));
 			}
 			
 			if (CivGlobal.getCampFromChunk(coord) != null) {
@@ -354,8 +354,7 @@ public class Road extends Structure {
 			if (structBlock != null) {
 				allowedToPlaceHere = false;
 				if (structBlock.getCiv() != this.getCiv()) {
-					throw new CivException(CivSettings.localize.localizedString("road_validate_structure")+" "+structBlock.getCiv().getName()+
-							" @ "+structBlock.getX()+", "+structBlock.getY()+", "+structBlock.getZ());
+					throw new CivException(CivSettings.localize.localizedString("var_road_validate_structure",structBlock.getCiv().getName(),(structBlock.getX()+", "+structBlock.getY()+", "+structBlock.getZ())));
 				}
 			}
 			
@@ -363,8 +362,7 @@ public class Road extends Structure {
 			if (rb != null) {
 				allowedToPlaceHere = false;
 				if (rb.getRoad().getCiv() != this.getCiv()) {
-					throw new CivException(CivSettings.localize.localizedString("road_validate_roadInWay")+" "+rb.getRoad().getCiv().getName()+
-							" @ "+rb.getCoord().getX()+", "+rb.getCoord().getY()+", "+rb.getCoord().getZ());
+					throw new CivException(CivSettings.localize.localizedString("var_road_validate_roadInWay",rb.getRoad().getCiv().getName(),(rb.getCoord().getX()+", "+rb.getCoord().getY()+", "+rb.getCoord().getZ())));
 				}
 			}
 		}
@@ -581,7 +579,7 @@ public class Road extends Structure {
 			
 			if (this.roadBlocks.size() == 0) {
 				/* We're out of road blocks. This road is no more! */
-				CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("road_destroyed")+" "+this.getCorner());
+				CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("var_road_destroyed",this.getCorner()));
 				this.delete();
 			}
 		} catch (SQLException e) {
@@ -633,12 +631,12 @@ public class Road extends Structure {
 		boolean wasTenPercent = false;
 		
 		if(hit.getOwner().isDestroyed()) {
-			CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("road_alreadyDestroyed"));
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_road_alreadyDestroyed",hit.getOwner().getDisplayName()));
 			return;
 		}
 		
 		if (!hit.getOwner().isComplete() && !(hit.getOwner() instanceof Wonder)) {
-			CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("road_underConstruction"));
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_road_underConstruction",hit.getOwner().getDisplayName()));
 			return;		
 		}
 		
@@ -659,7 +657,7 @@ public class Road extends Structure {
 	@Override
 	public void onDestroy() {
 		//can be overriden in subclasses.
-		CivMessage.global(this.getDisplayName()+" @ "+this.getTown().getName()+" "+CivSettings.localize.localizedString("road_destroySuccess"));
+		CivMessage.global(CivSettings.localize.localizedString("var_road_destroySuccess",this.getDisplayName(),this.getTown().getName()));
 		this.hitpoints = 0;
 		this.fancyDestroyStructureBlocks();
 		try {

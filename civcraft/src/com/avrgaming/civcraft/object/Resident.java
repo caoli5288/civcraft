@@ -540,8 +540,8 @@ public class Resident extends SQLObject {
 		Player player;
 		try {
 			player = CivGlobal.getPlayer(this);
-			CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("resident_debtmsg")+" "+this.getTreasury().getDebt()+" "+CivSettings.CURRENCY_NAME);
-			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("resident_debtEvictAlert1")+" "+this.daysTilEvict+" "+CivSettings.localize.localizedString("resident_debtEvictAlert2"));
+			CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_resident_debtmsg",this.getTreasury().getDebt(),CivSettings.CURRENCY_NAME));
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_resident_debtEvictAlert1",this.daysTilEvict));
 		} catch (CivException e) {
 			//Player is not online.
 		}
@@ -683,8 +683,7 @@ public class Resident extends SQLObject {
 
 	public void warnEvict() {
 		try {
-			CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+CivSettings.localize.localizedString("resident_evictionNotice1")+" "+
-					this.getDaysTilEvict()+" "+CivSettings.localize.localizedString("resident_evictionNotice2"));
+			CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+CivSettings.localize.localizedString("var_resident_evictionNotice1",this.getDaysTilEvict()));
 		} catch (CivException e) {
 			//player offline.
 		}
@@ -992,13 +991,13 @@ public class Resident extends SQLObject {
 		if (this.getTown() != null) {
 			for (Buildable struct : this.getTown().invalidStructures) {
 				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+
-						CivSettings.localize.localizedString("resident_structInvalidAlert1")+" "+struct.getDisplayName()+" @ "+struct.getCenterLocation()+
+						CivSettings.localize.localizedString("var_resident_structInvalidAlert1",struct.getDisplayName(),struct.getCenterLocation())+
 						" "+CivSettings.localize.localizedString("resident_structInvalidAlert2")+" "+struct.getInvalidReason());
 			}
 			
 			/* Show any event messages. */
 			if (this.getTown().getActiveEvent() != null) {
-				CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("resident_eventNotice1")+" "+this.getTown().getActiveEvent().configRandomEvent.name+" "+CivSettings.localize.localizedString("resident_eventNotice2"));
+				CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_resident_eventNotice1",this.getTown().getActiveEvent().configRandomEvent.name));
 			}
 		}
 		
@@ -1354,7 +1353,7 @@ public class Resident extends SQLObject {
 		
 	}
 	
-	public void loadPerks() {
+	public void loadPerks(final Player player) {
 //		if (!PlatinumManager.isEnabled()) {
 //			return;
 //		}
@@ -1378,20 +1377,76 @@ public class Resident extends SQLObject {
 						e.printStackTrace();
 						return;
 					} catch (NotVerifiedException e) {
-//						String url;
-//						try {
-//							url = CivSettings.getString(CivSettings.perkConfig, "system.register_url");
-//						} catch (InvalidConfiguration e1) {
-//							e1.printStackTrace();
-//							return;
-//						}
-//						
-//						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"Hey! You're in-game account is not registered! Register it at "+url);
-//						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"You'll be unable to earn Platinum until you register.");	
 						return;
 					}	
 				} catch (CivException e1) {
 					return;
+				}
+				try {
+
+					String perkMessage = "";
+					if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
+						resident.giveAllFreePerks();
+						perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+" ";
+					} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
+						if (player.hasPermission(CivSettings.MINI_ADMIN) || player.hasPermission(CivSettings.FREE_PERKS)) {
+							resident.giveAllFreePerks();
+							perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+": ";
+							perkMessage += "Weather"+", ";
+						}
+					}
+					if (player.hasPermission(CivSettings.ARCTIC_PERKS))
+					{
+						resident.giveAllArcticPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Arctic")+", ";
+					}
+					if (player.hasPermission(CivSettings.ATLANTEAN_PERKS))
+					{
+						resident.giveAllAtlanteanPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Atlantean")+", ";
+					}
+					if (player.hasPermission(CivSettings.AZTEC_PERKS))
+					{
+						resident.giveAllAztecPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Aztec")+", ";
+					}
+					if (player.hasPermission(CivSettings.CULTIST_PERKS))
+					{
+						resident.giveAllCultistPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Cultist")+", ";
+					}
+					if (player.hasPermission(CivSettings.EGYPTIAN_PERKS))
+					{
+						resident.giveAllEgyptianPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Egyptian")+", ";
+					}
+					if (player.hasPermission(CivSettings.ELVEN_PERKS))
+					{
+						resident.giveAllElvenPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Elven")+", ";
+					}
+					if (player.hasPermission(CivSettings.HELL_PERKS))
+					{
+						resident.giveAllHellPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Hell")+", ";
+					}
+					if (player.hasPermission(CivSettings.ROMAN_PERKS))
+					{
+						resident.giveAllRomanPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
+					}
+
+					if (player.hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
+					{
+						resident.giveAllNightLightsPerks();
+						perkMessage += "Night Lights"+", ";
+					}
+
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");
+					
+					CivMessage.send(resident, CivColor.LightGreen+perkMessage);
+				} catch (InvalidConfiguration e) {
+					e.printStackTrace();
 				}
 				
 				/* User was verified, lets see if it was the first time. */
@@ -1458,7 +1513,7 @@ public class Resident extends SQLObject {
 				return;
 			}
 			
-			throw new CivException(CivSettings.localize.localizedString("resident_cannotJoinCivJustLeft1")+" "+cooldownHours+" "+CivSettings.localize.localizedString("resident_cannotJoinCivJustLeft2"));
+			throw new CivException(CivSettings.localize.localizedString("var_resident_cannotJoinCivJustLeft1",cooldownHours));
 		}	
 	}
 	
@@ -1574,7 +1629,7 @@ public class Resident extends SQLObject {
 				if ((i-start) == 8) {
 					ItemStack guiStack = LoreGuiItem.build(resident.getName()+" Confirm", 
 							CivData.WOOL, CivData.DATA_WOOL_RED, 
-							CivColor.LightGreen+CivSettings.localize.localizedString("resident_tradeWait1")+" "+CivColor.LightBlue+resident.getName(),
+							CivColor.LightGreen+CivSettings.localize.localizedString("var_resident_tradeWait1",CivColor.LightBlue+resident.getName()),
 							CivColor.LightGray+" "+CivSettings.localize.localizedString("resident_tradeWait2"));
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {

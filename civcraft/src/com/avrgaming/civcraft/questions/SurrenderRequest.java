@@ -33,9 +33,9 @@ public class SurrenderRequest implements QuestionResponseInterface {
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
 			fromCiv.onDefeat(toCiv);
-			CivMessage.global(fromCiv.getName()+" "+CivSettings.localize.localizedString("surrender_accepted")+" "+toCiv.getName());
+			CivMessage.global(CivSettings.localize.localizedString("var_surrender_accepted",fromCiv.getName(),toCiv.getName()));
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" "+CivSettings.localize.localizedString("RequestDecline"));
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+CivSettings.localize.localizedString("var_RequestDecline",toCiv.getName()));
 		}
 	}
 

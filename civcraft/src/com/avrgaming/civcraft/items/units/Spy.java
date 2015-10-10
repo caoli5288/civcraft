@@ -55,7 +55,7 @@ public class Spy extends UnitMaterial {
 
 		UnitMaterial.setOwningTown(town, is);		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException(CivSettings.localize.localizedString("settler_errorBarracksFull")+" "+Unit.SPY_UNIT.getUnit().name);
+			throw new CivException(CivSettings.localize.localizedString("var_settler_errorBarracksFull",Unit.SPY_UNIT.getUnit().name));
 		}
 	}
 	
@@ -63,7 +63,7 @@ public class Spy extends UnitMaterial {
 		ItemStack is = LoreMaterial.spawn(Unit.SPY_UNIT);
 
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException(CivSettings.localize.localizedString("settler_errorBarracksFull")+" "+Unit.SPY_UNIT.getUnit().name);
+			throw new CivException(CivSettings.localize.localizedString("var_settler_errorBarracksFull",Unit.SPY_UNIT.getUnit().name));
 		}
 	}
 	

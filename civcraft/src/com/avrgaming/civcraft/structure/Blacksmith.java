@@ -114,7 +114,7 @@ public class Blacksmith extends Structure {
 		diff /= 1000;
 		
 		if (diff < Blacksmith.COOLDOWN) {
-			throw new CivException(CivSettings.localize.localizedString("blacksmith_onCooldown")+" "+(Blacksmith.COOLDOWN - diff)+" "+CivSettings.localize.localizedString("blacksmith_onCooldown2"));
+			throw new CivException(CivSettings.localize.localizedString("var_blacksmith_onCooldown",(Blacksmith.COOLDOWN - diff)));
 		}
 		
 		lastUse = now;
@@ -312,7 +312,7 @@ public class Blacksmith extends Structure {
 				String str = lore[i];
 				if (str.contains("free enhancements")) {
 					if (level != 0) {
-						lore[i] = CivColor.LightBlue+level+" "+CivSettings.localize.localizedString("blacksmith_forge_loreFreeEnchancements");
+						lore[i] = CivColor.LightBlue+CivSettings.localize.localizedString("var_blacksmith_forge_loreFreeEnchancements",level);
 					} else {
 						lore[i] = "";
 					}
@@ -384,11 +384,10 @@ public class Blacksmith extends Structure {
 		//BukkitTools.sch
 		// Schedule a message to notify the player when the smelting is finished.
 		BukkitObjects.scheduleAsyncDelayedTask(new NotificationTask(player.getName(), 
-				CivColor.LightGreen+CivSettings.localize.localizedString("blacksmith_smelt_asyncNotify")+" "+itemsInHand.getAmount()+" "+
-				CivData.getDisplayName(itemsInHand.getTypeId())), 
+				CivColor.LightGreen+CivSettings.localize.localizedString("var_blacksmith_smelt_asyncNotify",itemsInHand.getAmount(),CivData.getDisplayName(itemsInHand.getTypeId()))), 
 				TimeTools.toTicks(SMELT_TIME_SECONDS));
 		
-		CivMessage.send(player,CivColor.LightGreen+ itemsInHand.getAmount()+ " "+CivSettings.localize.localizedString("blacksmith_smelt_depositSuccess"));
+		CivMessage.send(player,CivColor.LightGreen+ CivSettings.localize.localizedString("var_blacksmith_smelt_depositSuccess",itemsInHand.getAmount(),CivData.getDisplayName(itemsInHand.getTypeId())));
 		
 		player.updateInventory();
 	}
@@ -439,8 +438,7 @@ public class Blacksmith extends Structure {
 				 
 				double timeLeft = ((double)Blacksmith.SMELT_TIME_SECONDS - (double)secondsBetween) / (double)60;
 				//Date finish = new Date(now+(secondsBetween*1000));
-				CivMessage.send(player, CivColor.Yellow+amount+" "+
-						CivData.getDisplayName(itemId)+" "+CivSettings.localize.localizedString("blacksmith_smelt_inProgress1")+" "+ df1.format(timeLeft) +" "+CivSettings.localize.localizedString("blacksmith_smelt_inProgress2"));
+				CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_blacksmith_smelt_inProgress1",amount,CivData.getDisplayName(itemId),df1.format(timeLeft)));
 				continue;
 			}
 			

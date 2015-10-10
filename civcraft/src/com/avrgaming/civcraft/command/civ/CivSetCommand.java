@@ -93,7 +93,7 @@ public class CivSetCommand extends CommandBase {
 		civ.setSciencePercentage(newPercentage);		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_set_scienceSuccess")+" "+args[1]+""+" percent.");	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_scienceSuccess",args[1]));	
 	}
 	
 
@@ -101,7 +101,7 @@ public class CivSetCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_set_currentColor")+" "+Integer.toHexString(civ.getColor()));
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_currentColor",Integer.toHexString(civ.getColor())));
 			return;
 		}
 	
@@ -117,7 +117,7 @@ public class CivSetCommand extends CommandBase {
 			
 			civ.setColor(color);
 			civ.save();
-			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_set_colorSuccess")+" "+Integer.toHexString(color));
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_colorSuccess",Integer.toHexString(color)));
 		} catch (NumberFormatException e) {
 			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_civ_set_colorInvalid"));
 		}

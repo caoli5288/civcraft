@@ -37,7 +37,7 @@ public class InteractiveCustomTemplateConfirm implements InteractiveResponse {
 		Perk perk = customTemplate.getParent();
 		
 		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_template_heading"));
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+perk.getDisplayName()+" "+CivSettings.localize.localizedString("interactive_template_bind1")+" "+town.getName());
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_template_bind1",perk.getDisplayName(),town.getName()));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_template_bind2"));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_template_bind3"));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_template_bind4"));
@@ -61,6 +61,6 @@ public class InteractiveCustomTemplateConfirm implements InteractiveResponse {
 		
 		customTemplate.bindTemplateToTown(resident.getTown(), resident);
 		customTemplate.markAsUsed(resident);
-		CivMessage.sendSuccess(player, customTemplate.getParent().getDisplayName()+" "+CivSettings.localize.localizedString("interactive_template_success")+" "+resident.getTown().getName());
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_interactive_template_success",customTemplate.getParent().getDisplayName(),resident.getTown().getName()));
 	}
 }

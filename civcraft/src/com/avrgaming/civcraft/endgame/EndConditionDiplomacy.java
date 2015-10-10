@@ -118,7 +118,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			
 			Integer otherVotes = getVotesFor(otherCiv);
 			if (otherVotes > votes) {
-				CivMessage.global(civ.getName()+" "+CivSettings.localize.localizedString("end_diplomacyError")+" "+otherCiv.getName());
+				CivMessage.global(CivSettings.localize.localizedString("var_end_diplomacyError",civ.getName(),otherCiv.getName()));
 				return false;
 			}
 		}
@@ -149,7 +149,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			CivGlobal.getSessionDB().update(entries.get(0).request_id, entries.get(0).key, ""+votes);			
 		}
 		
-		CivMessage.sendSuccess(resident, CivSettings.localize.localizedString("end_diplomacyAddVote")+" "+civ.getName());
+		CivMessage.sendSuccess(resident, CivSettings.localize.localizedString("var_end_diplomacyAddVote",civ.getName()));
 	}
 
 	public static void setVotes(Civilization civ, Integer votes) {

@@ -55,18 +55,18 @@ public class FishingListener implements Listener {
 				 for (ItemStack is : leftovers.values()) {
 					 player.getWorld().dropItem(player.getLocation(), is);
 				 }
-				 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("fishing_success")+" "+CivColor.LightPurple+CivSettings.localize.localizedString("fishing_rawFish"));
+				 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_fishing_success",CivColor.LightPurple+CivSettings.localize.localizedString("fishing_rawFish")));
 
 			 } else {
 				 for (ConfigFishing d : dropped) {
 					 if (d.craftMatId == null) {
 						 stack = ItemManager.createItemStack(d.type_id, 1);
-						 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("fishing_success")+" "+CivColor.LightPurple+stack.getType().name().replace("_", " ").toLowerCase());	
+						 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_fishing_success",CivColor.LightPurple+stack.getType().name().replace("_", " ").toLowerCase()));	
 					 } else {
 						 LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(d.craftMatId);
 						 if (craftMat != null) {
 							 stack = LoreCraftableMaterial.spawn(craftMat);
-							 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("fishing_success")+" "+CivColor.LightPurple+craftMat.getName());
+							 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_fishing_success",CivColor.LightPurple+craftMat.getName()));
 						 }
 					 }
 					 

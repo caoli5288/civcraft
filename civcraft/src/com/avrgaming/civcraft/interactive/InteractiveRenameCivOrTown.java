@@ -54,7 +54,7 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 				if (selection.equals("town")) {
 					Town town = CivGlobal.getTown(oldName);
 					if (town == null) {
-						throw new CivException(CivSettings.localize.localizedString("interactive_rename_townNoTown")+" "+oldName+".");
+						throw new CivException(CivSettings.localize.localizedString("var_interactive_rename_townNoTown",oldName));
 					}
 					
 					if (!town.getMayorGroup().hasMember(resident) && !town.getCiv().getLeaderGroup().hasMember(resident)) {
@@ -68,7 +68,7 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 					if (civ == null) {
 						civ = CivGlobal.getConqueredCiv(oldName);
 						if (civ == null) {
-							throw new CivException(CivSettings.localize.localizedString("interactive_rename_civNone")+" "+oldName+".");
+							throw new CivException(CivSettings.localize.localizedString("var_interactive_rename_civNone",oldName));
 						}
 					}
 					
@@ -83,8 +83,7 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 				newName = message.replace(" ", "_");
 				if (selectedCiv != null) {
 					try {
-						CivMessage.global(resident.getName()+" "+CivSettings.localize.localizedString("interactive_rename_successCiv")+" "+
-								selectedCiv.getName()+" -> "+newName);
+						CivMessage.global(CivSettings.localize.localizedString("var_interactive_rename_successCiv",resident.getName(),selectedCiv.getName(),newName));
 						selectedCiv.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {
@@ -92,8 +91,7 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 					}
 				} else if (selectedTown != null) {
 					try {
-						CivMessage.global(resident.getName()+" "+CivSettings.localize.localizedString("interactive_rename_successTown")+" "+
-								selectedTown.getName()+" -> "+newName);
+						CivMessage.global(CivSettings.localize.localizedString("var_interactive_rename_successTown",resident.getName(),selectedTown.getName(),newName));
 						selectedTown.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {

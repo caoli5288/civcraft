@@ -55,7 +55,7 @@ public class TownUpgradeCommand extends CommandBase {
 	
 	private void list_upgrades(String category, Town town) throws CivException {
 		if (!ConfigTownUpgrade.categories.containsKey(category.toLowerCase()) && !category.equalsIgnoreCase("all")) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_town_upgrade_listnoCat")+" "+category);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_upgrade_listnoCat",category));
 		}
 				
 		for (ConfigTownUpgrade upgrade : CivSettings.townUpgrades.values()) {
@@ -113,7 +113,7 @@ public class TownUpgradeCommand extends CommandBase {
 		
 		//TODO make upgrades take time by using hammers.
 		town.purchaseUpgrade(upgrade);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_upgrade_buySuccess")+" "+upgrade.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_upgrade_buySuccess",upgrade.name));
 	}
 	
 	@Override

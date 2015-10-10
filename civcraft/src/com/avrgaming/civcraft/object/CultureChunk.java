@@ -84,11 +84,11 @@ public class CultureChunk {
 	}
 	
 	public String getOnLeaveString() {
-		return CivColor.LightPurple+CivSettings.localize.localizedString("cultureLeaveMsg")+" "+town.getCiv().getName();
+		return CivColor.LightPurple+CivSettings.localize.localizedString("var_cultureLeaveMsg",town.getCiv().getName());
 	}
 	
 	public String getOnEnterString() {
-		return CivColor.LightPurple+CivSettings.localize.localizedString("cultureEnterMsg")+" "+town.getCiv().getName();
+		return CivColor.LightPurple+CivSettings.localize.localizedString("var_cultureEnterMsg",town.getCiv().getName());
 	}
 	public double getPower() {
 		// power = max/(distance^2).

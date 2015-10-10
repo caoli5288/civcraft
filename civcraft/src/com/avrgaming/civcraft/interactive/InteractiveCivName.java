@@ -56,7 +56,7 @@ public class InteractiveCivName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredCivName = message;
-		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("interactive_civ_success1")+" "+CivColor.Yellow+message+CivColor.LightGreen+"? "+CivSettings.localize.localizedString("interactive_civ_success2"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_interactive_civ_success1",CivColor.Yellow+message+CivColor.LightGreen));
 		CivMessage.send(player, " ");
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_civ_success3"));
 		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("interactive_civ_tocancel"));

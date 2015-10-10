@@ -68,7 +68,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 		
 		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException(CivSettings.localize.localizedString("settler_errorBarracksFull")+" "+Unit.SETTLER_UNIT.getUnit().name);
+			throw new CivException(CivSettings.localize.localizedString("var_settler_errorBarracksFull",Unit.SETTLER_UNIT.getUnit().name));
 		}
 
 	}
@@ -117,7 +117,7 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 			double dist = townhall.getCenterLocation().distance(new BlockCoord(event.getPlayer().getLocation()));
 			if (dist < minDistance) {
 				DecimalFormat df = new DecimalFormat();
-				CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorTooClose")+" "+town.getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+minDistance);
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_settler_errorTooClose",town.getName(),df.format(dist),minDistance));
 				return;
 			}
 		}

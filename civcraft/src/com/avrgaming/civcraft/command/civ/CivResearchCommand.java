@@ -57,11 +57,11 @@ public class CivResearchCommand extends CommandBase {
 		String techname = combineArgs(stripArgs(args, 1));
 		ConfigTech tech = CivSettings.getTechByName(techname);
 		if (tech == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotFound")+" "+techname);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_NotFound",techname));
 		}
 		
 		if (!civ.getTreasury().hasEnough(tech.cost)) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotEnough1")+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("cmd_civ_research_NotEnough2")+" "+tech.name);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_NotEnough1",CivSettings.CURRENCY_NAME,tech.name));
 		}
 		
 		if(!tech.isAvailable(civ)) {
@@ -70,12 +70,12 @@ public class CivResearchCommand extends CommandBase {
 		
 		if (civ.getResearchTech() != null) {
 			civ.setResearchProgress(0);
-			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_civ_research_lostProgress1")+" "+civ.getResearchTech().name+" "+CivSettings.localize.localizedString("cmd_civ_research_lostProgress2"));
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("var_cmd_civ_research_lostProgress1",civ.getResearchTech().name));
 			civ.setResearchTech(null);
 		}
 	
 		civ.startTechnologyResearch(tech);
-		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("cmd_civ_research_start")+" "+tech.name);
+		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("var_cmd_civ_research_start",tech.name));
 	}
 	
 	public void finished_cmd() throws CivException {
@@ -98,7 +98,7 @@ public class CivResearchCommand extends CommandBase {
 		
 		Town capitol = CivGlobal.getTown(civ.getCapitolName());
 		if (capitol == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_missingCapitol")+" "+civ.getCapitolName()+"! "+CivSettings.localize.localizedString("internalCommandException"));
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_missingCapitol",civ.getCapitolName())+" "+CivSettings.localize.localizedString("internalCommandException"));
 		}
 	
 		TownHall townhall = capitol.getTownHall();
@@ -113,11 +113,11 @@ public class CivResearchCommand extends CommandBase {
 		String techname = combineArgs(stripArgs(args, 1));
 		ConfigTech tech = CivSettings.getTechByName(techname);
 		if (tech == null) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_civ_research_NotFound")+" "+techname);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_NotFound",techname));
 		}
 		
 		civ.startTechnologyResearch(tech);
-		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_research_start")+" "+tech.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_research_start",tech.name));
 	}
 	
 	public void progress_cmd() throws CivException {

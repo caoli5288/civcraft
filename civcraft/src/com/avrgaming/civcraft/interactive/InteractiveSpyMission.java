@@ -54,20 +54,20 @@ public class InteractiveSpyMission implements InteractiveResponse {
 		int mins = mission.length / 60;
 		int seconds = mission.length % 60;
 		if (mins > 0) {
-			length += mins+" "+CivSettings.localize.localizedString("interactive_spy_mins");
+			length += CivSettings.localize.localizedString("var_interactive_spy_mins",mins);
 			if (seconds > 0) {
 				length += " & ";
 			}
 		}
 		
 		if (seconds > 0) {
-			length += seconds+" "+CivSettings.localize.localizedString("interactive_spy_seconds");
+			length += CivSettings.localize.localizedString("var_interactive_spy_seconds",seconds);
 		}
 		
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt1")+" "+CivColor.LightGreen+successChance);
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt2")+" "+CivColor.LightGreen+compromiseChance);
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt3")+" "+CivColor.Yellow+mission.cost+CivColor.Green+CivColor.BOLD+" "+CivSettings.CURRENCY_NAME);
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt4")+" "+CivColor.Yellow+length+CivColor.Green+CivColor.BOLD);
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt1",CivColor.LightGreen+successChance+CivColor.Green+CivColor.BOLD));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt2",CivColor.LightGreen+compromiseChance+CivColor.Green+CivColor.BOLD));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt3",CivColor.Yellow+mission.cost+CivColor.Green+CivColor.BOLD,CivSettings.CURRENCY_NAME));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt4",CivColor.Yellow+length+CivColor.Green+CivColor.BOLD));
 		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt5"));
 		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt6"));
 		CivMessage.send(player, CivColor.Green+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt7"));

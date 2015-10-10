@@ -37,7 +37,7 @@ public class TradeRequest implements QuestionResponseInterface {
 			otherPair.otherResident = pair.resident;
 			TradeInventoryListener.tradeInventories.put(TradeInventoryListener.getTradeInventoryKey(resident), otherPair);
 		} else {
-			CivMessage.send(trader, CivColor.LightGray+resident.getName()+" "+CivSettings.localize.localizedString("trade_declined"));
+			CivMessage.send(trader, CivColor.LightGray+CivSettings.localize.localizedString("var_trade_declined",resident.getName()));
 		}
 	}
 

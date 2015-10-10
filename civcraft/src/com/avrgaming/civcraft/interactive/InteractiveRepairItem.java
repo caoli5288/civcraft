@@ -32,8 +32,8 @@ public class InteractiveRepairItem implements InteractiveResponse {
 		}
 		
 		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_repair_heading"));
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt1")+" "+craftMat.getName()+"?");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt2")+" "+CivColor.Yellow+CivColor.BOLD+cost+" "+CivSettings.CURRENCY_NAME);
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_repair_prompt1",craftMat.getName()));
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_repair_prompt2",CivColor.Yellow+CivColor.BOLD+cost+CivColor.LightGreen,CivColor.Yellow+CivColor.BOLD+CivSettings.CURRENCY_NAME+CivColor.LightGreen));
 		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt3"));
 		
 	}

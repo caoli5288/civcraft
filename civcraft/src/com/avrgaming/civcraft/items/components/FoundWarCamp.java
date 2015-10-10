@@ -124,7 +124,7 @@ public class FoundWarCamp extends ItemComponent implements CallbackInterface {
 		CivMessage.sendHeading(player, CivSettings.localize.localizedString("buildWarCamp_heading"));
 		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("buildWarCamp_prompt1"));
 		CivMessage.send(player, CivColor.LightGreen+"   -"+CivSettings.localize.localizedString("buildWarCamp_prompt2"));
-		CivMessage.send(player, CivColor.LightGreen+"   -"+CivSettings.localize.localizedString("buildWarCamp_prompt3")+" "+warTimeout+" "+CivSettings.localize.localizedString("buildWarCamp_prompt4"));
+		CivMessage.send(player, CivColor.LightGreen+"   -"+CivSettings.localize.localizedString("var_buildWarCamp_prompt3",warTimeout));
 		CivMessage.send(player, " ");
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildWarCamp_prompt5"));
 		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("buildWarCamp_prompt6"));

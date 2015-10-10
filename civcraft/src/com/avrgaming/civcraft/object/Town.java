@@ -679,7 +679,7 @@ public class Town extends SQLObject {
 		if (this.getCultureLevel() != CivSettings.getMaxCultureLevel()) {
 			if (this.culture >= clc.amount) {
 				CivGlobal.processCulture();
-				CivMessage.sendCiv(this.civ, CivSettings.localize.localizedString("town_bordersExpanded")+" "+this.getName());
+				CivMessage.sendCiv(this.civ, CivSettings.localize.localizedString("var_town_bordersExpanded",this.getName()));
 			}
 		}
 		return;
@@ -806,7 +806,7 @@ public class Town extends SQLObject {
 			}
 			
 			if (resident.getTown() != null && resident.getTown().isMayor(resident)) {
-				throw new CivException(CivSettings.localize.localizedString("town_found_errorIsMayor")+" "+resident.getTown().getName());
+				throw new CivException(CivSettings.localize.localizedString("var_town_found_errorIsMayor",resident.getTown().getName()));
 			}
 		
 			if (resident.hasCamp()) {
@@ -815,14 +815,14 @@ public class Town extends SQLObject {
 			
 			Town existTown = CivGlobal.getTown(name);
 			if (existTown != null) {
-				throw new CivException(CivSettings.localize.localizedString("town_found_errorNameExists")+" "+name);
+				throw new CivException(CivSettings.localize.localizedString("var_town_found_errorNameExists",name));
 			}
 			
 			Town newTown;
 			try {
 				newTown = new Town(name, resident, civ);
 			} catch (InvalidNameException e) {
-				throw new CivException(name+" "+CivSettings.localize.localizedString("town_found_errorInvalidName"));
+				throw new CivException(CivSettings.localize.localizedString("var_town_found_errorInvalidName",name));
 			}
 			
 			Player player = CivGlobal.getPlayer(resident.getName());
@@ -863,7 +863,7 @@ public class Town extends SQLObject {
 								
 				if (dist < minDistance) {
 					DecimalFormat df = new DecimalFormat();
-					throw new CivException(CivSettings.localize.localizedString("town_found_errorTooClose")+" "+town.getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+minDistance);
+					throw new CivException(CivSettings.localize.localizedString("var_town_found_errorTooClose",town.getName(),df.format(dist),minDistance));
 				}
 			}
 			
@@ -880,8 +880,7 @@ public class Town extends SQLObject {
 					double dist = foundLocation.distance(cc.getChunkCoord());
 					if (dist <= min_distance) {
 						DecimalFormat df = new DecimalFormat();
-						throw new CivException(CivSettings.localize.localizedString("town_found_errorTooClose")+" "+cc.getTown().getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+min_distance);
-					
+						throw new CivException(CivSettings.localize.localizedString("var_town_found_errorTooClose",cc.getTown().getName(),df.format(dist),min_distance));					
 					}
 				}	
 			} catch (InvalidConfiguration e1) {
@@ -961,7 +960,7 @@ public class Town extends SQLObject {
 			
 			try {	
 				if (resident.getTown() != null) {
-					CivMessage.sendTown(resident.getTown(), resident.getName()+" "+CivSettings.localize.localizedString("town_found_leftTown"));
+					CivMessage.sendTown(resident.getTown(), CivSettings.localize.localizedString("var_town_found_leftTown",resident.getName()));
 					resident.getTown().removeResident(resident);
 				}
 				newTown.addResident(resident);
@@ -1123,7 +1122,7 @@ public class Town extends SQLObject {
 			}
 			
 			double capturePayment = amount * capturedPenalty;
-			CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("town_capturePenalty1")+" "+(amount - capturePayment)+" "+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("town_capturePenalty2")+" "+this.getCiv().getName());
+			CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("var_town_capturePenalty1",(amount - capturePayment),CivSettings.CURRENCY_NAME,this.getCiv().getName()));
 			amount = capturePayment;
 		}
 		
@@ -1174,7 +1173,7 @@ public class Town extends SQLObject {
 		}
 		
 		if (!this.getTreasury().hasEnough(upgrade.cost)) {
-			throw new CivException(CivSettings.localize.localizedString("town_missingFunds")+" "+upgrade.cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_town_missingFunds",upgrade.cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		if (!this.hasStructure(upgrade.require_structure)) {
@@ -1573,18 +1572,18 @@ public class Town extends SQLObject {
 		
 		double cost = wonder.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException(wonder.getDisplayName()+" "+CivSettings.localize.localizedString("town_buildwonder_errorTooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorTooPoor",wonder.getDisplayName(),cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		wonder.runCheck(center); //Throws exception if we can't build here.	
 
 		Buildable inProgress  = getCurrentStructureInProgress();
 		if (inProgress != null) {
-			throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorCurrentlyBuilding")+" "+inProgress.getDisplayName()+". "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorCurrentlyBuilding",inProgress.getDisplayName())+" "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
 		} else {
 			inProgress  = getCurrentWonderInProgress();
 			if (inProgress != null) {
-				throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorCurrentlyBuilding")+" "+inProgress.getDisplayName()+" "+CivSettings.localize.localizedString("town_buildwonder_errorOneWonderAtaTime"));
+				throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorCurrentlyBuilding",inProgress.getDisplayName())+" "+CivSettings.localize.localizedString("town_buildwonder_errorOneWonderAtaTime"));
 			}
 		}
 		
@@ -1597,13 +1596,13 @@ public class Town extends SQLObject {
 			if (CivGlobal.testFileFlag("debug")) {
 				e.printStackTrace();
 			}
-			throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorGeneric")+" "+e.getMessage());
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorGeneric",e.getMessage()));
 		}
 		
 		wonders.put(wonder.getCorner(), wonder);
 		
 		this.getTreasury().withdraw(cost);
-		CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("town_buildwonder_success")+" "+wonder.getDisplayName());
+		CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("var_town_buildwonder_success",wonder.getDisplayName()));
 		this.save();
 	}
 	
@@ -1631,13 +1630,13 @@ public class Town extends SQLObject {
 		
 		if (struct.getLimit() != 0) {
 			if (getStructureTypeCount(id) >= struct.getLimit()) {
-				throw new CivException(CivSettings.localize.localizedString("town_structure_errorLimitMet")+" "+struct.getLimit()+" "+struct.getDisplayName());
+				throw new CivException(CivSettings.localize.localizedString("var_town_structure_errorLimitMet",struct.getLimit(),struct.getDisplayName()));
 			}
 		}
 		
 		double cost = struct.getCost();
 		if (!this.getTreasury().hasEnough(cost)) {
-			throw new CivException(struct.getDisplayName()+" "+CivSettings.localize.localizedString("town_buildwonder_errorTooPoor")+" "+cost+" "+CivSettings.CURRENCY_NAME);
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorTooPoor",struct.getDisplayName(),cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		struct.runCheck(center); //Throws exception if we can't build here.	
@@ -1676,14 +1675,14 @@ public class Town extends SQLObject {
 				this.giveExtraHammers(this.getExtraHammers());
 			}
 		} catch (CivException e) {
-			throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorGeneric")+" "+e.getMessage());
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorGeneric",e.getMessage()));
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 		}
 				
 		this.getTreasury().withdraw(cost);
-		CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("town_buildwonder_success")+" "+struct.getDisplayName());
+		CivMessage.sendTown(this, CivColor.Yellow+CivSettings.localize.localizedString("var_town_buildwonder_success",struct.getDisplayName()));
 		
 	//	try {
 			//this.save();
@@ -2373,7 +2372,7 @@ public class Town extends SQLObject {
 
 	public void addOutpostChunk(TownChunk tc) throws AlreadyRegisteredException {
 		if (outposts.containsKey(tc.getChunkCoord())) {
-			throw new AlreadyRegisteredException(tc.getChunkCoord()+" "+CivSettings.localize.localizedString("town_outpost_alreadyRegistered")+" "+this.getName());
+			throw new AlreadyRegisteredException(CivSettings.localize.localizedString("var_town_outpost_alreadyRegistered",tc.getChunkCoord(),this.getName()));
 		}
 		outposts.put(tc.getChunkCoord(), tc);	
 	}
@@ -2495,22 +2494,22 @@ public class Town extends SQLObject {
 		if (daysInDebt >= CivSettings.TOWN_DEBT_GRACE_DAYS) {
 			if (daysInDebt >= CivSettings.TOWN_DEBT_SELL_DAYS) {
 				this.disband();
-				CivMessage.global(CivSettings.localize.localizedString("town_ruin1")+" "+this.getName()+" "+CivSettings.localize.localizedString("town_ruin2"));
+				CivMessage.global(CivSettings.localize.localizedString("var_town_ruin1",this.getName()));
 				return;
 			}
 		}
 		
-		CivMessage.global(CivSettings.localize.localizedString("town_ruin1")+" "+this.getName()+" "+CivSettings.localize.localizedString("town_inDebt")+" "+getDaysLeftWarning());
+		CivMessage.global(CivSettings.localize.localizedString("var_town_inDebt",this.getName())+getDaysLeftWarning());
 	}
 	
 	public String getDaysLeftWarning() {
 		
 		if (daysInDebt < CivSettings.TOWN_DEBT_GRACE_DAYS) {
-			return ""+(CivSettings.TOWN_DEBT_GRACE_DAYS-daysInDebt)+" "+CivSettings.localize.localizedString("town_inDebt_daysTilSale");
+			return " "+CivSettings.localize.localizedString("var_town_inDebt_daysTilSale",(CivSettings.TOWN_DEBT_GRACE_DAYS-daysInDebt));
 		}
 		
 		if (daysInDebt < CivSettings.TOWN_DEBT_SELL_DAYS) {
-			return this.getName()+" "+CivSettings.localize.localizedString("town_inDebt_upForSale")+" "+(CivSettings.TOWN_DEBT_SELL_DAYS-daysInDebt)+" "+CivSettings.localize.localizedString("town_inDebt_daysTilDelete");
+			return " "+CivSettings.localize.localizedString("var_town_inDebt_daysTilDelete",this.getName(),CivSettings.TOWN_DEBT_SELL_DAYS-daysInDebt);
 		}
 		
 		return "";
@@ -2542,7 +2541,7 @@ public class Town extends SQLObject {
 			
 			if (this.getTreasury().inDebt() == false) {
 				this.daysInDebt = 0;
-				CivMessage.global(CivSettings.localize.localizedString("town_ruin1")+" "+this.getName()+" "+CivSettings.localize.localizedString("civ_deposit_cleardebt"));
+				CivMessage.global(CivSettings.localize.localizedString("town_ruin_nolongerInDebt",this.getName()));
 			}
 		} else {
 			this.getTreasury().deposit(amount);
@@ -2592,7 +2591,7 @@ public class Town extends SQLObject {
 		/* Town is capitulating, no longer need a mother civ. */
 		this.setMotherCiv(null);
 		this.save();
-		CivMessage.global(CivSettings.localize.localizedString("town_capitulate1")+" "+this.getName()+" "+CivSettings.localize.localizedString("town_capitulate2")+" "+this.getCiv().getName()+" "+CivSettings.localize.localizedString("town_capitulate3"));	
+		CivMessage.global(CivSettings.localize.localizedString("var_town_capitulate1",this.getName(),this.getCiv().getName()));	
 	}
 	
 	public ConfigGovernment getGovernment() {
@@ -2997,11 +2996,11 @@ public class Town extends SQLObject {
 			}
 
 			if (percent > CivSettings.getDouble(CivSettings.espionageConfig, "espionage.town_exposure_location")) {
-				message += CivSettings.localize.localizedString("town_spy_location")+" "+player.getLocation().getBlockX()+", "+player.getLocation().getBlockY()+", "+player.getLocation().getBlockZ()+" ";
+				message += CivSettings.localize.localizedString("var_town_spy_location",(player.getLocation().getBlockX()+", "+player.getLocation().getBlockY()+", "+player.getLocation().getBlockZ()))+" ";
 			} 
 
 			if (percent > CivSettings.getDouble(CivSettings.espionageConfig, "espionage.town_exposure_name")) {
-				message += CivSettings.localize.localizedString("town_spy_perpetrator")+" "+resident.getName()+"!";
+				message += CivSettings.localize.localizedString("var_town_spy_perpetrator",resident.getName());
 			} 
 
 			if (message.length() > 0) {
@@ -3067,7 +3066,7 @@ public class Town extends SQLObject {
 			}
 			
 			if (now.getTime() < this.lastBuildableRefresh.getTime() + (buildable_refresh_cooldown*60*1000)) {
-				throw new CivException(CivSettings.localize.localizedString("town_refresh_wait1")+" "+buildable_refresh_cooldown+" "+CivSettings.localize.localizedString("town_refresh_wait2"));
+				throw new CivException(CivSettings.localize.localizedString("var_town_refresh_wait1",buildable_refresh_cooldown));
 			}
 		}
 		
@@ -3132,7 +3131,7 @@ public class Town extends SQLObject {
 		
 		CivGlobal.addTown(this);
 		
-		CivMessage.global(CivSettings.localize.localizedString("town_rename_success1")+" "+oldName+" "+CivSettings.localize.localizedString("town_rename_success2")+" "+this.getName());
+		CivMessage.global(CivSettings.localize.localizedString("var_town_rename_success1",oldName,this.getName()));
 	}
 
 	public void trimCultureChunks(HashSet<ChunkCoord> expanded) {
@@ -3179,7 +3178,7 @@ public class Town extends SQLObject {
 			int min_gift_age = CivSettings.getInteger(CivSettings.civConfig, "civ.min_gift_age");
 		
 			if (!DateUtil.isAfterDays(created_date, min_gift_age)) {
-				throw new CivException(this.getName()+" "+CivSettings.localize.localizedString("town_gift_errorAge1")+" "+min_gift_age+" "+CivSettings.localize.localizedString("town_gift_errorAge2"));
+				throw new CivException(CivSettings.localize.localizedString("var_town_gift_errorAge1",this.getName(),min_gift_age));
 			}
 		} catch (InvalidConfiguration e) {
 			throw new CivException("Configuration error.");

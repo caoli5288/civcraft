@@ -46,8 +46,7 @@ public class SpawnMobs extends RandomEventComponent {
 					Bukkit.getServer().getWorld(tc.getChunkCoord().getWorldname()).spawnEntity(loc, type);
 				}
 				
-				sendMessage(amount+" "+type.toString()+" "+CivSettings.localize.localizedString("re_spawnMobs")+" "+
-					(tc.getChunkCoord().getX()*16)+",64,"+(tc.getChunkCoord().getZ()*16));
+				sendMessage(CivSettings.localize.localizedString("var_re_spawnMobs",amount,type.toString(),(tc.getChunkCoord().getX()*16)+",64,"+(tc.getChunkCoord().getZ()*16)));
 			}
 		}
 

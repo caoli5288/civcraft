@@ -28,10 +28,10 @@ public class BuildCannon extends ItemComponent {
 			Resident resident = CivGlobal.getResident(event.getPlayer());
 			Cannon.newCannon(resident);
 			
-			CivMessage.sendCiv(resident.getCiv(), CivSettings.localize.localizedString("buildCannon_Success")+" "+
-					event.getPlayer().getLocation().getBlockX()+","+
+			CivMessage.sendCiv(resident.getCiv(), CivSettings.localize.localizedString("var_buildCannon_Success",
+					(event.getPlayer().getLocation().getBlockX()+","+
 					event.getPlayer().getLocation().getBlockY()+","+
-					event.getPlayer().getLocation().getBlockZ());
+					event.getPlayer().getLocation().getBlockZ())));
 			
 			ItemStack newStack = new ItemStack(Material.AIR);
 			event.getPlayer().setItemInHand(newStack);

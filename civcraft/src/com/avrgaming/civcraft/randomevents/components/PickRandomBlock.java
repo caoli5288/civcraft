@@ -93,7 +93,7 @@ public class PickRandomBlock extends RandomEventComponent {
 					int y_min = bcoord.getY() - rand.nextInt(10);
 					int y_max = bcoord.getY() + rand.nextInt(10);
 					
-					sendMessage(CivSettings.localize.localizedString("re_pickBlock1")+" "+coord.getX()+","+coord.getZ()+" "+CivSettings.localize.localizedString("re_pickBlock3")+" y="+y_min+" & y="+y_max);
+					sendMessage(CivSettings.localize.localizedString("var_re_pickBlock1",(coord.getX()+","+coord.getZ()),y_min,y_max));
 					sendMessage(CivSettings.localize.localizedString("re_pickBlock2"));
 				} catch (InvalidConfiguration e) {
 					e.printStackTrace();

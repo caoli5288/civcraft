@@ -696,7 +696,7 @@ public abstract class Buildable extends SQLObject {
 
 			double distance = townHallLoc.distance(loc);
 			if (distance < requiredDistance) {
-				throw new CivException(CivSettings.localize.localizedString("buildable_toocloseToSpawn1")+" "+requiredDistance+" "+CivSettings.localize.localizedString("buildable_toocloseToSpawn2"));
+				throw new CivException(CivSettings.localize.localizedString("var_buildable_toocloseToSpawn1",requiredDistance));
 			}
 			
 		}
@@ -743,7 +743,7 @@ public abstract class Buildable extends SQLObject {
 				double dist = townhall.getCenterLocation().distance(new BlockCoord(centerBlock));
 				if (dist < minDistance) {
 					DecimalFormat df = new DecimalFormat();
-					CivMessage.sendError(player, CivSettings.localize.localizedString("settler_errorTooClose")+" "+town.getName()+". "+df.format(dist)+" "+CivSettings.localize.localizedString("settler_errorTooClose2")+" "+minDistance);
+					CivMessage.sendError(player, CivSettings.localize.localizedString("var_settler_errorTooClose",town.getName(),df.format(dist),minDistance));
 					return;
 				}
 			}
@@ -1149,7 +1149,7 @@ public abstract class Buildable extends SQLObject {
 	
 	public void onDestroy() {
 		//can be overriden in subclasses.
-		CivMessage.global(this.getDisplayName()+" "+CivSettings.localize.localizedString("buildable_destroyedAlert")+" "+this.getTown().getName());
+		CivMessage.global(CivSettings.localize.localizedString("var_buildable_destroyedAlert",this.getDisplayName(),this.getTown().getName()));
 		this.hitpoints = 0;
 		this.fancyDestroyStructureBlocks();
 		this.save();
@@ -1160,14 +1160,14 @@ public abstract class Buildable extends SQLObject {
 		
 		if(hit.getOwner().isDestroyed()) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("buildable_alreadyDestroyed"));
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_buildable_alreadyDestroyed",hit.getOwner().getDisplayName()));
 			}
 			return;
 		}
 		
 		if (!hit.getOwner().isComplete() && !(hit.getOwner() instanceof Wonder)) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("buildable_underConstruction"));
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_buildable_underConstruction",hit.getOwner().getDisplayName()));
 			}
 			return;		
 		}
@@ -1190,18 +1190,16 @@ public abstract class Buildable extends SQLObject {
 		if (player != null) {
 		Resident resident = CivGlobal.getResident(player);
 			if (resident.isCombatInfo()) {
-				CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("buildable_OnDamageSuccess")+" ("+
-						hit.getOwner().hitpoints+"/"+hit.getOwner().getMaxHitPoints()+")");
+				CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_buildable_OnDamageSuccess",hit.getOwner().getDisplayName(),(hit.getOwner().hitpoints+"/"+hit.getOwner().getMaxHitPoints())));
 			}
 		}
 		
 	}
 	
 	public void onDamageNotification(Player player, BuildableDamageBlock hit) {
-		CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" "+CivSettings.localize.localizedString("buildable_OnDamageSuccess")+" "+
-				hit.getOwner().getDamagePercentage()+"%!");
-		CivMessage.sendTown(hit.getTown(), CivColor.Yellow+hit.getOwner().getDisplayName()+" @ ("+hit.getOwner().getCorner()+
-				") "+CivSettings.localize.localizedString("buildable_underAttackAlert")+" "+hit.getOwner().getDamagePercentage()+"%!");	
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_buildable_OnDamageSuccess",hit.getOwner().getDisplayName(),(hit.getOwner().getDamagePercentage()+"%")));
+
+		CivMessage.sendTown(hit.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_buildable_underAttackAlert",hit.getOwner().getDisplayName(),hit.getOwner().getCorner(),hit.getOwner().getDamagePercentage()));	
 	}
 	
 	public Map<BlockCoord, Boolean> getStructureBlocks() {
@@ -1555,9 +1553,8 @@ public abstract class Buildable extends SQLObject {
 		this.damage(damage);
 
 		DecimalFormat df = new DecimalFormat("###");
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+this.getDisplayName()+" @ ("+
-				center.getX()+","+center.getY()+","+center.getZ()+") "+CivSettings.localize.localizedString("buildable_cannotSupport"));
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+df.format(invalid_hourly_penalty*100)+"% "+CivSettings.localize.localizedString("buildable_cannotSupportDamage")+" ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_buildable_cannotSupport",this.getDisplayName(),(center.getX()+","+center.getY()+","+center.getZ())));
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_buildable_cannotSupportDamage",df.format(invalid_hourly_penalty*100),(this.hitpoints+"/"+this.getMaxHitPoints())));
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+this.invalidLayerMessage);
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("buildable_validationPrompt"));
 		this.save();
