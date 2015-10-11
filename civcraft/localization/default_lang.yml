@@ -2,6 +2,7 @@
 welcome_string: "Welcome to MineTexas CivilizationCraft [%0] [%1] [%2]"
 
 # =========================== String Formatting =========================
+# This file uses ANSI encoding.
 # In some of these strings, Variables may be present in varrying forms.
 # Use the Above string as an example
 # In code this is 
@@ -799,7 +800,7 @@ var_cmd_camp_removeSuccess: "[%0] was removed from your camp."
 cmd_camp_addInCamp: "This resident already belongs to a camp."
 cmd_camp_addInTown: "This resident belongs to a town and cannot join a camp."
 var_cmd_camp_addInvite: "[%0] has invited you to join their camp. Would you like to join [%1]?"
-var_cmd_camp_addSuccess: "[%0 was invited to join your camp."
+var_cmd_camp_addSuccess: "[%0] was invited to join your camp."
 var_cmd_camp_setownerMsg: "You are now the proud owner of the camp [%0]!"
 var_cmd_camp_setownerSuccess: "Transfered camp ownership to [%0]!"
 cmd_camp_leaveOwner: "The owner of the camp cannot leave it. Try [/camp setowner] to give it to someone else or use /camp disband to abondon the camp."
