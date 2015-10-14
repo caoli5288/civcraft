@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
@@ -51,6 +52,8 @@ public class GivePlayerStartingKit implements Runnable {
 					Integer amount = Integer.valueOf(split[1]);
 
 					stack = ItemManager.createItemStack(type, amount);
+					
+
 
 				} catch (NumberFormatException e) {
 					String customMatID = split[0];
@@ -62,6 +65,10 @@ public class GivePlayerStartingKit implements Runnable {
 					
 					stack = LoreCraftableMaterial.spawn(craftMat);
 				}
+//				if (split[0] == "mat_tutorial_book" || split[0] == "mat_found_camp")
+//				{
+					stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementSoulBound"));
+//				}
 				
 				player.getInventory().addItem(stack);
 			}

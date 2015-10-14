@@ -2,6 +2,7 @@ package com.avrgaming.global.perks.components;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.interactive.InteractiveConfirmWeatherChange;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -20,13 +21,13 @@ public class ChangeWeather extends PerkComponent {
 			return;
 		}
 		if (!player.getWorld().isThundering() && !player.getWorld().hasStorm()) {
-			CivMessage.sendError(resident, "Weather is already sunny!");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("weather_isSunny"));
 			return;
 		}
 		
-		CivMessage.sendHeading(resident, "Changing the Weather to Sunny");
-		CivMessage.send(resident, CivColor.Green+"Are you sure you want the weather to be sunny?");
-		CivMessage.send(resident, CivColor.LightGray+"If so type 'yes', type anything else to cancel.");
+		CivMessage.sendHeading(resident, CivSettings.localize.localizedString("weather_heading"));
+		CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("weather_confirmPrompt"));
+		CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("weather_confirmPrompt2"));
 		resident.setInteractiveMode(new InteractiveConfirmWeatherChange(this));
 	}
 }

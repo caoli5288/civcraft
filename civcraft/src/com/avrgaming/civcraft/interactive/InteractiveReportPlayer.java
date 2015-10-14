@@ -3,6 +3,7 @@ package com.avrgaming.civcraft.interactive;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -29,7 +30,7 @@ public class InteractiveReportPlayer implements InteractiveResponse {
 		}
 
 		if (message.equalsIgnoreCase("cancel")) {
-			CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Report cancelled.");
+			CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_report_cancel"));
 			resident.clearInteractiveMode();
 			return;
 		}
@@ -43,11 +44,11 @@ public class InteractiveReportPlayer implements InteractiveResponse {
 		}
 		
 		if (selectedType == null) {
-			CivMessage.sendError(player, "You must select a valid category to report. ("+ReportManager.getReportTypes()+")");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_report_category")+" ("+ReportManager.getReportTypes()+")");
 			return;
 		}
 		
-		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"Please enter a description of what happened:");
+		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_report_description"));
 		resident.setInteractiveMode(new InteractiveReportPlayerMessage(playerName, selectedType));		
 		
 	}

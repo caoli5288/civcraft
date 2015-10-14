@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+//import java.util.Random;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -153,10 +154,10 @@ public class Cannon extends Buildable {
 			tpl = Template.getTemplate(templatePath, center);
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new CivException("Internal Error.");
+			throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 		} catch (CivException e) {
 			e.printStackTrace();
-			throw new CivException("Internal Error.");
+			throw new CivException(CivSettings.localize.localizedString("internalCommandException"));
 		}
 		
 		corner = new BlockCoord(center);
@@ -171,7 +172,7 @@ public class Cannon extends Buildable {
 			this.saveNow();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal SQL Error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}
 		
 	}
@@ -179,15 +180,15 @@ public class Cannon extends Buildable {
 	protected void checkBlockPermissionsAndRestrictions(Player player, Block centerBlock, int regionX, int regionY, int regionZ) throws CivException {
 		
 		if (!War.isWarTime()) {
-			throw new CivException("Can only build Cannons during war time.");
+			throw new CivException(CivSettings.localize.localizedString("buildCannon_NotWar"));
 		}
 		
 		if (player.getLocation().getY() >= 128) {
-			throw new CivException("You're too high to build cannons.");
+			throw new CivException(CivSettings.localize.localizedString("cannon_build_tooHigh"));
 		}
 		
 		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
-			throw new CivException("Cannot build cannon here, would go over the minecraft height limit.");
+			throw new CivException(CivSettings.localize.localizedString("cannon_build_overHeightLimit"));
 		}
 		
 		if (!player.isOp()) {
@@ -203,32 +204,32 @@ public class Cannon extends Buildable {
 					Block b = centerBlock.getRelative(x, y, z);
 					
 					if (ItemManager.getId(b) == CivData.CHEST) {
-						throw new CivException("Cannot build here, would destroy chest.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_chestInWay"));
 					}
 		
 					BlockCoord coord = new BlockCoord(b);
 										
 					if (CivGlobal.getProtectedBlock(coord) != null) {
-						throw new CivException("Cannot build here, protected blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_protectedInWay"));
 					}
 					
 					if (CivGlobal.getStructureBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 					}
 								
 					if (CivGlobal.getCampBlock(coord) != null) {
-						throw new CivException("Cannot build here, a camp is in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_campinWay"));
 					}
 					
 					if (Cannon.cannonBlocks.containsKey(coord)) {
-						throw new CivException("Cannot build here, another cannon in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannon_build_cannonInWay"));
 					}
 					
 					yTotal += b.getWorld().getHighestBlockYAt(centerBlock.getX()+x, centerBlock.getZ()+z);
 					yCount++;
 					
 					if (CivGlobal.getRoadBlock(coord) != null) {
-						throw new CivException("Cannot build a cannon on top of an existing road block.");
+						throw new CivException(CivSettings.localize.localizedString("cannon_build_onRoad"));
 					}
 				}
 			}
@@ -238,7 +239,7 @@ public class Cannon extends Buildable {
 		
 		if (((centerBlock.getY() > (highestAverageBlock+10)) || 
 				(centerBlock.getY() < (highestAverageBlock-10)))) {
-			throw new CivException("Cannot build here, you must be closer to the surface.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 	}
 	
@@ -272,23 +273,23 @@ public class Cannon extends Buildable {
 	
 	private void updateFireSign(Block block) {
 		Sign sign = (Sign)block.getState();
-		sign.setLine(0, "FIRE");
+		sign.setLine(0, CivSettings.localize.localizedString("cannon_fire"));
 		boolean loaded = false;
 		
 		if (this.tntLoaded >= tntCost) {
-			sign.setLine(1, CivColor.LightGreen+CivColor.BOLD+"LOADED");
+			sign.setLine(1, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("cannon_Loaded"));
 			loaded = true;
 		} else {
 			sign.setLine(1, CivColor.Yellow+"("+this.tntLoaded+"/"+tntCost+") TNT");
 		}
 		
 		if (this.shotCooldown > 0) {
-			sign.setLine(2, CivColor.LightGray+"Wait "+this.shotCooldown);
+			sign.setLine(2, CivColor.LightGray+CivSettings.localize.localizedString("cannon_cooldownWait")+" "+this.shotCooldown);
 		} else {
 			if (loaded) {
-				sign.setLine(2, CivColor.LightGray+"READY");
+				sign.setLine(2, CivColor.LightGray+CivSettings.localize.localizedString("cannon_ready"));
 			} else {
-				sign.setLine(2, CivColor.LightGray+"Add TNT");
+				sign.setLine(2, CivColor.LightGray+CivSettings.localize.localizedString("cannon_addTNT"));
 			}
 		}
 		
@@ -517,13 +518,13 @@ public class Cannon extends Buildable {
 
 	private void validateUse(Player player) throws CivException {
 		if (this.hitpoints == 0) {
-			throw new CivException("Cannon destroyed.");
+			throw new CivException(CivSettings.localize.localizedString("cannon_destroyed"));
 		}
 		
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (resident.getCiv() != owner.getCiv()) {
-			throw new CivException("Only members of the owner's civilization can use a cannon.");
+			throw new CivException(CivSettings.localize.localizedString("cannon_notMember"));
 		}
 	}
 	
@@ -532,7 +533,7 @@ public class Cannon extends Buildable {
 		validateUse(event.getPlayer());
 		
 		if (this.shotCooldown > 0) {
-			CivMessage.sendError(event.getPlayer(), "Wait for the cooldown.");
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("cannon_waitForCooldown"));
 			return;
 		}
 		
@@ -543,7 +544,7 @@ public class Cannon extends Buildable {
 					if (ItemManager.getId(stack) == CivData.TNT) {
 						if (ItemManager.removeItemFromPlayer(event.getPlayer(), Material.TNT, 1)) {
 							this.tntLoaded++;
-							CivMessage.sendSuccess(event.getPlayer(), "Added TNT to cannon.");
+							CivMessage.sendSuccess(event.getPlayer(), CivSettings.localize.localizedString("cannon_addedTNT"));
 							updateFireSign(fireSignLocation.getBlock());
 
 							return;
@@ -551,7 +552,7 @@ public class Cannon extends Buildable {
 					}
 				}
 				
-				CivMessage.sendError(event.getPlayer(), "Cannon requires TNT to function. Please insert TNT.");
+				CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("cannon_notLoaded"));
 				return;
 			} else {
 				event.setCancelled(true);
@@ -559,7 +560,20 @@ public class Cannon extends Buildable {
 				return;
 			}
 		} else {
-			CivMessage.send(event.getPlayer(), "Fire!");
+//			Random rand = new Random();
+//			int randDestroy = rand.nextInt(100);
+//			if (randDestroy <= 15)
+//			{
+//				//destroy cannon
+//				CivMessage.send(event.getPlayer(), "Cannon misfired and was destroyed");
+//				destroy();
+//				CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+"Our Cannon at "+
+//						cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
+//						" has been destroyed due to misfire!");
+//				return;
+//			}
+			
+			CivMessage.send(event.getPlayer(), CivSettings.localize.localizedString("cannon_fireAway"));
 			cannonLocation.setDirection(direction);
 			Resident resident = CivGlobal.getResident(event.getPlayer());
 			CannonProjectile proj = new CannonProjectile(this, cannonLocation.clone(), resident);
@@ -659,22 +673,22 @@ public class Cannon extends Buildable {
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		
 		if (!resident.hasTown()) {
-			CivMessage.sendError(resident, "Can't destroy cannon's if you're not part of a civilization at war.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("cannon_onHit_NotAtWar"));
 			return;
 		}
 		
 		if (resident.getCiv() == owner.getCiv()) {
-			CivMessage.sendError(resident, "Can't destroy your own civ's cannons during war.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("cannon_onHit_ownCannon"));
 			return;
 		}
 		
 		if (!resident.getCiv().getDiplomacyManager().atWarWith(owner.getCiv())) {
-			CivMessage.sendError(resident, "You've got to be at war with this cannon's owner civ("+owner.getCiv().getName()+") to destroy it.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("cannon_onHit_NotWarringCiv")+"("+owner.getCiv().getName()+")");
 			return;
 		}
 		
 		if (this.hitpoints == 0) {
-			CivMessage.sendError(resident, "Cannon already destroyed.");
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("cannon_onHit_alreadyDestroyed"));
 			return;
 		}
 		
@@ -682,17 +696,15 @@ public class Cannon extends Buildable {
 		
 		if (hitpoints <= 0) {
 			destroy();
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivColor.BOLD+"Cannon Destroyed!");
-			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+"Our Cannon at "+
-					cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
-					" has been destroyed!");
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("cannon_onHit_Destroyed"));
+			CivMessage.sendCiv(owner.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("var_cannon_onHit_DestroyAlert",
+					cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()));
 			return;
 		}
 		
-		CivMessage.send(event.getPlayer(), CivColor.Yellow+"Hit Cannon! ("+this.hitpoints+"/"+maxHitpoints+")");
-		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+"Our Cannon at "+
-				cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()+
-				" has been hit! ("+hitpoints+"/"+maxHitpoints+")");
+		CivMessage.send(event.getPlayer(), CivColor.Yellow+CivSettings.localize.localizedString("cannon_onHit_doDamage")+" ("+this.hitpoints+"/"+maxHitpoints+")");
+		CivMessage.sendCiv(owner.getCiv(), CivColor.LightGray+CivSettings.localize.localizedString("var_cannon_onHit_doDamageAlert",hitpoints+"/"+maxHitpoints,
+				cannonLocation.getBlockX()+","+cannonLocation.getBlockY()+","+cannonLocation.getBlockZ()));
 	}
 	
 	private void launchExplodeFirework(Location loc) {

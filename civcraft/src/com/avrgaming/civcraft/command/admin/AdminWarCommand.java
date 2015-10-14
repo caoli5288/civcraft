@@ -37,13 +37,13 @@ public class AdminWarCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad war";
-		displayName = "Admin War";
+		displayName = CivSettings.localize.localizedString("adcmd_war_name");
 		
-		commands.put("start", "Turns on WarTime.");
-		commands.put("stop", "Turns off WarTime.");
-		commands.put("resetstart", "Resets the war start time to now.");
+		commands.put("start", CivSettings.localize.localizedString("adcmd_war_startDesc"));
+		commands.put("stop", CivSettings.localize.localizedString("adcmd_war_stopDesc"));
+		commands.put("resetstart", CivSettings.localize.localizedString("adcmd_war_resetstartDesc"));
 		//commands.put("setlastwar", "takes a date of the form: DAY:MONTH:YEAR:HOUR:MIN (24 hour time)");
-		commands.put("onlywarriors", "Kicks everyone who is not at war from servers and only lets at war players in.");
+		commands.put("onlywarriors", CivSettings.localize.localizedString("adcmd_war_onlywarriorsDesc"));
 	}
 	
 	public void onlywarriors_cmd() {
@@ -56,20 +56,20 @@ public class AdminWarCommand extends CommandBase {
 				Resident resident = CivGlobal.getResident(player);
 				
 				if (player.isOp() || player.hasPermission(CivSettings.MINI_ADMIN)) {
-					CivMessage.send(sender, "Skipping "+player.getName()+" since he is OP or mini admin.");
+					CivMessage.send(sender, CivSettings.localize.localizedString("var_adcmd_war_onlywarriorsSkippedAdmin",player.getName()));
 					continue;
 				}
 				
 				if (resident == null || !resident.hasTown() || 
 						!resident.getTown().getCiv().getDiplomacyManager().isAtWar()) {
 					
-					TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, "Kicked: Only residents 'at war' can play right now."));
+					TaskMaster.syncTask(new PlayerKickBan(player.getName(), true, false, CivSettings.localize.localizedString("adcmd_war_onlywarriorsKickMessage")));
 				}	
 			}
 			
-			CivMessage.global("All players 'not at war' have been kicked and cannot rejoin.");
+			CivMessage.global(CivSettings.localize.localizedString("adcmd_war_onlywarriorsStart"));
 		} else {
-			CivMessage.global("All players are now allowed to join again.");
+			CivMessage.global(CivSettings.localize.localizedString("adcmd_war_onlywarriorsEnd"));
 		}
 	}
 	
@@ -96,13 +96,13 @@ public class AdminWarCommand extends CommandBase {
 	public void start_cmd() {
 		
 		War.setWarTime(true);
-		CivMessage.sendSuccess(sender, "WarTime enabled.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_war_startSuccess"));
 	}
 	
 	public void stop_cmd() {
 		
 		War.setWarTime(false);
-		CivMessage.sendSuccess(sender, "WarTime disabled.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_war_stopSuccess"));
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class AdminWarCommand extends CommandBase {
 	@Override
 	public void permissionCheck() throws CivException {
 		if (sender.isOp() == false) {
-			throw new CivException("Only admins can use this command.");			
+			throw new CivException(CivSettings.localize.localizedString("adcmd_NotAdmin"));			
 		}	
 	}
 

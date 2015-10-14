@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.command.camp;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
@@ -26,6 +27,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.camp.Camp;
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -40,16 +42,62 @@ public class CampCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/camp";
-		displayName = "Camp";
+		displayName = CivSettings.localize.localizedString("Camp");
 		
-		commands.put("undo", "Unbuilds the camp, issues a refund.");
-		commands.put("add", "[name] - adds this player to our camp.");
-		commands.put("remove", "[name] - removes this player from our camp.");
-		commands.put("leave", "Leaves the current camp you're in.");
-		commands.put("setowner", "[name] - Sets the camp's owner to the player name you give. They must be a current member.");
-		commands.put("info", "Shows information about your current camp.");
-		commands.put("disband", "Disbands this camp.");
-		commands.put("upgrade", "Manage camp upgrades.");
+		commands.put("undo", CivSettings.localize.localizedString("cmd_camp_undoDesc"));
+		commands.put("add", CivSettings.localize.localizedString("cmd_camp_addDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_camp_removeDesc"));
+		commands.put("leave", CivSettings.localize.localizedString("cmd_camp_leaveDesc"));
+		commands.put("setowner", CivSettings.localize.localizedString("cmd_camp_setownerDesc"));
+		commands.put("info", CivSettings.localize.localizedString("cmd_camp_infoDesc"));
+		commands.put("disband", CivSettings.localize.localizedString("cmd_camp_disbandDesc"));
+		commands.put("upgrade", CivSettings.localize.localizedString("cmd_camp_upgradeDesc"));
+		commands.put("refresh", CivSettings.localize.localizedString("cmd_camp_refreshDesc"));
+		commands.put("location", CivSettings.localize.localizedString("cmd_camp_locationDesc"));
+	}
+	
+	public void location_cmd() throws CivException {
+		Resident resident = getResident();
+		
+		if (!resident.hasCamp()) {
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
+		}
+		Camp camp = resident.getCamp();
+
+        if (camp != null) 
+        {
+                CivMessage.send(sender, "");
+                CivMessage.send(sender, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("cmd_camp_locationSuccess")+" "+CivColor.LightPurple+camp.getCorner());
+                CivMessage.send(sender, "");
+        }
+    }
+	
+	
+	public void refresh_cmd() throws CivException {
+		Resident resident = getResident();
+		
+		if (!resident.hasCamp()) {
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
+		}
+		
+		Camp camp = resident.getCamp();
+		if (camp.getOwner() != resident) {
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_refreshNotOwner"));
+		}
+		
+		if (camp.isDestroyed())
+		{
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_refreshDestroyed"));
+		}
+		
+		try {
+			camp.repairFromTemplate();
+		} catch (IOException e) {
+		} catch (CivException e) {
+			e.printStackTrace();
+		}
+		camp.reprocessCommandSigns();
+		CivMessage.send(sender, CivSettings.localize.localizedString("cmd_camp_refreshSuccess"));
 	}
 	
 	public void upgrade_cmd() {
@@ -61,20 +109,20 @@ public class CampCommand extends CommandBase {
 		Camp camp = this.getCurrentCamp();
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
 
-		CivMessage.sendHeading(sender, "Camp "+camp.getName()+" Info");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_camp_infoHeading",camp.getName()));
 		HashMap<String,String> info = new HashMap<String, String>();
-		info.put("Owner", camp.getOwnerName());
-		info.put("Members", ""+camp.getMembers().size());
-		info.put("Next Raid", ""+sdf.format(camp.getNextRaidDate()));
+		info.put(CivSettings.localize.localizedString("Owner"), camp.getOwnerName());
+		info.put(CivSettings.localize.localizedString("Members"), ""+camp.getMembers().size());
+		info.put(CivSettings.localize.localizedString("NextRaid"), ""+sdf.format(camp.getNextRaidDate()));
 		CivMessage.send(sender, this.makeInfoString(info, CivColor.Green, CivColor.LightGreen));
 		
 		info.clear();
-		info.put("Hours of Fire Left", ""+camp.getFirepoints());
-		info.put("Longhouse Level", ""+camp.getLonghouseLevel()+""+camp.getLonghouseCountString());
+		info.put(CivSettings.localize.localizedString("cmd_camp_infoFireLeft"), ""+camp.getFirepoints());
+		info.put(CivSettings.localize.localizedString("cmd_camp_infoLonghouseLevel"), ""+camp.getLonghouseLevel()+""+camp.getLonghouseCountString());
 		CivMessage.send(sender, this.makeInfoString(info, CivColor.Green, CivColor.LightGreen));
 
 		info.clear();
-		info.put("Members", camp.getMembersString());
+		info.put(CivSettings.localize.localizedString("Members"), camp.getMembersString());
 		CivMessage.send(sender, this.makeInfoString(info, CivColor.Green, CivColor.LightGreen));
 	}
 	
@@ -84,15 +132,15 @@ public class CampCommand extends CommandBase {
 		Resident resident = getNamedResident(1);
 		
 		if (!resident.hasCamp() || resident.getCamp() != camp) {
-			throw new CivException(resident.getName()+" does not belong to this camp.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_camp_removeNotInCamp",resident.getName()));
 		}
 		
 		if (resident.getCamp().getOwner() == resident) {
-			throw new CivException("Cannot remove the owner of the camp from his own camp!");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_removeErrorOwner"));
 		}
 		
 		camp.removeMember(resident);
-		CivMessage.sendSuccess(sender, "Removed "+resident.getName()+" from this camp.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_removeSuccess",resident.getName()));
 	}
 	
 	public void add_cmd() throws CivException {
@@ -102,11 +150,11 @@ public class CampCommand extends CommandBase {
 		Player player = getPlayer();
 		
 		if (resident.hasCamp()) {
-			throw new CivException("This resident already belongs to a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_addInCamp"));
 		}
 		
 		if (resident.hasTown()) {
-			throw new CivException("This resident belongs to a town and cannot join a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_addInTown"));
 		}
 		
 		JoinCampResponse join = new JoinCampResponse();
@@ -115,10 +163,10 @@ public class CampCommand extends CommandBase {
 		join.sender = player;
 		
 		CivGlobal.questionPlayer(player, CivGlobal.getPlayer(resident), 
-				"Would you like to join the camp owned by "+player.getName()+"?",
+				CivSettings.localize.localizedString("var_cmd_camp_addInvite",player.getName(),camp.getName()),
 				INVITE_TIMEOUT, join);
 		
-		CivMessage.sendSuccess(player, "Invited "+resident.getName()+" to our camp.");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_camp_addSuccess",resident.getName()));
 	}
 	
 	public void setowner_cmd() throws CivException {
@@ -127,15 +175,15 @@ public class CampCommand extends CommandBase {
 		Resident newLeader = getNamedResident(1);
 		
 		if (!camp.hasMember(newLeader.getName())) {
-			throw new CivException(newLeader.getName()+" is not a member of the camp and cannot be set as the owner.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_camp_removeNotInCamp",newLeader.getName()));
 		}
 		
 		camp.setOwner(newLeader);
 		camp.save();
 		
 		Player player = CivGlobal.getPlayer(newLeader);
-		CivMessage.sendSuccess(player, "You are now the proud owner of the camp you're in.");
-		CivMessage.sendSuccess(sender, "Transfered camp ownership to "+newLeader.getName());
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_cmd_camp_setownerMsg",camp.getName()));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_setownerSuccess",newLeader.getName()));
 		
 	}
 	
@@ -143,17 +191,17 @@ public class CampCommand extends CommandBase {
 		Resident resident = getResident();
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("You are not currently in a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
 		}
 		
 		Camp camp = resident.getCamp();
 		if (camp.getOwner() == resident) {
-			throw new CivException("The owner of the camp cannot leave it. Try /camp setowner to give it to someone else or use /camp disband to abondon the camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_leaveOwner"));
 		}
 		
 		camp.removeMember(resident);
 		camp.save();
-		CivMessage.sendSuccess(sender, "You've left camp "+camp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_camp_leaveSuccess",camp.getName()));
 	}
 	
 	public void new_cmd() throws CivException {
@@ -166,32 +214,32 @@ public class CampCommand extends CommandBase {
 		Camp camp = this.getCurrentCamp();
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("You are not part of a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
 		}
 
 		camp.disband();
-		CivMessage.sendSuccess(sender, "Camp disbanded.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_camp_disbandSuccess"));
 	}
 	
 	public void undo_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("You are not part of a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
 		}
 		
 		Camp camp = resident.getCamp();
 		if (camp.getOwner() != resident) {
-			throw new CivException("Only the camp owner "+camp.getOwner().getName()+" can disband this camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_undoNotOwner"));
 		}
 		
 		if (!camp.isUndoable()) {
-			throw new CivException("This camp can no longer be unbuilt. Use /camp disband instead.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_undoTooLate"));
 		}
 		
 		LoreCraftableMaterial campMat = LoreCraftableMaterial.getCraftMaterialFromId("mat_found_camp");
 		if (campMat == null) {
-			throw new CivException("Cannot undo camp. Internal error. Contact an admin.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_camp_undoError"));
 		}
 		
 		ItemStack newStack = LoreCraftableMaterial.spawn(campMat);
@@ -199,11 +247,11 @@ public class CampCommand extends CommandBase {
 		HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(newStack);
 		for (ItemStack stack : leftovers.values()) {
 			player.getWorld().dropItem(player.getLocation(), stack);
-			CivMessage.send(player, CivColor.LightGray+"Your camp item was dropped on the ground because your inventory was full.");
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("cmd_camp_undoFullInven"));
 		}
 		
 		camp.undo();
-		CivMessage.sendSuccess(sender, "Unbuilt camp. You were refunded your Camp.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_camp_undoSuccess"));
 		
 	}
 	

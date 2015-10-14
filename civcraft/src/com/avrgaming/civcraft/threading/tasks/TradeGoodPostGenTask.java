@@ -34,7 +34,7 @@ import com.avrgaming.civcraft.config.ConfigTradeGood;
 import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.object.TradeGood;
 import com.avrgaming.civcraft.populators.TradeGoodPick;
 import com.avrgaming.civcraft.populators.TradeGoodPopulator;
@@ -88,8 +88,8 @@ public class TradeGoodPostGenTask implements Runnable {
 	
 	@Override
 	public void run() {
-		CivMessage.console(playerName, "Generating/Clearing Trade goods...");
-		CivMessage.console(playerName, "|- Organizing trade picks into a Queue.");
+		CivLog.info("Generating/Clearing Trade goods...");
+		CivLog.info("|- Organizing trade picks into a Queue.");
 		
 		deleteAllTradeGoodiesFromDB();
 		
@@ -103,7 +103,7 @@ public class TradeGoodPostGenTask implements Runnable {
 		int amount = 20;
 		int totalSize = picksQueue.size();
 		while (picksQueue.peek() != null) {
-			CivMessage.console(playerName, "|- Placing/Picking Goods:"+count+"/"+totalSize+" current size:"+picksQueue.size());
+			CivLog.info("|- Placing/Picking Goods:"+count+"/"+totalSize+" current size:"+picksQueue.size());
 			
 			Queue<TradeGoodPick> processQueue = new LinkedList<TradeGoodPick>();
 			for (int i = 0; i < amount; i++) {
@@ -128,7 +128,7 @@ public class TradeGoodPostGenTask implements Runnable {
 		}
 		
 		
-		CivMessage.console(playerName, "Finished!");
+		CivLog.info("Finished!");
 	}
 
 	class SyncTradeGenTask implements Runnable {

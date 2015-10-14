@@ -103,7 +103,6 @@ import com.avrgaming.civcraft.threading.tasks.CivLeaderQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CivQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CultureProcessAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.PlayerQuestionTask;
-//import com.avrgaming.civcraft.threading.tasks.UpdateTagBetweenCivsTask;
 import com.avrgaming.civcraft.threading.tasks.onLoadTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.BukkitObjects;
@@ -118,6 +117,9 @@ import com.avrgaming.global.perks.PerkManager;
 public class CivGlobal {
 
 	public static final double MIN_FRAME_DISTANCE = 3.0;
+	
+	public static double LIGHTHOUSE_WATER_PLAYER_SPEED = 1.5;
+	public static double LIGHTHOUSE_WATER_BOAT_SPEED = 1.1;
 	
 	public static Economy econ;
 	
@@ -181,6 +183,8 @@ public class CivGlobal {
 	private static SessionDatabase sdb;
 
 	public static boolean trommelsEnabled = true;
+	public static boolean quarriesEnabled = true;
+	public static boolean mobGrinderEnabled = true;
 	public static boolean towersEnabled = true;
 	public static boolean growthEnabled = true;
 	public static Boolean banWordsAlways = false;
@@ -702,7 +706,7 @@ public class CivGlobal {
 	public static Player getPlayer(Resident resident) throws CivException {
 		Player player = Bukkit.getPlayer(resident.getUUID());
 		if (player == null)
-			throw new CivException("No player named "+resident.getName());
+			throw new CivException("No player named"+" "+resident.getName());
 		return player;
 	}
 	
@@ -824,7 +828,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Player already has a question pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_hasPendingRequest"));			
 		}
 		
 		task = new PlayerQuestionTask(toPlayer, fromPlayer, question, timeout, finishedFunction);
@@ -841,7 +845,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Leaders of civ already have a question pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivLeaderQuestionTask(toCiv, fromPlayer, question, timeout, finishedFunction);
@@ -915,10 +919,10 @@ public class CivGlobal {
 	public static Player getPlayer(String name) throws CivException {
 		Resident res = CivGlobal.getResident(name);
 		if (res == null)
-			throw new CivException("No resident named"+name);
+			throw new CivException(CivSettings.localize.localizedString("var_civGlobal_noResident",name));
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player == null)
-			throw new CivException("No player named "+name);
+			throw new CivException(CivSettings.localize.localizedString("var_civGlobal_noPlayer",name));
 		return player;	
 	}
 	
@@ -1096,10 +1100,6 @@ public class CivGlobal {
 	public static ProtectedBlock getProtectedBlock(BlockCoord coord) {
 		return protectedBlocks.get(coord);
 	}
-	
-	public static ProtectedBlock removeProtectedBlock(BlockCoord coord) {
-		return protectedBlocks.remove(coord);
-	}
 
 	public static SessionDatabase getSessionDB() {
 		return sdb;
@@ -1209,7 +1209,17 @@ public class CivGlobal {
 	}
 	
 	public static void removeProtectedItemFrame(UUID id) {
+
+		CivLog.debug("Remove ID: "+id);
+		if (id == null)
+		{
+			return;
+		}
 		ItemFrameStorage store = getProtectedItemFrame(id);
+		if (store == null)
+		{
+			return;
+		}
 		ItemFrameStorage.attachedBlockMap.remove(store.getAttachedBlock());
 		protectedItemFrames.remove(id);
 	}
@@ -1451,34 +1461,28 @@ public class CivGlobal {
 		civ.getDiplomacyManager().setRelation(otherCiv, status, null);
 		otherCiv.getDiplomacyManager().setRelation(civ, status, null);
 		
-		String out = civ.getName()+" is now ";
+		String out = "";
 		switch (status) {
 		case NEUTRAL:
-			out += "NEUTRAL with ";
+			out += CivColor.LightGray+CivSettings.localize.localizedString("civGlobal_relation_Neutral")+CivColor.White;
 			break;
 		case HOSTILE:
-			out += CivColor.Yellow+"HOSTILE"+CivColor.White+" towards ";
+			out += CivColor.Yellow+CivSettings.localize.localizedString("civGlobal_relation_Hostile")+CivColor.White;
 			break;
 		case WAR:
-			out += "at "+CivColor.Rose+"WAR"+CivColor.White+" with ";
+			out += CivColor.Rose+CivSettings.localize.localizedString("civGlobal_relation_War")+CivColor.White;
 			break;
 		case PEACE:
-			out += "at PEACE with ";
+			out += CivColor.LightGreen+CivSettings.localize.localizedString("civGlobal_relation_Peace")+CivColor.White;
 			break;
 		case ALLY:
-			out += CivColor.LightGreen+" ALLIED "+CivColor.White+" with ";
+			out += CivColor.Green+CivSettings.localize.localizedString("civGlobal_relation_Allied")+CivColor.White;
 			break;
 		default:
 			break;
 		}
-		out += otherCiv.getName();
-		CivMessage.global(out);
-//		CivGlobal.updateTagsBetween(civ, otherCiv);
+		CivMessage.global(CivSettings.localize.localizedString("var_civGlobal_relation_isNow",civ.getName(),out,otherCiv.getName()));
 	}
-	
-//	private static void updateTagsBetween(Civilization civ, Civilization otherCiv) {
-//		TaskMaster.asyncTask(new UpdateTagBetweenCivsTask(civ, otherCiv), 0);
-//	}
 
 	public static void requestRelation(Civilization fromCiv, Civilization toCiv, String question, 
 			long timeout, QuestionResponseInterface finishedFunction) throws CivException {
@@ -1489,7 +1493,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Civilization already has an offer pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivQuestionTask(toCiv, fromCiv, question, timeout, finishedFunction);
@@ -1506,7 +1510,7 @@ public class CivGlobal {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Civilization already has an offer pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("civGlobal_civHasPendingRequest"));			
 		}
 		
 		task = new CivQuestionTask(toCiv, fromCiv, question, timeout, finishedFunction);

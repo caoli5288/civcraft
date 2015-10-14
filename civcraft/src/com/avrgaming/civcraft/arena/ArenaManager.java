@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 
-import net.minecraft.util.org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FileUtils;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -71,7 +71,7 @@ public class ArenaManager implements Runnable {
 			ArenaTeam team2 = teamQueue.poll();
 			if (team2 == null) {
 				/* We need another team to start a match, requeue our team and wait. */
-				CivMessage.sendTeam(team1, "No other teams waiting in queue yet, please wait.");
+				CivMessage.sendTeam(team1, CivSettings.localize.localizedString("arena_noOtherTeams"));
 				teamQueue.add(team1);
 				return;
 			}
@@ -99,8 +99,8 @@ public class ArenaManager implements Runnable {
 			/* Create a new arena. */
 			try {
 				Arena activeArena = createArena(arena);
-				CivMessage.sendTeam(team1, "Teleporting our team to the arena in 10 seconds...");
-				CivMessage.sendTeam(team2, "Teleporting our team to the arena in 10 seconds...");
+				CivMessage.sendTeam(team1, CivSettings.localize.localizedString("arena_enteringArenaIn10"));
+				CivMessage.sendTeam(team2, CivSettings.localize.localizedString("arena_enteringArenaIn10"));
 
 				class SyncTask implements Runnable {
 					Arena arena;
@@ -120,11 +120,11 @@ public class ArenaManager implements Runnable {
 							addTeamToArena(team2, team1, arena);
 							startArenaMatch(arena, team1, team2);
 						} catch (CivException e) {
-							CivMessage.sendTeam(team1, "An error has occured and your team has been kicked from the arena queue.");
-							CivMessage.sendTeam(team2, "An error has occured and your team has been kicked from the arena queue.");
+							CivMessage.sendTeam(team1, CivSettings.localize.localizedString("arena_ErrorKicked"));
+							CivMessage.sendTeam(team2, CivSettings.localize.localizedString("arena_ErrorKicked"));
 
-							CivMessage.sendTeam(team1, "Error:"+e.getMessage());
-							CivMessage.sendTeam(team2, "Error:"+e.getMessage());
+							CivMessage.sendTeam(team1, CivSettings.localize.localizedString("arena_ErrorKickedMessage")+e.getMessage());
+							CivMessage.sendTeam(team2, CivSettings.localize.localizedString("arena_ErrorKickedMessage")+e.getMessage());
 
 							e.printStackTrace();
 						}
@@ -147,12 +147,12 @@ public class ArenaManager implements Runnable {
 		int i = 0;
 		for (ArenaTeam team : teamQueue) {
 			if (!enabled) {
-				CivMessage.sendTeam(team, "Arenas are disabled via and admin. Please wait for them to be re-enabled.");			
+				CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_disabled"));
 			} else {
 				if (i < 2) {
-					CivMessage.sendTeam(team, "Waiting to join arena. We are next! All arena instances are busy.");			
+					CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_waitingBusy"));			
 				} else {
-					CivMessage.sendTeam(team, "Waiting to join arena. There are "+i+" teams ahead of us in line.");
+					CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_waitingQueue")+i);
 				}
 			}
 			i++;
@@ -240,12 +240,12 @@ public class ArenaManager implements Runnable {
 			}
 		}
 		
-		CivMessage.sendArena(activeArena, "Arena Match Started!");
+		CivMessage.sendArena(activeArena, CivSettings.localize.localizedString("arena_started"));
 	}
 	
 	public static void addTeamToQueue(ArenaTeam team) throws CivException {
 		if (teamQueue.contains(team)) {
-			throw new CivException("Your team is already in the queue.");
+			throw new CivException(CivSettings.localize.localizedString("arena_alreadyInQueue"));
 		}
 		
 		for (Resident resident : team.teamMembers) {
@@ -257,13 +257,13 @@ public class ArenaManager implements Runnable {
 
 			
 			if (!resident.isUsesAntiCheat()) {
-				throw new CivException("Cannot join arena: "+resident.getName()+" is not validated by CivCraft's anti-cheat.");
+				throw new CivException(CivSettings.localize.localizedString("var_arena_errorMissingAntiCheat",resident.getName()));
 			}
 		}
 		
-		CivMessage.sendTeam(team, "Added our team to the queue...");
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_addingTeamToQueue"));
 		if (teamQueue.size() > 2) {
-			CivMessage.sendTeam(team, "There are "+teamQueue.size()+" teams ahead of us in line.");
+			CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_waitingQueue")+teamQueue.size());
 		}
 		teamQueue.add(team);
 	}
@@ -272,12 +272,12 @@ public class ArenaManager implements Runnable {
 		arena.addTeam(team);
 		team.setCurrentArena(arena);
 		
-		CivMessage.sendTeamHeading(team, "Arena Match");
-		CivMessage.sendTeam(team, "Arena: "+CivColor.Yellow+CivColor.BOLD+arena.config.name);
+		CivMessage.sendTeamHeading(team, CivSettings.localize.localizedString("arena_statsHeading"));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_statsName")+" "+CivColor.Yellow+CivColor.BOLD+arena.config.name);
 		CivMessage.sendTeam(team, CivColor.LightGreen+CivColor.BOLD+""+team.getName()+CivColor.RESET+" VS "+CivColor.Rose+CivColor.BOLD+otherTeam.getName());
-		CivMessage.sendTeam(team, "Our Score: "+CivColor.LightGreen+team.getLadderPoints()+" "+getFavoredString(team, otherTeam));
-		CivMessage.sendTeam(team, "Their Score: "+CivColor.LightGreen+otherTeam.getLadderPoints()+" "+getFavoredString(otherTeam, team));
-		CivMessage.sendTeam(team, "Their team members: "+otherTeam.getMemberListSaveString());
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_statsScore")+" "+CivColor.LightGreen+team.getLadderPoints()+" "+getFavoredString(team, otherTeam));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_statsTheirScore")+" "+CivColor.LightGreen+otherTeam.getLadderPoints()+" "+getFavoredString(otherTeam, team));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("arena_statsTheirTeam")+" "+otherTeam.getMemberListSaveString());
 	}
 	
 	public static Arena createArena(ConfigArena arena) throws CivException {
@@ -559,10 +559,8 @@ public class ArenaManager implements Runnable {
 			
 		}
 		
-		CivMessage.sendArena(arena, CivColor.LightGreen+CivColor.BOLD+winner.getName()+
-									CivColor.RESET+" has defeated "+
-									CivColor.Rose+CivColor.BOLD+loser.getName());
-		CivMessage.sendArena(arena, "Leaving arena in 10 seconds...");
+		CivMessage.sendArena(arena, CivSettings.localize.localizedString("var_arena_hasDefeated",CivColor.LightGreen+CivColor.BOLD+winner.getName(),CivColor.Rose+CivColor.BOLD+loser.getName()));
+		CivMessage.sendArena(arena, CivSettings.localize.localizedString("arena_leavingIn10"));
 		TaskMaster.syncTask(new SyncTask(arena, loser, winner), TimeTools.toTicks(10));
 	}
 	
@@ -586,7 +584,7 @@ public class ArenaManager implements Runnable {
 			}
 		}
 		
-		CivMessage.sendArena(arena, "Leaving arena in 10 seconds...");
+		CivMessage.sendArena(arena, CivSettings.localize.localizedString("arena_leavingIn10"));
 		TaskMaster.syncTask(new SyncTask(arena), TimeTools.toTicks(10));
 	}
 

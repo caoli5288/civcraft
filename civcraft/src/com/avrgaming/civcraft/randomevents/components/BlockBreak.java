@@ -7,6 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.plugin.PluginManager;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivCraft;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -57,7 +58,7 @@ public class BlockBreak extends RandomEventComponent implements Listener {
 			Resident resident = CivGlobal.getResident(event.getPlayer().getName());
 			if (resident.getTown() == this.getParentTown()) {
 				brokenByTown = true;
-				CivMessage.send(event.getPlayer(), CivColor.LightGreen+"You seem to have found something interesting....");
+				CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("re_blockBreak_success"));
 			}
 			
 			blockBroken = true;

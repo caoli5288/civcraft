@@ -25,6 +25,7 @@ import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.object.Town;
 
@@ -87,7 +88,7 @@ public class WaterStructure extends Structure {
 		super.checkBlockPermissionsAndRestrictions(player, centerBlock, regionX, regionY, regionZ, savedLocation);
 		
 		if ((player.getLocation().getBlockY() - WATER_LEVEL) > TOLERANCE) {
-			throw new CivException("You must be close to the water's surface to build this structure.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_Water_notValidWaterSpot"));
 		}
 		
 	}

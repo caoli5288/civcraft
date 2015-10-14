@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.command.civ;
 import org.bukkit.ChatColor;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -38,10 +39,10 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/civ dip gift";
-		displayName = "Civ Diplomacy Gift";
+		displayName = CivSettings.localize.localizedString("cmd_civ_dipgift_name");
 		
-		commands.put("entireciv", "[civ] - Sends our entire civilization as a gift to [civ]. Only usable by civ leaders.");
-		commands.put("town", "[town] [civ] - Sends this town as a gift to [civ]. Only useable by civ leaders.");
+		commands.put("entireciv", CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivDesc"));
+		commands.put("town", CivSettings.localize.localizedString("cmd_civ_dipgift_townDesc"));
 		
 	}
 
@@ -53,7 +54,7 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 			 * this will allow questions to come in on a pseduo 'first come first serve' and 
 			 * prevents question spamming.
 			 */
-			throw new CivException("Civilization already has an offer pending, wait 30 seconds and try again.");			
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_sendHasPending"));			
 		}
 		
 		task = new CivQuestionTask(toCiv, fromCiv, message, 30000, finishedFunction);
@@ -67,22 +68,22 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		Civilization toCiv = getNamedCiv(1);
 		
 		if (fromCiv == toCiv) {
-			throw new CivException("Cannot gift your civiliation to itself.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivSelf"));
 		}
 		
 		if (fromCiv.getDiplomacyManager().isAtWar() || toCiv.getDiplomacyManager().isAtWar()) {
-			throw new CivException("Cannot gift your civilization if either civ is at war.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivAtWar"));
 		}
 		
 		fromCiv.validateGift();
 		toCiv.validateGift();
 		
 		if (War.isWarTime()) {
-			throw new CivException("Cannot gift civilizations during WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivDuringWar"));
 		}
 		
 		if (War.isWithinWarDeclareDays()) {
-			throw new CivException("Cannot gift civilizations within "+War.getTimeDeclareDays()+" days before WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivClostToWar1")+" "+War.getTimeDeclareDays()+" "+CivSettings.localize.localizedString("cmd_civ_dip_declareTooCloseToWar4"));
 		}
 		
 		
@@ -92,9 +93,9 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				CivColor.Yellow+ChatColor.BOLD+"The Civilization of "+fromCiv.getName()+" wishes to give itself to you. All of their towns will be yours."+
-						" It will cost us "+fromCiv.getMergeCost()+" Coins. Do you accept?", dipResponse);
-		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
+				CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_dipgift_entirecivRequest1",fromCiv.getName())+
+						" "+CivSettings.localize.localizedString("var_cmd_civ_dipgift_entirecivRequest2",fromCiv.getMergeCost(),CivSettings.CURRENCY_NAME), dipResponse);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivSuccess"));
 	}
 	
 	public void town_cmd() throws CivException {
@@ -104,27 +105,27 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		Civilization toCiv = getNamedCiv(2);
 
 		if (giftedTown.getCiv() != fromCiv) {
-			throw new CivException("You cannot gift a town that is not yours.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotYours"));
 		}
 		
 		if (giftedTown.getCiv() == toCiv) {
-			throw new CivException("You cannot gift a town to your own civ.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotInCiv"));
 		}
 		
 		if (giftedTown.getMotherCiv() != null && toCiv != giftedTown.getMotherCiv()) {
-			throw new CivException("You cannot gift captured towns to another civ unless it is the mother civ.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotMother"));
 		}
 		
 		if (giftedTown.isCapitol()) {
-			throw new CivException("You cannot give away your capitol town. Try gifting your entire civilization instead.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotCapitol"));
 		}
 		
 		if (War.isWarTime()) {
-			throw new CivException("Cannot gift towns during WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotDuringWar"));
 		}
 		
 		if (fromCiv.getDiplomacyManager().isAtWar() || toCiv.getDiplomacyManager().isAtWar()) {
-			throw new CivException("Cannot gift your town if either civ is at war.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_dipgift_townNotAtWar"));
 		}
 		
 		fromCiv.validateGift();
@@ -137,8 +138,8 @@ public class CivDiplomacyGiftCommand extends CommandBase {
 		dipResponse.toCiv = toCiv;
 		
 		sendGiftRequest(toCiv, fromCiv, 
-				"Our Civilization of "+fromCiv.getName()+" wishes to give the town of "+giftedTown.getName()+" to you. It will cost us "+giftedTown.getGiftCost()+" Coins. Do you accept?", dipResponse);
-		CivMessage.sendSuccess(sender, "Gift request sent, waiting for them to accept the gift.");
+				CivSettings.localize.localizedString("var_cmd_civ_dipgift_townRequest1",fromCiv.getName(),giftedTown.getName(),giftedTown.getGiftCost(),CivSettings.CURRENCY_NAME), dipResponse);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_dipgift_entirecivSuccess"));
 		
 	}
 	

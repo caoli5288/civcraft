@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.components.AttributeBiome;
 import com.avrgaming.civcraft.components.NonMemberFeeComponent;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -206,21 +207,21 @@ public class Library extends Structure {
 		if (ench.enchant != null) {
 			
 			if(!ench.enchant.canEnchantItem(item)) {
-				throw new CivException("You cannot enchant this item with this enchantment.");
+				throw new CivException(CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 			}
 			
 			if (item.containsEnchantment(ench.enchant) && item.getEnchantmentLevel(ench.enchant) > ench.level) {
-				throw new CivException("You already have this enchantment at this level, or better.");
+				throw new CivException(CivSettings.localize.localizedString("library_enchant_hasEnchant"));
 			}
 			
 			
 		} else {
 			if (!ench.enhancement.canEnchantItem(item)) {
-				throw new CivException("You cannot enchant this item with this enchantment.");
+				throw new CivException(CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 			}
 			
 			if (ench.enhancement.hasEnchantment(item)) {
-				throw new CivException("You already have this enchantment.");
+				throw new CivException(CivSettings.localize.localizedString("library_enchant_hasEnchantment"));
 			}
 		}
 	}
@@ -238,13 +239,13 @@ public class Library extends Structure {
 		int special_id = Integer.valueOf(sign.getAction());
 
 		if (!event.hasItem()) {
-			CivMessage.send(player, CivColor.Rose+"You must have the item you wish to enchant in hand.");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("library_enchant_itemNotInHand"));
 			return;
 		}
 		ItemStack item = event.getItem();
 		
 		if (special_id >= this.enchantments.size()) {
-			throw new CivException("Library enchantment not ready.");
+			throw new CivException(CivSettings.localize.localizedString("library_enchant_notReady"));
 		}
 		
 		
@@ -263,7 +264,7 @@ public class Library extends Structure {
 				
 		// Determine if resident can pay.
 		if (!resident.getTreasury().hasEnough(ench.price+payToTown)) {
-			CivMessage.send(player, CivColor.Rose+"You do not have enough money, you need "+ench.price+payToTown+ " Coins.");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_library_enchant_cannotAfford",ench.price+payToTown,CivSettings.CURRENCY_NAME));
 			return;
 		}
 				
@@ -273,14 +274,13 @@ public class Library extends Structure {
 		// Send money to town for non-resident fee
 		if (payToTown != 0) {
 			getTown().depositDirect(payToTown);
-			
-			CivMessage.send(player, CivColor.Yellow + "Paid "+ payToTown+" Coins in non-resident taxes.");
+			CivMessage.send(player,CivColor.Yellow+" "+CivSettings.localize.localizedString("var_taxes_paid",payToTown,CivSettings.CURRENCY_NAME));
 		}
 				
 		// Successful payment, process enchantment.
 		ItemStack newStack = this.addEnchantment(item, ench);
 		player.setItemInHand(newStack);
-		CivMessage.send(player, CivColor.LightGreen+"Enchanted with "+ench.displayName+"!");
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_library_enchantment_added",ench.displayName));
 	}
 
 	@Override
@@ -294,14 +294,14 @@ public class Library extends Structure {
 	
 	@Override
 	public String getDynmapDescription() {
-		String out = "<u><b>Library</u></b><br/>";
+		String out = "<u><b>"+this.getDisplayName()+"</u></b><br/>";
 		
 		if (this.enchantments.size() == 0) {
-			out += "Nothing stocked.";
+			out += CivSettings.localize.localizedString("library_dynmap_nothingStocked");
 		} 
 		else {
 			for (LibraryEnchantment mat : this.enchantments) {
-				out += mat.displayName+" for "+mat.price+"<br/>";
+				out += CivSettings.localize.localizedString("var_library_dynmap_item",mat.displayName,mat.price)+"<br/>";
 			}
 		}
 		return out;
@@ -315,7 +315,7 @@ public class Library extends Structure {
 
 	public void addEnchant(LibraryEnchantment enchant) throws CivException {
 		if (enchantments.size() >= 4) {
-			throw new CivException("Library is full.");
+			throw new CivException(CivSettings.localize.localizedString("library_full"));
 		}
 		enchantments.add(enchant);
 	}

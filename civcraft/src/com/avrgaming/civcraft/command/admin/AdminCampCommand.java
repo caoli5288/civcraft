@@ -25,6 +25,7 @@ import java.util.Date;
 
 import com.avrgaming.civcraft.camp.Camp;
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -34,11 +35,11 @@ public class AdminCampCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad camp";
-		displayName = "Admin camp";	
+		displayName = CivSettings.localize.localizedString("adcmd_camp_name");	
 		
-		commands.put("destroy", "[name] - destroyes this camp.");
-		commands.put("setraidtime", "[name] - d:M:y:H:m sets the raid time.");
-		commands.put("rebuild", "rebuilds this camp template");
+		commands.put("destroy", CivSettings.localize.localizedString("adcmd_camp_destroyDesc"));
+		commands.put("setraidtime", CivSettings.localize.localizedString("adcmd_camp_setRaidTimeDesck"));
+		commands.put("rebuild", CivSettings.localize.localizedString("adcmd_camp_rebuildDesc"));
 	}
 	
 	public void rebuild_cmd() throws CivException {
@@ -51,18 +52,18 @@ public class AdminCampCommand extends CommandBase {
 			e.printStackTrace();
 		}
 		camp.reprocessCommandSigns();
-		CivMessage.send(sender, "Repaired.");
+		CivMessage.send(sender, CivSettings.localize.localizedString("Repaired"));
 	}
 	
 	public void setraidtime_cmd() throws CivException {
 		Resident resident = getNamedResident(1);
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("This resident does not have a camp.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_camp_setRaidTimeNoCamp"));
 		}
 		
 		if (args.length < 3) {
-			throw new CivException("Enter a camp owner and date like DAY:MONTH:YEAR:HOUR:MIN");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_camp_setRaidTimeInvlidInput"));
 		}
 		
 		Camp camp = resident.getCamp();
@@ -74,9 +75,9 @@ public class AdminCampCommand extends CommandBase {
 		try {
 			next = parser.parse(dateStr);
 			camp.setNextRaidDate(next);
-			CivMessage.sendSuccess(sender, "Set raid date.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_camp_setRaidTimeSuccess"));
 		} catch (ParseException e) {
-			throw new CivException("Couldnt parse "+args[2]+" into a date, use format: DAY:MONTH:YEAR:HOUR:MIN");
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_camp_setRaidTimeFailedFormat",args[2]));
 		}
 		
 	}
@@ -84,7 +85,7 @@ public class AdminCampCommand extends CommandBase {
 	public void destroy_cmd() throws CivException {
 		Camp camp = getNamedCamp(1);		
 		camp.destroy();
-		CivMessage.sendSuccess(sender, "Camp destroyed.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_camp_destroyedSuccess"));
 	}
 	
 	@Override

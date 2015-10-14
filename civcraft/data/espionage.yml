@@ -99,7 +99,7 @@ missions:
 #      description: 
 #          - 'Plunges the target civiliztion into Anarchy.'
 #          - 'Emerges in a random government.' 
-#          - 'Must be within 100 blocks of the capital town hall.'
+#          - 'Must be within 100 blocks of the capitol town hall.'
 #      cost: 300000.0
 #      range: 100.0
 #      cooldown: 2.0

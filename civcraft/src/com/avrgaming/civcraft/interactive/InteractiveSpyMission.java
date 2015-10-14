@@ -6,6 +6,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigMission;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.items.units.MissionBook;
@@ -40,7 +41,7 @@ public class InteractiveSpyMission implements InteractiveResponse {
 			return;
 		}
 		
-		CivMessage.sendHeading(player, "Mission: "+mission.name);
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_spy_heading")+" "+mission.name);
 		
 		double failChance = MissionBook.getMissionFailChance(mission, target);
 		double compChance = MissionBook.getMissionCompromiseChance(mission, target);
@@ -53,23 +54,23 @@ public class InteractiveSpyMission implements InteractiveResponse {
 		int mins = mission.length / 60;
 		int seconds = mission.length % 60;
 		if (mins > 0) {
-			length += mins+" mins";
+			length += CivSettings.localize.localizedString("var_interactive_spy_mins",mins);
 			if (seconds > 0) {
-				length += " and ";
+				length += " & ";
 			}
 		}
 		
 		if (seconds > 0) {
-			length += seconds+" seconds";
+			length += CivSettings.localize.localizedString("var_interactive_spy_seconds",seconds);
 		}
 		
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"We have a "+CivColor.LightGreen+successChance+CivColor.Green+CivColor.BOLD+" chance of success.");
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"If we fail, the chance of being compromised is "+CivColor.LightGreen+compromiseChance);
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"It will cost our town "+CivColor.Yellow+mission.cost+CivColor.Green+CivColor.BOLD+" Coins to perform this mission.");
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"The mission will take "+CivColor.Yellow+length+CivColor.Green+CivColor.BOLD+" to complete.");
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"You must remain within the civ's borders during the mission, otherwise you'll fail the mission.");
-		CivMessage.send(player, CivColor.Green+CivColor.BOLD+"If these conditions are acceptible, type "+CivColor.Yellow+"yes");
-		CivMessage.send(player, CivColor.Green+ChatColor.BOLD+"Type anything else to abort.");
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt1",CivColor.LightGreen+successChance+CivColor.Green+CivColor.BOLD));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt2",CivColor.LightGreen+compromiseChance+CivColor.Green+CivColor.BOLD));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt3",CivColor.Yellow+mission.cost+CivColor.Green+CivColor.BOLD,CivSettings.CURRENCY_NAME));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_spy_prompt4",CivColor.Yellow+length+CivColor.Green+CivColor.BOLD));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt5"));
+		CivMessage.send(player, CivColor.Green+CivColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt6"));
+		CivMessage.send(player, CivColor.Green+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_spy_prompt7"));
 	}
 	
 	
@@ -84,14 +85,14 @@ public class InteractiveSpyMission implements InteractiveResponse {
 		resident.clearInteractiveMode();
 
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.sendError(player, "Mission Aborted.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_spy_aborted"));
 			return;
 		}
 		
 		if(!TaskMaster.hasTask("missiondelay:"+playerName)) {
 			TaskMaster.asyncTask("missiondelay:"+playerName, (new EspionageMissionTask(mission, playerName, playerLocation, target, mission.length)), 0);
 		} else {
-			CivMessage.sendError(player, "Waiting on countdown to start mission.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("interactive_spy_waiting"));
 			return;
 		}
 	}

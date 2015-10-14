@@ -1,6 +1,6 @@
 name: CivCraft
 main: com.avrgaming.civcraft.main.CivCraft
-version: 1.5
+version: 1.742
 
 commands:
     town:
@@ -43,8 +43,6 @@ commands:
         aliases:
     report:
         aliases:
-    vote:
-        aliases: [v]
     trade:
         aliases:
     kill:

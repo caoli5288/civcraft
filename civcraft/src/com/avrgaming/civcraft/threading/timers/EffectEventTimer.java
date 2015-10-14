@@ -34,6 +34,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Cottage;
 import com.avrgaming.civcraft.structure.Mine;
 import com.avrgaming.civcraft.structure.Structure;
+import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -94,6 +95,16 @@ public class EffectEventTimer extends CivAsyncTask {
 					}
 				}
 				break;
+			case "temple_culture":
+				if (struct instanceof Temple) {
+					Temple temple = (Temple)struct;
+					try {
+						temple.templeCulture(this);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+				break;
 			}
 			
 		}
@@ -109,7 +120,7 @@ public class EffectEventTimer extends CivAsyncTask {
 			// highjack this loop to display town hall warning.
 			TownHall townhall = town.getTownHall();
 			if (townhall == null) {
-				CivMessage.sendTown(town, CivColor.Yellow+"Your town does not have a town hall! Structures have no effect!");
+				CivMessage.sendTown(town, CivColor.Yellow+CivSettings.localize.localizedString("effectEvent_noTownHall"));
 				continue;
 			}
 							
@@ -132,11 +143,11 @@ public class EffectEventTimer extends CivAsyncTask {
 					unusedBeakers = Math.round(unusedBeakers);
 					
 					if (cultureFromBeakers > 0) {
-						CivMessage.sendTown(town, CivColor.LightGreen+"Converted "+CivColor.LightPurple+
-								df.format(unusedBeakers)+CivColor.LightGreen+" beakers into "+CivColor.LightPurple+
-								df.format(cultureFromBeakers)+CivColor.LightGreen+" culture since no tech was being researched.");
+						CivMessage.sendTown(town, CivColor.LightGreen+CivSettings.localize.localizedString("var_effectEvent_convertBeakers",(CivColor.LightPurple+
+								df.format(unusedBeakers)+CivColor.LightGreen),(CivColor.LightPurple+
+								df.format(cultureFromBeakers)+CivColor.LightGreen)));
 						cultureGenerated += cultureFromBeakers;
-						town.addAccumulatedCulture(unusedBeakers);
+						town.addAccumulatedCulture(cultureFromBeakers);
 						town.setUnusedBeakers(0);
 					}
 				}
@@ -146,7 +157,7 @@ public class EffectEventTimer extends CivAsyncTask {
 			}
 			
 			cultureGenerated = Math.round(cultureGenerated);
-			CivMessage.sendTown(town, CivColor.LightGreen+"Generated "+CivColor.LightPurple+cultureGenerated+CivColor.LightGreen+" culture.");
+			CivMessage.sendTown(town, CivColor.LightGreen+CivSettings.localize.localizedString("var_effectEvent_generatedCulture",(CivColor.LightPurple+cultureGenerated+CivColor.LightGreen)));
 		}
 		
 		/* Checking for expired vassal states. */

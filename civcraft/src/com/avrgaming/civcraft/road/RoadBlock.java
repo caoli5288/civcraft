@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.database.SQLUpdate;
 import com.avrgaming.civcraft.exception.CivException;
@@ -160,7 +161,7 @@ public class RoadBlock extends SQLObject implements BuildableDamageBlock {
 			TaskMaster.syncTask(new StructureBlockHitEvent(player.getName(), this.getCoord(), this, player.getWorld()), 0);
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
-			CivMessage.send(player, CivColor.Rose+"Cannot damage the road owned by "+this.getOwner().getCiv().getName()+" until "+sdf.format(this.road.getNextRaidDate()));		
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("var_roadBlock_cannotDestroy1",this.getOwner().getCiv().getName(),sdf.format(this.road.getNextRaidDate())));		
 		}
 	}
 

@@ -28,6 +28,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
@@ -188,7 +189,7 @@ public class TemplateStream {
 			String line = null;
 			line = reader.readLine();
 			if (line == null) {
-				throw new IOException("Invalid template file:"+filepath);
+				throw new IOException(CivSettings.localize.localizedString("template_invalidFile")+" "+filepath);
 			}
 			
 			String split[] = line.split(";");

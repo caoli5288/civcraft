@@ -24,6 +24,7 @@ import java.sql.SQLException;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -51,12 +52,12 @@ public class StartStructureBuild implements Runnable {
 			struct.doBuild(player, centerLoc, tpl);
 			struct.save();
 		} catch (CivException e) {
-			CivMessage.sendError(player, "Unable to build: "+e.getMessage());
+			CivMessage.sendError(player, CivSettings.localize.localizedString("internalCommandException")+" "+e.getMessage());
 		} catch (IOException e) {
-			CivMessage.sendError(player, "Internal IO error.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("internalIOException"));
 			e.printStackTrace();
 		} catch (SQLException e) {
-			CivMessage.sendError(player, "Internal SQL error.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("internalDatabaseException"));
 			e.printStackTrace();
 		}
 	}

@@ -84,6 +84,7 @@ public class Arena {
 		return getInstanceName(this.instanceID, config);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void addTeam(ArenaTeam team) throws CivException {
 		this.scoreboards.put(team.getName(), ArenaManager.scoreboardManager.getNewScoreboard());
 		
@@ -224,7 +225,7 @@ public class Arena {
 						r.restoreInventory();
 						r.teleportHome();
 						r.save();
-						CivMessage.send(r, CivColor.LightGray+"We've been teleported back to our home since the arena has ended.");
+						CivMessage.send(r, CivColor.LightGray+CivSettings.localize.localizedString("arena_endedTeleport"));
 					} catch (CivException e) {
 						/* player not online, inside arena is set true */
 					}
@@ -320,7 +321,7 @@ public class Arena {
 	public void decrementTimer() {
 		if (timeleft <= 0) {
 			if (!ended) {
-				CivMessage.sendArena(this, "Time is up! Nobody Wins!");
+				CivMessage.sendArena(this, CivSettings.localize.localizedString("arena_timeUp"));
 				ArenaManager.declareDraw(this);
 				ended = true;
 			}

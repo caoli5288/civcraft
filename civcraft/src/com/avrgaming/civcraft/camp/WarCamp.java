@@ -81,12 +81,12 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 				
 				try {					
 					if (!resident.hasTown()) {
-						throw new CivException("You must be part of a civilization to found a war camp.");
+						throw new CivException(CivSettings.localize.localizedString("warcamp_notInCiv"));
 					}
 					
 					if (!resident.getCiv().getLeaderGroup().hasMember(resident) &&
 						!resident.getCiv().getAdviserGroup().hasMember(resident)) {
-						throw new CivException("You must be a leader or adviser of the civilization to found a war camp.");
+						throw new CivException(CivSettings.localize.localizedString("warcamp_mustHaveRank"));
 					}
 					
 					int warCampMax;
@@ -98,20 +98,20 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					}
 					
 					if (resident.getCiv().getWarCamps().size() >= warCampMax) {
-						throw new CivException("You can only have "+warCampMax+" war camps.");
+						throw new CivException(CivSettings.localize.localizedString("var_warcamp_maxReached",warCampMax));
 					}
 					
 					ItemStack stack = player.getItemInHand();
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
 					if (craftMat == null || !craftMat.hasComponent("FoundWarCamp")) {
-						throw new CivException("You must be holding an item that can found a war camp.");
+						throw new CivException(CivSettings.localize.localizedString("warcamp_missingItem"));
 					}
 					
 					WarCamp camp = new WarCamp(resident, player.getLocation(), info);
 					camp.buildCamp(player, player.getLocation());
 					resident.getCiv().addWarCamp(camp);
 				
-					CivMessage.sendSuccess(player, "You have set up a war camp!");
+					CivMessage.sendSuccess(player, CivSettings.localize.localizedString("warcamp_createSuccess"));
 					camp.setWarCampBuilt();
 					ItemStack newStack = new ItemStack(Material.AIR);
 					player.setItemInHand(newStack);
@@ -238,20 +238,20 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 	protected void checkBlockPermissionsAndRestrictions(Player player, Block centerBlock, int regionX, int regionY, int regionZ) throws CivException {
 		
 		if (!War.isWarTime()) {
-			throw new CivException("Can only build War Camps during war time.");
+			throw new CivException(CivSettings.localize.localizedString("warcamp_notWarTime"));
 		}
 		
 		if (player.getLocation().getY() >= 200) {
-			throw new CivException("You're too high to build camps.");
+			throw new CivException(CivSettings.localize.localizedString("camp_checkTooHigh"));
 		}
 		
 		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
-			throw new CivException("Cannot build war camp here, would go over the minecraft height limit.");
+			throw new CivException(CivSettings.localize.localizedString("camp_checkWayTooHigh"));
 		}
 		
 		int minsLeft = this.isWarCampCooldownLeft();
 		if (minsLeft > 0) {
-			throw new CivException("Building a War Camp is on cooldown. You must wait "+minsLeft+" mins before you can build another.");
+			throw new CivException(CivSettings.localize.localizedString("var_warcamp_oncooldown",minsLeft));
 		}
 		
 		if (!player.isOp()) {
@@ -267,7 +267,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					Block b = centerBlock.getRelative(x, y, z);
 					
 					if (ItemManager.getId(b) == CivData.CHEST) {
-						throw new CivException("Cannot build here, would destroy chest.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_chestInWay"));
 					}
 		
 					BlockCoord coord = new BlockCoord(b);
@@ -276,34 +276,34 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					TownChunk tc = CivGlobal.getTownChunk(chunkCoord);
 					if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 						// Make sure we have permission to destroy any block in this area.
-						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+b.getX()+","+b.getY()+","+b.getZ());
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_needPermissions")+" "+b.getX()+","+b.getY()+","+b.getZ());
 					}
 					
 					if (CivGlobal.getProtectedBlock(coord) != null) {
-						throw new CivException("Cannot build here, protected blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_protectedInWay"));
 					}
 					
 					if (CivGlobal.getStructureBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 					}
 				
 					if (CivGlobal.getFarmChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_farmInWay"));
 					}
 		
 					if (CivGlobal.getWallChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a wall improvement.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_wallInWay"));
 					}
 					
 					if (CivGlobal.getCampBlock(coord) != null) {
-						throw new CivException("Cannot build here, a camp is in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_campinWay"));
 					}
 					
 					yTotal += b.getWorld().getHighestBlockYAt(centerBlock.getX()+x, centerBlock.getZ()+z);
 					yCount++;
 					
 					if (CivGlobal.getRoadBlock(coord) != null) {
-						throw new CivException("Cannot build a war camp on top of an existing road block.");
+						throw new CivException(CivSettings.localize.localizedString("warcamp_cannotBuildOnRoad"));
 					}
 				}
 			}
@@ -313,7 +313,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 		
 		if (((centerBlock.getY() > (highestAverageBlock+10)) || 
 				(centerBlock.getY() < (highestAverageBlock-10)))) {
-			throw new CivException("Cannot build here, you must be closer to the surface.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 	}
 	
@@ -467,11 +467,11 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					onControlBlockHit(cp, world, player, (StructureBlock)hit);
 				}
 			} else {
-				CivMessage.send(player, CivColor.Rose+"Control Block already destroyed.");
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("camp_controlBlockAlreadyDestroyed"));
 			}
 			
 		} else {
-			CivMessage.send(player, CivColor.Rose+"Cannot Damage " +this.getDisplayName()+ ", go after the control points!");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("structure_cannotDamage")+" "+this.getDisplayName()+ ", "+CivSettings.localize.localizedString("structure_targetControlBlocks"));
 		}
 	}
 	
@@ -505,14 +505,14 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 			this.onWarCampDestroy();	
 		}
 		else {
-			CivMessage.sendCiv(attacker.getTown().getCiv(), CivColor.LightGreen+"We've destroyed a control block in "+getCiv().getName()+"'s War Camp!");
-			CivMessage.sendCiv(getCiv(), CivColor.Rose+"A control block in our War Camp has been destroyed!");
+			CivMessage.sendCiv(attacker.getTown().getCiv(), CivColor.LightGreen+CivSettings.localize.localizedString("warcamp_enemyControlBlockDestroyed")+" "+getCiv().getName()+CivSettings.localize.localizedString("warcamp_name"));
+			CivMessage.sendCiv(getCiv(), CivColor.Rose+CivSettings.localize.localizedString("warcamp_ownControlBlockDestroyed"));
 		}
 		
 	}
 	
 	private void onWarCampDestroy() {
-		CivMessage.sendCiv(this.getCiv(), CivColor.Rose+"Our War Camp has been destroyed!");
+		CivMessage.sendCiv(this.getCiv(), CivColor.Rose+CivSettings.localize.localizedString("warcamp_ownDestroyed"));
 		this.getCiv().getWarCamps().remove(this);
 		
 		for (BlockCoord coord : this.structureBlocks.keySet()) {
@@ -528,8 +528,8 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 		world.playSound(hit.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
 		world.playEffect(hit.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
-		CivMessage.send(player, CivColor.LightGray+"Damaged Control Block ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
-		CivMessage.sendCiv(getCiv(), CivColor.Yellow+"Our War Camp's Control Points are under attack!");
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("warcamp_hitControlBlock")+" ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
+		CivMessage.sendCiv(getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("warcamp_controlBlockUnderAttack"));
 	}
 
 	@Override

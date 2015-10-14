@@ -16,6 +16,7 @@ import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.main.CivData;
@@ -216,13 +217,13 @@ public class TradeInventoryListener implements Listener {
 		/* Update our display item. */
 		ItemStack guiStack;
 		if (pair.coins == 0) {
-			guiStack = LoreGuiItem.build("Coins Offered", 
+			guiStack = LoreGuiItem.build(""+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("resident_tradeOffered"), 
 					ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-					CivColor.Yellow+"0 Coins");
+					CivColor.Yellow+"0 "+CivSettings.CURRENCY_NAME);
 		} else {
-			guiStack = LoreGuiItem.build("Coins Offered", 
+			guiStack = LoreGuiItem.build(""+CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("resident_tradeOffered"), 
 					ItemManager.getId(Material.GOLD_INGOT), 0, 
-					CivColor.Yellow+pair.coins+" Coins");
+					CivColor.Yellow+pair.coins+" "+CivSettings.CURRENCY_NAME);
 		}
 		pair.inv.setItem(MY_COIN_OFFER, guiStack);
 		
@@ -234,30 +235,30 @@ public class TradeInventoryListener implements Listener {
 	
 	public void markTradeValid(TradeInventoryPair pair) {
 		pair.valid = true;
-		ItemStack guiStack = LoreGuiItem.build("Your Confirm", 
+		ItemStack guiStack = LoreGuiItem.build(CivSettings.localize.localizedString("resident_tradeYourConfirm"), 
 				CivData.WOOL, CivData.DATA_WOOL_GREEN, 
-				CivColor.Gold+"<Click to Unconfirm Trade>");
+				CivColor.Gold+CivSettings.localize.localizedString("resident_tradeClicktoUnConfirm"));
 		pair.inv.setItem(MY_SLOT_BUTTON, guiStack);
 		
 		 guiStack = LoreGuiItem.build("Your Confirm", 
 					CivData.WOOL, CivData.DATA_WOOL_GREEN, 
-					CivColor.LightBlue+pair.otherResident.getName()+CivColor.LightGreen+" has confirmed the trade.");
+					CivSettings.localize.localizedString("var_resident_hasConfirmedTrade",(CivColor.LightBlue+pair.otherResident.getName()+CivColor.LightGreen)));
 		pair.otherInv.setItem(OTHER_SLOT_BUTTON, guiStack);
 
 	}
 	
 	public void markTradeInvalid(TradeInventoryPair pair) {
 		pair.valid = false;
-		ItemStack guiStack = LoreGuiItem.build("Your Confirm", 
+		ItemStack guiStack = LoreGuiItem.build(CivSettings.localize.localizedString("resident_tradeYourConfirm"), 
 				CivData.WOOL, CivData.DATA_WOOL_RED, 
-				CivColor.Gold+"<Click to Confirm Trade>");
+				CivColor.Gold+CivSettings.localize.localizedString("resident_tradeClicktoConfirm"));
 		
 		pair.inv.setItem(MY_SLOT_BUTTON, guiStack);
 		
-		ItemStack guiStack2 = LoreGuiItem.build(pair.otherResident.getName()+" Confirm", 
+		ItemStack guiStack2 = LoreGuiItem.build(pair.otherResident.getName()+" "+CivSettings.localize.localizedString("resident_tradeNotconfirmed"), 
 				CivData.WOOL, CivData.DATA_WOOL_RED, 
-				CivColor.LightGreen+"Waiting for "+CivColor.LightBlue+pair.otherResident.getName(),
-				CivColor.LightGray+"to confirm this trade.");
+				CivColor.LightGreen+CivSettings.localize.localizedString("var_resident_hasNotConfirmedTrade1",CivColor.LightBlue+pair.otherResident.getName()),
+				CivColor.LightGray+CivSettings.localize.localizedString("resident_hasNotConfirmedTrade1"));
 		pair.otherInv.setItem(OTHER_SLOT_BUTTON, guiStack2);
 	}
 	
@@ -459,16 +460,16 @@ public class TradeInventoryListener implements Listener {
 			}
 			
 			if (!pair.resident.getTreasury().hasEnough(pair.coins)) {
-				CivMessage.sendError(us, pair.resident.getName()+" doesnt have enough Coins!");
-				CivMessage.sendError(them, pair.resident.getName()+" doesnt have enough Coins!");
+				CivMessage.sendError(us, pair.resident.getName()+" "+CivSettings.localize.localizedString("resident_trade_doesnothaveenough")+" "+CivSettings.CURRENCY_NAME+"!");
+				CivMessage.sendError(them, pair.resident.getName()+" "+CivSettings.localize.localizedString("resident_trade_doesnothaveenough")+" "+CivSettings.CURRENCY_NAME+"!");
 				us.closeInventory();
 				them.closeInventory();
 				return;
 			}
 			
 			if (!pair.otherResident.getTreasury().hasEnough(pair.otherCoins)) {
-				CivMessage.sendError(us, pair.otherResident.getName()+" doesnt have enough Coins!");
-				CivMessage.sendError(them, pair.otherResident.getName()+" doesnt have enough Coins!");
+				CivMessage.sendError(us, pair.otherResident.getName()+" "+CivSettings.localize.localizedString("resident_trade_doesnothaveenough")+" "+CivSettings.CURRENCY_NAME+"!");
+				CivMessage.sendError(them, pair.otherResident.getName()+" "+CivSettings.localize.localizedString("resident_trade_doesnothaveenough")+" "+CivSettings.CURRENCY_NAME+"!");
 				us.closeInventory();
 				them.closeInventory();
 				return;
@@ -477,15 +478,16 @@ public class TradeInventoryListener implements Listener {
 			if (pair.coins != 0) {
 				pair.resident.getTreasury().withdraw(pair.coins);
 				pair.otherResident.getTreasury().deposit(pair.coins);
-				CivMessage.sendSuccess(pair.resident, "Gave "+CivColor.Rose+pair.coins+" to "+pair.otherResident.getName());
-				CivMessage.sendSuccess(pair.otherResident, "Recieved "+CivColor.Yellow+pair.coins+" from "+pair.resident.getName());
+				CivMessage.sendSuccess(pair.resident, CivSettings.localize.localizedString("var_resident_trade_gave",(CivColor.Rose+pair.coins+" "+CivSettings.CURRENCY_NAME),pair.otherResident.getName()));
+				CivMessage.sendSuccess(pair.otherResident, CivSettings.localize.localizedString("var_resident_trade_Receive",(CivColor.Yellow+pair.coins+" "+CivSettings.CURRENCY_NAME),pair.resident.getName()));
 			}
 
 			if (pair.otherCoins != 0) {
 				pair.otherResident.getTreasury().withdraw(pair.otherCoins);
 				pair.resident.getTreasury().deposit(pair.otherCoins);
-				CivMessage.sendSuccess(pair.resident, "Recieved "+CivColor.Yellow+pair.otherCoins+" from "+pair.otherResident.getName());
-				CivMessage.sendSuccess(pair.otherResident, "Gave "+CivColor.Rose+pair.otherCoins+" to "+pair.resident.getName());
+
+				CivMessage.sendSuccess(pair.resident, CivSettings.localize.localizedString("var_resident_trade_Receive",(CivColor.Yellow+pair.coins+" "+CivSettings.CURRENCY_NAME),pair.otherResident.getName()));
+				CivMessage.sendSuccess(pair.otherResident, CivSettings.localize.localizedString("var_resident_trade_gave",(CivColor.Rose+pair.coins+" "+CivSettings.CURRENCY_NAME),pair.resident.getName()));
 			}
 
 			/* Finally, give their stuff to me. And my stuff to them. */
@@ -504,8 +506,8 @@ public class TradeInventoryListener implements Listener {
 			}
 			
 			
-			CivMessage.sendSuccess(us, "Transaction Successful.");
-			CivMessage.sendSuccess(them, "Transaction Successful.");		
+			CivMessage.sendSuccess(us, CivSettings.localize.localizedString("resident_trade_success"));
+			CivMessage.sendSuccess(them, CivSettings.localize.localizedString("resident_trade_success"));		
 		} finally {
 			us.closeInventory();
 			them.closeInventory();
@@ -608,9 +610,9 @@ public class TradeInventoryListener implements Listener {
 		/* Close other player's inventory if open. */
 		TradeInventoryPair otherPair = tradeInventories.get(getTradeInventoryKey(pair.otherResident));
 		if (otherPair != null) {
-			ItemStack guiStack = LoreGuiItem.build(pair.otherResident.getName()+" Confirm", 
+			ItemStack guiStack = LoreGuiItem.build(pair.otherResident.getName()+" "+CivSettings.localize.localizedString("resident_tradeNotconfirmed"), 
 					CivData.BEDROCK, 0, 
-					CivColor.LightGray+player.getName()+" has closed the trading window.");
+					CivColor.LightGray+CivSettings.localize.localizedString("var_resident_trade_cancelled",player.getName()));
 			for (int i = OTHERS_SLOTS_START; i < OTHERS_SLOTS_END; i++) {
 				otherPair.inv.setItem(i, guiStack);
 			}

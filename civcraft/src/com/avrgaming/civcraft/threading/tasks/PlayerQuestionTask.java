@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.threading.tasks;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.questions.QuestionBaseTask;
@@ -55,9 +56,9 @@ public class PlayerQuestionTask extends QuestionBaseTask implements Runnable {
 	
 	@Override
 	public void run() {	
-		CivMessage.send(askedPlayer, CivColor.LightGray+"Question from: "+CivColor.LightBlue+questionPlayer.getName());
+		CivMessage.send(askedPlayer, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_prompt1")+" "+CivColor.LightBlue+questionPlayer.getName());
 		CivMessage.send(askedPlayer, CivColor.LightPurple+CivColor.BOLD+question);
-		CivMessage.send(askedPlayer, CivColor.LightGray+"Respond by typing "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" or "+CivColor.LightBlue+"/deny");
+		CivMessage.send(askedPlayer, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_prompt2"));
 		
 		try {
 			synchronized(this) {
@@ -74,8 +75,8 @@ public class PlayerQuestionTask extends QuestionBaseTask implements Runnable {
 			return;
 		}
 		
-		CivMessage.send(askedPlayer, CivColor.LightGray+"You failed to respond to the question from "+questionPlayer.getName()+" in time.");
-		CivMessage.send(questionPlayer, CivColor.LightGray+askedPlayer.getName()+" failed to answer the question in time.");
+		CivMessage.send(askedPlayer, CivColor.LightGray+CivSettings.localize.localizedString("var_PlayerQuestionTask_failedInTime",questionPlayer.getName()));
+		CivMessage.send(questionPlayer, CivColor.LightGray+CivSettings.localize.localizedString("var_civQtast_NoResponse",askedPlayer.getName()));
 		cleanup();
 	}
 

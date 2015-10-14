@@ -15,7 +15,7 @@ public class LoreEnhancementDefense extends LoreEnhancement {
 	}
 	
 	public String getLoreString(double baseLevel) {
-		return CivColor.Blue+"+"+baseLevel+" Defense";
+		return CivColor.Blue+"+"+baseLevel+" "+CivSettings.localize.localizedString("itemLore_Defense");
 	}
 	
 	@Override

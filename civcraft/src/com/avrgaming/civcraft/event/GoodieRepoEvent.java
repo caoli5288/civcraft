@@ -60,7 +60,7 @@ public class GoodieRepoEvent implements EventInterface {
 	public void process() {
 		CivLog.info("TimerEvent: GoodieRepo -------------------------------------");
 		repoProcess();
-		CivMessage.global("Trade Goodies have been respawned at trade outposts.");
+		CivMessage.global(CivSettings.localize.localizedString("goodieRepoBroadcast"));
 	}
 
 	@Override

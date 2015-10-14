@@ -91,7 +91,7 @@ public class Blacksmith extends Structure {
 	}
 	
 	private String getNonResidentFeeString() {
-		return "Fee: "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
+		return CivSettings.localize.localizedString("Fee:")+" "+((int)(this.nonMemberFeeComponent.getFeeRate()*100) + "%").toString();		
 	}
 	
 	@Override
@@ -114,7 +114,7 @@ public class Blacksmith extends Structure {
 		diff /= 1000;
 		
 		if (diff < Blacksmith.COOLDOWN) {
-			throw new CivException("Blacksmith is on cooldown. Please wait another "+(Blacksmith.COOLDOWN - diff)+" seconds.");
+			throw new CivException(CivSettings.localize.localizedString("var_blacksmith_onCooldown",(Blacksmith.COOLDOWN - diff)));
 		}
 		
 		lastUse = now;
@@ -146,18 +146,17 @@ public class Blacksmith extends Structure {
 
 			switch (special_id) {
 			case 0:
-				sign.setText("Deposit\nWithdraw\nCatalyst");
+				sign.setText(CivSettings.localize.localizedString("blacksmith_sign_catalyst"));
 				break;
 			case 1:
-				sign.setText("Forge!\n"+
-						"For "+cost+" Coins\n"+
+				sign.setText(CivSettings.localize.localizedString("blacksmith_sign_forgeCost")+" "+cost+CivSettings.CURRENCY_NAME+"\n"+
 						getNonResidentFeeString());			
 				break;
 			case 2:
-				sign.setText("Deposit\nOre\nResidents Only");
+				sign.setText(CivSettings.localize.localizedString("blacksmith_sign_depositOre"));
 				break;
 			case 3:
-				sign.setText("Withdraw\nOre\nResidents Only");
+				sign.setText(CivSettings.localize.localizedString("blacksmith_sign_withdrawOre"));
 				break;
 			}
 				
@@ -225,7 +224,7 @@ public class Blacksmith extends Structure {
 			/* Validate that the item being added is a catalyst */
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(item);
 			if (craftMat == null || !craftMat.hasComponent("Catalyst")) {
-				throw new CivException("You must deposit a catalyst into the forge.");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_deposit_notCatalyst"));
 			}
 			
 			/* Item is a catalyst. Add it to the session DB. */
@@ -237,12 +236,12 @@ public class Blacksmith extends Structure {
 			//	player.getInventory().remove(item);
 			}
 			
-			CivMessage.sendSuccess(player, "Deposited Catalyst.");
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("blacksmith_deposit_success"));
 		} else {
 			/* Catalyst already in blacksmith, withdraw it. */
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(sessions.get(0).value);
 			if (craftMat == null) {
-				throw new CivException("Error withdrawing catalyst from blacksmith. File a bug report!");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_deposit_errorWithdraw"));
 			}
 			
 			ItemStack stack = LoreMaterial.spawn(craftMat);
@@ -253,7 +252,7 @@ public class Blacksmith extends Structure {
 				}
 			}
 			CivGlobal.getSessionDB().delete_all(key);
-			CivMessage.sendSuccess(player, "Withdrawn Catalyst");
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("blacksmith_deposit_withdrawSuccess"));
 		}
 	}
 	
@@ -278,17 +277,17 @@ public class Blacksmith extends Structure {
 		if (freeStr == null) {
 			/* No free enhancements on item, search for catalyst. */
 			if (sessions == null || sessions.size() == 0) {
-				throw new CivException("No catalyst in the forge. Deposit one first.");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_noCatalyst"));
 			}
 			
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(sessions.get(0).value);
 			if (craftMat == null) {
-				throw new CivException("Error getting catalyst from blacksmith. File a bug report!");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_missingCatalyst"));
 			}
 			
 			catalyst = (Catalyst)craftMat.getComponent("Catalyst");
 			if (catalyst == null) {
-				throw new CivException("Error getting catalyst from blacksmith. Please file a bug report.");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_missingCatalyst"));
 			}
 		} else {
 			String[] split = freeStr.split(":");
@@ -297,12 +296,12 @@ public class Blacksmith extends Structure {
 			
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(mid);
 			if (craftMat == null) {
-				throw new CivException("Error getting catalyst from blacksmith. File a bug report!");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_missingCatalyst"));
 			}
 
 			catalyst = (Catalyst)craftMat.getComponent("Catalyst");
 			if (catalyst == null) {
-				throw new CivException("Error getting catalyst from blacksmith. Please file a bug report.");
+				throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_missingCatalyst"));
 			}
 			
 			/* reduce level and reset item. */
@@ -313,7 +312,7 @@ public class Blacksmith extends Structure {
 				String str = lore[i];
 				if (str.contains("free enhancements")) {
 					if (level != 0) {
-						lore[i] = CivColor.LightBlue+level+" free enhancements! Redeem at blacksmith.";
+						lore[i] = CivColor.LightBlue+CivSettings.localize.localizedString("var_blacksmith_forge_loreFreeEnchancements",level);
 					} else {
 						lore[i] = "";
 					}
@@ -336,7 +335,7 @@ public class Blacksmith extends Structure {
 		ItemStack enhancedItem = catalyst.getEnchantedItem(stack);
 		
 		if (enhancedItem == null) {
-			throw new CivException("You cannot use this catalyst on this item.");
+			throw new CivException(CivSettings.localize.localizedString("blacksmith_forge_invalidItem"));
 		}
 		
 		/* Consume the enhancement. */
@@ -348,11 +347,11 @@ public class Blacksmith extends Structure {
 			 * Sucks, but this is what happened here.
 			 */
 			player.setItemInHand(ItemManager.createItemStack(CivData.AIR, 1));
-			CivMessage.sendError(player, "Enhancement failed. Item has broken.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("blacksmith_forge_failed"));
 			return;
 		} else {
 			player.setItemInHand(enhancedItem);
-			CivMessage.sendSuccess(player, "Enhancement succeeded!");
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("blacksmith_forge_success"));
 			return;
 		}
 	}
@@ -365,13 +364,13 @@ public class Blacksmith extends Structure {
 		
 		// Make sure that the item is a valid smelt type.
 		if (!Blacksmith.canSmelt(itemsInHand.getTypeId())) {
-			throw new CivException ("Can only smelt gold and iron ore.");
+			throw new CivException (CivSettings.localize.localizedString("blacksmith_smelt_onlyOres"));
 		}
 		
 		// Only members can use the smelter
 		Resident res = CivGlobal.getResident(player.getName());
 		if (!res.hasTown() || this.getTown() != res.getTown()) {
-			throw new CivException ("Can only use the smelter if you are a town member.");
+			throw new CivException (CivSettings.localize.localizedString("blacksmith_smelt_notMember"));
 		}
 		
 		String value = convertType(itemsInHand.getTypeId())+":"+(itemsInHand.getAmount()*Blacksmith.YIELD_RATE);
@@ -385,11 +384,10 @@ public class Blacksmith extends Structure {
 		//BukkitTools.sch
 		// Schedule a message to notify the player when the smelting is finished.
 		BukkitObjects.scheduleAsyncDelayedTask(new NotificationTask(player.getName(), 
-				CivColor.LightGreen+" Your stack of "+itemsInHand.getAmount()+" "+
-				CivData.getDisplayName(itemsInHand.getTypeId())+" has finished smelting."), 
+				CivColor.LightGreen+CivSettings.localize.localizedString("var_blacksmith_smelt_asyncNotify",itemsInHand.getAmount(),CivData.getDisplayName(itemsInHand.getTypeId()))), 
 				TimeTools.toTicks(SMELT_TIME_SECONDS));
 		
-		CivMessage.send(player,CivColor.LightGreen+ "Deposited "+itemsInHand.getAmount()+ " ore.");
+		CivMessage.send(player,CivColor.LightGreen+ CivSettings.localize.localizedString("var_blacksmith_smelt_depositSuccess",itemsInHand.getAmount(),CivData.getDisplayName(itemsInHand.getTypeId())));
 		
 		player.updateInventory();
 	}
@@ -415,13 +413,13 @@ public class Blacksmith extends Structure {
 		// Only members can use the smelter
 		Resident res = CivGlobal.getResident(player.getName());
 		if (!res.hasTown() || this.getTown() != res.getTown()) {
-			throw new CivException ("Can only use the smelter if you are a town member.");
+			throw new CivException (CivSettings.localize.localizedString("blacksmith_smelt_notMember"));
 		}
 		
 		entries = CivGlobal.getSessionDB().lookup(key);
 		
 		if (entries == null || entries.size() == 0) {
-			throw new CivException ("No items to withdraw");
+			throw new CivException (CivSettings.localize.localizedString("blacksmith_smelt_nothingInSmelter"));
 		}
 				
 		Inventory inv = player.getInventory();
@@ -440,8 +438,7 @@ public class Blacksmith extends Structure {
 				 
 				double timeLeft = ((double)Blacksmith.SMELT_TIME_SECONDS - (double)secondsBetween) / (double)60;
 				//Date finish = new Date(now+(secondsBetween*1000));
-				CivMessage.send(player, CivColor.Yellow+"Stack of "+amount+" "+
-						CivData.getDisplayName(itemId)+" will be finished in "+ df1.format(timeLeft) +" minutes.");
+				CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_blacksmith_smelt_inProgress1",amount,CivData.getDisplayName(itemId),df1.format(timeLeft)));
 				continue;
 			}
 			
@@ -452,11 +449,12 @@ public class Blacksmith extends Structure {
 			// If this stack was successfully withdrawn, delete it from the DB.
 			if (leftovers.size() == 0) {
 				CivGlobal.getSessionDB().delete(se.request_id, se.key);
-				CivMessage.send(player, CivColor.LightGreen+"Withdrew "+amount+" "+CivData.getDisplayName(itemId));
+				CivMessage.send(player, CivSettings.localize.localizedString("var_cmd_civ_withdrawSuccess",amount,CivData.getDisplayName(itemId)));
+
 				break;
 			} else {
 				// We do not have space in our inventory, inform the player.
-				CivMessage.send(player, CivColor.Rose+"Not enough inventory space for all items.");
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("blacksmith_smelt_notEnoughInvenSpace"));
 				
 				// If the leftover size is the same as the size we are trying to withdraw, do nothing.
 				int leftoverAmount = CivGlobal.getLeftoverSize(leftovers);

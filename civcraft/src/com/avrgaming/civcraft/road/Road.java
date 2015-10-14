@@ -101,7 +101,7 @@ public class Road extends Structure {
 	public void processUndo() throws CivException {
 		
 		if (!this.hasOldBlockData) {
-			throw new CivException("It's been too long since the road was built. Cannot undo. Demolish it instead.");
+			throw new CivException(CivSettings.localize.localizedString("road_mustDemolish"));
 		}
 		
 		for (BlockCoord bcoord : oldBlockData.keySet()) {
@@ -132,7 +132,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		this.getTown().getTreasury().deposit(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.Yellow+"Refunded "+totalCost+" Coins from road construction.");
+		CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_road_undoComplete",totalCost,CivSettings.CURRENCY_NAME));
 		
 		try {
 			this.delete();
@@ -183,18 +183,18 @@ public class Road extends Structure {
 	@Override
 	public void buildPlayerPreview(Player player, Location centerLoc) throws CivException, IOException {
 		if (!this.getTown().hasTechnology(this.getRequiredTechnology())) {
-			throw new CivException("We don't have the technology yet.");
+			throw new CivException(CivSettings.localize.localizedString("road_missingTech"));
 		}
 		
 		if (War.isWarTime()) {
-			throw new CivException("Cannot build roads during WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("road_warTime"));
 		}
 		
 		/* 
 		 * Put the player into a "place mode" which allows them to place down
 		 * markers
 		 */
-		MarkerPlacementManager.addToPlacementMode(player, this, "Road Marker");		
+		MarkerPlacementManager.addToPlacementMode(player, this, CivSettings.localize.localizedString("road_startPlacement"));		
 	}
 	
 	@Override
@@ -211,11 +211,11 @@ public class Road extends Structure {
 		
 		CultureChunk cc = CivGlobal.getCultureChunk(next);
 		if (cc != null && cc.getTown().getCiv() != this.getTown().getCiv()) {
-			throw new CivException("Cannot build roads in the culture that is not yours.");
+			throw new CivException(CivSettings.localize.localizedString("road_wrongCulture"));
 		}
 		
 		if (locs.size() <= 1) {
-			CivMessage.send(player, CivColor.LightGray+"First location placed, place another to start build a Road.");
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("road_marker1"));
 			return;
 		}
 	
@@ -223,7 +223,7 @@ public class Road extends Structure {
 		
 		double distance = locs.get(0).distance(locs.get(1));
 		if (distance > Road.MAX_SEGMENT) {
-			throw new CivException("Can only build a road in "+Road.MAX_SEGMENT+" block segments, pick a closer location");
+			throw new CivException(CivSettings.localize.localizedString("var_road_tooLong",Road.MAX_SEGMENT));
 		}
 		
 		MarkerPlacementManager.removeFromPlacementMode(player, false);
@@ -253,7 +253,7 @@ public class Road extends Structure {
 		
 		double totalCost = this.getTotalCost();
 		if (!this.getTown().getTreasury().hasEnough(totalCost)) {
-			throw new CivException("You do not have the required "+totalCost+" Coins in the town treasury to build this road.");
+			throw new CivException(CivSettings.localize.localizedString("var_road_tooPoor",totalCost,CivSettings.CURRENCY_NAME));
 		}
 		
 		for (SimpleBlock sb : simpleBlocks.values()) {
@@ -296,7 +296,7 @@ public class Road extends Structure {
 		
 		/* Register structure in global tables. */
 		this.getTown().getTreasury().withdraw(totalCost);
-		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+"Our town spent "+CivColor.Yellow+totalCost+CivColor.LightGreen+" Coins constructing a road.");
+		CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_road_success",CivColor.Yellow+totalCost+CivColor.LightGreen,CivSettings.CURRENCY_NAME));
 		this.getTown().addStructure(this);
 		CivGlobal.addStructure(this);
 		this.getTown().lastBuildableBuilt = this;
@@ -339,23 +339,22 @@ public class Road extends Structure {
 			bcoord.setY(startCoord.getY() + i);
 			
 			if (ItemManager.getId(bcoord.getBlock()) == CivData.CHEST) {
-				throw new CivException("Cannot build a road here. Would destroy a chest at "+bcoord.toString());
+				throw new CivException(CivSettings.localize.localizedString("var_road_validate_wouldDestroyChest",bcoord.toString()));
 			}
 			
 			if (CivGlobal.getProtectedBlock(bcoord) != null) {
-				throw new CivException("Cannot build a road here. Would destroy protected block at "+bcoord.toString());
+				throw new CivException(CivSettings.localize.localizedString("var_road_validate_protectedBlock",bcoord.toString()));
 			}
 			
 			if (CivGlobal.getCampFromChunk(coord) != null) {
-				throw new CivException("Cannot build a road into a chunk which contains a camp.");
+				throw new CivException(CivSettings.localize.localizedString("road_validate_camp"));
 			}
 			
 			StructureBlock structBlock = CivGlobal.getStructureBlock(bcoord);
 			if (structBlock != null) {
 				allowedToPlaceHere = false;
 				if (structBlock.getCiv() != this.getCiv()) {
-					throw new CivException("Cannot build a road here. Structure block belonging to "+structBlock.getCiv().getName()+
-							" at "+structBlock.getX()+", "+structBlock.getY()+", "+structBlock.getZ()+" is in the way.");
+					throw new CivException(CivSettings.localize.localizedString("var_road_validate_structure",structBlock.getCiv().getName(),(structBlock.getX()+", "+structBlock.getY()+", "+structBlock.getZ())));
 				}
 			}
 			
@@ -363,8 +362,7 @@ public class Road extends Structure {
 			if (rb != null) {
 				allowedToPlaceHere = false;
 				if (rb.getRoad().getCiv() != this.getCiv()) {
-					throw new CivException("Cannot build a road here. Road belonging to "+rb.getRoad().getCiv().getName()+
-							" at block at "+rb.getCoord().getX()+", "+rb.getCoord().getY()+", "+rb.getCoord().getZ()+" is in the way.");
+					throw new CivException(CivSettings.localize.localizedString("var_road_validate_roadInWay",rb.getRoad().getCiv().getName(),(rb.getCoord().getX()+", "+rb.getCoord().getY()+", "+rb.getCoord().getZ())));
 				}
 			}
 		}
@@ -408,18 +406,18 @@ public class Road extends Structure {
 			
 			/* Make sure the Y doesnt get too steep. */
 			if (Math.abs(lastY - locSecond.getBlockY()) > 1.0 ) {
-				throw new CivException("Road is too steep to be built here. Try lowering the one of the end points to make the road less steep.");
+				throw new CivException(CivSettings.localize.localizedString("road_validate_tooSteep"));
 			}
 			
 			if (locSecond.getBlockY() < 5) {
-				throw new CivException("Cannot build road blocks within 5 blocks of bedrock.");
+				throw new CivException(CivSettings.localize.localizedString("road_validate_tooLow"));
 			}
 			
 			lastY = locSecond.getBlockY();
 			
 			blockCount++;
 			if (blockCount > Road.RECURSION_LIMIT) {
-				throw new CivException("ERROR: Building road blocks exceeded recursion limit! Halted to keep server alive.");
+				throw new CivException(CivSettings.localize.localizedString("road_validate_recursionLimit"));
 			}
 			
 			getHorizontalSegment(player, locSecond, simpleBlocks);
@@ -581,7 +579,7 @@ public class Road extends Structure {
 			
 			if (this.roadBlocks.size() == 0) {
 				/* We're out of road blocks. This road is no more! */
-				CivMessage.sendTown(this.getTown(), "Our road near "+this.getCorner()+" has been destroyed!");
+				CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("var_road_destroyed",this.getCorner()));
 				this.delete();
 			}
 		} catch (SQLException e) {
@@ -633,12 +631,12 @@ public class Road extends Structure {
 		boolean wasTenPercent = false;
 		
 		if(hit.getOwner().isDestroyed()) {
-			CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is already destroyed.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_road_alreadyDestroyed",hit.getOwner().getDisplayName()));
 			return;
 		}
 		
 		if (!hit.getOwner().isComplete() && !(hit.getOwner() instanceof Wonder)) {
-			CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is still being built, cannot be destroyed.");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("var_road_underConstruction",hit.getOwner().getDisplayName()));
 			return;		
 		}
 		
@@ -659,7 +657,7 @@ public class Road extends Structure {
 	@Override
 	public void onDestroy() {
 		//can be overriden in subclasses.
-		CivMessage.global("A "+this.getDisplayName()+" in "+this.getTown().getName()+" has been destroyed!");
+		CivMessage.global(CivSettings.localize.localizedString("var_road_destroySuccess",this.getDisplayName(),this.getTown().getName()));
 		this.hitpoints = 0;
 		this.fancyDestroyStructureBlocks();
 		try {

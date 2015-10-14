@@ -19,7 +19,7 @@ public class TradeCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/trade";
-		displayName = "Trade";
+		displayName = CivSettings.localize.localizedString("cmd_trade_Name");
 		sendUnknownToDefault = true;
 	}
 
@@ -29,7 +29,7 @@ public class TradeCommand extends CommandBase {
 		Resident trader = getResident();
 		
 		if (resident.isInsideArena() || trader.isInsideArena()) {
-			throw new CivException("You cannot trade items when a player is inside a PvP Arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_trade_ArenaError"));
 		}
 		
 		double max_trade_distance;
@@ -44,15 +44,15 @@ public class TradeCommand extends CommandBase {
 		Player residentPlayer = CivGlobal.getPlayer(resident);
 		
 		if (trader == resident) {
-			throw new CivException("You cannot trade with yourself.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_trade_YourselfError"));
 		}
 		
 		if (traderPlayer.getLocation().distance(residentPlayer.getLocation()) > max_trade_distance) {
-			throw new CivException(resident.getName()+" is too far away to trade with.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_trade_tooFarError",resident.getName()));
 		}
 		
 		if (TradeInventoryListener.tradeInventories.containsKey(TradeInventoryListener.getTradeInventoryKey(resident))) {
-			throw new CivException(resident.getName()+" is already trading with someone. Please wait.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_trade_alreadyTradingError",resident.getName()));
 		}
 		
 		TradeRequest tradeRequest = new TradeRequest();
@@ -60,15 +60,15 @@ public class TradeCommand extends CommandBase {
 		tradeRequest.trader = trader;
 		
 		CivGlobal.questionPlayer(traderPlayer, residentPlayer, 
-				"Would you like to trade with "+traderPlayer.getName()+"?",
+				CivSettings.localize.localizedString("cmd_trade_popTheQuestion")+" "+traderPlayer.getName()+"?",
 				TRADE_TIMEOUT, tradeRequest);
-		CivMessage.sendSuccess(sender, "Trade Invitation Sent");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_trade_requestSent"));
 	}
 
 	@Override
 	public void showHelp() {
-		CivMessage.send(sender, CivColor.LightPurple+command+" "+CivColor.Yellow+"[resident name] "+
-				CivColor.LightGray+"Opens trading window with this player.");
+		CivMessage.send(sender, CivColor.LightPurple+command+" "+CivColor.Yellow+CivSettings.localize.localizedString("cmd_trade_resName")+" "+
+				CivColor.LightGray+CivSettings.localize.localizedString("cmd_trade_cmdDesc"));
 	}
 
 	@Override

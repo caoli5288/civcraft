@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.command;
 
 import org.bukkit.ChatColor;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.interactive.InteractiveReportPlayer;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -14,23 +15,23 @@ public class ReportCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/report";
-		displayName = "Report";
+		displayName = CivSettings.localize.localizedString("cmd_reprot_Name");
 		
-		commands.put("player", "[name] - Reports this player for misconduct.");
+		commands.put("player", CivSettings.localize.localizedString("cmd_report_playerDesc"));
 	}
 
 	public void player_cmd() throws CivException {
 		Resident resident = getResident();
 		Resident reportedResident = getNamedResident(1);
 		
-		CivMessage.sendHeading(sender, "Reporting a Player");
-		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"You are reporting "+reportedResident.getName()+" for misconduct.");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_report_Heading"));
+		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_report_1")+" "+reportedResident.getName());
 		CivMessage.send(sender, " ");
-		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Please select one of the following categories: "+CivColor.LightGreen+ChatColor.BOLD+ReportManager.getReportTypes());
+		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_report_2")+" "+CivColor.LightGreen+ChatColor.BOLD+ReportManager.getReportTypes());
 		CivMessage.send(sender, " ");
-		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Reporting players allows our staff to determine patterns of behavior in players," +
-				"if a player gets too many bad reports they may be banned. Please know that filing false reports is also a bannable offense.");
-		CivMessage.send(sender, CivColor.LightGray+ChatColor.BOLD+"Type 'cancel' to cancel this report.");
+		CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+ CivSettings.localize.localizedString("cmd_report_3")+
+				CivSettings.localize.localizedString("cmd_report_4"));
+		CivMessage.send(sender, CivColor.LightGray+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_report_5"));
 		resident.setInteractiveMode(new InteractiveReportPlayer(reportedResident.getName()));
 	}
 	

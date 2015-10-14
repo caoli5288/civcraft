@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.questions;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Resident;
@@ -32,9 +33,9 @@ public class SurrenderRequest implements QuestionResponseInterface {
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
 			fromCiv.onDefeat(toCiv);
-			CivMessage.global(fromCiv.getName()+" has surrendered to "+toCiv.getName());
+			CivMessage.global(CivSettings.localize.localizedString("var_surrender_accepted",fromCiv.getName(),toCiv.getName()));
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" declined our offer.");
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+CivSettings.localize.localizedString("var_RequestDecline",toCiv.getName()));
 		}
 	}
 

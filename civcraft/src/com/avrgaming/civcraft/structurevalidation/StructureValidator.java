@@ -170,8 +170,7 @@ public class StructureValidator implements Runnable {
 			if (valid) {
 				if (percentValid < Buildable.getReinforcementRequirementForLevel(checkedLevelCount)) {
 					DecimalFormat df = new DecimalFormat();
-					message = "Layer: "+y+" is "+df.format(percentValid*100)+"%("+reinforcementValue+"/"+totalBlocks+
-							") valid, it needs to be "+df.format(Buildable.validPercentRequirement*100)+"%.";
+					message = CivSettings.localize.localizedString("var_structureValidator_layerInvalid",y,df.format(percentValid*100),(reinforcementValue+"/"+totalBlocks),df.format(Buildable.validPercentRequirement*100));
 					valid = false;
 					continue;
 				}
@@ -187,12 +186,12 @@ public class StructureValidator implements Runnable {
 		if (player != null) {
 			CivMessage.sendError(player, message);
 			if (player.isOp()) {
-				CivMessage.send(player, CivColor.LightGray+"Since you're OP we'll let you build here anyway.");
+				CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("structureValidator_isOP"));
 				valid = true;
 			}
 			
 			if (valid) {
-				CivMessage.send(player, CivColor.LightGreen+"Structure position is valid.");
+				CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("structureValidator_isValid"));
 				if (buildable != null) {
 					buildable.setValid(true);
 					buildable.invalidLayerMessage = "";

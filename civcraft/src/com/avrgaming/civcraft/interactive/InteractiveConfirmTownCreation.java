@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -42,12 +43,12 @@ public class InteractiveConfirmTownCreation implements InteractiveResponse {
 		resident.clearInteractiveMode();
 
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.send(player, "Town creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_town_cancel"));
 			return;
 		}
 		
 		if (resident.desiredTownName == null) {
-			CivMessage.send(player, CivColor.Rose+"Internal Error Creating Town... =(");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("interactive_town_createError"));
 			return;
 		}
 		
@@ -55,15 +56,14 @@ public class InteractiveConfirmTownCreation implements InteractiveResponse {
 		join.resident = resident;
 		join.civ = resident.getCiv();
 		try {
-			CivGlobal.questionLeaders(player, resident.getCiv(), player.getName()+" would like to found the town of "+
-					resident.desiredTownName+" at "+player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ(),
+			CivGlobal.questionLeaders(player, resident.getCiv(), CivSettings.localize.localizedString("var_interactive_town_alert",player.getName(),resident.desiredTownName,(player.getLocation().getBlockX()+","+player.getLocation().getBlockY()+","+player.getLocation().getBlockZ())),
 					30*1000, join);
 		} catch (CivException e) {
 			CivMessage.sendError(player, e.getMessage());
 			return;
 		}
 		
-		CivMessage.send(player, CivColor.Yellow+"Sent request to civilization leaders for this town. Awaiting their reply.");
+		CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("interactive_town_request"));
 //		CivGlobal.questionPlayer(player, CivGlobal.getPlayer(newResident), 
 //				"Would you like to join the town of "+town.getName()+"?",
 //				INVITE_TIMEOUT, join);

@@ -26,7 +26,6 @@ import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
-import com.avrgaming.global.perks.PlatinumManager;
 
 public class LoreCraftableMaterialListener implements Listener {
 
@@ -40,8 +39,12 @@ public class LoreCraftableMaterialListener implements Listener {
 				
 				/* Disable notch apples */
 				ItemStack resultStack = event.getInventory().getResult();
+				if (resultStack == null)
+				{
+					return;
+				}
 				if (resultStack.getType().equals(Material.GOLDEN_APPLE)) {
-					CivMessage.sendError((Player)event.getWhoClicked(), "You cannot craft golden apples. Sorry.");
+					CivMessage.sendError((Player)event.getWhoClicked(), CivSettings.localize.localizedString("loreCraft_goldenApples"));
 					event.setCancelled(true);
 					return;
 				}
@@ -49,7 +52,7 @@ public class LoreCraftableMaterialListener implements Listener {
 				ConfigTechItem restrictedTechItem = CivSettings.techItems.get(ItemManager.getId(resultStack));
 				if (restrictedTechItem != null) {
 					ConfigTech tech = CivSettings.techs.get(restrictedTechItem.require_tech);
-					CivMessage.sendError(player, "Your civilization doesn't have the required technology ("+tech.name+") to craft this item.");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("var_loreCraft_missingTech",tech.name));
 					event.setCancelled(true);
 					return;
 				}
@@ -58,10 +61,20 @@ public class LoreCraftableMaterialListener implements Listener {
 			}
 			
 			if (!craftMat.getConfigMaterial().playerHasTechnology(player)) {
-				CivMessage.sendError(player, "You do not have the required technology ("+craftMat.getConfigMaterial().getRequireString()+") to craft this item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_loreCraft_missingTech",craftMat.getConfigMaterial().getRequireString()));
 				event.setCancelled(true);
 				return;
 			}
+//			String matName =craftMat.getId(); 
+//			if (matName.contains("_alt"))
+//			{
+//				ItemStack resultStack = event.getInventory().getResult();
+//				String id = matName.replaceAll("_alt(.*)", "");
+//				ItemStack newStack = LoreMaterial.spawn(LoreMaterial.materialMap.get(id));
+//				newStack.setAmount(resultStack.getAmount());
+//				event.getInventory().setResult(newStack);
+//				CivLog.debug("Item Crafting: " +id);
+//			}
 			
 //			if (craftMat.hasComponent("Tagged")) {
 //				String tag = Tagged.matrixHasSameTag(event.getInventory().getMatrix());
@@ -81,15 +94,15 @@ public class LoreCraftableMaterialListener implements Listener {
 			
 			Resident resident = CivGlobal.getResident(player);
 			if (craftMat.getId().equals("mat_found_camp")) {
-				PlatinumManager.givePlatinumOnce(resident, 
-						CivSettings.platinumRewards.get("buildCamp").name,
-						CivSettings.platinumRewards.get("buildCamp").amount, 
-						"Achievement! You've founded your first camp and earned %d");
+//				PlatinumManager.givePlatinumOnce(resident, 
+//						CivSettings.platinumRewards.get("buildCamp").name,
+//						CivSettings.platinumRewards.get("buildCamp").amount, 
+//						"Achievement! You've founded your first camp and earned %d");
 			} else if(craftMat.getId().equals("mat_found_civ")) {
-				PlatinumManager.givePlatinumOnce(resident, 
-						CivSettings.platinumRewards.get("buildCiv").name,
-						CivSettings.platinumRewards.get("buildCiv").amount, 
-						"Achievement! You've founded your first Civilization and earned %d");				
+//				PlatinumManager.givePlatinumOnce(resident, 
+//						CivSettings.platinumRewards.get("buildCiv").name,
+//						CivSettings.platinumRewards.get("buildCiv").amount, 
+//						"Achievement! You've founded your first Civilization and earned %d");				
 			} else {
 				class AsyncTask implements Runnable {
 					Resident resident;
@@ -115,9 +128,9 @@ public class LoreCraftableMaterialListener implements Listener {
 							amount = Integer.valueOf(entries.get(0).value);
 							amount += craftAmount;
 							if (amount >= 100) {
-								PlatinumManager.givePlatinum(resident, 
-										CivSettings.platinumRewards.get("craft100Items").amount, 
-										"Expert crafting earns you %d");
+//								PlatinumManager.givePlatinum(resident, 
+//										CivSettings.platinumRewards.get("craft100Items").amount, 
+//										"Expert crafting earns you %d");
 								amount -= 100;
 							}
 						
@@ -212,7 +225,7 @@ public class LoreCraftableMaterialListener implements Listener {
 				}
 				
 				return;
-			} else {
+			} else {				
 				if(!LoreCraftableMaterial.isCustom(event.getRecipe().getResult())) {
 					/* Result is not custom, but recipie is. Set to blank. */
 					if (!loreMat.isVanilla()) {
@@ -220,6 +233,13 @@ public class LoreCraftableMaterialListener implements Listener {
 						return;
 					}
 				}
+			}
+
+			String matName =loreMat.getId(); 
+			if (matName.contains("_alt"))
+			{
+				String id = matName.replaceAll("_alt(.*)", "");
+				loreMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 			}
 			
 			ItemStack newStack;
@@ -259,6 +279,12 @@ public class LoreCraftableMaterialListener implements Listener {
 				}
 			}
 			
+			String matName =loreMat.getId(); 
+			if (matName.contains("_alt"))
+			{
+				String id = matName.replaceAll("_alt(.*)", "");
+				loreMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
+			}
 			
 			ItemStack newStack;
 			if (!loreMat.isVanilla()) {

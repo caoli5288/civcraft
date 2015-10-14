@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.threading.tasks.PlayerQuestionTask;
@@ -33,13 +34,13 @@ public class SelectCommand implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (!(sender instanceof Player)) {
-			CivMessage.sendError(sender, "Only a player can execute this command.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_MustBePlayer"));
 			return false;
 		}
 		
 		
 		if (args.length < 1) {
-			CivMessage.sendError(sender, "Enter a number.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_enterNumber"));
 			return false;
 		}
 		
@@ -47,12 +48,12 @@ public class SelectCommand implements CommandExecutor {
 		
 		PlayerQuestionTask task = (PlayerQuestionTask) CivGlobal.getQuestionTask(player.getName());
 		if (task == null) {
-			CivMessage.sendError(sender, "No question to respond to.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_acceptError"));
 			return false;
 		}
 		
 		if (!(task instanceof TemplateSelectQuestionTask)) {
-			CivMessage.sendError(sender, "Cannot respond to the current question.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_acceptSomethingWentWrong"));
 			return false;
 		}
 		

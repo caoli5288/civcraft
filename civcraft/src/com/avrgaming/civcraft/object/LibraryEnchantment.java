@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.object;
 
 import org.bukkit.enchantments.Enchantment;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.structure.Library;
@@ -37,7 +38,7 @@ public class LibraryEnchantment {
 		if (enchant == null)  {
 			enhancement = LoreEnhancement.enhancements.get(name);
 			if (enhancement == null) {
-				throw new CivException("Could not create CivEnchantment:"+name+". Couldn't find enchantment or enhancement");
+				throw new CivException(CivSettings.localize.localizedString("libraryEnchantError1",name));
 			}
 		}
 		level = lvl;

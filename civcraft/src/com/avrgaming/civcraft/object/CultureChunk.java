@@ -84,11 +84,11 @@ public class CultureChunk {
 	}
 	
 	public String getOnLeaveString() {
-		return CivColor.LightPurple+"Leaving "+town.getCiv().getName()+" Borders";
+		return CivColor.LightPurple+CivSettings.localize.localizedString("var_cultureLeaveMsg",town.getCiv().getName());
 	}
 	
 	public String getOnEnterString() {
-		return CivColor.LightPurple+"Entering "+town.getCiv().getName()+" Borders";
+		return CivColor.LightPurple+CivSettings.localize.localizedString("var_cultureEnterMsg",town.getCiv().getName());
 	}
 	public double getPower() {
 		// power = max/(distance^2).
@@ -188,18 +188,18 @@ public class CultureChunk {
 		
 		if (cc == null) {
 			CivMessage.send(player, CivColor.LightPurple+biome.name()+
-					CivColor.Green+" Coins: "+CivColor.LightGreen+info.coins+
-					CivColor.Green+" Happiness:"+CivColor.LightGreen+info.happiness+
-					CivColor.Green+" Hammers:"+CivColor.LightGreen+info.hammers+
-					CivColor.Green+" Growth:"+CivColor.LightGreen+info.growth+				
-					CivColor.Green+" Beakers:"+CivColor.LightGreen+info.beakers);
+					CivColor.Green+" "+CivSettings.localize.localizedString("Coins")+" "+CivColor.LightGreen+info.coins+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Happiness")+" "+CivColor.LightGreen+info.happiness+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Hammers")+" "+CivColor.LightGreen+info.hammers+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Growth")+" "+CivColor.LightGreen+info.growth+				
+					CivColor.Green+" "+CivSettings.localize.localizedString("Beakers")+" "+CivColor.LightGreen+info.beakers);
 		} else {
 			CivMessage.send(player, CivColor.LightPurple+biome.name()+
-					CivColor.Green+" Coins: "+CivColor.LightGreen+cc.getCoins()+
-					CivColor.Green+" Happiness:"+CivColor.LightGreen+cc.getHappiness()+
-					CivColor.Green+" Hammers:"+CivColor.LightGreen+cc.getHammers()+
-					CivColor.Green+" Growth:"+CivColor.LightGreen+cc.getGrowth()+				
-					CivColor.Green+" Beakers:"+CivColor.LightGreen+cc.getBeakers());
+					CivColor.Green+" "+CivSettings.localize.localizedString("Coins")+" "+CivColor.LightGreen+cc.getCoins()+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Happiness")+" "+CivColor.LightGreen+info.happiness+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Hammers")+" "+CivColor.LightGreen+info.hammers+
+					CivColor.Green+" "+CivSettings.localize.localizedString("Growth")+" "+CivColor.LightGreen+info.growth+				
+					CivColor.Green+" "+CivSettings.localize.localizedString("Beakers")+" "+CivColor.LightGreen+info.beakers);
 		}
 
 	}

@@ -30,6 +30,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigUnit;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
@@ -54,7 +55,7 @@ public class Spy extends UnitMaterial {
 
 		UnitMaterial.setOwningTown(town, is);		
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make "+Unit.SPY_UNIT.getUnit().name+". Barracks chest is full! Make Room!");
+			throw new CivException(CivSettings.localize.localizedString("var_settler_errorBarracksFull",Unit.SPY_UNIT.getUnit().name));
 		}
 	}
 	
@@ -62,7 +63,7 @@ public class Spy extends UnitMaterial {
 		ItemStack is = LoreMaterial.spawn(Unit.SPY_UNIT);
 
 		if (!Unit.addItemNoStack(inv, is)) {
-			throw new CivException("Cannot make "+Unit.SPY_UNIT.getUnit().name+". Barracks chest is full! Make Room!");
+			throw new CivException(CivSettings.localize.localizedString("var_settler_errorBarracksFull",Unit.SPY_UNIT.getUnit().name));
 		}
 	}
 	
@@ -130,7 +131,7 @@ public class Spy extends UnitMaterial {
 		ArrayList<String> lore = new ArrayList<String>();
 		lore.add("Mission Report");
 		meta.setAuthor("Mission Reports");
-		meta.setTitle("Missions From "+resident.getTown().getName());
+		meta.setTitle("Missions From"+" "+resident.getTown().getName());
 		
 		String out = "";
 		for (String str : bookout) {

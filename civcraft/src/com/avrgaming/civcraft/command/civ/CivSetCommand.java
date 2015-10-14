@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.civ;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -29,11 +30,11 @@ public class CivSetCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/civ set";
-		displayName = "Civ Set";
+		displayName = CivSettings.localize.localizedString("cmd_civ_set_Name");
 		
-		commands.put("taxes", "[percent] Sets the income tax for this civ.");
-		commands.put("science", "[percent] Sets the amount of taxes that get converted into beakers.");
-		commands.put("color", "(value) shows you the current civ's color. If value is specified, changes your color.");
+		commands.put("taxes", CivSettings.localize.localizedString("cmd_civ_set_taxesDesc"));
+		commands.put("science", CivSettings.localize.localizedString("cmd_civ_set_scienceDesc"));
+		commands.put("color", CivSettings.localize.localizedString("cmd_civ_set_colorDesc"));
 
 	}
 
@@ -46,13 +47,13 @@ public class CivSetCommand extends CommandBase {
 			Integer amount = Integer.valueOf(arg);
 			
 			if (amount < 0 || amount > 100) {
-				throw new CivException ("You must set a percentage between 0% and 100%");
+				throw new CivException (CivSettings.localize.localizedString("cmd_civ_set_invalidPercent")+" 0% & 100%");
 			}
 			
 			return ((double)amount/100);
 			
 		} catch (NumberFormatException e) {
-			throw new CivException(arg+" is not a number.");
+			throw new CivException(arg+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 				
 	}
@@ -61,14 +62,14 @@ public class CivSetCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "Current income percentage:"+civ.getIncomeTaxRateString());
+			CivMessage.send(sender, "Current income percentage:"+" "+civ.getIncomeTaxRateString());
 			return;
 		}
 		
 		double newPercentage = vaildatePercentage(args[1]);
 		
 		if (newPercentage > civ.getGovernment().maximum_tax_rate) {
-			throw new CivException("Cannot set your tax rate higher than your government's maximum("+
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_set_overmax")+"("+
 					DecimalHelper.formatPercentage(civ.getGovernment().maximum_tax_rate)+")");
 		}
 		
@@ -76,14 +77,14 @@ public class CivSetCommand extends CommandBase {
 		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Set income rate to "+args[1]+" percent.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civ_set_taxesSuccess")+" "+args[1]+" "+"%");
 	}
 	
 	public void science_cmd() throws CivException {
 	Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "Current science percentage:"+civ.getSciencePercentage());
+			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_civ_set_currentScience")+" "+civ.getSciencePercentage());
 			return;
 		}
 		
@@ -92,7 +93,7 @@ public class CivSetCommand extends CommandBase {
 		civ.setSciencePercentage(newPercentage);		
 		civ.save();
 		
-		CivMessage.sendSuccess(sender, "Set science rate to "+args[1]+" percent.");	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_scienceSuccess",args[1]));	
 	}
 	
 
@@ -100,7 +101,7 @@ public class CivSetCommand extends CommandBase {
 		Civilization civ = getSenderCiv();
 		
 		if (args.length < 2) {
-			CivMessage.sendSuccess(sender, "Civ color is: "+Integer.toHexString(civ.getColor()));
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_currentColor",Integer.toHexString(civ.getColor())));
 			return;
 		}
 	
@@ -108,17 +109,17 @@ public class CivSetCommand extends CommandBase {
 			
 			int color = Integer.parseInt(args[1], 16);
 			if (color > Civilization.HEX_COLOR_MAX) {
-				throw new CivException("Invalid color, out of range.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_set_colorInvalid"));
 			}
 			if (color == 0xFF0000) {
-				throw new CivException("Invalid color, this color is reserved for town borders.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_set_colorIsBorder"));
 			}
 			
 			civ.setColor(color);
 			civ.save();
-			CivMessage.sendSuccess(sender, "Set civ color to "+Integer.toHexString(color));
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_set_colorSuccess",Integer.toHexString(color)));
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is an invalid color.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_civ_set_colorInvalid"));
 		}
 	}
 	

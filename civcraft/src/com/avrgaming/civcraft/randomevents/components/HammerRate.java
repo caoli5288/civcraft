@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.randomevents.components;
 
 import java.text.DecimalFormat;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.randomevents.RandomEventComponent;
@@ -17,9 +18,9 @@ public class HammerRate extends RandomEventComponent {
 		DecimalFormat df = new DecimalFormat();
 		
 		if (rate > 1.0) {
-			sendMessage("Our production rate has increased by "+df.format((rate - 1.0)*100)+"% due to an unforseen event!");
+			sendMessage(CivSettings.localize.localizedString("var_re_hammers_increase",df.format((rate - 1.0)*100)));
 		} else {
-			sendMessage("Our production rate has decreased by "+df.format((1.0 - rate)*100)+"% due to an unforseen event!");
+			sendMessage(CivSettings.localize.localizedString("var_re_hammers_decrease",df.format((1.0 - rate)*100)));
 		}
 	}
 

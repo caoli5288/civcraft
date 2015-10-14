@@ -23,6 +23,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.camp.Camp;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -41,13 +42,13 @@ public class InteractiveCampName implements InteractiveResponse {
 		}
 
 		if (message.equalsIgnoreCase("cancel")) {
-			CivMessage.send(player, "Camp creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_camp_cancel"));
 			resident.clearInteractiveMode();
 			return;
 		}
 
 		if (!StringUtils.isAlpha(message)) {
-			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+"Camp names must only contain letters(A-Z). Enter another name.");
+			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_camp_invalid"));
 			return;
 		}
 	

@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.structure;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -80,6 +81,7 @@ import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.template.Template.TemplateType;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.BuildAsyncTask;
+import com.avrgaming.civcraft.threading.tasks.BuildUndoTask;
 import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
 import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.AABB;
@@ -198,6 +200,10 @@ public abstract class Buildable extends SQLObject {
 		if (this.getTown().getBuffManager().hasBuff(Buff.RUSH)) {
 			rate -= this.getTown().getBuffManager().getEffectiveDouble(Buff.RUSH);
 		}
+		if (this.isTileImprovement() && this.getTown().getBuffManager().hasBuff("buff_mother_tree_tile_improvement_cost")) {
+
+			rate -= this.getTown().getBuffManager().getEffectiveDouble("buff_mother_tree_tile_improvement_cost");
+		}
 		return rate*info.hammer_cost;
 	}
 	
@@ -252,8 +258,8 @@ public abstract class Buildable extends SQLObject {
 		return info.tile_improvement;
 	}
 	
-	public boolean isActive() {	
-		return this.isComplete() && (this.isTownHall() || !isDestroyed())  && isEnabled();
+	public boolean isActive() {
+		return this.isComplete() && (this.isTownHall() || !isDestroyed()) && isEnabled();
 	}
 
 	public abstract void processUndo() throws CivException;
@@ -379,6 +385,7 @@ public abstract class Buildable extends SQLObject {
 				}
 			}
 		}
+		this.save();
 	}
 	
 	public void buildPlayerPreview(Player player, Location centerLoc) throws CivException, IOException {
@@ -393,9 +400,9 @@ public abstract class Buildable extends SQLObject {
 			
 			/* Build an inventory full of templates to select. */
 			Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9);
-			ItemStack infoRec = LoreGuiItem.build("Default "+this.getDisplayName(), 
+			ItemStack infoRec = LoreGuiItem.build(CivSettings.localize.localizedString("buildable_lore_default")+" "+this.getDisplayName(), 
 					ItemManager.getId(Material.WRITTEN_BOOK), 
-					0, CivColor.Gold+"<Click To Build>");
+					0, CivColor.Gold+CivSettings.localize.localizedString("loreGui_template_clickToBuild"));
 			infoRec = LoreGuiItem.setAction(infoRec, "BuildWithTemplate");
 			inv.addItem(infoRec);
 			
@@ -412,12 +419,12 @@ public abstract class Buildable extends SQLObject {
 			for (Perk perk : personalUnboundPerks) {
 				infoRec = LoreGuiItem.build(perk.getDisplayName(), 
 						CivData.BEDROCK, 
-						perk.configPerk.data, CivColor.Gold+"<Click To Bind>",
-						CivColor.Gray+"Unbound Temple",
-						CivColor.Gray+"You own this template.",
-						CivColor.Gray+"The town is missing it.",
-						CivColor.Gray+"Click to bind to town first.",
-						CivColor.Gray+"Then build again.");				
+						perk.configPerk.data, CivColor.Gold+CivSettings.localize.localizedString("loreGui_template_clickToBuild"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_unbound"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_unbound2"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_unbound3"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_unbound4"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_unbound5"));				
 				infoRec = LoreGuiItem.setAction(infoRec, "ActivatePerk");
 				infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
 				
@@ -453,10 +460,9 @@ public abstract class Buildable extends SQLObject {
 		
 		this.setCorner(new BlockCoord(centerLoc));
 		
-		CivMessage.sendHeading(player, "Building a Structure");
-		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+"We've placed a bedrock outline, only visible to you which outlines "+
-				" the structure's location.");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"If this location looks good, type 'yes'. Otherwise, type anything else to cancel building.");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("buildable_preview_heading"));
+		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("buildable_preview_prompt1"));
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildable_preview_prompt2"));
 		Resident resident = CivGlobal.getResident(player);
 		resident.startPreviewTask(tpl, centerLoc.getBlock(), player.getUniqueId());
 		
@@ -487,15 +493,15 @@ public abstract class Buildable extends SQLObject {
 			Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9);
 			ItemStack infoRec = LoreGuiItem.build("Default "+info.displayName, 
 					ItemManager.getId(Material.WRITTEN_BOOK), 
-					0, CivColor.Gold+"<Click To Build>");
+					0, CivColor.Gold+CivSettings.localize.localizedString("loreGui_template_clickToBuild"));
 			infoRec = LoreGuiItem.setAction(infoRec, "BuildWithDefaultPersonalTemplate");
 			inv.addItem(infoRec);
 			
 			for (Perk perk : perkList) {
 				infoRec = LoreGuiItem.build(perk.getDisplayName(), 
 						perk.configPerk.type_id, 
-						perk.configPerk.data, CivColor.Gold+"<Click To Build>",
-						CivColor.Gray+"Provided by: "+CivColor.LightBlue+"Yourself :)");
+						perk.configPerk.data, CivColor.Gold+CivSettings.localize.localizedString("loreGui_template_clickToBuild"),
+						CivColor.Gray+CivSettings.localize.localizedString("loreGui_template_providedBy")+" "+CivColor.LightBlue+CivSettings.localize.localizedString("loreGui_template_Yourself"));
 				infoRec = LoreGuiItem.setAction(infoRec, "BuildWithPersonalTemplate");
 				infoRec = LoreGuiItem.setActionData(infoRec, "perk", perk.getIdent());
 				inv.addItem(infoRec);
@@ -522,16 +528,20 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public void undoFromTemplate() throws IOException, CivException {
-		Template undo_tpl = new Template();
-		undo_tpl.initUndoTemplate(this.getCorner().toString(), this.getTown().getName());
-		undo_tpl.buildUndoTemplate(undo_tpl, this.getCorner().getBlock());
-		
 		for (BuildAsyncTask task : this.getTown().build_tasks) {
 			if (task.buildable == this) {
 				task.abort();
 			}
 		}
-		undo_tpl.deleteUndoTemplate(this.getCorner().toString(), this.getTown().getName());
+		String filepath = "templates/undo/"+this.getTown().getName()+"/"+this.getCorner().toString();
+		File f = new File(filepath);
+		if(!f.exists()) {
+			throw new CivException(CivSettings.localize.localizedString("internalIOException")+" "+CivSettings.localize.localizedString("FileNotFound")+" "+filepath);
+		}
+		BuildUndoTask task = new BuildUndoTask(filepath, this.getCorner().toString(), this.getCorner(), 0, this.getTown().getName());
+		
+		this.town.undo_tasks.add(task);
+		BukkitObjects.scheduleAsyncDelayedTask(task, 0);
 	}
 	
 	public void unbindStructureBlocks() {
@@ -581,7 +591,7 @@ public abstract class Buildable extends SQLObject {
 			loc.setY(loc.getY() + info.templateYShift);
 			
 			if (loc.getY() < 1) {
-				throw new CivException("Cannot build here, too close to bedrock.");
+				throw new CivException(CivSettings.localize.localizedString("buildable_TooCloseToBedrock"));
 			}
 		}
 				
@@ -625,7 +635,7 @@ public abstract class Buildable extends SQLObject {
 			loc.setY(loc.getY() + this.getTemplateYShift());
 			
 			if (loc.getY() < 1) {
-				throw new CivException("Cannot build here, too close to bedrock.");
+				throw new CivException(CivSettings.localize.localizedString("buildable_TooCloseToBedrock"));
 			}
 		}
 				
@@ -686,7 +696,7 @@ public abstract class Buildable extends SQLObject {
 
 			double distance = townHallLoc.distance(loc);
 			if (distance < requiredDistance) {
-				throw new CivException("You must build at least "+requiredDistance+" blocks away from spawn.");
+				throw new CivException(CivSettings.localize.localizedString("var_buildable_toocloseToSpawn1",requiredDistance));
 			}
 			
 		}
@@ -707,7 +717,7 @@ public abstract class Buildable extends SQLObject {
 		if (!isTownHall()) {
 			CultureChunk cc = CivGlobal.getCultureChunk(centerBlock.getLocation());
 			if (cc == null || cc.getTown().getCiv() != this.town.getCiv()) {
-				throw new CivException("Cannot build here, you need to build inside your culture.");
+				throw new CivException(CivSettings.localize.localizedString("buildable_notInCulture"));
 			}
 		} else {
 			/* Structure is a town hall, auto-claim the borders. */
@@ -719,7 +729,7 @@ public abstract class Buildable extends SQLObject {
 			try {
 				minDistance = CivSettings.getDouble(CivSettings.townConfig, "town.min_town_distance");
 			} catch (InvalidConfiguration e) {
-				CivMessage.sendError(player, "Internal configuration error.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("internalException"));
 				e.printStackTrace();
 				return;
 			}
@@ -733,7 +743,7 @@ public abstract class Buildable extends SQLObject {
 				double dist = townhall.getCenterLocation().distance(new BlockCoord(centerBlock));
 				if (dist < minDistance) {
 					DecimalFormat df = new DecimalFormat();
-					CivMessage.sendError(player, "Cannot build town here. Too close to the town of "+town.getName()+". Distance is "+df.format(dist)+" and needs to be "+minDistance);
+					CivMessage.sendError(player, CivSettings.localize.localizedString("var_settler_errorTooClose",town.getName(),df.format(dist),minDistance));
 					return;
 				}
 			}
@@ -746,13 +756,13 @@ public abstract class Buildable extends SQLObject {
 				!centerBlock.getBiome().equals(Biome.RIVER) &&
 				!centerBlock.getBiome().equals(Biome.FROZEN_OCEAN) &&
 				!centerBlock.getBiome().equals(Biome.FROZEN_RIVER)) {
-				throw new CivException("Cannot build shipyard here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are.");
+				throw new CivException(CivSettings.localize.localizedString("buildable_shipyard_notEnoughWater"));
 			}
 		}
 		
 		Structure struct = CivGlobal.getStructure(new BlockCoord(centerBlock));
 		if (struct != null) {
-			throw new CivException("Cannot build here, structure already at this location.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_structureExistsHere"));
 		}
 
 		ignoreBorders = this.isAllowOutsideTown();
@@ -764,9 +774,14 @@ public abstract class Buildable extends SQLObject {
 		if (this.isTileImprovement()) {
 			ignoreBorders = true;
 			ConfigTownLevel level = CivSettings.townLevels.get(getTown().getLevel());
-			
-			if (getTown().getTileImprovementCount() >= level.tile_improvements) {
-				throw new CivException("Cannot build tile improvement. Already at tile improvement limit.");
+
+			Integer maxTileImprovements  = level.tile_improvements;
+			if (town.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
+			{
+				maxTileImprovements *= 2;
+			}
+			if (getTown().getTileImprovementCount() >= maxTileImprovements) {
+				throw new CivException(CivSettings.localize.localizedString("buildable_errorTILimit"));
 			}
 			
 			ChunkCoord coord = new ChunkCoord(centerBlock.getLocation());
@@ -776,7 +791,7 @@ public abstract class Buildable extends SQLObject {
 				}
 				ChunkCoord sCoord = new ChunkCoord(s.getCorner());
 				if (sCoord.equals(coord)) {
-					throw new CivException("Cannot build a tile improvement on the same chunk as another tile improvement.");
+					throw new CivException(CivSettings.localize.localizedString("buildable_errorTIHere"));
 				}
 			}
 			
@@ -784,20 +799,20 @@ public abstract class Buildable extends SQLObject {
 		
 		TownChunk centertc = CivGlobal.getTownChunk(origin);
 		if (centertc == null && ignoreBorders == false) {
-			throw new CivException("You must build this structure while inside town borders.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_errorNotInTown"));
 		}
 		
 		if (centerBlock.getLocation().getY() >= 255) {
-			throw new CivException("You're too high to build structures.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_errorTooHigh"));
 		}
 		
 		if (centerBlock.getLocation().getY() <= 7) {
-			throw new CivException("You can not place structures this close to bedrock!");
+			throw new CivException(CivSettings.localize.localizedString("buildable_errorTooLow"));
 		
 		}
 		
 		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
-			throw new CivException("Cannot build structure here, would go over the minecraft height limit.");
+			throw new CivException(CivSettings.localize.localizedString("buildable_errorHeightLimit"));
 		}
 		
 		/* Check that we're not overlapping with another structure's template outline. */
@@ -822,10 +837,9 @@ public abstract class Buildable extends SQLObject {
 			for (int y = 0; y < regionY; y++) {
 				for (int z = 0; z < regionZ; z++) {
 					Block b = centerBlock.getRelative(x, y, z);
-					String coordinateString = " x: "+b.getX()+" y: "+b.getY()+" z: "+b.getZ();
 					
 					if (ItemManager.getId(b) == CivData.CHEST) {
-						throw new CivException("Cannot build here, would destroy chest. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_chestInWay"));
 					}
 										
 					TownChunk tc = CivGlobal.getTownChunk(b.getLocation());
@@ -835,7 +849,7 @@ public abstract class Buildable extends SQLObject {
 					
 					if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 						// Make sure we have permission to destroy any block in this area.
-						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_needPermissions")+" "+b.getX()+","+b.getY()+","+b.getZ());
 					}
 		
 					BlockCoord coord = new BlockCoord(b);
@@ -844,9 +858,7 @@ public abstract class Buildable extends SQLObject {
 					if (tradeOutpost == null) {
 						//not building a trade outpost, prevent protected blocks from being destroyed.
 						if (CivGlobal.getProtectedBlock(coord) != null) {
-							CivGlobal.removeProtectedBlock(coord);
-							CivLog.warning("Removed Protected Block during construction: "+coordinateString);
-//							throw new CivException("Cannot build here, protected blocks in the way."+coordinateString);
+							throw new CivException(CivSettings.localize.localizedString("cannotBuild_protectedInWay"));
 						}
 					} else {
 						if (CivGlobal.getTradeGood(coord) != null) {
@@ -859,23 +871,23 @@ public abstract class Buildable extends SQLObject {
 					}
 					
 					if (CivGlobal.getStructureBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 					}
 				
 					if (CivGlobal.getFarmChunk(new ChunkCoord(coord.getLocation())) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a farm improvement. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_farmInWay"));
 					}
 		
 					if (CivGlobal.getWallChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a wall improvement. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_wallInWay"));
 					}
 					
 					if (CivGlobal.getCampBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 					}
 					
 					if (CivGlobal.getBuildablesAt(coord) != null) {
-						throw new CivException("Cannot build here, there is already a structure here. "+coordinateString);
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureHere"));
 					}
 					
 					RoadBlock rb = CivGlobal.getRoadBlock(coord);
@@ -886,7 +898,7 @@ public abstract class Buildable extends SQLObject {
 					BorderData border = Config.Border(b.getWorld().getName());
 					if (border != null) {
 						if(!border.insideBorder(b.getLocation().getX(), b.getLocation().getZ(), Config.ShapeRound())) {
-							throw new CivException("Cannot build here. Part of the structure would sit beyond the world border. "+coordinateString);
+							throw new CivException(CivSettings.localize.localizedString("cannotBuild_outsideBorder"));
 						}
 					}
 				}
@@ -895,7 +907,7 @@ public abstract class Buildable extends SQLObject {
 		
 		if (tradeOutpost != null) {
 			if (!foundTradeGood) {
-				throw new CivException("Must be built on top of a trade good.");
+				throw new CivException(CivSettings.localize.localizedString("buildable_errorNotOnTradeGood"));
 			}
 		}
 		
@@ -1058,6 +1070,13 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public String getSavedTemplatePath() {
+		if (templateName == null)
+			return templateName;
+		if (templateName.contains("capital"))
+		{
+			CivLog.debug("getSavedTemplatePath - Replacing Capital occurence");
+			templateName = templateName.replace("capital", "capitol");
+		}
 		return templateName;
 	}
 	public void setTemplateName(String templateName) {
@@ -1130,7 +1149,7 @@ public abstract class Buildable extends SQLObject {
 	
 	public void onDestroy() {
 		//can be overriden in subclasses.
-		CivMessage.global("A "+this.getDisplayName()+" in "+this.getTown().getName()+" has been destroyed!");
+		CivMessage.global(CivSettings.localize.localizedString("var_buildable_destroyedAlert",this.getDisplayName(),this.getTown().getName()));
 		this.hitpoints = 0;
 		this.fancyDestroyStructureBlocks();
 		this.save();
@@ -1141,14 +1160,14 @@ public abstract class Buildable extends SQLObject {
 		
 		if(hit.getOwner().isDestroyed()) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is already destroyed.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_buildable_alreadyDestroyed",hit.getOwner().getDisplayName()));
 			}
 			return;
 		}
 		
 		if (!hit.getOwner().isComplete() && !(hit.getOwner() instanceof Wonder)) {
 			if (player != null) {
-				CivMessage.sendError(player, hit.getOwner().getDisplayName()+" is still being built, cannot be destroyed.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_buildable_underConstruction",hit.getOwner().getDisplayName()));
 			}
 			return;		
 		}
@@ -1171,18 +1190,16 @@ public abstract class Buildable extends SQLObject {
 		if (player != null) {
 		Resident resident = CivGlobal.getResident(player);
 			if (resident.isCombatInfo()) {
-				CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" has been damaged ("+
-						hit.getOwner().hitpoints+"/"+hit.getOwner().getMaxHitPoints()+")");
+				CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_buildable_OnDamageSuccess",hit.getOwner().getDisplayName(),(hit.getOwner().hitpoints+"/"+hit.getOwner().getMaxHitPoints())));
 			}
 		}
 		
 	}
 	
 	public void onDamageNotification(Player player, BuildableDamageBlock hit) {
-		CivMessage.send(player, CivColor.LightGray+hit.getOwner().getDisplayName()+" has been damaged "+
-				hit.getOwner().getDamagePercentage()+"%!");
-		CivMessage.sendTown(hit.getTown(), CivColor.Yellow+"Our "+hit.getOwner().getDisplayName()+" at ("+hit.getOwner().getCorner()+
-				") is under attack! Damage is "+hit.getOwner().getDamagePercentage()+"%!");	
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_buildable_OnDamageSuccess",hit.getOwner().getDisplayName(),(hit.getOwner().getDamagePercentage()+"%")));
+
+		CivMessage.sendTown(hit.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_buildable_underAttackAlert",hit.getOwner().getDisplayName(),hit.getOwner().getCorner(),hit.getOwner().getDamagePercentage()));	
 	}
 	
 	public Map<BlockCoord, Boolean> getStructureBlocks() {
@@ -1256,16 +1273,24 @@ public abstract class Buildable extends SQLObject {
 					}
 								
 					Random rand = new Random();
-					
-					// Each block has a 10% chance to turn into gravel
-					if (rand.nextInt(100) <= 10) {
-						ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
+
+					// Each block has a 70% chance to turn into Air
+					if (rand.nextInt(100) <= 70) {
+						ItemManager.setTypeId(coord.getBlock(), CivData.AIR);
 						ItemManager.setData(coord.getBlock(), 0, true);
 						continue;
 					}
 					
-					// Each block has a 50% chance of starting a fire
-					if (rand.nextInt(100) <= 50) {
+					// Each block has a 30% chance to turn into gravel
+					if (rand.nextInt(100) <= 30) {
+						ItemManager.setTypeId(coord.getBlock(), CivData.GRAVEL);
+						ItemManager.setData(coord.getBlock(), 0, true);
+						continue;
+					}
+
+					
+					// Each block has a 10% chance of starting a fire
+					if (rand.nextInt(100) <= 10) {
 						ItemManager.setTypeId(coord.getBlock(), CivData.FIRE);
 						ItemManager.setData(coord.getBlock(), 0, true);
 						continue;
@@ -1362,6 +1387,10 @@ public abstract class Buildable extends SQLObject {
 		Template tpl = Template.getTemplate(this.getSavedTemplatePath(), null);
 		this.buildRepairTemplate(tpl, this.getCorner().getBlock());
 		TaskMaster.syncTask(new PostBuildSyncTask(tpl, this));
+	}
+	
+	public boolean isPartOfAdminCiv() {
+		return (this.getCiv().isAdminCiv());
 	}
 	
 	public boolean isTownHall() {
@@ -1524,11 +1553,10 @@ public abstract class Buildable extends SQLObject {
 		this.damage(damage);
 
 		DecimalFormat df = new DecimalFormat("###");
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+"Our town's "+this.getDisplayName()+" at ("+
-				center.getX()+","+center.getY()+","+center.getZ()+") cannot be supported by the blocks underneath!");
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+"It's lost "+df.format(invalid_hourly_penalty*100)+"% of it's hitpoints! HP is now ("+this.hitpoints+"/"+this.getMaxHitPoints()+")");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_buildable_cannotSupport",this.getDisplayName(),(center.getX()+","+center.getY()+","+center.getZ())));
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_buildable_cannotSupportDamage",df.format(invalid_hourly_penalty*100),(this.hitpoints+"/"+this.getMaxHitPoints())));
 		CivMessage.sendTown(this.getTown(), CivColor.Rose+this.invalidLayerMessage);
-		CivMessage.sendTown(this.getTown(), CivColor.Rose+"Fix the blocks on this layer then run '/build validatenearest' to fix it.");
+		CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("buildable_validationPrompt"));
 		this.save();
 			
 	}

@@ -6,6 +6,7 @@ import com.avrgaming.civcraft.arena.Arena;
 import com.avrgaming.civcraft.arena.ArenaManager;
 import com.avrgaming.civcraft.arena.ArenaTeam;
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -18,39 +19,39 @@ public class TeamCommand  extends CommandBase {
 	@Override
 	public void init() {
 		command = "/team";
-		displayName = "Team";
+		displayName = CivSettings.localize.localizedString("cmd_team_name");
 		
-		commands.put("info", "Lists information about the current team you're in.");
-		commands.put("show", "[name] Shows information about the named team.");
-		commands.put("create", "[name] Creates a team with the given name.");
-		commands.put("leave", "Leaves your current team.");
-		commands.put("disband", "Disbands your current team. You must be the team leader to do this.");
-		commands.put("add", "[resident] Add a resident to your team.");
-		commands.put("remove", "[resident] removes a resident from your team.");
-		commands.put("changeleader", "[resident] - Gives team leadership to another team member.");
-		commands.put("arena", "Join the queue to fight the arena! Will take us out of the queue if we're already in it.");
-		commands.put("top5", "Shows top 5 teams in the game!");
-		commands.put("top10", "Shows top 10 teams in the game!");
-		commands.put("list", "List all teams in the game.");
-		commands.put("surrender", "Give up on the current match.");
+		commands.put("info", CivSettings.localize.localizedString("cmd_team_infoDesc"));
+		commands.put("show", CivSettings.localize.localizedString("cmd_team_showDesc"));
+		commands.put("create", CivSettings.localize.localizedString("cmd_team_createDesc"));
+		commands.put("leave", CivSettings.localize.localizedString("cmd_team_leaveDesc"));
+		commands.put("disband", CivSettings.localize.localizedString("cmd_team_disbandDesc"));
+		commands.put("add", CivSettings.localize.localizedString("cmd_team_addDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_team_removeDesc"));
+		commands.put("changeleader", CivSettings.localize.localizedString("cmd_team_changeleaderDesc"));
+		commands.put("arena", CivSettings.localize.localizedString("cmd_team_arenaDesc"));
+		commands.put("top5", CivSettings.localize.localizedString("cmd_team_top5Desc"));
+		commands.put("top10", CivSettings.localize.localizedString("cmd_team_top10Desc"));
+		commands.put("list", CivSettings.localize.localizedString("cmd_team_listDesc"));
+		commands.put("surrender", CivSettings.localize.localizedString("cmd_team_surrenderDesc"));
 	}
 	
 	public void surrender_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (!resident.hasTeam()) {
-			throw new CivException("You must be part of a team to use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_surrenderNotInTeam"));
 		}
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("Only leaders can surrender during a match.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		ArenaTeam team = resident.getTeam();
 		Arena arena = team.getCurrentArena();
 		
 		if (arena == null) {
-			throw new CivException("Your team is not currently in arena match");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_surrenderNotInMatch"));
 		}
 		
 		ArenaTeam otherTeam = null;
@@ -62,11 +63,11 @@ public class TeamCommand  extends CommandBase {
 		}
 		
 		if (otherTeam == null) {
-			throw new CivException("Error, couldn't find other team to surrender to.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_surrenderNoOpposition"));
 		}
 		
 		ArenaManager.declareVictor(arena, team, otherTeam);
-		CivMessage.sendSuccess(sender, "Surrendered.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_surrenderSuccess"));
 
 	}
 	
@@ -74,34 +75,34 @@ public class TeamCommand  extends CommandBase {
 		Resident resident = getResident();
 		
 		if (!resident.hasTeam()) {
-			throw new CivException("You're already not part of a team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaNotInTeam"));
 		}
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("Only leaders can add their team to the arena queue.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		ArenaTeam team = resident.getTeam();
 		
 		if (team.getCurrentArena() != null) {
-			throw new CivException("Cannot join the arena queue while inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 
 		for (ArenaTeam t : ArenaManager.teamQueue) {
 			if (t == team) {
 				ArenaManager.teamQueue.remove(t);
-				CivMessage.sendSuccess(sender, "Removed our team from the queue.");
+				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_arenaLeft"));
 				return;
 			}
 		}
 		
 		ArenaManager.addTeamToQueue(team);
-		CivMessage.sendSuccess(sender, "Added our team to the queue.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_arenaAdded"));
 	}
 	
 	
 	public void list_cmd() {
-		CivMessage.sendHeading(sender, "Teams");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_team_ListHeading"));
 		String out = "";
 		
 		for (ArenaTeam team : ArenaTeam.arenaTeams.values()) {
@@ -113,7 +114,7 @@ public class TeamCommand  extends CommandBase {
 	
 	
 	public void top5_cmd() {
-		CivMessage.sendHeading(sender, "Top 5 Teams");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_team_top5Heading"));
 		
 		for (int i = 0; ((i < 5) && (i < ArenaTeam.teamRankings.size())); i++) {
 			ArenaTeam team = ArenaTeam.teamRankings.get(i);
@@ -122,7 +123,7 @@ public class TeamCommand  extends CommandBase {
 	}
 	
 	public void top10_cmd() {
-		CivMessage.sendHeading(sender, "Top 10 Teams");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_team_top10Heading"));
 		
 		for (int i = 0; ((i < 10) && (i < ArenaTeam.teamRankings.size())); i++) {
 			ArenaTeam team = ArenaTeam.teamRankings.get(i);
@@ -132,16 +133,16 @@ public class TeamCommand  extends CommandBase {
 	
 	public void printTeamInfo(ArenaTeam team) {
 		CivMessage.sendHeading(sender, "Team "+team.getName());
-		CivMessage.send(sender, CivColor.Green+"Points: "+CivColor.LightGreen+team.getLadderPoints()+
-								CivColor.Green+" Leader: "+CivColor.LightGreen+team.getLeader().getName());
-		CivMessage.send(sender, CivColor.Green+"Members: "+CivColor.LightGreen+team.getMemberListSaveString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_team_printPoints")+" "+CivColor.LightGreen+team.getLadderPoints()+
+								CivColor.Green+" "+CivSettings.localize.localizedString("Leader")+" "+CivColor.LightGreen+team.getLeader().getName());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Members")+" "+CivColor.LightGreen+team.getMemberListSaveString());
 	}
 
 	public void info_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (!resident.hasTeam()) {
-			throw new CivException("You're not currently part of a team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaNotInTeam"));
 		}
 		
 		ArenaTeam team = resident.getTeam();
@@ -154,59 +155,59 @@ public class TeamCommand  extends CommandBase {
 	}
 	
 	public void create_cmd() throws CivException {
-		String teamName = getNamedString(1, "Enter a name for your team.");
+		String teamName = getNamedString(1, CivSettings.localize.localizedString("cmd_team_createPrompt"));
 		Resident resident = getResident();
 		
 		if (resident.isProtected()) {
-			throw new CivException("You can not form a team while protected.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_createProtected"));
 		}
 		
 		if (resident.hasTeam()) {
-			throw new CivException("You can only be on one team at time. Leave your current team first.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_createHasTeam"));
 		}
 		
 		
 		ArenaTeam.createTeam(teamName, resident);
-		CivMessage.sendSuccess(sender, "Team Successfully Created.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_team_createSuccess"));
 	}
 	
 	public void leave_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (!resident.hasTeam()) {
-			throw new CivException("You're already not part of a team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaNotInTeam"));
 		}
 		
 		if (resident.isTeamLeader()) {
-			throw new CivException("Leaders cannot leave their own team. They must change the leader or disband the team first.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_leaveIsLeader"));
 		}
 		
 		ArenaTeam team = resident.getTeam();
 		
 		if (team.getCurrentArena() != null) {
-			throw new CivException("Cannot leave your team while it is inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 		
 		ArenaTeam.removeMember(team.getName(), resident);
-		CivMessage.sendSuccess(sender, "Left Team "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" has left the team.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_leaveSuccess",team.getName()));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("var_cmd_team_leftMessage",resident.getName()));
 	}
 	
 	public void disband_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("You must have a team and be it's leader to disband your team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		if (resident.getTeam().getCurrentArena() != null) {
-			throw new CivException("Cannot disband your team while it is inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 		
 		String teamName = resident.getTeam().getName();
 		ArenaTeam.deleteTeam(teamName);
 		ArenaTeam.arenaTeams.remove(teamName);
-		CivMessage.sendSuccess(sender, "Disbanded team: "+teamName);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_disbandSuccess",teamName));
 	}
 	
 	public void add_cmd() throws CivException {
@@ -214,22 +215,22 @@ public class TeamCommand  extends CommandBase {
 		Resident member = getNamedResident(1);
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("You must have a team and be it's leader to add members to your team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		if (member.hasTeam()) {
-			throw new CivException(member.getName()+" is already on a team.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_team_addHasTeam",member.getName()));
 		}
 		
 		if (resident.getTeam().getCurrentArena() != null) {
-			throw new CivException("Cannot add players to team while inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 		
 		try {
 			Player player = CivGlobal.getPlayer(member);
 			
 			if (member.isProtected()) {
-				throw new CivException(player.getName()+" is protected and unable to join a team");
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_team_addProtected",player.getName()));
 			}
 			
 			ArenaTeam team = resident.getTeam();
@@ -239,14 +240,14 @@ public class TeamCommand  extends CommandBase {
 			join.sender = (Player)sender;
 					
 			CivGlobal.questionPlayer(CivGlobal.getPlayer(resident), player, 
-					"Would you like to join team "+team.getName()+"?",
+					CivSettings.localize.localizedString("var_cmd_team_addRequest",team.getName()),
 					30000, join);
 			
 		} catch (CivException e) {
 			throw new CivException(e.getMessage());
 		}
 				
-		CivMessage.sendSuccess(sender, "Sent invitation to "+member.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_addInvite",member.getName()));
 	}
 	
 	public void remove_cmd() throws CivException {
@@ -254,16 +255,16 @@ public class TeamCommand  extends CommandBase {
 		Resident member = getNamedResident(1);
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("You must have a team and be it's leader to remove members to your team.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		if (resident.getTeam().getCurrentArena() != null) {
-			throw new CivException("Cannot remove players from the team while inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 		
 		ArenaTeam.removeMember(resident.getTeam().getName(), member);
-		CivMessage.sendSuccess(sender, "Removed Team Member "+member.getName());
-		CivMessage.sendTeam(resident.getTeam(), member.getName()+" has left the team.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_removeSuccess",member.getName()));
+		CivMessage.sendTeam(resident.getTeam(), CivSettings.localize.localizedString("var_cmd_team_leftMessage",member.getName()));
 
 	}
 	
@@ -272,25 +273,25 @@ public class TeamCommand  extends CommandBase {
 		Resident member = getNamedResident(1);
 		
 		if (!resident.isTeamLeader()) {
-			throw new CivException("You must have a team and be it's leader to change team leaders.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_NotLeader"));
 		}
 		
 		ArenaTeam team = resident.getTeam();
 		
 		if (team.getCurrentArena() != null) {
-			throw new CivException("Cannot change team leaders while inside the arena.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_team_arenaInArena"));
 		}
 		
 		if (!team.hasMember(member)) {
-			throw new CivException(member.getName()+" must already be added to your team in order to become it's leader.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_team_changeleaderNotInTeam",member.getName()));
 		}
 		
 		team.setLeader(member);
 		team.save();
 		
-		CivMessage.sendSuccess(sender, "Changed team leader to "+member.getName());
-		CivMessage.sendSuccess(member, "You are now leader of team "+team.getName());
-		CivMessage.sendTeam(team, resident.getName()+" has changed the team leader to "+member.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess1",member.getName()));
+		CivMessage.sendSuccess(member, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess2",team.getName()));
+		CivMessage.sendTeam(team, CivSettings.localize.localizedString("var_cmd_team_changeleaderSuccess3",resident.getName(),member.getName()));
 		
 	}
 	

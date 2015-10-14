@@ -557,8 +557,10 @@ public class LoreCraftableMaterial extends LoreMaterial {
 			return null;
 		}
 		
+		
 		LoreMaterial mat = materialMap.get(getMID(stack));
 		if (mat instanceof LoreCraftableMaterial) {
+			
 			return (LoreCraftableMaterial)mat;
 		}
 		

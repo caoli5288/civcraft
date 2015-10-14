@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.command.admin;
 import java.sql.SQLException;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
@@ -36,34 +37,34 @@ public class AdminRecoverCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad recover";
-		displayName = "Admin recover";
+		displayName = CivSettings.localize.localizedString("adcmd_recover_Name");
 		
-		commands.put("structures", "Finds and recovers all of the 'broken' structures.");
-		commands.put("listbroken", "Lists all broken structures and their locations.");
+		commands.put("structures", CivSettings.localize.localizedString("adcmd_recover_structuresDesc"));
+		commands.put("listbroken", CivSettings.localize.localizedString("adcmd_recover_listBrokenDesc"));
 		
-		commands.put("listorphantowns", "Lists all of the currently orphaned towns.");
-		commands.put("listorphancivs", "Lists all of the currently orphaned civs.");
+		commands.put("listorphantowns", CivSettings.localize.localizedString("adcmd_recover_listOrphanTownDesc"));
+		commands.put("listorphancivs", CivSettings.localize.localizedString("adcmd_recover_listOrphanCivsDesc"));
 		
-		commands.put("listorphanleaders", "Lists all orphaned leaders.");
-		commands.put("fixleaders", "Looks up leaders of civilizations and sets them back in town.");
+		commands.put("listorphanleaders", CivSettings.localize.localizedString("adcmd_recover_listOrphanLeadersDesc"));
+		commands.put("fixleaders", CivSettings.localize.localizedString("adcmd_recover_fixLeadersDesc"));
 		
-		commands.put("listorphanmayors", "List all leaders who are not mayors of the capitol.");
-		commands.put("fixmayors", "Makes all leaders of civs mayors in the capitol town.");
+		commands.put("listorphanmayors", CivSettings.localize.localizedString("adcmd_recover_listOrphanMayorsDesc"));
+		commands.put("fixmayors", CivSettings.localize.localizedString("admcd_recover_fixmayorsDesc"));
 		
-		commands.put("forcesaveresidents", "force saves all residents");
-		commands.put("forcesavetowns", "force saves all towns");
-		commands.put("forcesavecivs", "force saves all civs");
+		commands.put("forcesaveresidents", CivSettings.localize.localizedString("adcmd_recover_forceSaveResDesc"));
+		commands.put("forcesavetowns", CivSettings.localize.localizedString("adcmd_recover_forceSaveTownsDesc"));
+		commands.put("forcesavecivs", CivSettings.localize.localizedString("adcmd_recover_forceSaveCivsDesc"));
 		
-		commands.put("listdefunctcivs", "list all towns with no leader group.");
-		commands.put("killdefunctcivs", "attempts to delete defunct civs.");
+		commands.put("listdefunctcivs", CivSettings.localize.localizedString("adcmd_recover_listDefunctCivsDesc"));
+		commands.put("killdefunctcivs", CivSettings.localize.localizedString("admcd_recover_killDefunctCivsDesc"));
 		
-		commands.put("listdefuncttowns", "list all towns with no mayors group");
-		commands.put("killdefuncttowns", "attempts to delete defunct towns.");
+		commands.put("listdefuncttowns", CivSettings.localize.localizedString("adcmd_recover_listDefunctTownsDesc"));
+		commands.put("killdefuncttowns", CivSettings.localize.localizedString("adcmd_recover_killdefunctTownsDesc"));
 		
-		commands.put("listnocaptials", "list all civs with no capitols");
-		commands.put("cleannocapitols", "clean out all civs with no capitols.");
+		commands.put("listnocaptials", CivSettings.localize.localizedString("adcmd_recover_listNoCapitolsDesc"));
+		commands.put("cleannocapitols", CivSettings.localize.localizedString("adcmd_recover_cleanNoCapitolsDesc"));
 		
-		commands.put("fixtownresidents", "Restores all residents to the towns listed in their debug_town field.");
+		commands.put("fixtownresidents", CivSettings.localize.localizedString("adcmd_recover_fixTownResidenstDesc"));
 
 	}
 	
@@ -72,7 +73,7 @@ public class AdminRecoverCommand extends CommandBase {
 			if (resident.debugTown != null && !resident.debugTown.equals("")) {
 				Town town = CivGlobal.getTown(resident.debugTown);
 				if (town == null) {
-					CivLog.error("Couldn't find town:"+resident.debugTown+" for resident:"+resident.getName()+" is this town deleted?");
+					CivLog.error( CivSettings.localize.localizedString("var_admcd_recover_FixTownError1",resident.debugTown,resident.getName()));
 					continue;
 				}
 				
@@ -86,7 +87,7 @@ public class AdminRecoverCommand extends CommandBase {
 		}
 	}
 	public void listnocapitols_cmd() {
-		CivMessage.sendHeading(sender, "Defunct Civs");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_ListNoCapitolHeading"));
 		for (Civilization civ : CivGlobal.getCivs()) {
 			
 			Town town = CivGlobal.getTown(civ.getCapitolName());
@@ -101,7 +102,7 @@ public class AdminRecoverCommand extends CommandBase {
 			
 			Town town = CivGlobal.getTown(civ.getCapitolName());
 			if (town == null) {
-				CivMessage.send(sender, "Deleting "+civ.getName());
+				CivMessage.send(sender, CivSettings.localize.localizedString("Deleting")+" "+civ.getName());
 				try {
 					civ.delete();
 				} catch (SQLException e) {
@@ -112,7 +113,7 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listdefunctcivs_cmd() {
-		CivMessage.sendHeading(sender, "Defunct Civs");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_ListNoCapitolHeading"));
 		for (Civilization civ : CivGlobal.getCivs()) {
 			if (civ.getLeaderGroup() == null) {
 				CivMessage.send(sender, civ.getName());
@@ -123,7 +124,7 @@ public class AdminRecoverCommand extends CommandBase {
 	public void killdefunctcivs_cmd() {
 		for (Civilization civ : CivGlobal.getCivs()) {
 			if (civ.getLeaderGroup() == null) {
-				CivMessage.send(sender, "Deleteing "+civ.getName());
+				CivMessage.send(sender, CivSettings.localize.localizedString("Deleting")+" "+civ.getName());
 				try {
 					civ.delete();
 				} catch (SQLException e) {
@@ -134,7 +135,7 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listdefuncttowns_cmd() {
-		CivMessage.sendHeading(sender, "Defunct Towns");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_listDefunctTownsHeading"));
 		for (Town town : CivGlobal.getTowns()) {
 			if (town.getMayorGroup() == null) {
 				CivMessage.send(sender, town.getName());
@@ -145,7 +146,7 @@ public class AdminRecoverCommand extends CommandBase {
 	public void killdefuncttowns_cmd() {
 		for (Town town : CivGlobal.getTowns()) {
 			if (town.getMayorGroup() == null) {
-				CivMessage.send(sender, "Deleting "+town.getName());
+				CivMessage.send(sender, CivSettings.localize.localizedString("Deleting")+" "+town.getName());
 				try {
 					town.delete();
 				} catch (SQLException e) {
@@ -160,21 +161,21 @@ public class AdminRecoverCommand extends CommandBase {
 		for (Resident resident : CivGlobal.getResidents()) {
 			resident.saveNow();
 		}
-		CivMessage.sendSuccess(sender, "Saved "+CivGlobal.getResidents().size()+" residents");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forcesaveResSuccss",CivGlobal.getResidents().size()));
 	}
 	
 	public void forcesavetowns_cmd() throws SQLException {
 		for (Town town : CivGlobal.getTowns()) {
 			town.saveNow();
 		}
-		CivMessage.sendSuccess(sender, "Saved "+CivGlobal.getTowns().size()+" towns");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forceSaveTownsSuccess",CivGlobal.getTowns().size()));
 	}
 	
 	public void forcesavecivs_cmd() throws SQLException {
 		for (Civilization civ : CivGlobal.getCivs()) {
 			civ.saveNow();
 		}
-		CivMessage.sendSuccess(sender, "Saved "+CivGlobal.getCivs().size()+" civs");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_recover_forceSaveCivsSuccess",CivGlobal.getCivs().size()));
 	}
 	
 	public void listorphanmayors_cmd() {
@@ -189,11 +190,11 @@ public class AdminRecoverCommand extends CommandBase {
 				continue;
 			}
 			
-			CivMessage.send(sender, "Broken: "+leader.getName()+" in civ: "+civ.getName()+" in capitol:"+capitol.getName());
+			CivMessage.send(sender, CivSettings.localize.localizedString("Broken")+" "+leader.getName()+" "+CivSettings.localize.localizedString("inCiv")+" "+civ.getName()+" "+CivSettings.localize.localizedString("inCapitol")+" "+capitol.getName());
 			
 		}
 		
-		CivMessage.sendSuccess(sender, "Finished");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("Finished"));
 	}
 	
 	public void fixmayors_cmd() {
@@ -210,7 +211,7 @@ public class AdminRecoverCommand extends CommandBase {
 			}
 			
 			if (capitol.getMayorGroup() == null) {
-				CivMessage.send(sender, "Town:"+capitol.getName()+" doesnt have a mayors group??");
+				CivMessage.send(sender, CivSettings.localize.localizedString("var_adcmd_recover_fixMayorsError",capitol.getName()));
 				continue;
 			}
 			
@@ -220,11 +221,11 @@ public class AdminRecoverCommand extends CommandBase {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
-			CivMessage.send(sender, "Fixed "+leader.getName()+" in civ: "+civ.getName()+" in capitol:"+capitol.getName());
+			CivMessage.send(sender, CivSettings.localize.localizedString("Fixed")+" "+leader.getName()+" "+CivSettings.localize.localizedString("inCiv")+" "+civ.getName()+" "+CivSettings.localize.localizedString("inCapitol")+" "+capitol.getName());
 			
 		}
 		
-		CivMessage.sendSuccess(sender, "Finished");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("Finished"));
 		
 	}
 
@@ -239,7 +240,7 @@ public class AdminRecoverCommand extends CommandBase {
 			if (!res.hasTown()) {
 				Town capitol = civ.getTown(civ.getCapitolName());
 				if (capitol == null) {
-					CivMessage.send(sender, "-- no capitol for civ "+civ.getName());
+					CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_fixLeadersNoCap")+" "+civ.getName());
 					continue;
 				}
 				res.setTown(capitol);
@@ -248,7 +249,7 @@ public class AdminRecoverCommand extends CommandBase {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-				CivMessage.send(sender, "Fixed Civ:"+civ.getName()+" leader:"+res.getName());
+				CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_FixLeaders1")+" "+civ.getName()+" "+CivSettings.localize.localizedString("Leader")+" "+res.getName());
 			}
 			
 			if (!civ.getLeaderGroup().hasMember(res)) {
@@ -264,7 +265,7 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listorphanleaders_cmd() {
-		CivMessage.sendHeading(sender, "Orphan Leaders");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_listOrphanLeadersHeading"));
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
 			Resident res = civ.getLeader();
@@ -275,11 +276,11 @@ public class AdminRecoverCommand extends CommandBase {
 			if (!res.hasTown()) {
 				Town capitol = civ.getTown(civ.getCapitolName());
 				if (capitol == null) {
-					CivMessage.send(sender, "-- no capitol for civ "+civ.getName());
+					CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_fixLeadersNoCap")+" "+civ.getName());
 					continue;
 				}
 				
-				CivMessage.send(sender, "Broken Civ:"+civ.getName()+" Leader:"+res.getName());
+				CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_listOrphanLeadersBroken")+civ.getName()+" "+CivSettings.localize.localizedString("Leader")+" "+res.getName());
 			}
 			
 		}
@@ -287,7 +288,7 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listorphantowns_cmd() {
-		CivMessage.sendHeading(sender, "Orphan Towns");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_listOrphanTownsHeading"));
 		
 		for (Town town : CivGlobal.orphanTowns) {
 			CivMessage.send(sender, town.getName());
@@ -295,7 +296,7 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listorphancivs_cmd() {
-		CivMessage.sendHeading(sender, "Orphan Civs");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_recover_listOrphanCivsHeading"));
 		
 		for (Civilization civ : CivGlobal.orphanCivs) {
 			CivMessage.send(sender, civ.getName()+ " capitol:"+civ.getCapitolName());
@@ -304,12 +305,12 @@ public class AdminRecoverCommand extends CommandBase {
 	}
 	
 	public void listbroken_cmd() {
-		CivMessage.send(sender, "Starting List Broken Task");
+		CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_listbrokenStart"));
 		TaskMaster.syncTask(new RecoverStructuresAsyncTask(sender, true), 0);
 	}
 	
 	public void structures_cmd() {
-		CivMessage.send(sender, "Starting Recover Task");
+		CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_recover_structuresStart"));
 		TaskMaster.syncTask(new RecoverStructuresAsyncTask(sender, false), 0);
 		
 	}

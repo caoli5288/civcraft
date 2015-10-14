@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -29,7 +30,7 @@ public class InteractiveReportPlayerMessage implements InteractiveResponse {
 		}
 		
 		ReportManager.reportPlayer(playerName, type, message, resident.getName());
-		CivMessage.sendSuccess(player, playerName+" was reported. Thank you.");
+		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_interactive_report_success",playerName));
 		resident.clearInteractiveMode();
 	}
 

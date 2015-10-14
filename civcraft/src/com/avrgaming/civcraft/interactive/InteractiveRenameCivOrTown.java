@@ -1,5 +1,6 @@
 package com.avrgaming.civcraft.interactive;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -26,9 +27,8 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 	}
 	
 	public void displayQuestion(Resident resident) {		
-		CivMessage.send(resident, CivColor.Green+"Would you like to rename a "+CivColor.LightGreen+"CIV"+
-								  CivColor.Green+" or a "+CivColor.LightGreen+"TOWN"+CivColor.Green+"?");
-		CivMessage.send(resident, CivColor.Gray+"(Type 'civ' or 'town' anything else cancels.)");
+		CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("interactive_rename_question1"));
+		CivMessage.send(resident, CivColor.Gray+CivSettings.localize.localizedString("interactive_rename_question2"));
 		return;
 	}
 	
@@ -41,67 +41,65 @@ public class InteractiveRenameCivOrTown implements InteractiveResponse {
 		try {
 			if (selection == null) {
 				if (message.equalsIgnoreCase("town")) {
-					CivMessage.send(resident, CivColor.Green+"Enter the name of the town you want to rename:");
+					CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("interactive_rename_townPrompt"));
 					selection = "town";
 				} else if (message.equalsIgnoreCase("civ")) {
-					CivMessage.send(resident, CivColor.Green+"Enter the name of the civ you want to rename:");
+					CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("interactive_rename_civPrompt"));
 					selection = "civ";
 				} else {
-					throw new CivException("Rename cancelled.");
+					throw new CivException(CivSettings.localize.localizedString("interactive_rename_cancel"));
 				}
 			} else if (oldName == null) {
 				oldName = message;
 				if (selection.equals("town")) {
 					Town town = CivGlobal.getTown(oldName);
 					if (town == null) {
-						throw new CivException("No town named "+oldName+".");
+						throw new CivException(CivSettings.localize.localizedString("var_interactive_rename_townNoTown",oldName));
 					}
 					
 					if (!town.getMayorGroup().hasMember(resident) && !town.getCiv().getLeaderGroup().hasMember(resident)) {
-						throw new CivException("You must be the town's mayor or the civ's leader to rename towns.");
+						throw new CivException(CivSettings.localize.localizedString("interactive_rename_noPerms"));
 					}
 					
 					selectedTown = town;
-					CivMessage.send(resident, CivColor.Green+"Enter the NEW name of your town:");
+					CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("interactive_rename_newtownPrompt"));
 				} else if (selection.equals("civ")) {
 					Civilization civ = CivGlobal.getCiv(oldName);
 					if (civ == null) {
 						civ = CivGlobal.getConqueredCiv(oldName);
 						if (civ == null) {
-							throw new CivException("No civ named "+oldName+".");
+							throw new CivException(CivSettings.localize.localizedString("var_interactive_rename_civNone",oldName));
 						}
 					}
 					
 					if (!civ.getLeaderGroup().hasMember(resident)) {
-						throw new CivException("You must be the civ's leader in order to rename it.");
+						throw new CivException(CivSettings.localize.localizedString("interactive_rename_civnoPerms"));
 					}
 					
 					selectedCiv = civ;
-					CivMessage.send(resident, CivColor.Green+"Enter the NEW name of your civ:");
+					CivMessage.send(resident, CivColor.Green+CivSettings.localize.localizedString("interactive_rename_newcivPrompt"));
 				}
 			} else if (newName == null) {
 				newName = message.replace(" ", "_");
 				if (selectedCiv != null) {
 					try {
-						CivMessage.global(resident.getName()+" has used a "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" to rename the civ of "+
-								selectedCiv.getName()+" to "+newName);
+						CivMessage.global(CivSettings.localize.localizedString("var_interactive_rename_successCiv",resident.getName(),selectedCiv.getName(),newName));
 						selectedCiv.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {
-						throw new CivException("This name is not valid. Pick another.");
+						throw new CivException(CivSettings.localize.localizedString("interactive_rename_invalidName"));
 					}
 				} else if (selectedTown != null) {
 					try {
-						CivMessage.global(resident.getName()+" has used a "+CivColor.Yellow+"Rename Token"+CivColor.RESET+" to rename the town of "+
-								selectedTown.getName()+" to "+newName);
+						CivMessage.global(CivSettings.localize.localizedString("var_interactive_rename_successTown",resident.getName(),selectedTown.getName(),newName));
 						selectedTown.rename(newName);
 						perk.markAsUsed(resident);
 					} catch (InvalidNameException e) {
-						throw new CivException("This name is not valid. Pick another.");
+						throw new CivException(CivSettings.localize.localizedString("interactive_rename_invalidName"));
 					}
 				}
 			} else {
-				throw new CivException("Couldn't find all the information we needed. Rename cancelled.");
+				throw new CivException(CivSettings.localize.localizedString("interactive_rename_missingInfo"));
 			}
 		} catch (CivException e) {
 			CivMessage.sendError(resident, e.getMessage());

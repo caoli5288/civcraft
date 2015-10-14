@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.threading.tasks;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -60,7 +61,7 @@ public class PlayerReviveTask implements Runnable {
 			return;
 		}
 		
-		CivMessage.send(player, CivColor.LightGray+"You will respawn in "+timeout+" seconds.");
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_PlayerReviveTask_repawnIn",timeout));
 		
 		try {
 			synchronized(this) {
@@ -84,7 +85,7 @@ public class PlayerReviveTask implements Runnable {
 			loc = revive.getLocation();
 		}
 		
-		CivMessage.send(player, CivColor.LightGreen+"Respawning...");
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("PlayerReviveTask_respawning"));
 		
 		try {
 			synchronized(this) {

@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Queue;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -48,6 +49,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
+import com.avrgaming.civcraft.threading.sync.SyncBuildUpdateTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.PlayerBlockChangeUtil;
@@ -64,8 +66,10 @@ public class Template {
 	public int size_x;
 	public int size_y;
 	public int size_z;
+	private String strTheme;
 	private String dir;
 	private String filepath;
+	private Queue<SimpleBlock> sbs; //Blocks to add to main sync task queue;
 	
 	/* Save the command block locations when we init the template, so we dont have to search for them later. */
 	public ArrayList<BlockCoord> commandBlockRelativeLocations = new ArrayList<BlockCoord>();
@@ -121,8 +125,8 @@ public class Template {
 		attachableTypes.add(ItemManager.getId(Material.TORCH));
 		attachableTypes.add(ItemManager.getId(Material.REDSTONE_WIRE));
 		attachableTypes.add(ItemManager.getId(Material.WHEAT));
-		attachableTypes.add(ItemManager.getId(Material.SIGN_POST));
-		attachableTypes.add(ItemManager.getId(Material.WALL_SIGN));
+//		attachableTypes.add(ItemManager.getId(Material.SIGN_POST));
+//		attachableTypes.add(ItemManager.getId(Material.WALL_SIGN));
 		attachableTypes.add(ItemManager.getId(Material.LADDER));
 		attachableTypes.add(ItemManager.getId(Material.RAILS));
 		attachableTypes.add(ItemManager.getId(Material.LEVER));
@@ -157,10 +161,23 @@ public class Template {
 		attachableTypes.add(ItemManager.getId(Material.ACTIVATOR_RAIL));
 	}
 	
-	
-	public Template() 
+	public static boolean isAttachable(int blockID)
 	{
-		
+		if (attachableTypes.contains(blockID))
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	
+	public Template() {
+		sbs = new LinkedList<SimpleBlock>();	
+	}
+	
+	public void updateBlocksQueue(Queue<SimpleBlock> sbs) {
+		SyncBuildUpdateTask.queueSimpleBlock(sbs);
+		return;
 	}
 	
 	/*public CivTemplate(Location center, String name, Type type) throws TownyException, IOException {
@@ -178,7 +195,6 @@ public class Template {
 		
 		String dir = Template.parseDirection(playerLocationForDirection);
 		dir = Template.invertDirection(dir);
-				
 		return Template.getTemplateFilePath(buildable.getTemplateBaseName(), dir, type, theme);
 	}
 	
@@ -424,7 +440,7 @@ public class Template {
 		line = reader.readLine();
 		if (line == null) {
 			reader.close();
-			throw new CivException("Invalid template file:"+filepath);
+			throw new CivException(CivSettings.localize.localizedString("template_invalidFile")+" "+filepath);
 		}
 		
 		String split[] = line.split(";");
@@ -468,7 +484,7 @@ public class Template {
 		dir = invertDirection(dir); //We want the direction the building should be facing, not the player.
 
 		if (dir == null) {
-			throw new CivException("Unknown direction.");
+			throw new CivException(CivSettings.localize.localizedString("template_unknwonDirection"));
 		}
 	}
 	
@@ -505,6 +521,7 @@ public class Template {
 		
 		
 		// Find the template file.
+		this.setTheme(theme);
 		String templatePath = Template.getTemplateFilePath(center, buildable, theme);
 		this.setFilepath(templatePath);
 		load_template(templatePath);
@@ -517,6 +534,11 @@ public class Template {
 	
 	public static Template getTemplate(String filepath, Location dirLoc) throws IOException, CivException {
 		/* Attempt to get template statically. */
+		if (filepath.contains("capital"))
+		{
+			CivLog.debug("Template getTemplate - Replacing Capital occurence");
+			filepath = filepath.replace("capital", "capitol");
+		}
 		Template tpl = templateCache.get(filepath);
 		if (tpl == null) {
 			/* No template found in cache. Load it. */
@@ -539,7 +561,7 @@ public class Template {
 		line = reader.readLine();
 		if (line == null) {
 			reader.close();
-			throw new CivException("Invalid template file:"+filepath);
+			throw new CivException(CivSettings.localize.localizedString("template_invalidFile")+" "+filepath);
 		}
 		
 		String split[] = line.split(";");
@@ -577,7 +599,13 @@ public class Template {
 			
 			SimpleBlock block = new SimpleBlock(blockId, blockData);
 			
-			if (blockId == CivData.WOOD_DOOR || blockId == CivData.IRON_DOOR) {
+			if (blockId == CivData.WOOD_DOOR || 
+					blockId == CivData.IRON_DOOR || 
+					blockId == CivData.SPRUCE_DOOR || 
+					blockId == CivData.BIRCH_DOOR || 
+					blockId == CivData.JUNGLE_DOOR || 
+					blockId == CivData.ACACIA_DOOR || 
+					blockId == CivData.DARK_OAK_DOOR) {
 				this.doorRelativeLocations.add(new BlockCoord("", blockX, blockY, blockZ));
 			}
 			
@@ -641,6 +669,10 @@ public class Template {
 						}
 					}
 				}
+			}
+			
+			if (isAttachable(blockId)) {
+				this.attachableLocations.add(new BlockCoord("", blockX, blockY, blockZ));
 			}
 			
 			blocks[blockX][blockY][blockZ] = block;
@@ -749,8 +781,18 @@ public class Template {
 						if (CivSettings.restrictedUndoBlocks.contains(ItemManager.getId(b))) {
 							continue;
 						}
+						SimpleBlock sb = tpl.blocks[x][y][z];
+						
+						// Convert relative x,y,z to real x,y,z in world.
+						sb.x = x+centerBlock.getX();
+						sb.y = y+centerBlock.getY();
+						sb.z = z+centerBlock.getZ();
+						sb.worldname = centerBlock.getWorld().getName();
+//						sb.buildable = buildable;
+
+						sbs.add(sb);
 					
-						ItemManager.setTypeIdAndData(b, tpl.blocks[x][y][z].getType(), (byte)tpl.blocks[x][y][z].getData(), false);
+//						ItemManager.setTypeIdAndData(b, tpl.blocks[x][y][z].getType(), (byte)tpl.blocks[x][y][z].getData(), false);
 //						try {
 //							nms.setBlockFast(b.getWorld(), b.getX(), b.getY(), b.getZ(), tpl.blocks[x][y][z].getType(), 
 //								(byte)tpl.blocks[x][y][z].getData());
@@ -772,10 +814,19 @@ public class Template {
 				}
 			}
 		}
+		updateBlocksQueue(sbs);
 	}
 	
 	public String dir() {
 		return dir;
+	}
+
+	public String getTheme() {
+		return strTheme;
+	}
+
+	public void setTheme(String strTheme) {
+		this.strTheme = strTheme;
 	}
 	
 }

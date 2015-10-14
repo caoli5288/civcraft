@@ -65,7 +65,7 @@ public class CultureProcessAsyncTask extends CivAsyncTask {
 		town.trimCultureChunks(expanded);
 		int expandedAmount = expanded.size() - town.getCultureChunks().size();
 		if (expandedAmount > 0) {
-			CivMessage.sendCiv(town.getCiv(), "Town of "+town.getName()+" expanded "+expandedAmount+" chunks!");
+			CivMessage.sendCiv(town.getCiv(), CivSettings.localize.localizedString("var_cultureProcess_townGrow",town.getName(),expandedAmount));
 		}
 		
 	}

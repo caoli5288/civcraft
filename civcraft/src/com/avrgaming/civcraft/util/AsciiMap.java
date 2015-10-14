@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.TownChunk;
@@ -46,7 +47,7 @@ public class AsciiMap {
 		int startX = currentChunk.getX();
 		int startZ = currentChunk.getZ();
 	
-		out.add(CivMessage.buildTitle("Map"));
+		out.add(CivMessage.buildTitle(CivSettings.localize.localizedString("Map")));
 		
 		//ChunkCoord currentChunk = new ChunkCoord(center);
 		for (int x = 0; x < width; x++) {

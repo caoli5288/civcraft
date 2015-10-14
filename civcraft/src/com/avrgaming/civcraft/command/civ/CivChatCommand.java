@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -41,14 +42,14 @@ public class CivChatCommand implements CommandExecutor {
 		Player player = (Player)sender;
 		Resident resident = CivGlobal.getResident(player);
 		if (resident == null) {
-			CivMessage.sendError(sender, "You are not a resident? Relogin please..");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_civchat_notResident"));
 			return false;
 		}
 	
 		if (args.length == 0) {
 			resident.setCivChat(!resident.isCivChat());
 			resident.setTownChat(false);
-			CivMessage.sendSuccess(sender, "Civ chat mode set to "+resident.isCivChat());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_civchat_modeSet")+" "+resident.isCivChat());
 			return true;
 		}
 		
@@ -59,7 +60,7 @@ public class CivChatCommand implements CommandExecutor {
 		}
 	
 		if (resident.getTown() == null) {
-			player.sendMessage(CivColor.Rose+"You are not part of a civ, nobody hears you.");
+			player.sendMessage(CivColor.Rose+CivSettings.localize.localizedString("cmd_civchat_error"));
 			return false;
 		}
 		

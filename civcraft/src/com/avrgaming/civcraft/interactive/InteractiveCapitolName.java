@@ -23,6 +23,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.town.TownCommand;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -43,13 +44,13 @@ public class InteractiveCapitolName implements InteractiveResponse {
 		}
 
 		if (message.equalsIgnoreCase("cancel")) {
-			CivMessage.send(player, "Civilization creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_capitol_cancel"));
 			resident.clearInteractiveMode();
 			return;
 		}
 		
 		if (!StringUtils.isAlpha(message)) {
-			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+"Town names must only contain letters(A-Z). Enter another name.");
+			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_capitol_invalidname"));
 			return;
 		}
 		
@@ -58,9 +59,8 @@ public class InteractiveCapitolName implements InteractiveResponse {
 		message = message.replace("\'", "");
 		
 		resident.desiredCapitolName = message;
-		CivMessage.send(player, CivColor.LightGreen+"The Civilization of "+CivColor.Yellow+resident.desiredCivName+
-				CivColor.LightGreen+"! And its capitol will be "+CivColor.Yellow+resident.desiredCapitolName+CivColor.LightGreen+"!");
-		CivMessage.sendHeading(player, "Survey Results");
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_interactive_capitol_confirm1",CivColor.Yellow+resident.desiredCivName+CivColor.LightGreen,CivColor.Yellow+resident.desiredCapitolName+CivColor.LightGreen));
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_capitol_confirmSurvey"));
 		
 		class SyncTask implements Runnable {
 			String playerName;
@@ -86,7 +86,7 @@ public class InteractiveCapitolName implements InteractiveResponse {
 				
 				CivMessage.send(player, TownCommand.survey(player.getLocation()));
 				CivMessage.send(player, "");
-				CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Are you sure? Type 'yes' and I will create this Civilization. Type anything else, and I will forget the whole thing.");
+				CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_capitol_confirmPrompt"));
 				resident.setInteractiveMode(new InteractiveConfirmCivCreation());				
 			}
 		

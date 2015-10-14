@@ -5,6 +5,7 @@ import gpl.AttributeUtil;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.util.CivColor;
 
 public class LoreEnhancementSoulBound extends LoreEnhancement {
@@ -30,7 +31,7 @@ public class LoreEnhancementSoulBound extends LoreEnhancement {
 	}
 	
 	public String getDisplayName() {
-		return "SoulBound";
+		return CivSettings.localize.localizedString("itemLore_Soulbound");
 	}
 	
 	@Override

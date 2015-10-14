@@ -33,18 +33,17 @@ public class TownUpgradeCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town upgrade";
-		displayName = "Town Upgrade";
+		displayName = CivSettings.localize.localizedString("cmd_town_upgrade_name");
 		
-		
-		commands.put("list", "shows available upgrades to purchase.");
-		commands.put("purchased", "shows a list of purchased upgrades.");
-		commands.put("buy", "[name] - buys upgrade for town.");
+		commands.put("list", CivSettings.localize.localizedString("cmd_town_upgrade_listDesc"));
+		commands.put("purchased", CivSettings.localize.localizedString("cmd_town_upgrade_purchasedDesc"));
+		commands.put("buy", CivSettings.localize.localizedString("cmd_town_upgrade_buyDesc"));
 		
 	}
 
 	public void purchased_cmd() throws CivException {
 		Town town = this.getSelectedTown();
-		CivMessage.sendHeading(sender, "Upgrades Purchased");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_upgrade_purchasedHeading"));
 
 		String out = "";
 		for (ConfigTownUpgrade upgrade : town.getUpgrades().values()) {
@@ -56,13 +55,13 @@ public class TownUpgradeCommand extends CommandBase {
 	
 	private void list_upgrades(String category, Town town) throws CivException {
 		if (!ConfigTownUpgrade.categories.containsKey(category.toLowerCase()) && !category.equalsIgnoreCase("all")) {
-			throw new CivException("No category called "+category);
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_town_upgrade_listnoCat",category));
 		}
 				
 		for (ConfigTownUpgrade upgrade : CivSettings.townUpgrades.values()) {
 			if (category.equalsIgnoreCase("all") || upgrade.category.equalsIgnoreCase(category)) {	
 				if (upgrade.isAvailable(town)) {
-					CivMessage.send(sender, upgrade.name+CivColor.LightGray+" Cost: "+CivColor.Yellow+upgrade.cost);
+					CivMessage.send(sender, upgrade.name+" "+CivColor.LightGray+CivSettings.localize.localizedString("Cost")+" "+CivColor.Yellow+upgrade.cost);
 				}
 			}
 		}
@@ -71,10 +70,10 @@ public class TownUpgradeCommand extends CommandBase {
 	public void list_cmd() throws CivException {
 		Town town = this.getSelectedTown();
 		
-		CivMessage.sendHeading(sender, "Available Upgrades");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_upgrade_listHeading"));
 		
 		if (args.length < 2) {
-			CivMessage.send(sender, "- "+CivColor.Gold+"All "+
+			CivMessage.send(sender, "- "+CivColor.Gold+CivSettings.localize.localizedString("cmd_town_upgrade_listAllHeading")+" "+
 					CivColor.LightBlue+"("+ConfigTownUpgrade.getAvailableCategoryCount("all", town)+")");
 			for (String category : ConfigTownUpgrade.categories.keySet()) {
 				CivMessage.send(sender, "- "+CivColor.Gold+WordUtils.capitalize(category)+
@@ -90,7 +89,7 @@ public class TownUpgradeCommand extends CommandBase {
 	public void buy_cmd() throws CivException {
 		if (args.length < 2) {
 			list_upgrades("all", getSelectedTown());
-			CivMessage.send(sender, "Enter the name of the upgrade you wish to purchase.");
+			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_town_upgrade_buyHeading"));
 			return;
 		}
 		
@@ -105,16 +104,16 @@ public class TownUpgradeCommand extends CommandBase {
 		
 		ConfigTownUpgrade upgrade = CivSettings.getUpgradeByNameRegex(town, combinedArgs);
 		if (upgrade == null) {
-			throw new CivException("No upgrade by the name of "+combinedArgs+" could be found.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_upgrade_buyInvalid")+" "+combinedArgs);
 		}
 		
 		if (town.hasUpgrade(upgrade.id)) {
-			throw new CivException("You already have that upgrade.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_upgrade_buyOwned"));
 		}
 		
 		//TODO make upgrades take time by using hammers.
 		town.purchaseUpgrade(upgrade);
-		CivMessage.sendSuccess(sender, "Upgrade \""+upgrade.name+"\" purchased.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_upgrade_buySuccess",upgrade.name));
 	}
 	
 	@Override

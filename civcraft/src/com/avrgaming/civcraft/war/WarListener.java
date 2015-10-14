@@ -22,7 +22,6 @@ import com.avrgaming.civcraft.camp.CampBlock;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.StructureBlock;
@@ -52,7 +51,7 @@ public class WarListener implements Listener {
 		}
 	}
 	
-	@EventHandler(priority = EventPriority.HIGH)
+	@EventHandler(priority = EventPriority.HIGHEST)
     public void onBlockBreak(BlockBreakEvent event) {
 		if (event.isCancelled()) {
 			return;
@@ -84,11 +83,15 @@ public class WarListener implements Listener {
 			event.getBlock().getType().equals(Material.TNT) ||
 			event.getBlock().getType().equals(Material.LADDER) ||
 			event.getBlock().getType().equals(Material.VINE) ||
+			event.getBlock().getType().equals(Material.IRON_BLOCK) || 
+			event.getBlock().getType().equals(Material.GOLD_BLOCK) ||
+			event.getBlock().getType().equals(Material.DIAMOND_BLOCK) ||
+			event.getBlock().getType().equals(Material.EMERALD_BLOCK) ||
 			!event.getBlock().getType().isSolid()) {
 			return;
 		}
 		
-		CivMessage.sendError(event.getPlayer(), "Must use TNT to break blocks in at-war civilization cultures during WarTime.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_mustUseTNT"));
 		event.setCancelled(true);
 	}
 	
@@ -148,7 +151,8 @@ public class WarListener implements Listener {
 				return;
 			}
 		
-		CivMessage.sendError(event.getPlayer(), "Can only place grass, dirt, and TNT blocks in at-war civilization cultures during WarTime.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_onlyBuildCertainBlocks"));
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("war_canAlsoPlaceBridgeBlocks"));
 		event.setCancelled(true);
 	}
 	
@@ -177,27 +181,22 @@ public class WarListener implements Listener {
 			return;
 		}
 		
-		CivLog.debug("Explosion 1");
 		if (event.isCancelled()) {
 			return;
 		}
-		CivLog.debug("Explosion 2");
 		
 		if (event.getEntity() == null) {
 			return;
 		}
-		CivLog.debug("Explosion 3");
 		
 		if (event.getEntityType().equals(EntityType.UNKNOWN)) {
 			return;
 		}
 
-		CivLog.debug("Explosion 4");
 		if (event.getEntityType().equals(EntityType.PRIMED_TNT) ||
 				event.getEntityType().equals(EntityType.MINECART_TNT)) {
 
 			HashSet<Buildable> structuresHit = new HashSet<Buildable>();
-			CivLog.debug("Explosion 5");
 		
 			for (int y = -yield; y <= yield; y++) {
 				for (int x = -yield; x <= yield; x++) {
@@ -254,11 +253,11 @@ public class WarListener implements Listener {
 											}
 										} else {
 											sb.getOwner().onDamage(structureDamage, b.getWorld(), null, sb.getCoord(), sb);
-											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+"Our "+sb.getOwner().getDisplayName()+" at ("+
+											CivMessage.sendCiv(sb.getCiv(), CivColor.Yellow+CivSettings.localize.localizedString("var_war_tntMsg",sb.getOwner().getDisplayName(),(
 													sb.getOwner().getCenterLocation().getX()+","+
 													sb.getOwner().getCenterLocation().getY()+","+
-													sb.getOwner().getCenterLocation().getZ()+")"+
-													" was hit by TNT! ("+sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints()+")");
+													sb.getOwner().getCenterLocation().getZ()+")"),
+													(sb.getOwner().getHitpoints()+"/"+sb.getOwner().getMaxHitPoints())));
 										}
 									}
 								} else {
@@ -273,7 +272,7 @@ public class WarListener implements Listener {
 			event.setCancelled(true);
 		}
 
-		CivLog.debug("Explosion 6");
 	}
 
 }
+

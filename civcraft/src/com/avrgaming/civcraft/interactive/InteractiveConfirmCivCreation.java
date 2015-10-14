@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -43,12 +44,12 @@ public class InteractiveConfirmCivCreation implements InteractiveResponse {
 		resident.clearInteractiveMode();
 
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.send(player, "Civilization creation cancelled.");
+			CivMessage.send(player, CivSettings.localize.localizedString("interactive_civ_cancelcreate"));
 			return;
 		}
 		
 		if (resident.desiredCapitolName == null || resident.desiredCivName == null) {
-			CivMessage.send(player, CivColor.Rose+"Internal Error Creating Civ... =(");
+			CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("interactive_civ_createError"));
 			return;
 		}
 		

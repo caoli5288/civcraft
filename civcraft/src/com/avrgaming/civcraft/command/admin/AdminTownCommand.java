@@ -52,49 +52,49 @@ public class AdminTownCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad town";
-		displayName = "Admin town";
+		displayName = CivSettings.localize.localizedString("adcmd_town_name");
 		
-		commands.put("disband", "[town] - disbands this town");
-		commands.put("claim", "[town] - forcibly claims the plot you stand on for this named town.");
-		commands.put("unclaim", "forcibly unclaims the plot you stand on.");
-		commands.put("hammerrate", "[town] [amount] set this town's hammer rate to this amount.");
-		commands.put("addmayor", "[town] [player] - adds the player as a mayor of this town.");
-		commands.put("addassistant", "[town] [player] - adds this player as an assistant to this town.");
-		commands.put("rmmayor", "[town] [player] - remove this player as a mayor from this town.");
-		commands.put("rmassistant", "[town] [player] - remove this player as an assistant from this town.");
-		commands.put("tp", "[town] - teleports to this town's town hall");
-		commands.put("culture", "[town] [amount] - gives this town this amount of culture.");
-		commands.put("info", "[town] - shows information for this town as-if you were a resident.");
-		commands.put("setciv", "[town] [civ] - changes this town's civilization to the named civ.");
-		commands.put("select", "[town] - selects this town as if you were the owner.");
-		commands.put("claimradius", "[radius] - claims chunks in this radius.");
-		commands.put("chestreport", "[town] Report on the chests town.");
-		commands.put("rebuildgroups", "[town] - Remakes town's protected groups if they are not present.");
-		commands.put("capture", "[winner civ] [loser town] - Captures the named town for this civ.");
-		commands.put("setmotherciv", "[town] [motherciv] - Changes the mother civ of this town.");
-		commands.put("sethappy", "[town] [amount] - Sets a magical base happiness for this town.");
-		commands.put("setunhappy", "[town] [amount] - sets a magical base unhappiness for this town.");
-		commands.put("event", "[town] [event_id] - Runs the named random event in this town.");
-		commands.put("rename", "[town] [new_name] - Renames this town.");
+		commands.put("disband", CivSettings.localize.localizedString("adcmd_town_disbandDesc"));
+		commands.put("claim", CivSettings.localize.localizedString("adcmd_town_claimDesc"));
+		commands.put("unclaim", CivSettings.localize.localizedString("adcmd_town_unclaimDesc"));
+		commands.put("hammerrate", CivSettings.localize.localizedString("adcmd_town_hammerrateDesc"));
+		commands.put("addmayor", CivSettings.localize.localizedString("adcmd_town_addmayorDesc"));
+		commands.put("addassistant", CivSettings.localize.localizedString("adcmd_town_addAssistantDesc"));
+		commands.put("rmmayor", CivSettings.localize.localizedString("adcmd_town_rmmayorDesc"));
+		commands.put("rmassistant", CivSettings.localize.localizedString("adcmd_town_rmassistantDesc"));
+		commands.put("tp", CivSettings.localize.localizedString("adcmd_town_tpDesc"));
+		commands.put("culture", CivSettings.localize.localizedString("adcmd_town_cultureDesc"));
+		commands.put("info", CivSettings.localize.localizedString("adcmd_town_infoDesc"));
+		commands.put("setciv", CivSettings.localize.localizedString("adcmd_town_setcivDesc"));
+		commands.put("select", CivSettings.localize.localizedString("adcmd_town_selectDesc"));
+		commands.put("claimradius", CivSettings.localize.localizedString("adcmd_town_claimradiusDesc"));
+		commands.put("chestreport", CivSettings.localize.localizedString("adcmd_town_chestReportDesc"));
+		commands.put("rebuildgroups", CivSettings.localize.localizedString("adcmd_town_rebuildgroupsDesc"));
+		commands.put("capture", CivSettings.localize.localizedString("adcmd_town_captureDesc"));
+		commands.put("setmotherciv", CivSettings.localize.localizedString("adcmd_town_setmothercivDesc"));
+		commands.put("sethappy", CivSettings.localize.localizedString("adcmd_town_sethappyDesc"));
+		commands.put("setunhappy", CivSettings.localize.localizedString("adcmd_town_setunhappyDesc"));
+		commands.put("event", CivSettings.localize.localizedString("adcmd_town_eventDesc"));
+		commands.put("rename", CivSettings.localize.localizedString("adcmd_town_renameDesc"));
 	}
 	
 	public void rename_cmd() throws CivException, InvalidNameException {
 		Town town = getNamedTown(1);
-		String name = getNamedString(2, "Name for new town.");
+		String name = getNamedString(2, CivSettings.localize.localizedString("EnterTownName"));
 		
 		if (args.length < 3) {
-			throw new CivException("Use underscores for names with spaces.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_town_renameUnderscores"));
 		}
 		
 		town.rename(name);
-		CivMessage.sendSuccess(sender, "Renamed town.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_renameSuccess"));
 	}
 	
 	public void event_cmd() throws CivException {
 		Town town = getNamedTown(1);
 		
 		if (args.length < 3) {
-			CivMessage.sendHeading(sender, "Available Events");
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_town_eventHeading"));
 			String out = "";
 			for (ConfigRandomEvent configEvent : CivSettings.randomEvents.values()) {
 				out += configEvent.id+",";
@@ -106,7 +106,7 @@ public class AdminTownCommand extends CommandBase {
 		ConfigRandomEvent event = CivSettings.randomEvents.get(args[2]);
 		RandomEvent randEvent = new RandomEvent(event);
 		randEvent.start(town);
-		CivMessage.sendSuccess(sender, "Started event:"+event.name);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_eventRenameSuccess")+" "+event.name);
 	}
 	
 	public void setunhappy_cmd() throws CivException {
@@ -114,7 +114,7 @@ public class AdminTownCommand extends CommandBase {
 		double happy = getNamedDouble(2);
 		
 		town.setBaseUnhappy(happy);
-		CivMessage.sendSuccess(sender, "Set unhappiness.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_setunhappySuccess",happy));
 
 	}
 	
@@ -123,7 +123,7 @@ public class AdminTownCommand extends CommandBase {
 		double happy = getNamedDouble(2);
 		
 		town.setBaseHappiness(happy);
-		CivMessage.sendSuccess(sender, "Set happiness.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_sethappySuccess",happy));
 
 	}
 	
@@ -134,7 +134,7 @@ public class AdminTownCommand extends CommandBase {
 		town.setMotherCiv(civ);
 		town.save();
 		
-		CivMessage.sendSuccess(sender, "Set town "+town.getName()+" to civ "+civ.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_setMotherCivSuccess",town.getName(),civ.getName()));
 	}
 	
 	public void capture_cmd() throws CivException {
@@ -142,7 +142,7 @@ public class AdminTownCommand extends CommandBase {
 		Town town = getNamedTown(2);
 		
 		town.onDefeat(civ);
-		CivMessage.sendSuccess(sender, "Captured.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_captureSuccess",town.getName(),civ.getName()));
 	}
 	
 	public void rebuildgroups_cmd() throws CivException {
@@ -162,7 +162,7 @@ public class AdminTownCommand extends CommandBase {
 			} catch (InvalidNameException e1) {
 				e1.printStackTrace();
 			}
-			CivMessage.sendSuccess(sender, "Created residents group.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_rebuildgroupsResidents"));
 		}
 		
 		if (town.getAssistantGroup() == null) {
@@ -181,7 +181,7 @@ public class AdminTownCommand extends CommandBase {
 			 catch (InvalidNameException e) {
 					e.printStackTrace();
 				}
-			CivMessage.sendSuccess(sender, "Created assistants group.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_rebuildgroupsAssistants"));
 		}
 		
 		if (town.getMayorGroup() == null) {
@@ -198,7 +198,7 @@ public class AdminTownCommand extends CommandBase {
 			} catch (InvalidNameException e) {
 				e.printStackTrace();
 			}
-			CivMessage.sendSuccess(sender, "Created mayors groups.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_rebuildgroupsMayors"));
 		}
 		
 	}
@@ -212,8 +212,8 @@ public class AdminTownCommand extends CommandBase {
 			coords.add(coord);
 		}
 		
-		CivMessage.sendHeading(sender, "Chests with Goodies in "+town.getName());
-		CivMessage.send(sender, "Processing (this may take a while)");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("adcmd_town_chestReportStart")+" "+town.getName());
+		CivMessage.send(sender, CivSettings.localize.localizedString("adcmd_ReportStarted"));
 		TaskMaster.syncTask(new ReportChestsTask(sender, coords), 0);
 		
 	}
@@ -243,7 +243,7 @@ public class AdminTownCommand extends CommandBase {
 		Integer radius = getNamedInteger(1);
 	
 		int count = claimradius(town, getPlayer().getLocation(), radius);
-		CivMessage.sendSuccess(sender, "Claimed "+count+" chunks");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_claimradiusSuccess",count));
 	}
 	
 	public void select_cmd() throws CivException {
@@ -252,16 +252,16 @@ public class AdminTownCommand extends CommandBase {
 		
 		if (resident.getSelectedTown() == null) {
 			if (resident.getTown() == selectTown) {
-				throw new CivException("You already have "+selectTown.getName()+" selected.");
+				throw new CivException(CivSettings.localize.localizedString("var_adcmd_town_selectAlreadySelected",selectTown.getName()));
 			}
 		}
 		
 		if (resident.getSelectedTown() == selectTown) {
-			throw new CivException("You already have "+selectTown.getName()+" selected.");
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_town_selectAlreadySelected",selectTown.getName()));
 		}
 						
 		resident.setSelectedTown(selectTown);
-		CivMessage.sendSuccess(sender, "You have selected "+selectTown.getName()+".");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_selectSuccess",selectTown.getName()));
 	}
 	
 	
@@ -270,16 +270,16 @@ public class AdminTownCommand extends CommandBase {
 		Civilization civ = getNamedCiv(2);
 		
 		if (town.getCiv() == civ) {
-			throw new CivException("Town already belongs to civilization "+civ.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_town_setcivErrorInCiv",civ.getName()));
 		}
 		
 		if (town.isCapitol()) {
-			throw new CivException("Cannot move the capitol town.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_town_setcivErrorCapitol"));
 		}
 		
 		town.changeCiv(civ);		
 		CivGlobal.processCulture();
-		CivMessage.global("An admin has moved the town of "+town.getName()+" to civilization "+civ.getName());
+		CivMessage.global(CivSettings.localize.localizedString("var_adcmd_town_setcivSuccess1",town.getName(),civ.getName()));
 		
 	}
 	
@@ -299,7 +299,7 @@ public class AdminTownCommand extends CommandBase {
 		town.addAccumulatedCulture(culture);
 		town.save();
 		
-		CivMessage.sendSuccess(sender, "Gave "+town.getName()+" "+culture+" culture points.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_var_adcmd_town_cultureSuccess",town.getName(),culture));
 	}
 	
 	public void tp_cmd() throws CivException {
@@ -311,7 +311,7 @@ public class AdminTownCommand extends CommandBase {
 			if (townhall != null && townhall.isComplete()) {
 				BlockCoord bcoord = townhall.getRandomRevivePoint();
 				((Player)sender).teleport(bcoord.getLocation());
-				CivMessage.sendSuccess(sender, "Teleported to "+town.getName());
+				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_tpSuccess",town.getName()));
 				return;
 			} else {
 				if (town.getTownChunks().size() > 0) {
@@ -319,12 +319,12 @@ public class AdminTownCommand extends CommandBase {
 					
 					Location loc = new Location(Bukkit.getWorld(coord.getWorldname()), (coord.getX() << 4), 100, (coord.getZ() << 4));
 					((Player)sender).teleport(loc);
-					CivMessage.sendSuccess(sender, "Teleported to "+town.getName());
+					CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_tpSuccess",town.getName()));
 					return;
 				}
 			}
 			
-			throw new CivException("Couldn't find a town hall or a town chunk to teleport to.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_town_tpError"));
 		}
 		
 	}
@@ -335,7 +335,7 @@ public class AdminTownCommand extends CommandBase {
 		Resident resident = getNamedResident(2);
 		
 		if (!town.getAssistantGroup().hasMember(resident)) {
-			throw new CivException(resident.getName()+" is not in the assistants group in "+town.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_town_rmassistantNotInTown",resident.getName(),town.getName()));
 		}
 	
 		town.getAssistantGroup().removeMember(resident);
@@ -345,7 +345,7 @@ public class AdminTownCommand extends CommandBase {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Removed"+resident.getName()+" to assistants group in "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_rmassistantSuccess",resident.getName(),town.getName()));
 		
 	}
 	
@@ -354,7 +354,8 @@ public class AdminTownCommand extends CommandBase {
 		Resident resident = getNamedResident(2);
 		
 		if (!town.getMayorGroup().hasMember(resident)) {
-			throw new CivException(resident.getName()+" is not in the mayors group in "+town.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_town_rmmayorNotInTown",resident.getName(),town.getName()));
+
 		}
 	
 		town.getMayorGroup().removeMember(resident);
@@ -364,7 +365,8 @@ public class AdminTownCommand extends CommandBase {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Removed"+resident.getName()+" to mayors group in "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_rmmayorSuccess",resident.getName(),town.getName()));
+
 		
 	}
 	
@@ -379,7 +381,7 @@ public class AdminTownCommand extends CommandBase {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Added "+resident.getName()+" to assistants group in "+town.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_addAssistantSuccess",resident.getName(),town.getName()));
 		
 	}
 	
@@ -394,39 +396,39 @@ public class AdminTownCommand extends CommandBase {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Added "+resident.getName()+" to mayors group in "+town.getName());
-		
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_addmayorSuccess",resident.getName(),town.getName()));
+
 	}
 	
 	public void disband_cmd() throws CivException {
 		Town town = getNamedTown(1);
 		
 		if (town.isCapitol()) {
-			throw new CivException("Cannot disband the capitol town, disband the civilization instead.");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_town_disbandError"));
 		}
 		
-		CivMessage.sendTown(town, "Your town is has disbanded by an admin!");
+		CivMessage.sendTown(town, CivSettings.localize.localizedString("adcmd_town_disbandBroadcast"));
 		try {
 			town.delete();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		
-		CivMessage.sendSuccess(sender, "Town disbanded");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_town_disbandSuccess"));
 	}
 	
 	public void hammerrate_cmd() throws CivException {
 		if (args.length < 3) {
-			throw new CivException("Enter a town name and amount");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_town_hammerratePrompt"));
 		}
 		
 		Town town = getNamedTown(1);
 		
 		try {
 			town.setHammerRate(Double.valueOf(args[2]));
-			CivMessage.sendSuccess(sender, "Set "+args[1]+" hammer rate to "+args[2]);
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_town_hammerrateSuccess",args[1],args[2]));
 		} catch (NumberFormatException e) {
-			throw new CivException(args[2]+" is not a number.");
+			throw new CivException(args[2]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 		
 		town.save();
@@ -449,9 +451,9 @@ public class AdminTownCommand extends CommandBase {
 			
 			town.save();
 			
-			CivMessage.sendSuccess(player, "Unclaimed plot from "+town.getName());
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_adcmd_town_unclaimSuccess",town.getName()));
 		} else {
-			CivMessage.sendError(sender, "This plot is not owned.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("adcmd_town_unclaimErrorNotOwned"));
 		}
 		
 	}
@@ -473,9 +475,9 @@ public class AdminTownCommand extends CommandBase {
 			tc.save();
 			town.save();
 			
-			CivMessage.sendSuccess(player, "Claimed plot for "+town.getName());
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_adcmd_town_claimSucess",town.getName()));
 		} else {
-			CivMessage.sendError(sender, "This plot is already owned by town "+town.getName()+" use unclaim first.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("var_adcmd_town_claimErrorOwned",town.getName()));
 		}
 		
 	}

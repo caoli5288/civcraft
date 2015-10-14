@@ -52,10 +52,21 @@ public class SLSManager implements Runnable {
 			throw new CivException("Cannot have a server address with a ';' in it.");
 		}
 		
+		serverURL = CivSettings.getStringBase("server_url");
+		if (serverURL.contains(";")) {
+			throw new CivException("Cannot have a server url with a ';' in it.");
+		}
+		
+		serverURLDescription = CivSettings.getStringBase("server_url_description");
+		if (serverURLDescription.contains(";")) {
+			throw new CivException("Cannot have a server url description with a ';' in it.");
+		}
+		
 		serverTimezone = CivSettings.getStringBase("server_timezone");
 		if (serverTimezone.contains(";")) {
 			throw new CivException("Cannot have a server timezone with a ';' in it.");
 		}
+		
 		
 		gen_id = CivSettings.getGenID();
 		if (gen_id == null) {
@@ -77,7 +88,10 @@ public class SLSManager implements Runnable {
 	public static void sendHeartbeat() {
 		try {
 			InetAddress address = InetAddress.getByName("atlas.civcraft.net");
-			String message = gen_id+";"+serverName+";"+serverDescription+";"+serverTimezone+";"+serverAddress+";"+Bukkit.getOnlinePlayers().length+";"+Bukkit.getMaxPlayers()+";"+getParsedVersion();
+//			String message = gen_id+";<a href=\""+serverURL+"\" title=\""+serverURLDescription+"\" target=\"_blank\" style=\"color:black\"><strong>"+serverName+"</strong></a>;<strong>"+serverDescription+"</strong>;<strong>"+serverTimezone+"</strong>;<strong>"+serverAddress+"</strong>;"+
+
+			String message = gen_id+";"+serverName+";"+serverDescription+";"+serverTimezone+";"+serverAddress+";"+
+					Bukkit.getOnlinePlayers().size()+";"+Bukkit.getMaxPlayers()+";"+getParsedVersion();
 			
 			try {
 				if (CivSettings.getStringBase("debug_heartbeat").equalsIgnoreCase("true")) {

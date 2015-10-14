@@ -19,6 +19,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.Inventory;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -48,7 +49,7 @@ public class ArenaListener implements Listener {
 		if (resident.isInsideArena()) {
 			if (resident.getCurrentArena() != null) {
 				
-				CivMessage.sendArena(resident.getCurrentArena(), event.getPlayer().getName()+" has rejoined the arena.");
+				CivMessage.sendArena(resident.getCurrentArena(), CivSettings.localize.localizedString("var_arena_playerJoined",event.getPlayer().getName()));
 				
 				class SyncTask implements Runnable {
 					String name;
@@ -92,7 +93,7 @@ public class ArenaListener implements Listener {
 						
 						
 
-						CivMessage.send(resident, CivColor.LightGray+"You've been teleported home since the arena you were in no longer exists.");
+						CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("arena_destroyedTeleport"));
 					}
 				}
 				
@@ -110,7 +111,7 @@ public class ArenaListener implements Listener {
 		}
 		
 		/* Player is leaving an active arena. Let everyone know. */
-		CivMessage.sendArena(ArenaManager.activeArenas.get(worldName), event.getPlayer().getName()+" has logged out of the arena.");
+		CivMessage.sendArena(ArenaManager.activeArenas.get(worldName), CivSettings.localize.localizedString("var_arena_playerLeft",event.getPlayer().getName()));
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -166,7 +167,7 @@ public class ArenaListener implements Listener {
 		
 		Location loc = arena.getRespawnLocation(resident);
 		if (loc != null) {
-			CivMessage.send(resident, CivColor.LightGray+"Respawned in arena.");
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("arena_respawned"));
 			World world = Bukkit.getWorld(arena.getInstanceName());
 			loc.setWorld(world);
 			
@@ -251,7 +252,7 @@ public class ArenaListener implements Listener {
 						long secondsLeft = (now.getTime() - resident.getLastKilledTime().getTime()) / 1000;
 						secondsLeft = 30 - secondsLeft;
 						
-						CivMessage.sendError(resident, "Respawning back into arena in "+secondsLeft+" seconds.");
+						CivMessage.sendError(resident, CivSettings.localize.localizedString("var_arena_respawningIn",secondsLeft));
 						TaskMaster.syncTask(this, TimeTools.toTicks(1));
 					} else {
 						BlockCoord revive = arena.getRandomReviveLocation(resident);
@@ -259,7 +260,7 @@ public class ArenaListener implements Listener {
 							Location loc = revive.getCenteredLocation();
 							World world = Bukkit.getWorld(arena.getInstanceName());
 							loc.setWorld(world);
-							CivMessage.send(resident, CivColor.LightGray+"Revived in arena.");
+							CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("arena_revived"));
 							
 							Player player;
 							try {

@@ -27,6 +27,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementAttack;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -45,7 +46,7 @@ public class Attack extends ItemComponent {
 				type(AttributeType.GENERIC_ATTACK_DAMAGE).
 				amount(0).
 				build());
-		attrs.addLore(CivColor.Rose+""+this.getDouble("value")+" Attack");
+		attrs.addLore(CivColor.Rose+""+this.getDouble("value")+" "+CivSettings.localize.localizedString("itemLore_Attack"));
 		return;
 	}
 	
@@ -54,8 +55,7 @@ public class Attack extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
-					"You do not have the required technology to use this item. It's attack output will be reduced in half.");
+			CivMessage.send(resident, CivColor.Rose+CivSettings.localize.localizedString("itemLore_Warning")+" - "+CivColor.LightGray+CivSettings.localize.localizedString("itemLore_attackHalfDamage"));
 		}
 	}
 	

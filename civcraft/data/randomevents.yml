@@ -72,8 +72,6 @@ random_events:
       success:
          - name: 'MessageTown'
            message: "We've cleared enough slime. We've averted the happiness penalty."
-         - name: 'GivePlatinum'
-           message: 'Saving the town, earning the %d!'
       failure:
          - name: 'MessageTown'
            message: "Arg! Our people are terrified and scared! We suffer a happiness penalty"
@@ -178,8 +176,6 @@ random_events:
          - name: 'Happiness'
            value: '5'
            duration: '120'
-         - name: 'GivePlatinum'
-           message: 'Finding the herbs has earned you %d'
       failure:
          - name: 'MessageTown'
            message: "We couldn't find the herbs in time!"
@@ -205,8 +201,6 @@ random_events:
          - name: 'PayPlayer'
            playername_var: 'player'
            amount: '75000'
-         - name: 'GivePlatinum'
-           message: 'Great Success! %d for finding the coins!'
       failure:
          - name: 'MessageTown'
            message: "We couldn't find the coins in time!"

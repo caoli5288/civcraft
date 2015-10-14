@@ -42,6 +42,7 @@ import com.avrgaming.civcraft.object.Relation.Status;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.sessiondb.SessionEntry;
+import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.war.War;
 
@@ -50,26 +51,51 @@ public class CivCommand extends CommandBase {
 	@Override
 	public void init() {		
 		command = "/civ";
-		displayName = "Civ";
+		displayName = CivSettings.localize.localizedString("cmd_civ_name");
 		
-		commands.put("townlist", "Shows a list of all towns in the civilization.");
-		commands.put("deposit", "[amount] - deposits this amount into the civ's treasury.");
-		commands.put("withdraw", "[amount] - withdraws this amount from the civ's treasury.");
-		commands.put("info", "Shows information about this Civilization");
-		commands.put("show", "[name] gives you information about the civ named [name].");
-		commands.put("list", "(name) - shows all civs in the world, or the towns for the civ named (name).");
-		commands.put("research", "Manage civilization's research.");
-		commands.put("gov", "Manage your civilizations government.");
-		commands.put("time", "View information about upcoming events.");
-		commands.put("set", "Set various civilization properties such as taxes and border color");
-		commands.put("group", "Manage the leaders and advisers group.");
-		commands.put("dip", "Manage civilization's diplomacy.");
-		commands.put("victory", "Show which civs are close to victory.");
-		commands.put("votes", "Shows the diplomatic votes for all civs.");
-		commands.put("top5", "Show the top 5 civilizations in the world.");
-		commands.put("disbandtown", "[town] Disbands this town. Mayor must also issue /town disbandtown");
-		commands.put("revolution", "stages a revolution for the mother civilization!");
-		commands.put("claimleader", "claim yourself as leader of this civ. All current leaders must be inactive.");
+		commands.put("townlist", CivSettings.localize.localizedString("cmd_civ_townlistDesc"));
+		commands.put("deposit", CivSettings.localize.localizedString("cmd_civ_depositDesc"));
+		commands.put("withdraw", CivSettings.localize.localizedString("cmd_civ_withdrawDesc"));
+		commands.put("info", CivSettings.localize.localizedString("cmd_civ_infoDesc"));
+		commands.put("show", CivSettings.localize.localizedString("cmd_civ_showDesc"));
+		commands.put("list", CivSettings.localize.localizedString("cmd_civ_listDesc"));
+		commands.put("research", CivSettings.localize.localizedString("cmd_civ_researchDesc"));
+		commands.put("gov", CivSettings.localize.localizedString("cmd_civ_govDesc"));
+		commands.put("time", CivSettings.localize.localizedString("cmd_civ_timeDesc"));
+		commands.put("set", CivSettings.localize.localizedString("cmd_civ_setDesc"));
+		commands.put("group", CivSettings.localize.localizedString("cmd_civ_groupDesc"));
+		commands.put("dip", CivSettings.localize.localizedString("cmd_civ_dipDesc"));
+		commands.put("victory", CivSettings.localize.localizedString("cmd_civ_victoryDesc"));
+		commands.put("vote", CivSettings.localize.localizedString("cmd_civ_voteDesc"));
+		commands.put("votes", CivSettings.localize.localizedString("cmd_civ_votesDesc"));
+		commands.put("top5", CivSettings.localize.localizedString("cmd_civ_top5Desc"));
+		commands.put("disbandtown", CivSettings.localize.localizedString("cmd_civ_disbandtownDesc"));
+		commands.put("revolution", CivSettings.localize.localizedString("cmd_civ_revolutionDesc"));
+		commands.put("claimleader", CivSettings.localize.localizedString("cmd_civ_claimleaderDesc"));
+		commands.put("motd", CivSettings.localize.localizedString("cmd_civ_motdDesc"));
+		commands.put("location", CivSettings.localize.localizedString("cmd_civ_locationDesc"));
+	}
+
+	public void location_cmd() throws CivException {
+		Civilization civ = getSenderCiv();
+	    Resident resident = getResident();
+	    if (resident.getCiv() == civ) {
+    		for (Town town : civ.getTowns())
+    		{
+    			String name = town.getName();
+    			TownHall townhall = town.getTownHall();
+	            if (townhall == null) {
+	                    CivMessage.send(sender, CivColor.Rose+CivColor.BOLD+name+CivColor.RESET+CivColor.Gray+CivSettings.localize.localizedString("cmd_civ_locationMissingTownHall"));
+	            } else {
+	                    CivMessage.send(sender, CivColor.Rose+CivColor.BOLD+name+CivColor.LightPurple+" - "+CivSettings.localize.localizedString("cmd_civ_locationSuccess")+" "+townhall.getCorner());
+	            }
+    		}
+	    }
+	}
+	
+	public void motd_cmd() throws CivException {
+		CivMotdCommand cmd = new CivMotdCommand();	
+		cmd.onCommand(sender, null, "motd", this.stripArgs(args, 1));
 	}
 	
 	public void claimleader_cmd() throws CivException {
@@ -77,31 +103,31 @@ public class CivCommand extends CommandBase {
 		Resident resident = getResident();		
 		
 		if (!civ.areLeadersInactive()) {
-			throw new CivException("At least one leader is not inactive for your civ. Cannot claim leadership.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_claimleaderStillActive"));
 		}
 		
 		civ.getLeaderGroup().addMember(resident);
 		civ.getLeaderGroup().save();
-		CivMessage.sendSuccess(sender, "You are now a leader in "+civ.getName());
-		CivMessage.sendCiv(civ, resident.getName()+" has assumed control of the civilization due to inactive leadership.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_claimLeaderSuccess",civ.getName()));
+		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("var_cmd_civ_claimLeaderBroadcast",resident.getName()));
 	}
 	
 	public void votes_cmd() throws CivException {
 		
-		CivMessage.sendHeading(sender, "Diplomatic Votes");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_votesHeading"));
 		for (Civilization civ : CivGlobal.getCivs()) {
 			Integer votes = EndConditionDiplomacy.getVotesFor(civ);
 			if (votes != 0) {
 				CivMessage.send(sender, CivColor.LightBlue+
-						CivColor.BOLD+civ.getName()+CivColor.White+" has "+
-						CivColor.LightPurple+CivColor.BOLD+votes+CivColor.White+" votes");
+						CivColor.BOLD+civ.getName()+CivColor.White+": "+
+						CivColor.LightPurple+CivColor.BOLD+votes+CivColor.White+" "+CivSettings.localize.localizedString("cmd_civ_votes"));
 			}
 		}
 	}
 	
 	public void victory_cmd() {
 		
-		CivMessage.sendHeading(sender, "Civs Close To Victory");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_victoryHeading"));
 		boolean anybody = false;
 
 		for (EndGameCondition endCond : EndGameCondition.endConditions) {
@@ -114,14 +140,13 @@ public class CivCommand extends CommandBase {
 			for (SessionEntry entry : entries) {
 				Civilization civ = EndGameCondition.getCivFromSessionData(entry.value);
 				Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
-				CivMessage.send(sender, CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+" is "+
-				CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White+" days away from a "+CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+
-				CivColor.White+" victory!");
+				CivMessage.send(sender, CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White+": "+
+				CivSettings.localize.localizedString("var_cmd_civ_victoryDays",(CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White),(CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White)));
 			}
 		}
 		
 		if (!anybody) {
-			CivMessage.send(sender, CivColor.LightGray+"Nobody yet...");
+			CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_civ_victoryNoOne"));
 		}
 		
 	}
@@ -130,17 +155,17 @@ public class CivCommand extends CommandBase {
 		Town town = getSelectedTown();
 		
 		if (War.isWarTime() || War.isWithinWarDeclareDays()) {
-			throw new CivException("Can not start a revolution during WarTime or "+War.getTimeDeclareDays()+" days before WarTime");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_revolutionErrorWar1",War.getTimeDeclareDays()));
 		}
 		
 		if (town.getMotherCiv() == null) {
-			throw new CivException("Cannot start a revolution unless captured by another civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_revolutionErrorNoMother"));
 		}
 		
 		Civilization motherCiv = town.getMotherCiv();
 		
 		if (!motherCiv.getCapitolName().equals(town.getName())) {
-			throw new CivException("Can only start a revolution from your mother civilization's capitol town("+motherCiv.getCapitolName()+").");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_revolutionErrorNotCapitol",motherCiv.getCapitolName()));
 		}
 		
 		
@@ -152,34 +177,34 @@ public class CivCommand extends CommandBase {
 			
 			Date conquered = town.getMotherCiv().getConqueredDate();
 			if (conquered == null) {
-				throw new CivException("You must have been conquered to start a revolution.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_revolutionErrorNoMother"));
 			}
 			
 			revCal.setTime(town.getMotherCiv().getConqueredDate());
 			revCal.add(Calendar.DAY_OF_MONTH, revolution_cooldown);
 			
 			if (!cal.after(revCal)) {
-				throw new CivException("Cannot start a revolution within "+revolution_cooldown+" of being conquered.");
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_revolutionErrorTooSoon",revolution_cooldown));
 			}
 			
 		} catch (InvalidConfiguration e) {
 			e.printStackTrace();
-			throw new CivException("Internal Configuration Error.");
+			throw new CivException(CivSettings.localize.localizedString("internalException"));
 		}
 		
 		
 		double revolutionFee = motherCiv.getRevolutionFee();
 		
 		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"For a measly "+revolutionFee+" we could fund a revolution and get our old civ back!");
-			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Funding a revolution will put us AT WAR with any town that currently owns one of our native towns. To win the revolution, we" +
-					"only need to survive the wars. Are you sure you want to do this?");
-			CivMessage.send(sender, CivColor.LightGreen+"Type '/civ revolution yes' to start the revolution.");
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_revolutionConfirm1",revolutionFee,CivSettings.CURRENCY_NAME));
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_revolutionConfirm2"));
+			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("cmd_civ_revolutionConfirm3"));
+			CivMessage.send(sender, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_civ_revolutionConfirm4"));
 			return;
 		}
 		
 		if(!town.getTreasury().hasEnough(revolutionFee)) {
-			throw new CivException("The capitol town doesnt have the required "+revolutionFee+" in order to start a revolution.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_revolutionErrorTooPoor",revolutionFee,CivSettings.CURRENCY_NAME));
 		}
 
 		/* Starting a revolution! Give back all of our towns to us. */
@@ -209,66 +234,36 @@ public class CivCommand extends CommandBase {
 		
 		
 		town.getTreasury().withdraw(revolutionFee);
-		CivMessage.global(CivColor.Yellow+ChatColor.BOLD+"The civilization of "+motherCiv.getName()+" demands its freedom and has started a revolution! It has declared WAR on any civ that owns its old towns.");
-		CivMessage.global(CivColor.Rose+"RED!"+CivColor.LightGreen+" The blood of angry men! "+CivColor.LightGray+"BLACK!"+CivColor.LightGreen+" The dark of ages past!");
-		CivMessage.global(CivColor.Rose+"RED!"+CivColor.LightGreen+" A world about to dawn! "+CivColor.LightGray+"BLACK!"+CivColor.LightGreen+" The night that ends at last!");
+		CivMessage.global(CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("var_cmd_civ_revolutionSuccess1",motherCiv.getName()));
 
 	}
-	
-//	public void capitulate_cmd() throws CivException {
-//		Town town = getSelectedTown();
-//		Resident resident = getResident();
-//		
-//		if (town.getMotherCiv() == null) {
-//			throw new CivException("Cannot capitulate unless captured by another civilization.");
-//		}
-//		
-//		Civilization motherCiv = town.getMotherCiv();
-//		
-//		if (!town.getMotherCiv().getCapitolName().equals(town.getName())) {
-//			throw new CivException("Can only capitulate your entire civ from the capitol town.");
-//		}
-//		
-//		if (!town.getMotherCiv().getLeaderGroup().hasMember(resident)) {
-//			throw new CivException("You must be the leader of the captured civilization in order to capitulate.");
-//		}
-//		
-//		if (args.length < 2 || !args[1].equalsIgnoreCase("yes")) {
-//			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"Capitualting means that this civ will be DELETED and all of its towns will become a normal towns in "+
-//					town.getCiv().getName()+" and can no longer revolt. Are you sure?");
-//			CivMessage.send(sender, CivColor.Yellow+ChatColor.BOLD+"If you're sure, type /civ capitulate yes");
-//			return;
-//		}
-//		
-//
-//	}
 	
 	public void disbandtown_cmd() throws CivException {
 		this.validLeaderAdvisor();
 		Town town = this.getNamedTown(1);
 		
 		if (town.getMotherCiv() != null) {
-			throw new CivException("You cannot disband towns that are currently conquered.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_disbandtownError"));
 		}
 		
 		if (town.leaderWantsToDisband) {
 			town.leaderWantsToDisband = false;
-			CivMessage.send(sender, "No longer want to disband.");
+			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_civ_disbandtownErrorLeader"));
 			return;
 		}	
 		
 		town.leaderWantsToDisband = true;		
 
 		if (town.leaderWantsToDisband && town.mayorWantsToDisband) {
-			CivMessage.sendCiv(town.getCiv(), "Town "+town.getName()+" is being disbanded by agreement from the civ leader and the mayor");
+			CivMessage.sendCiv(town.getCiv(), CivSettings.localize.localizedString("var_cmd_civ_disbandtownSuccess",town.getName()));
 			town.disband();
 		}
 		
-		CivMessage.send(sender, CivColor.Yellow+"Waiting on mayor to type /town disbandtown");
+		CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_disbandtownPrompt"));
 	}
 	
 	public void top5_cmd() {	
-		CivMessage.sendHeading(sender, "Top 5 Civilizations");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_top5Heading"));
 //		TreeMap<Integer, Civilization> scores = new TreeMap<Integer, Civilization>();
 //		
 //		for (Civilization civ : CivGlobal.getCivs()) {
@@ -281,7 +276,7 @@ public class CivCommand extends CommandBase {
 		synchronized(CivGlobal.civilizationScores) {
 			int i = 1;
 			for (Integer score : CivGlobal.civilizationScores.descendingKeySet()) {
-				CivMessage.send(sender, i+") "+CivColor.Gold+CivGlobal.civilizationScores.get(score).getName()+CivColor.White+" - "+score+" points");
+				CivMessage.send(sender, i+") "+CivColor.Gold+CivGlobal.civilizationScores.get(score).getName()+CivColor.White+" - "+score);
 				i++;
 				if (i > 5) {
 					break;
@@ -307,7 +302,7 @@ public class CivCommand extends CommandBase {
 	}
 	
 	public void time_cmd() throws CivException {
-		CivMessage.sendHeading(sender, "CivCraft Timers");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_timeHeading"));
 		Resident resident = getResident();
 		ArrayList<String> out = new ArrayList<String>();
 		SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
@@ -317,27 +312,27 @@ public class CivCommand extends CommandBase {
 		sdf.setTimeZone(cal.getTimeZone());
 		
 		
-		out.add(CivColor.Green+"Current Server Time: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_timeServer")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		
 		cal.setTime(CivGlobal.getNextUpkeepDate());
-		out.add(CivColor.Green+"Next Upkeep: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_timeUpkeep")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		
 		cal.setTime(CivGlobal.getNextHourlyTickDate());
-		out.add(CivColor.Green+"Next Hourly Tick: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_timeHourly")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		
 		cal.setTime(CivGlobal.getNextRepoTime());
-		out.add(CivColor.Green+"Next Trade Good Repo: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_timeRepo")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		
 		if (War.isWarTime()) {
-			out.add(CivColor.Yellow+"WarTime is now!");
+			out.add(CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_timeWarNow"));
 			cal.setTime(War.getStart());
-			out.add(CivColor.Yellow+"    Started: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+			out.add(CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_timeWarStarted")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 			
 			cal.setTime(War.getEnd());
-			out.add(CivColor.Yellow+"    Ends: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+			out.add(CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_timeWarEnds")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		} else {
 			cal.setTime(War.getNextWarTime());
-			out.add(CivColor.Green+"Next WarTime: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+			out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_timeWarNext")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		}
 		
 		Player player = null;
@@ -348,10 +343,10 @@ public class CivCommand extends CommandBase {
 
 		if (player == null || player.hasPermission(CivSettings.MINI_ADMIN) || player.isOp()) {
 			cal.setTime(CivGlobal.getTodaysSpawnRegenDate());
-			out.add(CivColor.LightPurple+"Next Spawn Regen: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+			out.add(CivColor.LightPurple+CivSettings.localize.localizedString("cmd_civ_timeSpawnRegen")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 			
 			cal.setTime(CivGlobal.getNextRandomEventTime());
-			out.add(CivColor.LightPurple+"Next Random Event: "+CivColor.LightGreen+sdf.format(cal.getTime()));
+			out.add(CivColor.LightPurple+CivSettings.localize.localizedString("cmd_civ_timeRandomEvent")+" "+CivColor.LightGreen+sdf.format(cal.getTime()));
 		}
 		
 		CivMessage.send(sender, out);
@@ -370,7 +365,7 @@ public class CivCommand extends CommandBase {
 	public void list_cmd() throws CivException {
 		if (args.length < 2) {	
 			String out = "";
-			CivMessage.sendHeading(sender, "Civs in the World");
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_listHeading"));
 			for (Civilization civ : CivGlobal.getCivs()) {
 				out += civ.getName()+", ";
 			}
@@ -382,7 +377,7 @@ public class CivCommand extends CommandBase {
 		Civilization civ = getNamedCiv(1);
 		
 		String out = "";
-		CivMessage.sendHeading(sender, "Towns in "+args[1]);
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_civ_listtowns",args[1]));
 		
 		for (Town t : civ.getTowns()) {
 			out += t.getName()+", ";
@@ -393,7 +388,7 @@ public class CivCommand extends CommandBase {
 	
 	public void show_cmd() throws CivException {
 		if (args.length < 2) {
-			throw new CivException("You need to enter the civ name you wish to know about.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_showPrompt"));
 		}
 		
 		Civilization civ = getNamedCiv(1);
@@ -406,7 +401,7 @@ public class CivCommand extends CommandBase {
 	
 	public void deposit_cmd() throws CivException {
 		if (args.length < 2) {
-			throw new CivException("Enter the amount you want to deposit.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_despositPrompt"));
 		}
 		
 		Resident resident = getResident();
@@ -415,55 +410,55 @@ public class CivCommand extends CommandBase {
 		try {
 			Double amount = Double.valueOf(args[1]);
 			if (amount < 1) {
-				throw new CivException("Cannot deposit less than 1");
+				throw new CivException(amount+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 			}
 			amount = Math.floor(amount);
 			
 			civ.depositFromResident(resident, Double.valueOf(args[1]));			
 			
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is not a valid number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal Database Exception");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}
 		
-		CivMessage.sendSuccess(sender, "Deposited "+args[1]+" coins.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("Deposited")+args[1]+" "+CivSettings.CURRENCY_NAME);
 	}
 
 	public void withdraw_cmd() throws CivException {
 		if (args.length < 2) {
-			throw new CivException("Enter the amount you want to withdraw.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_civ_withdrawPrompt"));
 		}
 		
 		Civilization civ = getSenderCiv();
 		Resident resident = getResident();
 		
 		if (!civ.getLeaderGroup().hasMember(resident)) {
-			throw new CivException("Only leaders can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NeedHigherCivRank2"));
 		}
 		
 		try {
 			Double amount = Double.valueOf(args[1]);
 			if (amount < 1) {
-				throw new CivException("Cannot withdraw less than 1");
+				throw new CivException(amount+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 			}
 			amount = Math.floor(amount);
 			
 			if(!civ.getTreasury().payTo(resident.getTreasury(), Double.valueOf(args[1]))) {
-				throw new CivException("The civ does not have that much.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_civ_withdrawTooPoor"));
 			}
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" is not a valid number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 		
-		CivMessage.sendSuccess(sender, "Withdrew "+args[1]+" coins.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_civ_withdrawSuccess",args[1],CivSettings.CURRENCY_NAME));
 	}
 	
 	public void townlist_cmd() throws CivException {
 		Civilization civ = getSenderCiv();
 		
-		CivMessage.sendHeading(sender, civ.getName()+" Town List");
+		CivMessage.sendHeading(sender, civ.getName()+" "+CivSettings.localize.localizedString("cmd_civ_townListHeading"));
 		String out = "";
 		for (Town town : civ.getTowns()) {
 			out += town.getName()+",";
@@ -474,6 +469,40 @@ public class CivCommand extends CommandBase {
 	public void info_cmd() throws CivException {
 		CivInfoCommand cmd = new CivInfoCommand();	
 		cmd.onCommand(sender, null, "info", this.stripArgs(args, 1));		
+	}
+	
+	public void vote_cmd() throws CivException {
+	
+		if (args.length < 2) {
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_civ_voteHeading"));
+			return;
+		}
+
+		if (sender instanceof Player) {
+			Player player = (Player)sender;
+			Resident resident = CivGlobal.getResident(player);
+			
+			if (!resident.hasTown()) {
+				CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_civ_voteNotInTown"));
+				return;
+			}
+			
+			Civilization civ = CivGlobal.getCiv(args[1]);
+			if (civ == null) {
+				CivMessage.sendError(sender, CivSettings.localize.localizedString("var_cmd_civ_voteInvalidCiv",args[1]));
+				return;
+			}
+			
+			if (!EndConditionDiplomacy.canPeopleVote()) {
+				CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_civ_voteNoCouncil"));
+				return;
+			}
+			
+			EndConditionDiplomacy.addVote(civ, resident);
+			return;
+		} else {
+			return;
+		}
 	}
 	
 	@Override

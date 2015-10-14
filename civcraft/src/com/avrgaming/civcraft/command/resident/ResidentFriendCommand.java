@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.command.resident;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
@@ -28,24 +29,24 @@ public class ResidentFriendCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/resident friend";
-		displayName = "Resident Friend";
+		displayName = CivSettings.localize.localizedString("cmd_res_friend_name");
 		
-		commands.put("add", "[name] - adds this resident to your friends list.");
-		commands.put("remove", "[name] - removes this resident from your friends list.");
-		commands.put("list", "shows a list of all your current friends.");
+		commands.put("add", CivSettings.localize.localizedString("cmd_res_friend_addDesc"));
+		commands.put("remove", CivSettings.localize.localizedString("cmd_res_friend_removeDesc"));
+		commands.put("list", CivSettings.localize.localizedString("cmd_res_friend_listDesc"));
 	}
 	
 	public void add_cmd() throws CivException {
 		Resident resident = getResident();
 		
 		if (args.length < 2) {
-			throw new CivException("Please specify the name of the friend you want to add.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_friend_addPrompt"));
 		}
 		
 		Resident friendToAdd = getNamedResident(1);
 		
 		resident.addFriend(friendToAdd);
-		CivMessage.sendSuccess(sender, "Added "+args[1]+" as a friend.");	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_friend_addSuccess",args[1]));	
 		resident.save();
 	}
 	
@@ -53,19 +54,19 @@ public class ResidentFriendCommand extends CommandBase {
 	Resident resident = getResident();
 		
 		if (args.length < 2) {
-			throw new CivException("Please specify the name of the friend you want to removed.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_res_friend_removePrompt"));
 		}
 		
 		Resident friendToRemove = getNamedResident(1);
 		
 		resident.removeFriend(friendToRemove);
-		CivMessage.sendSuccess(sender, "Removed "+args[1]+" as a friend.");	
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_res_friend_removeSuccess",args[1]));	
 		resident.save();
 	}
 	
 	public void list_cmd() throws CivException {
 		Resident resident = getResident();
-		CivMessage.sendHeading(sender, resident.getName()+" friend list");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("var_cmd_res_friend_listHeading",resident.getName()));
 		
 		String out = "";
 		for (String res : resident.getFriends()) {

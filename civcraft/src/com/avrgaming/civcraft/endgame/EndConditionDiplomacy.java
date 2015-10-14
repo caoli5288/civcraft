@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -117,7 +118,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			
 			Integer otherVotes = getVotesFor(otherCiv);
 			if (otherVotes > votes) {
-				CivMessage.global(civ.getName()+" doesn't have enough votes for a diplomatic victory! The rival civilization of "+otherCiv.getName()+" has more!");
+				CivMessage.global(CivSettings.localize.localizedString("var_end_diplomacyError",civ.getName(),otherCiv.getName()));
 				return false;
 			}
 		}
@@ -148,7 +149,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			CivGlobal.getSessionDB().update(entries.get(0).request_id, entries.get(0).key, ""+votes);			
 		}
 		
-		CivMessage.sendSuccess(resident, "Added a vote for "+civ.getName());
+		CivMessage.sendSuccess(resident, CivSettings.localize.localizedString("var_end_diplomacyAddVote",civ.getName()));
 	}
 
 	public static void setVotes(Civilization civ, Integer votes) {
@@ -184,7 +185,7 @@ public class EndConditionDiplomacy extends EndGameCondition {
 			}
 		}
 
-		CivMessage.sendError(resident, "You must wait 24 hours before casting another vote.");
+		CivMessage.sendError(resident, CivSettings.localize.localizedString("end_diplomacy24hours"));
 		return false;
 	}
 

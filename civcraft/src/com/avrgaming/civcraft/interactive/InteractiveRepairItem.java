@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.interactive;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -30,10 +31,10 @@ public class InteractiveRepairItem implements InteractiveResponse {
 			return;
 		}
 		
-		CivMessage.sendHeading(player, "Repair!");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Hello there! Would you like to repair your "+craftMat.getName()+"?");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Looks like we can get you fixed up for "+CivColor.Yellow+CivColor.BOLD+cost+" Coins.");
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"If that's ok, please type 'yes'. Type anything else to cancel.");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("interactive_repair_heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_repair_prompt1",craftMat.getName()));
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("var_interactive_repair_prompt2",CivColor.Yellow+CivColor.BOLD+cost+CivColor.LightGreen,CivColor.Yellow+CivColor.BOLD+CivSettings.CURRENCY_NAME+CivColor.LightGreen));
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("interactive_repair_prompt3"));
 		
 	}
 	
@@ -43,7 +44,7 @@ public class InteractiveRepairItem implements InteractiveResponse {
 		resident.clearInteractiveMode();
 
 		if (!message.equalsIgnoreCase("yes")) {
-			CivMessage.send(resident, CivColor.LightGray+"Repair cancelled.");
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("interactive_repair_canceled"));
 			return;
 		}
 		

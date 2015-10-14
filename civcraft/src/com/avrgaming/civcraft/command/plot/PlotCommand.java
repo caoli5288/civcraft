@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -39,19 +40,19 @@ public class PlotCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/plot";
-		displayName = "Plot";
+		displayName = CivSettings.localize.localizedString("cmd_plot_Name");
 		
-		commands.put("info", "Show info for the plot you're standing on.");
-		commands.put("toggle", "[mobs]|[fire] toggles mob spawning or fire in this plot.");
-		commands.put("perm", "View/Modify permissions.");
-		commands.put("fs", "[amount] - puts plot up for sale for this amount.");
-		commands.put("nfs", "Makes plot not for sale.");
-		commands.put("buy", "Buys the plot your standing on.");
-		commands.put("addgroup", "[name] - adds this group to the plot.");
-		commands.put("setowner", "[name|none] Sets the owner on this plot(gives it away).");
-		commands.put("farminfo", "Special information about this plot if it is a farm plot.");
-		commands.put("removegroup", "[name] - removes this group from the plot.");
-		commands.put("cleargroups", "Clears all groups from this plot.");
+		commands.put("info", CivSettings.localize.localizedString("cmd_plot_infoDesc"));
+		commands.put("toggle", CivSettings.localize.localizedString("cmd_plot_toggleDesc"));
+		commands.put("perm",CivSettings.localize.localizedString("cmd_plot_permDesc"));
+		commands.put("fs", CivSettings.localize.localizedString("cmd_plot_fsDesc"));
+		commands.put("nfs", CivSettings.localize.localizedString("cmd_plot_nfsDesc"));
+		commands.put("buy", CivSettings.localize.localizedString("cmd_plot_buyDesc"));
+		commands.put("addgroup", CivSettings.localize.localizedString("cmd_plot_addgroupDesc"));
+		commands.put("setowner", CivSettings.localize.localizedString("cmd_plot_setowner"));
+		commands.put("farminfo", CivSettings.localize.localizedString("cmd_plot_farminfoDesc"));
+		commands.put("removegroup", CivSettings.localize.localizedString("cmd_plot_removegroupDesc"));
+		commands.put("cleargroups", CivSettings.localize.localizedString("cmd_plot_cleargroupsDesc"));
 	}
 	
 	public void farminfo_cmd() throws CivException {
@@ -61,39 +62,39 @@ public class PlotCommand extends CommandBase {
 		FarmChunk fc = CivGlobal.getFarmChunk(coord);
 		
 		if (fc == null) {
-			throw new CivException("This chunk is not a farm chunk.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_notFarm"));
 		}
 		
 		if (fc.getStruct().isActive() == false) {
-			throw new CivException("This chunk is a farm, but the structure is not finished building yet.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_farmNotDone"));
 		}
 		
-		String dateString = "Never";
+		String dateString = CivSettings.localize.localizedString("Never");
 		
 		if (fc.getLastGrowDate() != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/d/y k:m:s z");
 			dateString = sdf.format(fc.getLastGrowDate());
 		}
 		
-		CivMessage.sendHeading(sender, "Farm Plot Info");
-		CivMessage.send(sender, CivColor.Green+"Last Grow Time: "+CivColor.LightGreen+dateString);
-		CivMessage.send(sender, CivColor.Green+"Last Grow Amount: "+CivColor.LightGreen+fc.getLastGrowTickCount());
-		CivMessage.send(sender, CivColor.Green+"Growth Ticks While Unloaded: "+CivColor.LightGreen+fc.getMissedGrowthTicksStat());
-		CivMessage.send(sender, CivColor.Green+"Last Effective Growth Rate: "+CivColor.LightGreen+df.format(fc.getFarm().getLastEffectiveGrowthRate()*100)+"%");
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_plot_farmInfoHeading"));
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmLastGrowTime")+" "+CivColor.LightGreen+dateString);
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmLastGrowVolume")+" "+CivColor.LightGreen+fc.getLastGrowTickCount());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmunloaded")+" "+CivColor.LightGreen+fc.getMissedGrowthTicksStat());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmRate")+" "+CivColor.LightGreen+df.format(fc.getFarm().getLastEffectiveGrowthRate()*100)+"%");
 		
 		String success = "no";
 		if (fc.getLastRandomInt() < fc.getLastChanceForLast()) {
 			success = "yes";
 		}
 		
-		CivMessage.send(sender, CivColor.Green+"Last Extra Grow Chance: "+CivColor.LightGreen+fc.getLastChanceForLast()+" vs "+CivColor.LightGreen+fc.getLastRandomInt()+" success? "+CivColor.LightGreen+success);
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmExtraRate")+" "+CivColor.LightGreen+fc.getLastChanceForLast()+" vs "+CivColor.LightGreen+fc.getLastRandomInt()+" "+CivSettings.localize.localizedString("cmd_plot_farmsuccessToo")+" "+CivColor.LightGreen+success);
 		
 		String out = "";
 		for (BlockCoord bcoord : fc.getLastGrownCrops()) {
 			out += bcoord.toString()+", ";
 		}
 		
-		CivMessage.send(sender, CivColor.Green+"Crops Grown: "+CivColor.LightGreen+out);
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_farmCropsGrown")+" "+CivColor.LightGreen+out);
 		
 		
 	}
@@ -103,26 +104,26 @@ public class PlotCommand extends CommandBase {
 		validPlotOwner();
 		
 		if (args.length < 2) {
-			throw new CivException("You must specifiy and owner.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_setownerPrompt"));
 		}
 		
 		if (args[1].equalsIgnoreCase("none")) {
 			tc.perms.setOwner(null);
 			tc.save();
-			CivMessage.sendSuccess(sender, "Set plot owner to none, returned plot to town.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_setownerNone"));
 			return;
 		}
 		
 		Resident resident = getNamedResident(1);
 
 		if (resident.getTown() != tc.getTown()) {
-			throw new CivException("Resident must be a member of this town.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_setownerNotRes"));
 		}
 		
 		tc.perms.setOwner(resident);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, "Plot is now owned by "+args[1]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_setownerSuccess",args[1]));
 		
 	}
 	
@@ -131,22 +132,22 @@ public class PlotCommand extends CommandBase {
 		validPlotOwner();
 		
 		if (args.length < 2) {
-			throw new CivException("You must specify a group name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_removegroupPrompt"));
 		}
 		
 		if (args[1].equalsIgnoreCase("none")) {
-			throw new CivException("To clear the groups use the 'cleargroups' command instead.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_removegroupNone"));
 		}
 		
 		PermissionGroup grp = tc.getTown().getGroupByName(args[1]);
 		if (grp == null) {
-			throw new CivException("Could not find group named "+args[1]+" in this town.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_plot_removegroupInvalid",args[1]));
 		}
 		
 		tc.perms.removeGroup(grp);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, "Removed plot group "+grp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_removegroupSuccess",grp.getName()));
 	}
 	
 	public void cleargroups_cmd() throws CivException {
@@ -155,7 +156,7 @@ public class PlotCommand extends CommandBase {
 		
 		tc.perms.clearGroups();
 		tc.save();
-		CivMessage.sendSuccess(sender, "Cleared the plot's groups.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_plot_cleargroupsSuccess"));
 		return;
 	}
 
@@ -164,23 +165,23 @@ public class PlotCommand extends CommandBase {
 		validPlotOwner();
 		
 		if (args.length < 2) {
-			throw new CivException("You must specify a group name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_addgroupPrompt"));
 		}
 		
 		if (args[1].equalsIgnoreCase("none")) {
-			throw new CivException("To clear the groups use the 'cleargroups' command instead.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_addgroupNone"));
 			
 		}
 		
 		PermissionGroup grp = tc.getTown().getGroupByName(args[1]);
 		if (grp == null) {
-			throw new CivException("Could not find group named "+args[1]+" in this town.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_plot_removegroupInvalid",args[1]));
 		}
 		
 		tc.perms.addGroup(grp);
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, "Added plot group "+grp.getName());
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_addgroupSuccess",grp.getName()));
 	}
 	
 	public void buy_cmd() throws CivException {
@@ -188,19 +189,19 @@ public class PlotCommand extends CommandBase {
 		Resident resident = getResident();
 		
 		if (tc.isOutpost()) {
-			throw new CivException("Cannot buy outposts.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_buyOutpost"));
 		}
 		
 		if (resident.getTown() != tc.getTown()) {
-			throw new CivException("You cannot buy this plot, you are not a member of this town.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_buyNotInTown"));
 		}
 		
 		if (tc.isForSale() == false) {
-			throw new CivException("This plot is not for sale.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_buyNotForSale"));
 		}
 		
 		tc.purchase(resident);
-		CivMessage.sendSuccess(sender, "Purchased plot "+tc.getChunkCoord()+" for "+tc.getValue()+" Coins.");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_buySuccess",tc.getChunkCoord(),tc.getValue(),CivSettings.CURRENCY_NAME));
 	}
 	
 	public void fs_cmd() throws CivException {
@@ -208,11 +209,11 @@ public class PlotCommand extends CommandBase {
 		this.validPlotOwner();
 		
 		if (tc.isOutpost()) {
-			throw new CivException("Cannot sell outposts.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_sellOutpost"));
 		}
 		
 		if (args.length < 2) {
-			throw new CivException("You must specify a price.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_sellNeedPrice"));
 		}
 		
 		try {
@@ -221,10 +222,10 @@ public class PlotCommand extends CommandBase {
 			tc.setPrice(price);
 			tc.save();
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" could not be read as a number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
 		
-		CivMessage.sendTown(tc.getTown(), "Placed plot "+tc.getCenterString()+" up for sale at "+args[1]+" Coins.");
+		CivMessage.sendTown(tc.getTown(), CivSettings.localize.localizedString("var_cmd_plot_sellSuccess1",tc.getCenterString(),args[1],CivSettings.CURRENCY_NAME));
 	}
 	
 	
@@ -236,10 +237,10 @@ public class PlotCommand extends CommandBase {
 			tc.setForSale(false);
 			tc.save();
 		} catch (NumberFormatException e) {
-			throw new CivException(args[1]+" could not be read as a number.");
+			throw new CivException(args[1]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
 		
-		CivMessage.sendTown(tc.getTown(), "Plot "+tc.getCenterString()+" is no longer up for sale.");
+		CivMessage.sendTown(tc.getTown(), CivSettings.localize.localizedString("cmd_plot_nfsSuccess")+" "+tc.getCenterString());
 	}
 	
 	public void toggle_cmd() throws CivException {
@@ -247,7 +248,7 @@ public class PlotCommand extends CommandBase {
 		this.validPlotOwner();
 		
 		if (args.length < 2) {
-			throw new CivException("Please specifiy mobs or fire to toggle.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_togglePrompt"));
 		}
 		
 		if (args[1].equalsIgnoreCase("mobs")) {
@@ -257,7 +258,7 @@ public class PlotCommand extends CommandBase {
 				tc.perms.setMobs(true);
 			}
 			
-			CivMessage.sendSuccess(sender, "Set mob spawning on this plot to "+tc.perms.isMobs());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_toggleMobs",tc.perms.isMobs()));
 			
 		} else if (args[1].equalsIgnoreCase("fire")) {
 			if (tc.perms.isFire()) {
@@ -265,7 +266,7 @@ public class PlotCommand extends CommandBase {
 			} else {
 				tc.perms.setFire(true);
 			}
-			CivMessage.sendSuccess(sender, "Set fire on this plot to "+tc.perms.isFire());
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_toggleFire",tc.perms.isFire()));
 		}
 		tc.save();
 	}
@@ -276,26 +277,26 @@ public class PlotCommand extends CommandBase {
 	}
 	
 	private void showCurrentPermissions(TownChunk tc) {
-		CivMessage.send(sender, CivColor.Green+"Build: "+CivColor.LightGreen+tc.perms.getBuildString());
-		CivMessage.send(sender, CivColor.Green+"Destroy: "+CivColor.LightGreen+tc.perms.getDestroyString());
-		CivMessage.send(sender, CivColor.Green+"Interact: "+CivColor.LightGreen+tc.perms.getInteractString());
-		CivMessage.send(sender, CivColor.Green+"Item Use: "+CivColor.LightGreen+tc.perms.getItemUseString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showPermBuild")+" "+CivColor.LightGreen+tc.perms.getBuildString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showPermDestroy")+" "+CivColor.LightGreen+tc.perms.getDestroyString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showPermInteract")+" "+CivColor.LightGreen+tc.perms.getInteractString());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showPermItemUse")+" "+CivColor.LightGreen+tc.perms.getItemUseString());
 	}
 	
 	private void showPermOwnership(TownChunk tc) {
-		String out = CivColor.Green+"Town: "+CivColor.LightGreen+tc.getTown().getName();
-		out += CivColor.Green+" Owner: "+CivColor.LightGreen;
+		String out = CivColor.Green+CivSettings.localize.localizedString("Town")+" "+CivColor.LightGreen+tc.getTown().getName();
+		out += CivColor.Green+" "+CivSettings.localize.localizedString("Owner")+" "+CivColor.LightGreen;
 		if (tc.perms.getOwner() != null) {
 			out += tc.perms.getOwner().getName();
 		} else {
-			out += "none";
+			out += CivSettings.localize.localizedString("none");
 		}
 		
-		out += CivColor.Green+" Group: "+CivColor.LightGreen;
+		out += CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_group_listGroup")+" "+CivColor.LightGreen;
 		if (tc.perms.getGroups().size() != 0) {
 			out += tc.perms.getGroupString();
 		} else {
-			out += "none";
+			out += CivSettings.localize.localizedString("none");
 		}
 		
 		CivMessage.send(sender, out);
@@ -313,10 +314,10 @@ public class PlotCommand extends CommandBase {
 			
 			TownChunk tc = CivGlobal.getTownChunk(player.getLocation());
 			if (tc == null) {
-				throw new CivException("Plot is not owned.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_plot_infoNotOwned"));
 			}
 			
-			CivMessage.sendHeading(sender, "Plot Information");
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_plot_infoHeading"));
 			showPermOwnership(tc);
 			showCurrentPermissions(tc);
 			showToggles(tc);
@@ -326,16 +327,16 @@ public class PlotCommand extends CommandBase {
 	}
 	
 	private void showToggles(TownChunk tc) {
-		CivMessage.send(sender, CivColor.Green+"Mobs: "+CivColor.LightGreen+tc.perms.isMobs()+" "+
-								CivColor.Green+"Fire: "+CivColor.LightGreen+tc.perms.isFire());
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showMobs")+" "+CivColor.LightGreen+tc.perms.isMobs()+" "+
+								CivColor.Green+CivSettings.localize.localizedString("cmd_plot_showFire")+" "+CivColor.LightGreen+tc.perms.isFire());
 	}
 
 	private void showPriceInfo(TownChunk tc) {
 		String out = "";
 		if (tc.isForSale()) {
-			out += CivColor.Yellow+" [For Sale at "+tc.getPrice()+" Coins] ";
+			out += CivColor.Yellow+CivSettings.localize.localizedString("var_cmd_plot_showPrice",tc.getPrice(),CivSettings.CURRENCY_NAME);
 		}
-		CivMessage.send(sender, CivColor.Green+"Value: "+CivColor.LightGreen+tc.getValue()+out);
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Value")+" "+CivColor.LightGreen+tc.getValue()+out);
 	}
 
 	@Override

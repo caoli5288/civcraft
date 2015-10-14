@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.command.town;
 import java.util.ArrayList;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigTownUpgrade;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -33,10 +34,10 @@ public class TownResetCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town reset";
-		displayName = "Town Reset";
+		displayName = CivSettings.localize.localizedString("cmd_town_reset_name");
 		
-		commands.put("library", "Removes all town library enchantment upgrades.");
-		commands.put("store", "Removes all town store material upgrades.");
+		commands.put("library", CivSettings.localize.localizedString("cmd_town_reset_libraryDesc"));
+		commands.put("store", CivSettings.localize.localizedString("cmd_town_reset_storeDesc"));
 	}
 
 	public void library_cmd() throws CivException {
@@ -44,7 +45,7 @@ public class TownResetCommand extends CommandBase {
 		
 		Library library = (Library) town.findStructureByConfigId("s_library");
 		if (library == null) {
-			throw new CivException("Your town doesn't have a library.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_reset_libraryNone"));
 		}
 		
 		ArrayList<ConfigTownUpgrade> removeUs = new ArrayList<ConfigTownUpgrade>();
@@ -61,7 +62,7 @@ public class TownResetCommand extends CommandBase {
 		library.reset();
 		
 		town.save();
-		CivMessage.sendSuccess(sender, "Library enchantment upgrades reset!");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_reset_librarySuccess"));
 	}
 	
 	public void store_cmd() throws CivException {
@@ -69,7 +70,7 @@ public class TownResetCommand extends CommandBase {
 		
 		Store store = (Store) town.findStructureByConfigId("s_store");
 		if (store == null) {
-			throw new CivException("Your town doesn't have a library.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_town_reset_storeNone"));
 		}
 		
 		ArrayList<ConfigTownUpgrade> removeUs = new ArrayList<ConfigTownUpgrade>();
@@ -86,7 +87,7 @@ public class TownResetCommand extends CommandBase {
 		store.reset();
 		
 		town.save();
-		CivMessage.sendSuccess(sender, "Store material upgrades reset!");
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_reset_storeSuccess"));
 	}
 	
 	@Override

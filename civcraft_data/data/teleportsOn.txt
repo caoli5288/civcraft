@@ -1,3 +1,0 @@
-pex group default parents add teleport
-pex group Member parents add home
-broadcast Teleportation is now enabled

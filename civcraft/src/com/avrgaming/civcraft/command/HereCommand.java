@@ -23,6 +23,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.CultureChunk;
@@ -42,20 +43,20 @@ public class HereCommand implements CommandExecutor {
 			
 			CultureChunk cc = CivGlobal.getCultureChunk(coord);
 			if (cc != null) {
-				CivMessage.send(sender, CivColor.LightPurple+"You're currently inside the culture of Civ:"+
-						CivColor.Yellow+cc.getCiv().getName()+CivColor.LightPurple+" for town:"+CivColor.Yellow+cc.getTown().getName());
+				CivMessage.send(sender, CivColor.LightPurple+CivSettings.localize.localizedString("var_cmd_here_inCivAndTown",
+						CivColor.Yellow+cc.getCiv().getName()+CivColor.LightPurple,CivColor.Yellow+cc.getTown().getName()));
 			}
 			
 			TownChunk tc = CivGlobal.getTownChunk(coord);
 			if (tc != null) {
-				CivMessage.send(sender, CivColor.Green+"You're currently inside the town borders of "+CivColor.LightGreen+tc.getTown().getName());
+				CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("var_cmd_here_inTown",CivColor.LightGreen+tc.getTown().getName()));
 				if (tc.isOutpost()) {
-					CivMessage.send(sender, CivColor.Yellow+"This chunk is an outpost.");
+					CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_here_outPost"));
 				}
 			}
 			
 			if (cc == null && tc == null) {
-				CivMessage.send(sender, CivColor.Yellow+"You stand in wilderness.");
+				CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_here_wilderness"));
 			}
 			
 		}

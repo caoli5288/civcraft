@@ -41,6 +41,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigUnit;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
@@ -97,7 +98,7 @@ public class UnitMaterial extends LoreMaterial {
 	@Override
 	public void onBlockPlaced(BlockPlaceEvent event) {
 		event.setCancelled(true);
-		CivMessage.sendError(event.getPlayer(), "Cannot place this item");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_cannotPlace"));
 		event.getPlayer().updateInventory();
 	}
 
@@ -114,7 +115,7 @@ public class UnitMaterial extends LoreMaterial {
 		event.setUseItemInHand(Result.DENY);
 		//if (event.getClickedBlock() == null) {
 			event.setCancelled(true);
-			CivMessage.sendError(event.getPlayer(), "Cannot use this item.");
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_cannotUse"));
 		//}
 	}
 
@@ -207,7 +208,7 @@ public class UnitMaterial extends LoreMaterial {
 	@Override
 	public void onItemCraft(CraftItemEvent event) {
 		try {
-			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), "Cannot craft with a unit item.");
+			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), CivSettings.localize.localizedString("unitItem_cannotCraft"));
 		} catch (CivException e) {
 			//player offline?
 		}
@@ -219,14 +220,14 @@ public class UnitMaterial extends LoreMaterial {
 	public void onItemPickup(PlayerPickupItemEvent event) {
 				
 		if(!validateUnitUse(event.getPlayer(), event.getItem().getItemStack())) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "You cannot use this unit because it does not belong to your civilization.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
 			event.setCancelled(true);
 			return;
 		}
 		
 		ConfigUnit unit = Unit.getPlayerUnit(event.getPlayer());
 		if (unit != null) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), "Already a "+unit.name+" cannot pickup another unit item.");
+			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 			event.setCancelled(true);
 		} else {
 			// Reposition item to the last quickbar slot
@@ -312,7 +313,7 @@ public class UnitMaterial extends LoreMaterial {
 			Player player = (Player)toInv.getHolder();
 				
 			if(!validateUnitUse(player, stack)) {
-				CivMessage.sendError(player, "You cannot use this unit because it does not belong to your civlization.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
 				event.setCancelled(true);
 				return;
 			}
@@ -321,7 +322,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, "You already are a "+unit.name+" cannot pickup another unit item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
@@ -361,7 +362,7 @@ public class UnitMaterial extends LoreMaterial {
 			Player player = (Player)toInv.getHolder();
 
 			if(!validateUnitUse(player, stack)) {
-				CivMessage.sendError(player, "You cannot use this unit because it does not belong to your civlization.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
 				event.setCancelled(true);
 				return;
 			}
@@ -370,7 +371,7 @@ public class UnitMaterial extends LoreMaterial {
 			ConfigUnit unit = Unit.getPlayerUnit(player);
 			if (unit != null) {
 				//player already has a unit item, cancel this event.
-				CivMessage.sendError(player, "You already are a "+unit.name+" cannot pickup another unit item.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
@@ -408,7 +409,7 @@ public class UnitMaterial extends LoreMaterial {
 				Player player = (Player)toInv.getHolder();
 				
 				if(!validateUnitUse(player, droppedStack)) {
-					CivMessage.sendError(player, "You cannot use this unit because it does not belong to your civlization.");
+					CivMessage.sendError(player, CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
 					event.setCancelled(true);
 					return;
 				}

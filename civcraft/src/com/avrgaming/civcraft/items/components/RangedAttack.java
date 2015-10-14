@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.items.units.Unit;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementAttack;
@@ -22,7 +23,7 @@ public class RangedAttack extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrs) {
-		attrs.addLore(CivColor.Rose+this.getDouble("value")+" Ranged Attack");	
+		attrs.addLore(CivColor.Rose+this.getDouble("value")+" "+CivSettings.localize.localizedString("itemLore_RangedAttack"));	
 	}
 	
 	private static double ARROW_MAX_VEL = 6.0; 
@@ -31,7 +32,7 @@ public class RangedAttack extends ItemComponent {
 	public void onInteract(PlayerInteractEvent event) {
 		if (Unit.isWearingAnyMetal(event.getPlayer())) {
 			event.setCancelled(true);
-			CivMessage.sendError(event.getPlayer(), "Cannot use a bow while wearing metal armor.");
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("itemLore_RangedAttack_errorMetal"));
 			return;
 		}
 	}
@@ -41,8 +42,8 @@ public class RangedAttack extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
-					"You do not have the required technology to use this item. It's attack output will be reduced in half.");
+			CivMessage.send(resident, CivColor.Rose+CivSettings.localize.localizedString("itemLore_Warning")+" - "+CivColor.LightGray+
+					CivSettings.localize.localizedString("itemLore_attackHalfDamage"));
 		}
 	}
 	
@@ -56,7 +57,7 @@ public class RangedAttack extends ItemComponent {
 				Player attacker = (Player)arrow.getShooter();
 				if (Unit.isWearingAnyMetal(attacker)) {
 					event.setCancelled(true);
-					CivMessage.sendError(attacker, "Cannot use a bow while wearing metal armor.");
+					CivMessage.sendError(attacker, CivSettings.localize.localizedString("itemLore_RangedAttack_errorMetal"));
 					return;
 				}
 			}

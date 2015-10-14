@@ -10,6 +10,7 @@ import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItemListener;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -77,7 +78,7 @@ public class LoreEnhancementArenaItem  extends LoreEnhancement implements Listen
 			if (LoreCraftableMaterial.hasEnhancement(stack, "LoreEnhancementArenaItem")) {
 				if (!resident.isInsideArena()) {
 					event.getInventory().remove(stack);
-					removedReason = CivColor.LightGray+"Some items were removed since they were arena items";
+					removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaRemoved");
 				}
 				
 				/* Arena items are OK after this point. */
@@ -91,7 +92,7 @@ public class LoreEnhancementArenaItem  extends LoreEnhancement implements Listen
 				} else {
 					if (!resident.isInsideArena()) {
 						event.getInventory().remove(stack);
-						removedReason = CivColor.LightGray+"Some items were detected as illegal/impossible and have been removed.";
+						removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaIllegal");
 					}
 				}
 			}
@@ -126,7 +127,7 @@ public class LoreEnhancementArenaItem  extends LoreEnhancement implements Listen
 			if (LoreCraftableMaterial.hasEnhancement(stack, "LoreEnhancementArenaItem")) {
 				if (!resident.isInsideArena()) {
 					event.getPlayer().getInventory().remove(stack);
-					removedReason = CivColor.LightGray+"Some items were removed since they were arena items";
+					removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaRemoved");
 				}
 				
 				/* Arena items are OK after this point. */
@@ -140,7 +141,7 @@ public class LoreEnhancementArenaItem  extends LoreEnhancement implements Listen
 				} else {
 					if (!resident.isInsideArena()) {
 						event.getPlayer().getInventory().remove(stack);
-						removedReason = CivColor.LightGray+"Some items were detected as illegal/impossible and have been removed.";
+						removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaIllegal");
 					}
 				}
 			}
@@ -162,14 +163,14 @@ public class LoreEnhancementArenaItem  extends LoreEnhancement implements Listen
 					if (!resident.isInsideArena()) {
 						continue; /* dont re-add */
 					}
-					removedReason = CivColor.LightGray+"Some items were removed since they were arena items";
+					removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaRemoved");
 				} else {			
 					if (isIllegalStack(stack)) {
 						if (event.getPlayer().isOp()) {
 							//CivMessage.send(event.getPlayer(), CivColor.LightGray+"You're allowed to keep an illegal item because you are op.");
 						} else {
 							if (!resident.isInsideArena()) {
-								removedReason = CivColor.LightGray+"Some items were detected as illegal/impossible and have been removed.";
+								removedReason = CivColor.LightGray+CivSettings.localize.localizedString("loreEnhancement_arenaIllegal");
 								continue; /* don't re-add */
 							}
 						}

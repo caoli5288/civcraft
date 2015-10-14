@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.CivColor;
@@ -73,7 +74,7 @@ public class WarStats {
 			}
 		}
 		
-		return CivColor.LightGreen+CivColor.BOLD+out+CivColor.LightGray+" ("+mostKills+" kills)";
+		return CivColor.LightGreen+CivColor.BOLD+out+CivColor.LightGray+" ("+CivSettings.localize.localizedString("var_war_over_announceKills",mostKills)+")";
 	}
 	
 	public static List<String> getCapturedCivs() {
@@ -85,7 +86,7 @@ public class WarStats {
 				continue;
 			}
 			
-			String line = CivColor.LightGreen+CivColor.BOLD+key+CivColor.Rose+CivColor.BOLD+" Conquered: "+CivColor.RESET+CivColor.LightGray;
+			String line = CivColor.LightGreen+CivColor.BOLD+key+CivColor.Rose+CivColor.BOLD+" "+CivSettings.localize.localizedString("war_over_announceConquered")+" "+CivColor.RESET+CivColor.LightGray;
 			String tmp = "";
 			for (String str : conquered) {
 				tmp += str+", ";

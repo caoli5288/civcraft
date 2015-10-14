@@ -39,7 +39,20 @@ public class AnnouncementTimer implements Runnable {
 	
 	public AnnouncementTimer(String filename, int interval) {
 		minutes = interval;
-		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/"+filename);
+		
+		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/" +filename);
+		if (!file.exists()) {
+			CivLog.warning("Configuration file: "+filename+" was missing. Streaming to disk from Jar.");
+			try {
+				CivSettings.streamResourceToDisk("/data/"+filename);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		CivLog.info("Loading Configuration file: "+filename);
+		
 		
 		announcements = new ArrayList<String>();
 		
@@ -75,7 +88,7 @@ public class AnnouncementTimer implements Runnable {
 	public void run() {		
 		
 		for (String str : announcements) {
-			CivMessage.sendAll(CivColor.Gold+"Tip: "+CivColor.White+str);
+			CivMessage.sendAll(CivColor.Gold+CivSettings.localize.localizedString("TipHeading")+" "+CivColor.White+str);
 			
 			try {
 				Thread.sleep(60*minutes*1000); //sleep for x mins

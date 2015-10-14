@@ -21,25 +21,30 @@ valid_mods:
     - name: 'CivCraft Anti-Cheat'
       checksums:
         - '2428100271'
+        - '1495198275'
 
     - name: 'Forge Mod Loader'
       checksums: 
         - '3682366158'
         - '2157093643'
+        - '524156170'
 
     - name: 'net.minecraft.client.main.Main'
       checksums: 
         - '569927350'
+        - '1243427875'
 
     - name: 'Minecraft Forge'
       checksums: 
         - '3682366158'
         - '2157093643'
+        - '524156170'
 
     - name: 'Optifine'
       checksums: 
         - '193410396'
         - '2942626117'
+        - '1517681784'
     
     - name: 'ReiMinimap - Forge'
       checksums: 

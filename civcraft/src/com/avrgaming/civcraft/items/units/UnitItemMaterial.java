@@ -37,6 +37,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -90,7 +91,7 @@ public class UnitItemMaterial extends LoreMaterial {
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onItemDrop(PlayerDropItemEvent event) {
-		CivMessage.sendError(event.getPlayer(), "Cannot drop this item, belongs to the unit you are currently assigned.");
+		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitItem_cannotDrop"));
 		event.setCancelled(true);
 		event.getPlayer().updateInventory();
 	}
@@ -98,7 +99,7 @@ public class UnitItemMaterial extends LoreMaterial {
 	@Override
 	public void onItemCraft(CraftItemEvent event) {
 		try {
-			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), "Cannot craft with a unit item.");
+			CivMessage.sendError(CivGlobal.getPlayer(event.getWhoClicked().getName()), CivSettings.localize.localizedString("unitItem_cannotCraft"));
 		} catch (CivException e) {
 			//player offline?
 		}
@@ -158,7 +159,7 @@ public class UnitItemMaterial extends LoreMaterial {
 			this.addLore(str);
 		}
 		
-		this.addLore(CivColor.Gold+"Soulbound");
+		this.addLore(CivColor.Gold+CivSettings.localize.localizedString("Soulbound"));
 	}
 
 	public int getSocketSlot() {

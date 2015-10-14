@@ -41,20 +41,29 @@ system:
 
 perks:
 ########### Personal Perks
-    - id: 'perk_rename_civ_town'
-      display_name: 'Rename Civ or Town'
-      item_id: 421
+#    - id: 'perk_rename_civ_town'
+#      display_name: 'Rename Civ or Town'
+#      item_id: 421
+#      data: 0
+#      components:
+#         - name: 'RenameCivOrTown'
+
+# ===== Eureka TEMPLATES
+    - id: 'perk_ea_monument'
+      display_name: 'Eureka Monument Template'
+      item_id: 288
       data: 0
       components:
-         - name: 'RenameCivOrTown'
+          - name: 'CustomTemplate'
+            theme: 'eureka'
+            template: 'monument'
 
     - id: 'perk_sunny_weather'
       display_name: 'Sunny Weather!'
-      item_id: 8
+      item_id: 347
       data: 0
       components:
          - name: 'ChangeWeather'
-
 
     - id: 'template_arctic'
       display_name: 'Arctic Templates'
@@ -62,6 +71,13 @@ perks:
       data: 0
       components:
           - name: 'CustomTemplate'
+
+    # - id: 'template_atlantean'
+    #   display_name: 'Atlantean Templates'
+    #   item_id: 169
+    #   data: 0
+    #   components:
+    #       - name: 'CustomTemplate'
 
     - id: 'template_aztec'
       display_name: 'Aztec Templates'
@@ -91,6 +107,20 @@ perks:
       components:
           - name: 'CustomTemplate'
 
+    # - id: 'template_elven'
+    #   display_name: 'Elven Template'
+    #   item_id: 18
+    #   data: 3
+    #   components:
+    #       - name: 'CustomTemplate'
+
+    # - id: 'template_cultist'
+    #   display_name: 'Cultist Template'
+    #   item_id: 397
+    #   data: 1
+    #   components:
+    #       - name: 'CustomTemplate'
+
 ############ ARCTIC THEME
     - id: 'tpl_arctic_camp'
       display_name: 'Arctic Camp'
@@ -110,7 +140,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'arrow_tower'
-
+    
     - id: 'tpl_arctic_bank'
       display_name: 'Arctic Bank Template'
       item_id: 79
@@ -137,7 +167,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'cannon_tower'
-
+   
     - id: 'tpl_arctic_capitol'
       display_name: 'Arctic Capitol Template'
       item_id: 79
@@ -145,9 +175,9 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'arctic'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
-
+    
     - id: 'tpl_arctic_cottage'
       display_name: 'Arctic Cottage Template'
       item_id: 79
@@ -156,7 +186,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'cottage'
-
+    
     - id: 'tpl_arctic_granary'
       display_name: 'Arctic Granary Template'
       item_id: 79
@@ -183,7 +213,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'library'
-
+    
     - id: 'tpl_arctic_market'
       display_name: 'Arctic Market Template'
       item_id: 79
@@ -192,7 +222,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'market'
-
+    
     - id: 'tpl_arctic_mine'
       display_name: 'Arctic Mine Template'
       item_id: 79
@@ -228,7 +258,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'scout_tower'
-
+    
     - id: 'tpl_arctic_shipyard'
       display_name: 'Arctic Shipyard Template'
       item_id: 79
@@ -237,7 +267,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'shipyard'
-
+    
     - id: 'tpl_arctic_stable'
       display_name: 'Arctic Stable Template'
       item_id: 79
@@ -246,7 +276,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'stable'
-
+    
     - id: 'tpl_arctic_temple'
       display_name: 'Arctic Temple Template'
       item_id: 79
@@ -264,7 +294,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'trommel'
-
+    
     - id: 'tpl_arctic_town_hall'
       display_name: 'Arctic Town Hall Template'
       item_id: 79
@@ -274,7 +304,7 @@ perks:
             theme: 'arctic'
             template: 'town_hall'
             id: 's_townhall'
-
+    
     - id: 'tpl_arctic_windmill'
       display_name: 'Arctic Windmill Template'
       item_id: 79
@@ -301,6 +331,15 @@ perks:
           - name: 'CustomTemplate'
             theme: 'arctic'
             template: 'store'
+
+    - id: 'tpl_arctic_fortified_wall'
+      display_name: 'Arctic Fortified Wall Template'
+      item_id: 79
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'arctic'
+            template: 'fortified_wall'
 
 
 ############ AZTEC THEME
@@ -332,7 +371,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'blacksmith'
-
+    
     - id: 'tpl_aztec_bank'
       display_name: 'Aztec Bank Template'
       item_id: 98
@@ -359,7 +398,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'cannon_tower'
-
+   
     - id: 'tpl_aztec_capitol'
       display_name: 'Aztec Capitol Template'
       item_id: 98
@@ -367,9 +406,9 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'aztec'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
-
+    
     - id: 'tpl_aztec_cottage'
       display_name: 'Aztec Cottage Template'
       item_id: 98
@@ -378,7 +417,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'cottage'
-
+    
     - id: 'tpl_aztec_granary'
       display_name: 'Aztec Granary Template'
       item_id: 98
@@ -405,7 +444,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'library'
-
+    
     - id: 'tpl_aztec_market'
       display_name: 'Aztec Market Template'
       item_id: 98
@@ -414,7 +453,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'market'
-
+    
     - id: 'tpl_aztec_mine'
       display_name: 'Aztec Mine Template'
       item_id: 98
@@ -450,7 +489,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'scout_tower'
-
+    
     - id: 'tpl_aztec_shipyard'
       display_name: 'Aztec Shipyard Template'
       item_id: 98
@@ -459,7 +498,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'shipyard'
-
+    
     - id: 'tpl_aztec_stable'
       display_name: 'Aztec Stable Template'
       item_id: 98
@@ -468,7 +507,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'stable'
-
+    
     - id: 'tpl_aztec_temple'
       display_name: 'Aztec Temple Template'
       item_id: 98
@@ -486,7 +525,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'trommel'
-
+    
     - id: 'tpl_aztec_town_hall'
       display_name: 'Aztec Town Hall Template'
       item_id: 98
@@ -496,7 +535,7 @@ perks:
             theme: 'aztec'
             template: 'town_hall'
             id: 's_townhall'
-
+    
     - id: 'tpl_aztec_windmill'
       display_name: 'Aztec Windmill Template'
       item_id: 98
@@ -514,6 +553,15 @@ perks:
           - name: 'CustomTemplate'
             theme: 'aztec'
             template: 'store'
+
+    - id: 'tpl_aztec_fortified_wall'
+      display_name: 'Aztec Fortified Wall Template'
+      item_id: 98
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'aztec'
+            template: 'fortified_wall'
 
 
 # ===== EGYPTIAN TEMPLATES
@@ -536,7 +584,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'arrow_tower'
-
+    
     - id: 'tpl_egyptian_bank'
       display_name: 'Egyptian Bank Template'
       item_id: 24
@@ -563,7 +611,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'cannon_tower'
-
+   
     - id: 'tpl_egyptian_capitol'
       display_name: 'Egyptian Capitol Template'
       item_id: 24
@@ -571,9 +619,9 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'egyptian'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
-
+    
     - id: 'tpl_egyptian_cottage'
       display_name: 'Egyptian Cottage Template'
       item_id: 24
@@ -582,7 +630,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'cottage'
-
+    
     - id: 'tpl_egyptian_granary'
       display_name: 'Egyptian Granary Template'
       item_id: 24
@@ -609,7 +657,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'library'
-
+    
     - id: 'tpl_egyptian_market'
       display_name: 'Egyptian Market Template'
       item_id: 24
@@ -618,7 +666,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'market'
-
+    
     - id: 'tpl_egyptian_mine'
       display_name: 'Egyptian Mine Template'
       item_id: 24
@@ -654,7 +702,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'scout_tower'
-
+    
     - id: 'tpl_egyptian_shipyard'
       display_name: 'Egyptian Shipyard Template'
       item_id: 24
@@ -663,7 +711,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'shipyard'
-
+    
     - id: 'tpl_egyptian_stable'
       display_name: 'Egyptian Stable Template'
       item_id: 24
@@ -672,7 +720,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'stable'
-
+    
     - id: 'tpl_egyptian_temple'
       display_name: 'Egyptian Temple Template'
       item_id: 24
@@ -690,7 +738,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'egyptian'
             template: 'trommel'
-
+    
     - id: 'tpl_egyptian_town_hall'
       display_name: 'Egyptian Town Hall Template'
       item_id: 24
@@ -700,7 +748,7 @@ perks:
             theme: 'egyptian'
             template: 'town_hall'
             id: 's_townhall'
-
+    
     - id: 'tpl_egyptian_windmill'
       display_name: 'Egyptian Windmill Template'
       item_id: 24
@@ -728,6 +776,15 @@ perks:
             theme: 'egyptian'
             template: 'store'
 
+    - id: 'tpl_egyptian_fortified_wall'
+      display_name: 'Egyptian Fortified Wall Template'
+      item_id: 24
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'egyptian'
+            template: 'fortified_wall'
+
 # ===== ROMAN TEMPLATES
 
     - id: 'tpl_roman_camp'
@@ -748,7 +805,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'arrow_tower'
-
+    
     - id: 'tpl_roman_bank'
       display_name: 'Roman Bank Template'
       item_id: 155
@@ -775,7 +832,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'cannon_tower'
-
+   
     - id: 'tpl_roman_capitol'
       display_name: 'Roman Capitol Template'
       item_id: 155
@@ -783,9 +840,9 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'roman'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
-
+    
     - id: 'tpl_roman_cottage'
       display_name: 'Roman Cottage Template'
       item_id: 155
@@ -794,7 +851,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'cottage'
-
+    
     - id: 'tpl_roman_granary'
       display_name: 'Roman Granary Template'
       item_id: 155
@@ -821,7 +878,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'library'
-
+    
     - id: 'tpl_roman_market'
       display_name: 'Roman Market Template'
       item_id: 155
@@ -830,7 +887,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'market'
-
+    
     - id: 'tpl_roman_mine'
       display_name: 'Roman Mine Template'
       item_id: 155
@@ -866,7 +923,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'scout_tower'
-
+    
     - id: 'tpl_roman_shipyard'
       display_name: 'Roman Shipyard Template'
       item_id: 155
@@ -875,7 +932,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'shipyard'
-
+    
     - id: 'tpl_roman_stable'
       display_name: 'Roman Stable Template'
       item_id: 155
@@ -884,7 +941,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'stable'
-
+    
     - id: 'tpl_roman_temple'
       display_name: 'Roman Temple Template'
       item_id: 155
@@ -902,7 +959,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'roman'
             template: 'trommel'
-
+    
     - id: 'tpl_roman_town_hall'
       display_name: 'Roman Town Hall Template'
       item_id: 155
@@ -912,7 +969,7 @@ perks:
             theme: 'roman'
             template: 'town_hall'
             id: 's_townhall'
-
+    
     - id: 'tpl_roman_windmill'
       display_name: 'Roman Windmill Template'
       item_id: 155
@@ -940,8 +997,16 @@ perks:
             theme: 'roman'
             template: 'store'
 
-# ===== HELL TEMPLATES
+    - id: 'tpl_roman_fortified_wall'
+      display_name: 'Roman Fortified Wall Template'
+      item_id: 155
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+            theme: 'roman'
+            template: 'fortified_wall'
 
+# ===== HELL TEMPLATES
     - id: 'tpl_hell_camp'
       display_name: 'Hell Camp'
       item_id: 87
@@ -960,7 +1025,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'arrow_tower'
-
+    
     - id: 'tpl_hell_bank'
       display_name: 'Hell Bank Template'
       item_id: 87
@@ -987,7 +1052,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'cannon_tower'
-
+   
     - id: 'tpl_hell_capitol'
       display_name: 'Hell Capitol Template'
       item_id: 87
@@ -995,9 +1060,9 @@ perks:
       components:
           - name: 'CustomPersonalTemplate'
             theme: 'hell'
-            template: 'capital' #misspelt on purpose, easier to leave as is.
+            template: 'capitol' 
             id: 's_capitol'
-
+    
     - id: 'tpl_hell_cottage'
       display_name: 'Hell Cottage Template'
       item_id: 87
@@ -1006,7 +1071,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'cottage'
-
+    
     - id: 'tpl_hell_granary'
       display_name: 'Hell Granary Template'
       item_id: 87
@@ -1033,7 +1098,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'library'
-
+    
     - id: 'tpl_hell_market'
       display_name: 'Hell Market Template'
       item_id: 87
@@ -1042,7 +1107,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'market'
-
+    
     - id: 'tpl_hell_mine'
       display_name: 'Hell Mine Template'
       item_id: 87
@@ -1078,7 +1143,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'scout_tower'
-
+    
     - id: 'tpl_hell_shipyard'
       display_name: 'Hell Shipyard Template'
       item_id: 87
@@ -1087,7 +1152,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'shipyard'
-
+    
     - id: 'tpl_hell_stable'
       display_name: 'Hell Stable Template'
       item_id: 87
@@ -1096,7 +1161,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'stable'
-
+    
     - id: 'tpl_hell_temple'
       display_name: 'Hell Temple Template'
       item_id: 87
@@ -1114,7 +1179,7 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'trommel'
-
+    
     - id: 'tpl_hell_town_hall'
       display_name: 'Hell Town Hall Template'
       item_id: 87
@@ -1124,7 +1189,7 @@ perks:
             theme: 'hell'
             template: 'town_hall'
             id: 's_townhall'
-
+    
     - id: 'tpl_hell_windmill'
       display_name: 'Hell Windmill Template'
       item_id: 87
@@ -1151,3 +1216,730 @@ perks:
           - name: 'CustomTemplate'
             theme: 'hell'
             template: 'store'
+
+    - id: 'tpl_hell_fortified_wall'
+      display_name: 'Hell Fortified Wall Template'
+      item_id: 87
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'hell'
+            template: 'fortified_wall'
+
+# ===== Elven TEMPLATES
+
+#     - id: 'prem_tpl_elven_camp'
+#       display_name: 'Elven Camp'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'elven'
+#             template: 'camp'
+#             id: 'camp'
+
+#     - id: 'prem_tpl_elven_arrow_tower'
+#       display_name: 'Elven Arrow Tower Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'arrow_tower'
+
+#     - id: 'prem_tpl_elven_bank'
+#       display_name: 'Elven Bank Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'bank'
+
+#     - id: 'prem_tpl_elven_barracks'
+#       display_name: 'Elven Barracks Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'barracks'
+
+#     - id: 'prem_tpl_elven_cannon_tower'
+#       display_name: 'Elven Cannon Tower Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'cannon_tower'
+
+#     - id: 'prem_tpl_elven_capitol'
+#       display_name: 'Elven Capitol Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'elven'
+#             template: 'capitol' 
+#             id: 's_capitol'
+
+#     - id: 'prem_tpl_elven_cottage'
+#       display_name: 'Elven Cottage Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'cottage'
+
+#     - id: 'prem_tpl_elven_granary'
+#       display_name: 'Elven Granary Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'granary'
+
+#     - id: 'prem_tpl_elven_grocer'
+#       display_name: 'Elven Grocer Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'grocer'
+
+#     - id: 'prem_tpl_elven_library'
+#       display_name: 'Elven Library Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'library'
+
+#     - id: 'prem_tpl_elven_market'
+#       display_name: 'Elven Market Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'market'
+
+#     - id: 'prem_tpl_elven_mine'
+#       display_name: 'Elven Mine Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'mine'
+
+#     - id: 'prem_tpl_elven_monument'
+#       display_name: 'Elven Monument Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'monument'
+
+#     - id: 'prem_tpl_elven_pasture'
+#       display_name: 'Elven Pasture Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'pasture'
+
+#     - id: 'prem_tpl_elven_scout_tower'
+#       display_name: 'Elven Scout Tower Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'scout_tower'
+
+#     - id: 'prem_tpl_elven_shipyard'
+#       display_name: 'Elven Shipyard Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'shipyard'
+
+#     - id: 'prem_tpl_elven_stable'
+#       display_name: 'Elven Stable Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'stable'
+
+#     - id: 'prem_tpl_elven_temple'
+#       display_name: 'Elven Temple Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'temple'
+
+#     - id: 'prem_tpl_elven_trommel'
+#       display_name: 'Elven Trommel Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'trommel'
+
+#     - id: 'prem_tpl_elven_town_hall'
+#       display_name: 'Elven Town Hall Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'elven'
+#             template: 'town_hall'
+#             id: 's_townhall'
+
+#     - id: 'prem_tpl_elven_windmill'
+#       display_name: 'Elven Windmill Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'windmill'
+
+#     - id: 'prem_tpl_elven_blacksmith'
+#       display_name: 'Elven Blacksmith Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'blacksmith'
+
+#     - id: 'prem_tpl_elven_store'
+#       display_name: 'Elven Store Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'store'
+
+#     - id: 'prem_tpl_elven_trade_outpost'
+#       display_name: 'Elven Trade Outpost Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'trade_outpost'
+
+#     - id: 'prem_tpl_elven_fortified_wall'
+#       display_name: 'Elven Fortified Wall Template'
+#       item_id: 18
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'elven'
+#             template: 'fortified_wall'
+
+# # ===== CoreEmpire TEMPLATES
+    - id: 'perk_ce_monument'
+      display_name: 'CoreEmpire Monument Template'
+      item_id: 314
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'coreempire'
+            template: 'monument'
+
+# # ===== Cultist TEMPLATES
+#     - id: 'prem_tpl_cultist_camp'
+#       display_name: 'Cultist Camp'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'cultist'
+#             template: 'camp'
+#             id: 'camp'
+
+#     - id: 'prem_tpl_cultist_arrow_tower'
+#       display_name: 'Cultist Arrow Tower Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'arrow_tower'
+
+#     - id: 'prem_tpl_cultist_bank'
+#       display_name: 'Cultist Bank Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'bank'
+
+#     - id: 'prem_tpl_cultist_barracks'
+#       display_name: 'Cultist Barracks Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'barracks'
+
+#     - id: 'prem_tpl_cultist_cannon_tower'
+#       display_name: 'Cultist Cannon Tower Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'cannon_tower'
+
+#     - id: 'prem_tpl_cultist_capitol'
+#       display_name: 'Cultist Capitol Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'cultist'
+#             template: 'capitol' 
+#             id: 's_capitol'
+
+#     - id: 'prem_tpl_cultist_cottage'
+#       display_name: 'Cultist Cottage Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'cottage'
+
+#     - id: 'prem_tpl_cultist_granary'
+#       display_name: 'Cultist Granary Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'granary'
+
+#     - id: 'prem_tpl_cultist_grocer'
+#       display_name: 'Cultist Grocer Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'grocer'
+
+#     - id: 'prem_tpl_cultist_library'
+#       display_name: 'Cultist Library Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'library'
+
+#     - id: 'prem_tpl_cultist_market'
+#       display_name: 'Cultist Market Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'market'
+
+#     - id: 'prem_tpl_cultist_mine'
+#       display_name: 'Cultist Mine Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'mine'
+
+#     - id: 'prem_tpl_cultist_monument'
+#       display_name: 'Cultist Monument Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'monument'
+
+#     - id: 'prem_tpl_cultist_pasture'
+#       display_name: 'Cultist Pasture Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'pasture'
+
+#     - id: 'prem_tpl_cultist_scout_tower'
+#       display_name: 'Cultist Scout Tower Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'scout_tower'
+
+#    - id: 'prem_tpl_cultist_shipyard'
+#      display_name: 'Cultist Shipyard Template'
+#      item_id: 397
+#      data: 3
+#      components:
+#          - name: 'CustomTemplate'
+#            theme: 'cultist'
+#            template: 'shipyard'
+
+#     - id: 'prem_tpl_cultist_stable'
+#       display_name: 'Cultist Stable Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'stable'
+
+#     - id: 'prem_tpl_cultist_temple'
+#       display_name: 'Cultist Temple Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'temple'
+
+#     - id: 'prem_tpl_cultist_trommel'
+#       display_name: 'Cultist Trommel Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'trommel'
+
+#     - id: 'prem_tpl_cultist_town_hall'
+#       display_name: 'Cultist Town Hall Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'cultist'
+#             template: 'town_hall'
+#             id: 's_townhall'
+
+#     - id: 'prem_tpl_cultist_windmill'
+#       display_name: 'Cultist Windmill Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'windmill'
+
+#     - id: 'prem_tpl_cultist_blacksmith'
+#       display_name: 'Cultist Blacksmith Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'blacksmith'
+
+#     - id: 'prem_tpl_cultist_store'
+#       display_name: 'Cultist Store Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'store'
+
+#     - id: 'prem_tpl_cultist_trade_outpost'
+#       display_name: 'Cultist Trade Outpost Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'trade_outpost'
+
+#     - id: 'prem_tpl_cultist_fortified_wall'
+#       display_name: 'Cultist Fortified Wall Template'
+#       item_id: 397
+#       data: 1
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'cultist'
+#             template: 'fortified_wall'
+
+# # ===== Atlantean TEMPLATES
+#     - id: 'prem_tpl_atlantean_camp'
+#       display_name: 'Atlantean Camp'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'atlantean'
+#             template: 'camp'
+#             id: 'camp'
+
+#     - id: 'prem_tpl_atlantean_arrow_tower'
+#       display_name: 'Atlantean Arrow Tower Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'arrow_tower'
+
+#     - id: 'prem_tpl_atlantean_bank'
+#       display_name: 'Atlantean Bank Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'bank'
+
+#     - id: 'prem_tpl_atlantean_barracks'
+#       display_name: 'Atlantean Barracks Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'barracks'
+
+#     - id: 'prem_tpl_atlantean_cannon_tower'
+#       display_name: 'Atlantean Cannon Tower Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'cannon_tower'
+
+#     - id: 'prem_tpl_atlantean_capitol'
+#       display_name: 'Atlantean Capitol Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'atlantean'
+#             template: 'capitol' 
+#             id: 's_capitol'
+
+#     - id: 'prem_tpl_atlantean_cottage'
+#       display_name: 'Atlantean Cottage Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'cottage'
+
+#     - id: 'prem_tpl_atlantean_granary'
+#       display_name: 'Atlantean Granary Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'granary'
+
+#     - id: 'prem_tpl_atlantean_grocer'
+#       display_name: 'Atlantean Grocer Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'grocer'
+
+#     - id: 'prem_tpl_atlantean_library'
+#       display_name: 'Atlantean Library Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'library'
+
+#     - id: 'prem_tpl_atlantean_market'
+#       display_name: 'Atlantean Market Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'market'
+
+#     - id: 'prem_tpl_atlantean_mine'
+#       display_name: 'Atlantean Mine Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'mine'
+
+#     - id: 'prem_tpl_atlantean_monument'
+#       display_name: 'Atlantean Monument Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'monument'
+
+#     - id: 'prem_tpl_atlantean_pasture'
+#       display_name: 'Atlantean Pasture Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'pasture'
+
+#     - id: 'prem_tpl_atlantean_scout_tower'
+#       display_name: 'Atlantean Scout Tower Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'scout_tower'
+
+#     - id: 'prem_tpl_atlantean_shipyard'
+#       display_name: 'Atlantean Shipyard Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'shipyard'
+
+#     - id: 'prem_tpl_atlantean_stable'
+#       display_name: 'Atlantean Stable Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'stable'
+
+#     - id: 'prem_tpl_atlantean_temple'
+#       display_name: 'Atlantean Temple Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'temple'
+
+#     - id: 'prem_tpl_atlantean_trommel'
+#       display_name: 'Atlantean Trommel Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'trommel'
+
+#     - id: 'prem_tpl_atlantean_town_hall'
+#       display_name: 'Atlantean Town Hall Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomPersonalTemplate'
+#             theme: 'atlantean'
+#             template: 'town_hall'
+#             id: 's_townhall'
+
+#     - id: 'prem_tpl_atlantean_windmill'
+#       display_name: 'Atlantean Windmill Template'
+#       item_id: 169
+#       data: 3
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'windmill'
+
+#     - id: 'prem_tpl_atlantean_blacksmith'
+#       display_name: 'Atlantean Blacksmith Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'blacksmith'
+
+#     - id: 'prem_tpl_atlantean_store'
+#       display_name: 'Atlantean Store Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'store'
+
+#     - id: 'prem_tpl_atlantean_trade_outpost'
+#       display_name: 'Atlantean Trade Outpost Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'trade_outpost'
+
+#     - id: 'prem_tpl_atlantean_fortified_wall'
+#       display_name: 'Atlantean Fortified Wall Template'
+#       item_id: 169
+#       data: 0
+#       components:
+#           - name: 'CustomTemplate'
+#             theme: 'atlantean'
+#             template: 'fortified_wall'
+
+    - id: 'perk_haunted_camp'
+      display_name: 'Haunted Camp'
+      item_id: 91
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'haunted'
+            template: 'camp'
+            id: 'camp'
+
+    - id: 'perk_midieval_camp'
+      display_name: 'Medieval Camp'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'midieval'
+            template: 'camp'
+            id: 'camp'

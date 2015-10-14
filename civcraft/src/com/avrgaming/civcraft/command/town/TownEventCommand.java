@@ -3,6 +3,7 @@ package com.avrgaming.civcraft.command.town;
 import java.text.SimpleDateFormat;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Town;
@@ -14,10 +15,10 @@ public class TownEventCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/town event";
-		displayName = "Town Event";
+		displayName = CivSettings.localize.localizedString("cmd_town_event_name");
 		
-		commands.put("show", "Shows current town event.");
-		commands.put("activate", "Activates current event.");
+		commands.put("show", CivSettings.localize.localizedString("cmd_town_event_showDesc"));
+		commands.put("activate", CivSettings.localize.localizedString("cmd_town_event_activateDesc"));
 	}
 
 	public void activate_cmd() throws CivException {
@@ -25,10 +26,10 @@ public class TownEventCommand extends CommandBase {
 		RandomEvent event = town.getActiveEvent();
 
 		if (event == null) {
-			CivMessage.sendError(sender, "No current event.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_town_event_activateNone"));
 		} else {
 			event.activate();
-			CivMessage.sendSuccess(sender, "Event activated!");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("cmd_town_event_activateSuccess"));
 		}
 	}
 	
@@ -37,19 +38,19 @@ public class TownEventCommand extends CommandBase {
 		RandomEvent event = town.getActiveEvent();
 
 		if (event == null) {
-			CivMessage.sendError(sender, "No current event.");
+			CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_town_event_activateNone"));
 		} else {
 			SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
 
-			CivMessage.sendHeading(sender, "Current Event: "+event.configRandomEvent.name);
-			CivMessage.send(sender, CivColor.Green+"Started On: "+CivColor.LightGreen+sdf.format(event.getStartDate()));
-			CivMessage.send(sender, CivColor.Green+"End Date:"+CivColor.LightGreen+sdf.format(event.getEndDate()));
+			CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_town_event_showCurrent")+" "+event.configRandomEvent.name);
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_town_event_showStarted")+" "+CivColor.LightGreen+sdf.format(event.getStartDate()));
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_town_event_showEnd")+" "+CivColor.LightGreen+sdf.format(event.getEndDate()));
 			if (event.isActive()) {
-				CivMessage.send(sender, CivColor.LightGray+"Event has been activated.");
+				CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_town_event_showActive"));
 			} else {
-				CivMessage.send(sender, CivColor.Yellow+"Event has not been activated. Use '/town event activate' to activate the event.");
+				CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_town_event_showInactive"));
 			}
-			CivMessage.send(sender, CivColor.Green+"-- Messages From Event ---");
+			CivMessage.send(sender, CivColor.Green+"-- "+CivSettings.localize.localizedString("cmd_town_event_showMessageHeading")+" ---");
 			CivMessage.send(sender, CivColor.LightGray+event.getMessages());
 		}
 	}

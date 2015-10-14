@@ -7,6 +7,7 @@ import java.util.Date;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Town;
@@ -18,10 +19,10 @@ public class AdminRoadCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/ad road";
-		displayName = "Admin Road";	
+		displayName = CivSettings.localize.localizedString("adcmd_road_name");	
 		
 	//	commands.put("destroy", "Destroys nearest road.");
-		commands.put("setraidtime", "d:M:y:H:m sets the raid time on the nearest road");		
+		commands.put("setraidtime", CivSettings.localize.localizedString("adcmd_road_setRaidTimeDesc"));		
 	}
 
 	public void setraidtime_cmd() throws CivException {
@@ -29,13 +30,13 @@ public class AdminRoadCommand extends CommandBase {
 		Player player = getPlayer();
 		
 		if (args.length < 3) {
-			throw new CivException("Enter a date like DAY:MONTH:YEAR:HOUR:MIN");
+			throw new CivException(CivSettings.localize.localizedString("adcmd_road_setRaidTimePrompt"));
 		}
 		
 		Buildable buildable = town.getNearestBuildable(player.getLocation());
 		Road road;
 		if (!(buildable instanceof Road)) {
-			throw new CivException("Nearest structure is not a road, it's a "+buildable.getDisplayName());
+			throw new CivException( CivSettings.localize.localizedString("var_adcmd_road_setRaidTimeNotRoad",buildable.getDisplayName()));
 		}
 		
 		road = (Road)buildable;
@@ -47,9 +48,9 @@ public class AdminRoadCommand extends CommandBase {
 		try {
 			next = parser.parse(dateStr);
 			road.setNextRaidDate(next);
-			CivMessage.sendSuccess(sender, "Set raid date.");
+			CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_road_setRaidTimeEnterTime"));
 		} catch (ParseException e) {
-			throw new CivException("Couldnt parse "+args[2]+" into a date, use format: DAY:MONTH:YEAR:HOUR:MIN");
+			throw new CivException(CivSettings.localize.localizedString("var_adcmd_road_setRaidTimeError",args[2]));
 		}
 		
 	}

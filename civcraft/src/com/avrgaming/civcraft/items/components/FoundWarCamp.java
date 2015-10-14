@@ -36,30 +36,30 @@ public class FoundWarCamp extends ItemComponent implements CallbackInterface {
 	
 	@Override
 	public void onPrepareCreate(AttributeUtil attrUtil) {
-		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+"Deploys War Camp");
-		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+"<Right Click To Use>");		
+		attrUtil.addLore(ChatColor.RESET+CivColor.Gold+CivSettings.localize.localizedString("buildWarCamp_lore1"));
+		attrUtil.addLore(ChatColor.RESET+CivColor.Rose+CivSettings.localize.localizedString("itemLore_RightClickToUse"));		
 	}
 	
 	public void foundCamp(Player player) throws CivException {
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (!resident.hasTown()) {
-			throw new CivException("You must be part of a civilization to found a war camp.");
+			throw new CivException(CivSettings.localize.localizedString("buildWarCamp_errorNotInCiv"));
 		}
 		
 		if (!resident.getCiv().getLeaderGroup().hasMember(resident) &&
 			!resident.getCiv().getAdviserGroup().hasMember(resident)) {
-			throw new CivException("You must be a leader or adviser of the civilization to found a war camp.");
+			throw new CivException(CivSettings.localize.localizedString("buildWarCamp_errorNotPerms"));
 		}
 		
 		if (!War.isWarTime()) {
-			throw new CivException("War Camps can only be built during WarTime.");
+			throw new CivException(CivSettings.localize.localizedString("buildWarCamp_errorNotWarTime"));
 		}
 		
 		/*
 		 * Build a preview for the Capitol structure.
 		 */
-		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+"Checking structure position...Please wait.");
+		CivMessage.send(player, CivColor.LightGreen+CivColor.BOLD+CivSettings.localize.localizedString("build_checking_position"));
 
 		
 		Buildable.buildVerifyStatic(player, info, player.getLocation(), this);
@@ -121,13 +121,13 @@ public class FoundWarCamp extends ItemComponent implements CallbackInterface {
 			return;
 		}
 		
-		CivMessage.sendHeading(player, "Ready for War! War Camp.");
-		CivMessage.send(player, CivColor.LightGreen+"Lets get down to buisness. ");
-		CivMessage.send(player, CivColor.LightGreen+"   -Your Civilization will be able to spawn here.");
-		CivMessage.send(player, CivColor.LightGreen+"   -Cannot be rebuilt for at least "+warTimeout+" mins.");
+		CivMessage.sendHeading(player, CivSettings.localize.localizedString("buildWarCamp_heading"));
+		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("buildWarCamp_prompt1"));
+		CivMessage.send(player, CivColor.LightGreen+"   -"+CivSettings.localize.localizedString("buildWarCamp_prompt2"));
+		CivMessage.send(player, CivColor.LightGreen+"   -"+CivSettings.localize.localizedString("var_buildWarCamp_prompt3",warTimeout));
 		CivMessage.send(player, " ");
-		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+"Do you want to place the War Camp here?");
-		CivMessage.send(player, CivColor.LightGray+"(To accept, type 'yes')");
+		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildWarCamp_prompt5"));
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("buildWarCamp_prompt6"));
 		
 		resident.setInteractiveMode(new InteractiveWarCampFound(info));
 	}

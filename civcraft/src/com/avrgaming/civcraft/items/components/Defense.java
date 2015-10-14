@@ -25,6 +25,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementDefense;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
@@ -37,7 +38,7 @@ public class Defense extends ItemComponent {
 
 	@Override
 	public void onPrepareCreate(AttributeUtil attrs) {
-		attrs.addLore(CivColor.Blue+""+this.getDouble("value")+" Defense");
+		attrs.addLore(CivColor.Blue+""+this.getDouble("value")+" "+CivSettings.localize.localizedString("itemLore_Defense"));
 	}
 	
 	@Override
@@ -45,8 +46,7 @@ public class Defense extends ItemComponent {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (!resident.hasTechForItem(event.getPlayer().getInventory().getItem(event.getNewSlot()))) {		
-			CivMessage.send(resident, CivColor.Rose+"Warning - "+CivColor.LightGray+
-					"You do not have the required technology to use this item. It's defense output will be reduced in half.");
+			CivMessage.send(resident, CivColor.Rose+CivSettings.localize.localizedString("itemLore_Warning")+" - "+CivColor.LightGray+CivSettings.localize.localizedString("itemLore_defenseHalfPower"));
 		}
 	}
 	

@@ -73,12 +73,10 @@ import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.mobs.components.MobComponent;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
-import com.avrgaming.moblib.MobLib;
 
 public class CustomItemManager implements Listener {
 	
@@ -87,7 +85,7 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onEnchantItemEvent(EnchantItemEvent event) {
-		CivMessage.sendError(event.getEnchanter(), "Items cannot be enchanted with enchantment tables.");
+		CivMessage.sendError(event.getEnchanter(), CivSettings.localize.localizedString("customItem_NoEnchanting"));
 		event.setCancelled(true);
 	}
 	
@@ -279,11 +277,7 @@ public class CustomItemManager implements Listener {
 					/* Arrow was fired by a tower. */
 					afc.setHit(true);
 					afc.destroy(event.getDamager());
-					if (defendingPlayer == null)
-					{
-						//Fix NPE, for some reason defending player can be null here.
-						return;
-					}
+					
 					Resident defenderResident = CivGlobal.getResident(defendingPlayer);
 					if (defenderResident != null && defenderResident.hasTown() && 
 							defenderResident.getTown().getCiv() == afc.getFromTower().getTown().getCiv()) {
@@ -309,11 +303,11 @@ public class CustomItemManager implements Listener {
 		}
 		
 		if (defendingPlayer == null) {
-			if (event.getEntity() instanceof LivingEntity) {
-				if (MobLib.isMobLibEntity((LivingEntity) event.getEntity())) {
-					MobComponent.onDefense(event.getEntity(), event);
-				}	
-			}
+//			if (event.getEntity() instanceof LivingEntity) {
+//				if (MobLib.isMobLibEntity((LivingEntity) event.getEntity())) {
+//					MobComponent.onDefense(event.getEntity(), event);
+//				}	
+//			}
 			return;
 		} else {
 			/* Search equipt items for defense event. */
@@ -810,7 +804,7 @@ public class CustomItemManager implements Listener {
 			}
 			if (!sentMessage) {
 				if (player != null) {
-					CivMessage.send(player, CivColor.LightGray+"Restricted vanilla items in your inventory have been removed.");
+					CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("customItem_restrictedItemsRemoved"));
 				}
 				sentMessage = true;
 			}
@@ -842,7 +836,7 @@ public class CustomItemManager implements Listener {
 				contents[i] = new ItemStack(Material.AIR);
 				foundBad = true;
 				if (!sentMessage) {
-					CivMessage.send(player, CivColor.LightGray+"Restricted vanilla items in your inventory have been removed.");
+					CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("customItem_restrictedItemsRemoved"));
 					sentMessage = true;
 				}
 			}		

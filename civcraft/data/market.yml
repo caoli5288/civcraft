@@ -94,7 +94,7 @@ items:
       data: 0
       value: 20
 
-    - id: 14
+    - id: 135
       name: 'Leather'
       type_id: 334
       data: 0
@@ -182,3 +182,9 @@ items:
       type_id: 289
       data: 0
       value: 100
+
+    - id: 140
+      name: 'Sponge'
+      type_id: 19
+      data: 0
+      value: 1000

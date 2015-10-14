@@ -25,6 +25,7 @@ import java.util.Queue;
 
 import org.bukkit.block.Block;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -103,7 +104,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 			
 			if (buildable instanceof Wonder) {
 				if (buildable.getTown().getMotherCiv() != null) {
-					CivMessage.sendTown(buildable.getTown(), "Wonder production halted while we're conquered by "+buildable.getTown().getCiv().getName());
+					CivMessage.sendTown(buildable.getTown(), CivSettings.localize.localizedString("var_buildAsync_wonderHaltedConquered",buildable.getTown().getCiv().getName()));
 					try {
 						Thread.sleep(1800000); //30 min notify.
 					} catch (InterruptedException e) {
@@ -113,7 +114,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 				
 				Buildable inProgress = buildable.getTown().getCurrentStructureInProgress();
 				if (inProgress != null && inProgress != buildable) {
-					CivMessage.sendTown(buildable.getTown(), "Wonder production halted while we're constructing a "+inProgress.getDisplayName());
+					CivMessage.sendTown(buildable.getTown(), CivSettings.localize.localizedString("var_buildAsync_wonderHaltedOtherConstruction",inProgress.getDisplayName()));
 					try {
 						Thread.sleep(600000); //10 min notify.
 					} catch (InterruptedException e) {
@@ -122,7 +123,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 				}
 				
 				if (buildable.getTown().getTownHall() == null) {
-					CivMessage.sendTown(buildable.getTown(), "Wonder production halted while you have no town hall.");
+					CivMessage.sendTown(buildable.getTown(), CivSettings.localize.localizedString("buildAsync_wonderHaltedNoTownHall"));
 					try {
 						Thread.sleep(600000); //10 min notify.
 					} catch (InterruptedException e) {
@@ -159,11 +160,11 @@ public class BuildAsyncTask extends CivAsyncTask {
 					this.percent_complete = nextPercentComplete;
 					if ((this.percent_complete % 10 == 0)) {
 						if (buildable instanceof Wonder) {
-							CivMessage.global(buildable.getDisplayName()+" in "+buildable.getTown().getName()+" is "+nextPercentComplete+"% complete.");
+							CivMessage.global(CivSettings.localize.localizedString("var_buildAsync_progressWonder",buildable.getDisplayName(),buildable.getTown().getName(),nextPercentComplete));
 						} else {
 														
 							CivMessage.sendTown(buildable.getTown(),
-									CivColor.Yellow+"The "+buildable.getDisplayName()+" is now "+(nextPercentComplete)+"% complete.");
+									CivColor.Yellow+CivSettings.localize.localizedString("var_buildAsync_progressOther",buildable.getDisplayName(),nextPercentComplete));
 						}
 					}
 				}
@@ -189,7 +190,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 					}
 					
 					if (buildable.isDestroyed()) {
-						CivMessage.sendTown(buildable.getTown(), buildable.getDisplayName()+" was destroyed while it was building!");
+						CivMessage.sendTown(buildable.getTown(), CivSettings.localize.localizedString("var_buildAsync_destroyed",buildable.getDisplayName()));
 						abortWonder();
 						return false;
 					}
@@ -230,7 +231,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 		tpl.deleteInProgessTemplate(buildable.getCorner().toString(), buildable.getTown());
 		buildable.getTown().build_tasks.remove(this);
 		TaskMaster.syncTask(new PostBuildSyncTask(tpl, buildable));
-		CivMessage.global("The town of "+buildable.getTown().getName()+ " has completed a "+ buildable.getDisplayName() + "!");
+		CivMessage.global(CivSettings.localize.localizedString("var_buildAsync_completed",buildable.getTown().getName(), buildable.getDisplayName()));
 		buildable.onComplete();
 		return false;
 	}
@@ -273,7 +274,14 @@ public class BuildAsyncTask extends CivAsyncTask {
 		// of the build task async.
 		synchronized (this.aborted) {
 			if (!this.aborted) {
-				if (sb.getType() == CivData.WOOD_DOOR || sb.getType() == CivData.IRON_DOOR) {
+				if (sb.getType() == CivData.WOOD_DOOR || 
+					sb.getType() == CivData.IRON_DOOR || 
+					sb.getType() == CivData.SPRUCE_DOOR || 
+					sb.getType() == CivData.BIRCH_DOOR || 
+					sb.getType() == CivData.JUNGLE_DOOR || 
+					sb.getType() == CivData.ACACIA_DOOR || 
+					sb.getType() == CivData.DARK_OAK_DOOR ||
+					Template.isAttachable(sb.getType())) {
 					// dont build doors, save it for post sync build.
 				}
 				else {
@@ -309,13 +317,13 @@ public class BuildAsyncTask extends CivAsyncTask {
 	}
 	
 	private void processWonderAbort() {
-		CivMessage.sendTown(buildable.getTown(), CivColor.Rose+"You can no longer build "+buildable.getDisplayName()+" since it was built in a far away land.");
+		CivMessage.sendTown(buildable.getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_buildAsync_wonderFarAway",buildable.getDisplayName()));
 		
 		//Refund the town half the cost of the wonder.
 		double refund = (int)(buildable.getCost() / 2);			
 		buildable.getTown().depositDirect(refund);
 
-		CivMessage.sendTown(buildable.getTown(), CivColor.Yellow+"Town was refunded 50% ("+refund+" Coins) of the cost to build the wonder.");
+		CivMessage.sendTown(buildable.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_buildAsync_wonderRefund",refund,CivSettings.CURRENCY_NAME));
 		abortWonder();
 	}
 	

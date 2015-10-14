@@ -35,6 +35,7 @@ import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.arena.ArenaTeam;
 import com.avrgaming.civcraft.camp.Camp;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -112,12 +113,12 @@ public abstract class CommandBase implements CommandExecutor {
 						return true;
 					} catch (IllegalAccessException | IllegalArgumentException e) {
 						e.printStackTrace();
-						CivMessage.sendError(sender, "Internal Command Error.");
+						CivMessage.sendError(sender, CivSettings.localize.localizedString("internalCommandException"));
 					} catch (InvocationTargetException e) {
 						if (e.getCause() instanceof CivException) {
 							CivMessage.sendError(sender, e.getCause().getMessage());
 						} else {
-							CivMessage.sendError(sender, "Internal Command Error.");
+							CivMessage.sendError(sender, CivSettings.localize.localizedString("internalCommandException"));
 							e.getCause().printStackTrace();
 						}
 					}
@@ -132,7 +133,7 @@ public abstract class CommandBase implements CommandExecutor {
 						}
 						return false;
 					}
-					CivMessage.sendError(sender, "Unknown method "+args[0]);
+					CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_unknwonMethod")+" "+args[0]);
 				}
 				return true;
 			}
@@ -147,7 +148,7 @@ public abstract class CommandBase implements CommandExecutor {
 			return false;
 		}
 		
-		CivMessage.sendError(sender, "Unknown command "+args[0]);
+		CivMessage.sendError(sender, CivSettings.localize.localizedString("cmd_unknownCommand")+" "+args[0]);
 		return false;
 	}
 	
@@ -164,7 +165,7 @@ public abstract class CommandBase implements CommandExecutor {
 	}
 
 	public void showBasicHelp() {
-		CivMessage.sendHeading(sender, displayName+" Command Help");
+		CivMessage.sendHeading(sender, displayName+" "+CivSettings.localize.localizedString("cmd_CommandHelpTitle"));
 		for (String c : commands.keySet()) {
 			String info = commands.get(c);
 			
@@ -181,7 +182,7 @@ public abstract class CommandBase implements CommandExecutor {
 		Player player = getPlayer();
 		Resident res = CivGlobal.getResident(player);
 		if (res == null) {
-			throw new CivException("Resident "+player.getName()+" could not be found.");
+			throw new CivException(CivSettings.localize.localizedString("var_Resident_CouldNotBeFound",player.getName()));
 		}
 		return res;
 	}
@@ -190,7 +191,7 @@ public abstract class CommandBase implements CommandExecutor {
 		if (sender instanceof Player) {
 			return (Player)sender;
 		}
-		throw new CivException("Only players can do this.");
+		throw new CivException(CivSettings.localize.localizedString("cmd_MustBePlayer"));
 	}
 	
 	public Town getSelectedTown() throws CivException {
@@ -207,7 +208,7 @@ public abstract class CommandBase implements CommandExecutor {
 					try {
 						res.getSelectedTown().validateResidentSelect(res);
 					} catch (CivException e) {
-						CivMessage.send(player, CivColor.Yellow+"You can no longer use the selected town "+res.getSelectedTown().getName()+", switched back to "+res.getTown().getName());
+						CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_cmd_townDeselectedInvalid",res.getSelectedTown().getName(),res.getTown().getName()));
 						res.setSelectedTown(res.getTown());
 						return res.getTown();
 					}
@@ -218,7 +219,7 @@ public abstract class CommandBase implements CommandExecutor {
 				}
 			}
 		}
-		throw new CivException("You are not part of a town.");
+		throw new CivException(CivSettings.localize.localizedString("cmd_notPartOfTown"));
 	}
 	
 	public TownChunk getStandingTownChunk() throws CivException {
@@ -226,7 +227,7 @@ public abstract class CommandBase implements CommandExecutor {
 		
 		TownChunk tc = CivGlobal.getTownChunk(player.getLocation());
 		if (tc == null) {
-			throw new CivException("This plot is not owned.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plotNotOwned"));
 		}
 		return tc;
 	}
@@ -259,7 +260,7 @@ public abstract class CommandBase implements CommandExecutor {
 		Town town = getSelectedTown();
 		
 		if (!town.playerIsInGroupName("mayors", player)) {
-			throw new CivException("Only mayors can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_MustBeMayor"));
 		}
 		//if (this.)
 	}
@@ -280,12 +281,12 @@ public abstract class CommandBase implements CommandExecutor {
 		
 		if (town.getMayorGroup() == null || town.getAssistantGroup() == null || 
 				civ.getLeaderGroup() == null) {
-			throw new CivException("ERROR: This town("+town.getName()+") or civ("+civ.getName()+") is missing a special group. Please contact and admin.");
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_townOrCivMissingGroup1",town.getName(),civ.getName()));
 		}
 		
 		if (!town.getMayorGroup().hasMember(resident) && !town.getAssistantGroup().hasMember(resident) &&
 				!civ.getLeaderGroup().hasMember(resident)) {
-			throw new CivException("Only mayors, assistants and civ leaders of the mother civilization can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NeedHigherTownOrCivRank"));
 		}
 	}
 	
@@ -295,7 +296,7 @@ public abstract class CommandBase implements CommandExecutor {
 
 		
 		if (!civ.getLeaderGroup().hasMember(res) && !civ.getAdviserGroup().hasMember(res)) {
-			throw new CivException("Only leaders and advisers can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NeedHigherCivRank"));
 		}
 	}
 	
@@ -304,7 +305,7 @@ public abstract class CommandBase implements CommandExecutor {
 		Civilization civ = getSenderCiv();
 		
 		if (!civ.getLeaderGroup().hasMember(res)) {
-			throw new CivException("Only leaders can use this command.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NeedHigherCivRank2"));
 		}
 	}
 	
@@ -315,11 +316,11 @@ public abstract class CommandBase implements CommandExecutor {
 		if (tc.perms.getOwner() == null) {
 			validMayorAssistantLeader();
 			if (tc.getTown() != resident.getTown()) {
-				throw new CivException("You cannot manage a plot not in your town.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_validPlotOwnerFalse"));
 			}
 		} else {
 			if (resident != tc.perms.getOwner()) {
-				throw new CivException("You are not the owner of this plot.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_validPlotOwnerFalse2"));
 			}
 		}	
 	}
@@ -333,12 +334,12 @@ public abstract class CommandBase implements CommandExecutor {
 		Resident resident = getResident();
 		
 		if (resident.getTown() == null) {
-			throw new CivException("You are not a citizen of a civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_getSenderCivNoCiv"));
 		}
 				
 		if (resident.getTown().getCiv() == null) {
 			//This should never happen but....
-			throw new CivException("You are not a citizen of a civilization.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_getSenderCivNoCiv"));
 		}
 		
 		return resident.getTown().getCiv();
@@ -346,35 +347,35 @@ public abstract class CommandBase implements CommandExecutor {
 
 	protected Double getNamedDouble(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a number.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_enterNumber"));
 		}
 		
 		try {
 			Double number = Double.valueOf(args[index]);
 			return number;
 		} catch (NumberFormatException e) {
-			throw new CivException(args[index]+" is not a number.");
+			throw new CivException(args[index]+" "+CivSettings.localize.localizedString("cmd_enterNumerError"));
 		}
 		
 	}
 	
 	protected Integer getNamedInteger(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a number.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_enterNumber"));
 		}
 		
 		try {
 			Integer number = Integer.valueOf(args[index]);
 			return number;
 		} catch (NumberFormatException e) {
-			throw new CivException(args[index]+" is not whole a number.");
+			throw new CivException(args[index]+" "+CivSettings.localize.localizedString("cmd_enterNumerError2"));
 		}
 		
 	}
 	
 	protected Resident getNamedResident(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a resident name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterResidentName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -388,20 +389,20 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(resident);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No resident matching that name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (Resident resident : potentialMatches) {
@@ -409,7 +410,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one resident matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);
@@ -417,7 +418,7 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected Civilization getNamedCiv(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a civ name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterCivName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -431,20 +432,20 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(civ);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No civ matching the name '"+args[index]+"'");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" '"+args[index]+"'");
 		}
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (Civilization civ : potentialMatches) {
@@ -452,7 +453,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one civ matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);
@@ -460,7 +461,7 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected Civilization getNamedCapturedCiv(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a civ name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterCivName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -474,20 +475,20 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(civ);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No civ matching the name '"+args[index]+"'");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" '"+args[index]+"'");
 		}
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (Civilization civ : potentialMatches) {
@@ -495,7 +496,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one civ matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);
@@ -515,7 +516,7 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected Town getNamedTown(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a town name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterTownName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -529,20 +530,20 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(town);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No town matching that name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (Town town : potentialMatches) {
@@ -550,7 +551,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one town matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);
@@ -567,12 +568,12 @@ public abstract class CommandBase implements CommandExecutor {
 	@SuppressWarnings("deprecation")
 	protected OfflinePlayer getNamedOfflinePlayer(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a player name");
+			throw new CivException(CivSettings.localize.localizedString("EnterPlayerName"));
 		}
 		
 		OfflinePlayer offplayer = Bukkit.getOfflinePlayer(args[index]);
 		if (offplayer == null) {
-			throw new CivException("No player named:"+args[index]);
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" "+args[index]);
 		}
 		
 		return offplayer;
@@ -590,12 +591,12 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected PermissionGroup getNamedPermissionGroup(Town town, int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a group name");
+			throw new CivException(CivSettings.localize.localizedString("EnterGroupName"));
 		}
 		
 		PermissionGroup grp = CivGlobal.getPermissionGroupFromName(town, args[index]);
 		if (grp == null) {
-			throw new CivException("No group named:"+args[index]+" in town "+town.getName());
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults",args[index],town.getName()));
 		}
 		
 		return grp;
@@ -605,11 +606,11 @@ public abstract class CommandBase implements CommandExecutor {
 		Resident resident = getResident();
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("You are not currently in a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
 		}
 		
 		if (resident.getCamp().getOwner() != resident) {
-			throw new CivException("Only the owner of the camp("+resident.getCamp().getOwnerName()+") is allowed to do this.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotOwner")+" ("+resident.getCamp().getOwnerName()+")");
 		}
 	}
 	
@@ -617,7 +618,7 @@ public abstract class CommandBase implements CommandExecutor {
 		Resident resident = getResident();
 		
 		if (!resident.hasCamp()) {
-			throw new CivException("You are not currently in a camp.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_campBase_NotInCamp"));
 		}
 		
 		return resident.getCamp();
@@ -625,7 +626,7 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected Camp getNamedCamp(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a camp name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterCampName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -639,21 +640,21 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(camp);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No camp matching that name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (Camp camp : potentialMatches) {
@@ -661,7 +662,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one camp matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);
@@ -669,7 +670,7 @@ public abstract class CommandBase implements CommandExecutor {
 	
 	protected ArenaTeam getNamedTeam(int index) throws CivException {
 		if (args.length < (index+1)) {
-			throw new CivException("Enter a team name.");
+			throw new CivException(CivSettings.localize.localizedString("EnterTeamName"));
 		}
 		
 		String name = args[index].toLowerCase();
@@ -683,20 +684,20 @@ public abstract class CommandBase implements CommandExecutor {
 					potentialMatches.add(team);
 				}
 			} catch (Exception e) {
-				throw new CivException("Invalid pattern.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_invalidPattern"));
 			}
 			
 			if (potentialMatches.size() > MATCH_LIMIT) {
-				throw new CivException("Too many potential matches. Refine your search.");
+				throw new CivException(CivSettings.localize.localizedString("cmd_TooManyResults"));
 			}
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException("No team matching that name.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {
-			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+"Potential Matches");
+			CivMessage.send(sender, CivColor.LightPurple+ChatColor.UNDERLINE+CivSettings.localize.localizedString("cmd_NameMoreThan1"));
 			CivMessage.send(sender, " ");
 			String out = "";
 			for (ArenaTeam team : potentialMatches) {
@@ -704,7 +705,7 @@ public abstract class CommandBase implements CommandExecutor {
 			}
 		
 			CivMessage.send(sender, CivColor.LightBlue+ChatColor.ITALIC+out);
-			throw new CivException("More than one team matches, please clarify.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameMoreThan2"));
 		}
 		
 		return potentialMatches.get(0);

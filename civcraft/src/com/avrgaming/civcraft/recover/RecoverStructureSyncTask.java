@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
@@ -100,11 +101,11 @@ public class RecoverStructureSyncTask implements Runnable {
 	@Override
 	public void run() {
 		for (Structure struct : this.structures) {
-			CivMessage.send(sender, "Reparing "+struct.getDisplayName()+" at "+CivColor.Yellow+struct.getCorner());
+			CivMessage.send(sender, CivSettings.localize.localizedString("structureRepairStart")+" "+struct.getDisplayName()+" @ "+CivColor.Yellow+struct.getCorner());
 			repairStructure(struct);
 		}
 		
-		CivMessage.send(sender, "Structure repair finished.");
+		CivMessage.send(sender, CivSettings.localize.localizedString("structureRepairComplete"));
 	}
 	
 	

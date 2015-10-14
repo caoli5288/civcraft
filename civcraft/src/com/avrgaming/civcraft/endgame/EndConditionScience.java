@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.endgame;
 
 import java.util.ArrayList;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -60,7 +61,7 @@ public class EndConditionScience extends EndGameCondition {
 	public boolean finalWinCheck(Civilization civ) {
 		Civilization rival = getMostAccumulatedBeakers();
 		if (rival != civ) {
-			CivMessage.global(civ.getName()+" doesn't have enough beakers for a scientific victory. The rival civilization of "+rival.getName()+" has more!");
+			CivMessage.global(CivSettings.localize.localizedString("var_end_scienceError",civ.getName(),rival.getName()));
 			return false;
 		}
 		
@@ -92,7 +93,7 @@ public class EndConditionScience extends EndGameCondition {
 		/* remove any extra beakers we might have. */
 		CivGlobal.getSessionDB().delete_all(getBeakerSessionKey(civ));
 		civ.removeTech(techname);
-		CivMessage.sendCiv(civ, "We were defeated while trying to achieve a science victory! We've lost all of our accumulated beakers and our victory tech!");
+		CivMessage.sendCiv(civ, CivSettings.localize.localizedString("end_scienceWarDefeat"));
 		
 		civ.save();
 		this.onFailure(civ);

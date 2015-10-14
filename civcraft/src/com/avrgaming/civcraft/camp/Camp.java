@@ -78,6 +78,7 @@ import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.template.Template.TemplateType;
 import com.avrgaming.civcraft.threading.TaskMaster;
+import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -153,13 +154,13 @@ public class Camp extends Buildable {
 				try {					
 					Camp existCamp = CivGlobal.getCamp(name);
 					if (existCamp != null) {
-						throw new CivException("A camp named "+name+" already exists!");
+						throw new CivException("("+name+") "+CivSettings.localize.localizedString("camp_nameTaken"));
 					}
 					
 					ItemStack stack = player.getItemInHand();
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
 					if (craftMat == null || !craftMat.hasComponent("FoundCamp")) {
-						throw new CivException("You must be holding an item that can found a camp.");
+						throw new CivException(CivSettings.localize.localizedString("camp_missingItem"));
 					}
 					
 					Camp camp = new Camp(resident, name, player.getLocation());
@@ -168,7 +169,7 @@ public class Camp extends Buildable {
 					CivGlobal.addCamp(camp);
 					camp.save();
 				
-					CivMessage.sendSuccess(player, "You have set up camp!");
+					CivMessage.sendSuccess(player, CivSettings.localize.localizedString("camp_createSuccess"));
 					ItemStack newStack = new ItemStack(Material.AIR);
 					player.setItemInHand(newStack);
 					resident.clearInteractiveMode();
@@ -437,6 +438,8 @@ public class Camp extends Buildable {
 			e1.printStackTrace();
 		}
 		buildCampFromTemplate(tpl, corner);
+
+		TaskMaster.syncTask(new PostBuildSyncTask(tpl, this));
 		processCommandSigns(tpl, corner);
 		try {
 			this.saveNow();
@@ -544,10 +547,10 @@ public class Camp extends Buildable {
 					ItemManager.setData(absCoord.getBlock(), sb.getData());
 					
 					Sign sign = (Sign)absCoord.getBlock().getState();
-					sign.setLine(0, "Sifter Disabled");
-					sign.setLine(1, "Upgrade using");
+					sign.setLine(0, CivSettings.localize.localizedString("camp_sifterUpgradeSign1"));
+					sign.setLine(1, CivSettings.localize.localizedString("upgradeUsing_SignText"));
 					sign.setLine(2, "/camp upgrade");
-					sign.setLine(3, "command");
+					sign.setLine(3, "");
 					sign.update();
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -566,9 +569,9 @@ public class Camp extends Buildable {
 					ItemManager.setData(absCoord.getBlock(), sb.getData());
 					
 					Sign sign = (Sign)absCoord.getBlock().getState();
-					sign.setLine(0, "Longhouse");
-					sign.setLine(1, "Disabled");
-					sign.setLine(2, "Upgrade using");
+					sign.setLine(0, CivSettings.localize.localizedString("camp_longhouseSign1"));
+					sign.setLine(1, CivSettings.localize.localizedString("camp_longhouseSign2"));
+					sign.setLine(2, CivSettings.localize.localizedString("upgradeUsing_SignText"));
 					sign.setLine(3, "/camp upgrade");
 					sign.update();
 				}
@@ -667,11 +670,11 @@ public class Camp extends Buildable {
 			}
 		} else {
 			this.firepoints--;
-			CivMessage.sendCamp(this, CivColor.Yellow+"Our campfire doesn't have enough coal to keep burning, its starting to go out! "+this.firepoints+" hours left.");
+			CivMessage.sendCamp(this, CivColor.Yellow+CivSettings.localize.localizedString("var_camp_campfireDown",this.firepoints));
 			
 			double percentLeft = (double)this.firepoints / (double)this.maxFirePoints;
 			if (percentLeft < 0.3) {
-				CivMessage.sendCamp(this, CivColor.Yellow+ChatColor.BOLD+"Warning! Our campfire is less than 30% out! We need to stock it with more coal or our camp will be destroyed!");
+				CivMessage.sendCamp(this, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("camp_campfire30percent"));
 			}
 			
 			if (this.firepoints < 0) {
@@ -698,7 +701,7 @@ public class Camp extends Buildable {
 		}
 		
 		if (mInv.getInventoryCount() == 0) {
-			CivMessage.sendCamp(this, CivColor.Rose+"Your camp's longhouse could not find an input chest for food! Nothing happens.");
+			CivMessage.sendCamp(this, CivColor.Rose+CivSettings.localize.localizedString("camp_longhouseNoChest"));
 			return;
 		}
 		
@@ -708,16 +711,16 @@ public class Camp extends Buildable {
 		
 		switch (result) {
 		case STARVE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved"+consumeComponent.getCountString()+CivColor.LightGreen+" and generated no Coins.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_camp_yourLonghouseDown",(CivColor.Rose+CivSettings.localize.localizedString("var_camp_longhouseStarved",consumeComponent.getCountString())+CivColor.LightGreen),CivSettings.CURRENCY_NAME));
 			return;
 		case LEVELDOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Rose+"starved and leveled-down"+CivColor.LightGreen+" and generated no Coins.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_camp_yourLonghouseDown",(CivColor.Rose+CivSettings.localize.localizedString("camp_longhouseStavedAndLeveledDown")+CivColor.LightGreen),CivSettings.CURRENCY_NAME));
 			return;
 		case STAGNATE:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+CivColor.Yellow+"stagnated"+CivColor.LightGreen+" and generated no Coins.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_camp_yourLonghouseDown",(CivColor.Yellow+CivSettings.localize.localizedString("camp_longhouseStagnated")+CivColor.LightGreen),CivSettings.CURRENCY_NAME));
 			return;
 		case UNKNOWN:
-			CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse has done "+CivColor.Purple+"something unknown"+CivColor.LightGreen+" and generated no Coins.");
+			CivMessage.sendCamp(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_camp_yourLonghouseDown",(CivColor.Purple+CivSettings.localize.localizedString("camp_longhouseSomethingUnknown")+CivColor.LightGreen),CivSettings.CURRENCY_NAME));
 			return;
 		default:
 			break;
@@ -752,19 +755,19 @@ public class Camp extends Buildable {
 		String stateMessage = "";
 		switch (result) {
 		case GROW:
-			stateMessage = CivColor.Green+"grew"+consumeComponent.getCountString()+CivColor.LightGreen;
+			stateMessage = CivColor.Green+CivSettings.localize.localizedString("var_camp_longhouseGrew",consumeComponent.getCountString()+CivColor.LightGreen);
 			break;
 		case LEVELUP:
-			stateMessage = CivColor.Green+"leveled up"+CivColor.LightGreen;
+			stateMessage = CivColor.Green+CivSettings.localize.localizedString("camp_longhouselvlUp")+CivColor.LightGreen;
 			break;
 		case MAXED:
-			stateMessage = CivColor.Green+"is maxed"+consumeComponent.getCountString()+CivColor.LightGreen;
+			stateMessage = CivColor.Green+CivSettings.localize.localizedString("var_camp_longhouseIsMaxed",consumeComponent.getCountString()+CivColor.LightGreen);
 			break;
 		default:
 			break;
 		}
 		
-		CivMessage.sendCamp(this, CivColor.LightGreen+"Your camp's longhouse "+stateMessage+" and generated "+total_coins+" Coins. Coins were given to the camp's owner.");
+		CivMessage.sendCamp(this, CivColor.LightGreen+CivSettings.localize.localizedString("var_camp_yourLonghouse",stateMessage,total_coins,CivSettings.CURRENCY_NAME));
 	}
 	
 	private void buildCampFromTemplate(Template tpl, BlockCoord corner) {
@@ -881,15 +884,15 @@ public class Camp extends Buildable {
 		ChunkCoord ccoord = new ChunkCoord(centerBlock.getLocation());
 		CultureChunk cc = CivGlobal.getCultureChunk(ccoord);
 		if (cc != null) {
-			throw new CivException("You cannot build a camp inside a civilization's culture.");
+			throw new CivException(CivSettings.localize.localizedString("camp_checkInCivError"));
 		}
 		
 		if (player.getLocation().getY() >= 200) {
-			throw new CivException("You're too high to build camps.");
+			throw new CivException(CivSettings.localize.localizedString("camp_checkTooHigh"));
 		}
 		
 		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {
-			throw new CivException("Cannot build camp here, would go over the minecraft height limit.");
+			throw new CivException(CivSettings.localize.localizedString("camp_checkWayTooHigh"));
 		}
 		
 		if (!player.isOp()) {
@@ -907,7 +910,7 @@ public class Camp extends Buildable {
 					Block b = centerBlock.getRelative(x, y, z);
 					
 					if (ItemManager.getId(b) == CivData.CHEST) {
-						throw new CivException("Cannot build here, would destroy chest.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_chestInWay"));
 					}
 		
 					BlockCoord coord = new BlockCoord(b);
@@ -916,27 +919,27 @@ public class Camp extends Buildable {
 					TownChunk tc = CivGlobal.getTownChunk(chunkCoord);
 					if (tc != null && !tc.perms.hasPermission(PlotPermissions.Type.DESTROY, CivGlobal.getResident(player))) {
 						// Make sure we have permission to destroy any block in this area.
-						throw new CivException("Cannot build here, you need DESTROY permissions to the block at "+b.getX()+","+b.getY()+","+b.getZ());
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_needPermissions")+" "+b.getX()+","+b.getY()+","+b.getZ());
 					}
 					
 					if (CivGlobal.getProtectedBlock(coord) != null) {
-						throw new CivException("Cannot build here, protected blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_protectedInWay"));
 					}
 					
 					if (CivGlobal.getStructureBlock(coord) != null) {
-						throw new CivException("Cannot build here, structure blocks in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_structureInWay"));
 					}
 				
 					if (CivGlobal.getFarmChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a farm improvement.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_farmInWay"));
 					}
 		
 					if (CivGlobal.getWallChunk(chunkCoord) != null) {
-						throw new CivException("Cannot build here, in the same chunk as a wall improvement.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_wallInWay"));
 					}
 					
 					if (CivGlobal.getCampBlock(coord) != null) {
-						throw new CivException("Cannot build here, a camp is in the way.");
+						throw new CivException(CivSettings.localize.localizedString("cannotBuild_campinWay"));
 					}
 					
 					yTotal += b.getWorld().getHighestBlockYAt(centerBlock.getX()+x, centerBlock.getZ()+z);
@@ -964,7 +967,7 @@ public class Camp extends Buildable {
 		
 		if (((centerBlock.getY() > (highestAverageBlock+10)) || 
 				(centerBlock.getY() < (highestAverageBlock-10)))) {
-			throw new CivException("Cannot build here, you must be closer to the surface.");
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 		
 	}
@@ -1144,7 +1147,7 @@ public class Camp extends Buildable {
 
 	@Override
 	public String getDisplayName() {
-		return "Camp";
+		return CivSettings.localize.localizedString("Camp");
 	}
 	
 	@Override
@@ -1237,8 +1240,8 @@ public class Camp extends Buildable {
 		world.playSound(cp.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
 		world.playEffect(cp.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
-		CivMessage.send(player, CivColor.LightGray+"Damaged Control Block ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
-		CivMessage.sendCamp(this, CivColor.Yellow+"One of our camp's Control Points is under attack!");
+		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("camp_hitControlBlock")+"("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
+		CivMessage.sendCamp(this, CivColor.Yellow+CivSettings.localize.localizedString("camp_controlBlockUnderAttack"));
 	}
 	
 	
@@ -1266,10 +1269,10 @@ public class Camp extends Buildable {
 		}
 
 		if (allDestroyed) {
-			CivMessage.sendCamp(this, CivColor.Rose+"Our camp has been destroyed!");
+			CivMessage.sendCamp(this, CivColor.Rose+CivSettings.localize.localizedString("camp_destroyed"));
 			this.destroy();
 		} else {
-			CivMessage.sendCamp(this, CivColor.Rose+"One of camps's Control Points has been destroyed!");
+			CivMessage.sendCamp(this, CivColor.Rose+CivSettings.localize.localizedString("camp_controlBlockDestroyed"));
 		}
 		
 	}
@@ -1283,7 +1286,7 @@ public class Camp extends Buildable {
 			Resident resident = CivGlobal.getResident(player);
 			
 			if (resident.isProtected()) {
-				CivMessage.sendError(player, "You are unable to damage camps while protected.");
+				CivMessage.sendError(player, CivSettings.localize.localizedString("camp_protected"));
 				return;
 			}
 			
@@ -1296,11 +1299,11 @@ public class Camp extends Buildable {
 						onControlBlockHit(cp, world, player);
 					}
 				} else {
-					CivMessage.send(player, CivColor.Rose+"Control Block already destroyed.");
+					CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("camp_controlBlockAlreadyDestroyed"));
 				}
 			} else {
 				SimpleDateFormat sdf = new SimpleDateFormat("M/dd h:mm:ss a z");
-				CivMessage.send(player, CivColor.Rose+"Cannot damage control blocks for this camp until "+sdf.format(getNextRaidDate()));
+				CivMessage.send(player, CivColor.Rose+CivSettings.localize.localizedString("camp_protectedUntil")+" "+sdf.format(getNextRaidDate()));
 			}
 			
 		}
@@ -1343,7 +1346,7 @@ public class Camp extends Buildable {
 		Resident owner = this.getOwner();
 		
 		if (!owner.getTreasury().hasEnough(upgrade.cost)) {
-			throw new CivException("The owner does not have the required "+upgrade.cost+" Coins to purchase this upgrade.");
+			throw new CivException(CivSettings.localize.localizedString("var_camp_ownerMissingCost",upgrade.cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		this.upgrades.put(upgrade.id, upgrade);

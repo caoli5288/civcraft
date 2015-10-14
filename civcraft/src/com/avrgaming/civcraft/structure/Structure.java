@@ -57,7 +57,7 @@ public class Structure extends Buildable {
 		// Disallow duplicate structures with the same hash.
 		Structure struct = CivGlobal.getStructure(this.getCorner());
 		if (struct != null) {
-			throw new CivException("There is a structure already here.");
+			throw new CivException(CivSettings.localize.localizedString("structure_alreadyExistsHere"));
 		}
 	}
 	
@@ -93,6 +93,22 @@ public class Structure extends Buildable {
 				struct = (Structure) new Trommel(center, id, town);
 			} else {
 				struct = (Structure) new Trommel(rs);
+			}
+			break;	
+
+		case "ti_quarry":
+			if (rs == null) {
+				struct = (Structure) new Quarry(center, id, town);
+			} else {
+				struct = (Structure) new Quarry(rs);
+			}
+			break;	
+			
+		case "s_mob_grinder":
+			if (rs == null) {
+				struct = (Structure) new MobGrinder(center, id, town);
+			} else {
+				struct = (Structure) new MobGrinder(rs);
 			}
 			break;	
 			
@@ -192,6 +208,14 @@ public class Structure extends Buildable {
 				struct = (Structure) new TownHall(rs);
 			}
 			break;
+		// Just for backwards compatibility with old typos on existing servers:
+		case "s_capital":
+			if (rs == null) {
+				struct = (Structure) new Capitol(center, id, town);
+			} else {
+				struct = (Structure) new Capitol(rs);
+			}
+			break;
 		case "s_capitol":
 			if (rs == null) {
 				struct = (Structure) new Capitol(center, id, town);
@@ -232,6 +256,13 @@ public class Structure extends Buildable {
 				struct = (Structure) new Wall(center, id, town);
 			} else {
 				struct = (Structure) new Wall(rs);
+			}
+			break;
+		case "ti_fortifiedwall":
+			if (rs == null) {
+				struct = (Structure) new FortifiedWall(center, id, town);
+			} else {
+				struct = (Structure) new FortifiedWall(rs);
 			}
 			break;
 		case "ti_road":
@@ -565,7 +596,7 @@ public class Structure extends Buildable {
 	public void processUndo() throws CivException {
 		
 		if (isTownHall()) {
-			throw new CivException("Cannot undo town halls or a capitols, build a new town hall using '/build town hall' or '/build capitol' to move it.");
+			throw new CivException(CivSettings.localize.localizedString("structure_move_notCaporHall"));
 		}
 	
 		try {
@@ -573,14 +604,14 @@ public class Structure extends Buildable {
 			getTown().removeStructure(this);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new CivException("Internal database error.");
+			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
 		}		
 		
-		CivMessage.sendTown(getTown(), CivColor.LightGreen+getDisplayName()+" was unbuilt with the undo command.");
+		CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_structure_undo_success",getDisplayName()));
 				
 		double refund = this.getCost();
 		this.getTown().depositDirect(refund);
-		CivMessage.sendTown(getTown(), "Town refunded "+refund+" Coins.");
+		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("var_structure_undo_refund",this.getTown().getName(),refund,CivSettings.CURRENCY_NAME));
 		
 		this.unbindStructureBlocks();
 	}
@@ -623,25 +654,25 @@ public class Structure extends Buildable {
 		try {
 			repairFromTemplate();
 		} catch (CivException | IOException e) {
-			throw new CivException("Internal template error.");
+			throw new CivException(CivSettings.localize.localizedString("internalIOException"));
 		}
 		save();
 	}
 	
 	public void repairStructure() throws CivException {
 		if (this instanceof TownHall) {
-			throw new CivException("Town halls and capitols cannot be repaired.");
+			throw new CivException(CivSettings.localize.localizedString("structure_repair_notCaporHall"));
 		}
 		
 		double cost = getRepairCost();
 		if (!getTown().getTreasury().hasEnough(cost)) {
-			throw new CivException("Your town cannot not afford the "+cost+" Coins to build a "+getDisplayName());
+			throw new CivException(CivSettings.localize.localizedString("var_structure_repair_tooPoor",getTown().getName(),cost,CivSettings.CURRENCY_NAME,getDisplayName()));
 		}
 		
 		repairStructureForFree();
 		
 		getTown().getTreasury().withdraw(cost);
-		CivMessage.sendTown(getTown(), CivColor.Yellow+"The town has repaired a "+getDisplayName()+" at "+getCorner());
+		CivMessage.sendTown(getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_structure_repair_success",getTown().getName(),getDisplayName(),getCorner()));
 	}
 
 	@Override

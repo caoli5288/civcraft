@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.command.plot;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.command.CommandBase;
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -33,9 +34,9 @@ public class PlotPermCommand extends CommandBase {
 	@Override
 	public void init() {
 		command = "/plot perm";
-		displayName = "Plot Perm";
+		displayName = CivSettings.localize.localizedString("cmd_plot_perm_name");
 		
-		commands.put("set", "Sets a permission flag on or off.");
+		commands.put("set", CivSettings.localize.localizedString("cmd_plot_perm_setDesc"));
 	}
 	
 	public void set_cmd() throws CivException {
@@ -43,12 +44,12 @@ public class PlotPermCommand extends CommandBase {
 		
 		TownChunk tc = CivGlobal.getTownChunk(player.getLocation());
 		if (tc == null) {
-			throw new CivException("Plot is not part of a town.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_perm_setnotInTown"));
 		}
 		
 		if (args.length < 4) {
 			showPermCmdHelp();
-			throw new CivException("Incorrect number of arguments");	
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_perm_setBadArg"));	
 		}
 		
 		PermissionNode node = null;
@@ -70,11 +71,11 @@ public class PlotPermCommand extends CommandBase {
 			break;
 		default:
 			showPermCmdHelp();
-			throw new CivException("Incorrect Command Arguments.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_perm_setBadArg"));
 		}
 		
 		if (node == null) {
-			throw new CivException("Internal error, unknown permission node.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_perm_setInternalError"));
 		}
 		
 		boolean on;
@@ -84,7 +85,7 @@ public class PlotPermCommand extends CommandBase {
 			on = false;
 		} else {
 			showPermCmdHelp();
-			throw new CivException("Incorrect Command Arguments.");
+			throw new CivException(CivSettings.localize.localizedString("cmd_plot_perm_setBadArg"));
 		}
 		
 		switch(args[2].toLowerCase()) {
@@ -100,13 +101,13 @@ public class PlotPermCommand extends CommandBase {
 		
 		tc.save();
 		
-		CivMessage.sendSuccess(sender, "Permission "+node.getType()+" changed to "+on+" for "+args[2]);
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_plot_perm_setSuccess",node.getType(),on,args[2]));
 	}
 	
 	private void showPermCmdHelp() {
-		CivMessage.send(sender, CivColor.LightGray+"/plot perm set <type> <groupType> [on|off] ");
-		CivMessage.send(sender, CivColor.LightGray+"    types: [build|destroy|interact|itemuse|reset]");
-		CivMessage.send(sender, CivColor.LightGray+"    groupType: [owner|group|others]");
+		CivMessage.send(sender, CivColor.LightGray+CivSettings.localize.localizedString("cmd_plot_perm_help1"));
+		CivMessage.send(sender, CivColor.LightGray+"    "+CivSettings.localize.localizedString("cmd_plot_perm_help2"));
+		CivMessage.send(sender, CivColor.LightGray+"    "+CivSettings.localize.localizedString("cmd_plot_perm_help3"));
 	}
 
 	@Override

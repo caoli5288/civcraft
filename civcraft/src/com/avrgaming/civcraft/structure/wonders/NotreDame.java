@@ -23,6 +23,7 @@ import java.sql.SQLException;
 
 import org.bukkit.Location;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -74,7 +75,7 @@ public class NotreDame extends Wonder {
 
 	public void processPeaceTownCoins() {
 		double totalCoins = 0;
-		
+		int peacefulTowns = 0;
 		double coinsPerTown = this.getTown().getBuffManager().getEffectiveInt("buff_notre_dame_coins_from_peace");
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
@@ -85,12 +86,12 @@ public class NotreDame extends Wonder {
 			if (civ.getDiplomacyManager().isAtWar()) {
 				continue;
 			}
-			
+			peacefulTowns++;
 			totalCoins += (coinsPerTown*civ.getTowns().size());
 		}
 		
 		this.getTown().depositTaxed(totalCoins);
-		CivMessage.sendTown(this.getTown(), "Generated "+totalCoins+" Coins from the peaceful towns of the world!");	
+		CivMessage.sendTown(this.getTown(), CivSettings.localize.localizedString("var_NotreDame_generatedCoins",totalCoins,CivSettings.CURRENCY_NAME,peacefulTowns));	
 		
 	}
 

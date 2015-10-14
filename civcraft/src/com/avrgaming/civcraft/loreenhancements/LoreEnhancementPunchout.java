@@ -6,13 +6,14 @@ import java.util.Random;
 
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.object.BuildableDamageBlock;
 import com.avrgaming.civcraft.util.CivColor;
 
 public class LoreEnhancementPunchout extends LoreEnhancement {
 	
 	public String getDisplayName() {
-		return "Punchout";
+		return CivSettings.localize.localizedString("itemLore_Punchout");
 	}
 	
 	public AttributeUtil add(AttributeUtil attrs) {

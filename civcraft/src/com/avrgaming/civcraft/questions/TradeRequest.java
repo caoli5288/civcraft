@@ -1,5 +1,6 @@
 package com.avrgaming.civcraft.questions;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.trade.TradeInventoryListener;
@@ -36,7 +37,7 @@ public class TradeRequest implements QuestionResponseInterface {
 			otherPair.otherResident = pair.resident;
 			TradeInventoryListener.tradeInventories.put(TradeInventoryListener.getTradeInventoryKey(resident), otherPair);
 		} else {
-			CivMessage.send(trader, CivColor.LightGray+resident.getName()+" denied our trade invitation.");
+			CivMessage.send(trader, CivColor.LightGray+CivSettings.localize.localizedString("var_trade_declined",resident.getName()));
 		}
 	}
 

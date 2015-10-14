@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.questions;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -36,7 +37,7 @@ public class ChangeRelationResponse implements QuestionResponseInterface {
 		if (param.equalsIgnoreCase("accept")) {
 			CivGlobal.setRelation(fromCiv, toCiv, status);
 		} else {
-			CivMessage.sendCiv(fromCiv, CivColor.LightGray+toCiv.getName()+" declined our offer.");
+			CivMessage.sendCiv(fromCiv, CivColor.LightGray+CivSettings.localize.localizedString("var_RequestDecline",toCiv.getName()));
 		}
 	}
 	@Override

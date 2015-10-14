@@ -1,5 +1,6 @@
 package com.avrgaming.civcraft.questions;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Resident;
@@ -17,10 +18,10 @@ public class TownNewRequest implements QuestionResponseInterface {
 	@Override
 	public void processResponse(String param) {
 		if (param.equalsIgnoreCase("accept")) {
-			CivMessage.send(civ, CivColor.LightGreen+"Our Civilization leader "+leader.getName()+" has accepted the request to found the town of "+name);
+			CivMessage.send(civ, CivColor.LightGreen+CivSettings.localize.localizedString("newTown_accepted1",leader.getName(),name));
 			TaskMaster.syncTask(new FoundTownSync(resident));
 		} else {
-			CivMessage.send(resident, CivColor.LightGray+"Our request to found a town has been denied.");
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("var_newTown_declined",leader.getName()));
 		}		
 	}
 

@@ -35,7 +35,7 @@ generation:
 #    chunks_z: 100
     
     # Random seed for trade good locations
-    seed: 1337331
+    seed: 2520150148
 
 # Hemispheres, valid ranges that trade goods can spawn in.
 # The the minecraft world...
@@ -138,7 +138,6 @@ land_goods:
       buffs: 'buff_advanced_tooling, buff_extraction, buff_fire_bomb'
       material: 351 # ink sack
       material_data: 0
-      hemispheres: 'hemi_north'
 
     - id: 'good_papyrus'
       name: Papyrus
@@ -160,7 +159,6 @@ land_goods:
       buffs: 'buff_espionage, buff_sabotage, buff_dirty_money'
       material: 106 # vines
       material_data: 0
-      hemispheres: 'hemi_northeast'
 
     - id: 'good_ivory'
       name: Ivory
@@ -189,7 +187,6 @@ land_goods:
       buffs: 'buff_espionage, buff_sabotage, buff_dirty_money'
       material: 31 # tall grass
       material_data: 0
-      hemispheres: 'hemi_southwest'
 
     - id: 'good_guarana'
       name: Guarana
@@ -197,7 +194,6 @@ land_goods:
       buffs: 'buff_extraction, buff_rush, buff_medicine'
       material: 351 # ink sack
       material_data: 1 # red
-      hemispheres: 'hemi_equator'
 
     - id: 'good_grapes'
       name: Grapes
@@ -212,7 +208,6 @@ land_goods:
       buffs: 'buff_barter, buff_greed, buff_monopoly'
       material: 388 # emerald
       material_data: 0
-      hemispheres: 'hemi_southeast'
     
     - id: 'good_olives'
       name: Olives
@@ -263,7 +258,6 @@ land_goods:
       buffs: 'buff_fine_art, buff_greed, buff_monopoly'
       material: 338 # sugar canes
       material_data: 0
-      hemispheres: 'hemi_south'
 
     - id: 'good_spice'
       name: Spice
@@ -300,7 +294,6 @@ water_goods:
       buffs: 'buff_monopoly, buff_greed'
       material: 332 # Snow ball
       material_data: 0
-      hemispheres: 'hemi_north'
     
     - id: 'good_whale'
       name: Whale
@@ -308,7 +301,6 @@ water_goods:
       buffs: 'buff_innovation, buff_advanced_tooling, buff_fine_art, buff_extraction'
       material: 345 # compass
       material_data: 0
-      hemispheres: 'hemi_south'
 
     - id: 'good_shrimp'
       name: Shrimp

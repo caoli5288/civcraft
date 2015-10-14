@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.interactive.InteractiveCustomTemplateConfirm;
 import com.avrgaming.civcraft.main.CivGlobal;
@@ -31,12 +32,12 @@ public class CustomTemplate extends PerkComponent {
 		
 		Town town = resident.getTown();
 		if (town == null) {
-			CivMessage.sendError(player, "This template but be bound to a town and you're not currently in one!");
+			CivMessage.sendError(player, CivSettings.localize.localizedString("customTemplate_noTown"));
 			return;
 		}
 		
 		if (hasTownTemplate(town)) {
-			CivMessage.sendError(player, CivColor.Rose+"Cannot bind this template, the town already has this template.");
+			CivMessage.sendError(player, CivColor.Rose+CivSettings.localize.localizedString("customTemplatE_alreadyBound"));
 			return;
 		}
 		

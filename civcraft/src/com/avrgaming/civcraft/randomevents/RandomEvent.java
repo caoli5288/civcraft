@@ -266,7 +266,7 @@ public class RandomEvent extends SQLObject {
 				comp.process();
 			} else {
 				requireActivation = true;
-				CivMessage.sendTown(this.town, CivColor.Yellow+"This event requires activation! use '/town event activate' to activate it.");
+				CivMessage.sendTown(this.town, CivColor.Yellow+CivSettings.localize.localizedString("re_activationRequired"));
 			}
 		}
 		
@@ -455,7 +455,7 @@ public class RandomEvent extends SQLObject {
 	
 	public void activate() throws CivException {
 		if (this.active) {
-			throw new CivException("Event is already active!");
+			throw new CivException(CivSettings.localize.localizedString("re_alreadyActive"));
 		}
 		
 		this.active = true;

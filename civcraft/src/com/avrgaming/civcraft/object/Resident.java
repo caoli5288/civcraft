@@ -43,9 +43,12 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+//import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+//import org.bukkit.potion.PotionEffect;
+//import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
@@ -89,7 +92,6 @@ import com.avrgaming.civcraft.util.PlayerBlockChangeUtil;
 import com.avrgaming.civcraft.util.SimpleBlock;
 import com.avrgaming.global.perks.NotVerifiedException;
 import com.avrgaming.global.perks.Perk;
-import com.avrgaming.global.perks.PlatinumManager;
 import com.avrgaming.global.perks.components.CustomPersonalTemplate;
 import com.avrgaming.global.perks.components.CustomTemplate;
 
@@ -172,7 +174,7 @@ public class Resident extends SQLObject {
 	private Date lastKilledTime = null;
 	private String lastIP = "";
 	private UUID uid;
-	
+//	private boolean onWater = false;
 	private boolean onRoad = false;
 	public String debugTown;
 	
@@ -538,8 +540,8 @@ public class Resident extends SQLObject {
 		Player player;
 		try {
 			player = CivGlobal.getPlayer(this);
-			CivMessage.send(player, CivColor.Yellow+"You are in "+this.getTreasury().getDebt()+" Coins of debt!");
-			CivMessage.send(player, CivColor.LightGray+"If you do not pay your debt within "+this.daysTilEvict+" days you will be evicted from town.");
+			CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_resident_debtmsg",this.getTreasury().getDebt(),CivSettings.CURRENCY_NAME));
+			CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("var_resident_debtEvictAlert1",this.daysTilEvict));
 		} catch (CivException e) {
 			//Player is not online.
 		}
@@ -559,7 +561,7 @@ public class Resident extends SQLObject {
 			this.getTown().removeResident(this);
 
 			try {
-				CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+"You have been evicted from town!");
+				CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+CivSettings.localize.localizedString("resident_evictedAlert"));
 			} catch (CivException e) {
 				// Resident not online.
 			}
@@ -681,8 +683,7 @@ public class Resident extends SQLObject {
 
 	public void warnEvict() {
 		try {
-			CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+"You are being evicted from town! You have "+
-					this.getDaysTilEvict()+" days left to pack your stuff and leave.");
+			CivMessage.send(CivGlobal.getPlayer(this), CivColor.Yellow+CivSettings.localize.localizedString("var_resident_evictionNotice1",this.getDaysTilEvict()));
 		} catch (CivException e) {
 			//player offline.
 		}
@@ -756,6 +757,7 @@ public class Resident extends SQLObject {
 		player.updateInventory();
 		return count;
 	}
+	
 	
 	@SuppressWarnings("deprecation")
 	public boolean takeItemInHand(int itemId, int itemData, int amount) throws CivException {
@@ -840,7 +842,7 @@ public class Resident extends SQLObject {
 	public boolean buyItem(String itemName, int id, byte data, double price, int amount) throws CivException {
 		
 		if (!this.getTreasury().hasEnough(price)) {
-			throw new CivException("Not enough Coins.");
+			throw new CivException(CivSettings.localize.localizedString("resident_notEnoughMoney")+" "+CivSettings.CURRENCY_NAME);
 		}
 		
 		boolean completed = true;
@@ -858,7 +860,7 @@ public class Resident extends SQLObject {
 			return true;
 		}
 		else {
-			throw new CivException("Inventory full.");
+			throw new CivException(CivSettings.localize.localizedString("resident_buyInvenFull"));
 		}
 	}
 
@@ -869,6 +871,7 @@ public class Resident extends SQLObject {
 		return this.getTown().getCiv();
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setScoreboardName(String name, String key) {
 		if (this.scoreboard == null) {
 			this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
@@ -988,13 +991,13 @@ public class Resident extends SQLObject {
 		if (this.getTown() != null) {
 			for (Buildable struct : this.getTown().invalidStructures) {
 				CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+
-						"WARNING: Your town's "+struct.getDisplayName()+" at "+struct.getCenterLocation()+
-						" is invalid! Reason:"+struct.getInvalidReason());
+						CivSettings.localize.localizedString("var_resident_structInvalidAlert1",struct.getDisplayName(),struct.getCenterLocation())+
+						" "+CivSettings.localize.localizedString("resident_structInvalidAlert2")+" "+struct.getInvalidReason());
 			}
 			
 			/* Show any event messages. */
 			if (this.getTown().getActiveEvent() != null) {
-				CivMessage.send(player, CivColor.Yellow+"The is a "+this.getTown().getActiveEvent().configRandomEvent.name+" going on in your town! Use /town event for details.");
+				CivMessage.send(player, CivColor.Yellow+CivSettings.localize.localizedString("var_resident_eventNotice1",this.getTown().getActiveEvent().configRandomEvent.name));
 			}
 		}
 		
@@ -1109,7 +1112,7 @@ public class Resident extends SQLObject {
 	public void setPerformingMission(boolean performingMission) {
 		this.performingMission = performingMission;
 	}
-
+	
 	public void onRoadTest(BlockCoord coord, Player player) {
 		/* Test the block beneath us for a road, if so, set the road flag. */
 		BlockCoord feet = new BlockCoord(coord);
@@ -1152,6 +1155,27 @@ public class Resident extends SQLObject {
 			Perk perk = new Perk(p);
 			
 			if (perk.getIdent().startsWith("tpl_arctic") || perk.getIdent().startsWith("template_arctic"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+	}
+	
+	public void giveAllAtlanteanPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_atlantean") || perk.getIdent().startsWith("template_atlantean"))
 			{
 				perk.count = perkCount;
 				this.perks.put(perk.getIdent(), perk);
@@ -1215,6 +1239,27 @@ public class Resident extends SQLObject {
 			Perk perk = new Perk(p);
 			
 			if (perk.getIdent().startsWith("tpl_roman") || perk.getIdent().startsWith("template_roman"))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+	}
+	
+	public void giveAllNightLightsPerks() {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith("prem_tpl_nightlights") || perk.getIdent().startsWith("template_nightlights"))
 			{
 				perk.count = perkCount;
 				this.perks.put(perk.getIdent(), perk);
@@ -1308,10 +1353,10 @@ public class Resident extends SQLObject {
 		
 	}
 	
-	public void loadPerks() {
-		if (!PlatinumManager.isEnabled()) {
-			return;
-		}
+	public void loadPerks(final Player player) {
+//		if (!PlatinumManager.isEnabled()) {
+//			return;
+//		}
 		
 		class AsyncTask implements Runnable {
 			Resident resident;
@@ -1328,31 +1373,87 @@ public class Resident extends SQLObject {
 					try {
 						CivGlobal.perkManager.loadPerksForResident(resident);
 					} catch (SQLException e) {
-						CivMessage.sendError(player, "Unable to load perks from perk database. Contact an admin.");
+						CivMessage.sendError(player, CivSettings.localize.localizedString("resident_couldnotloadperks"));
 						e.printStackTrace();
 						return;
 					} catch (NotVerifiedException e) {
-						String url;
-						try {
-							url = CivSettings.getString(CivSettings.perkConfig, "system.register_url");
-						} catch (InvalidConfiguration e1) {
-							e1.printStackTrace();
-							return;
-						}
-						
-						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"Hey! You're in-game account is not registered! Register it at "+url);
-						CivMessage.send(player, CivColor.Yellow+CivColor.BOLD+"You'll be unable to earn Platinum until you register.");	
 						return;
 					}	
 				} catch (CivException e1) {
 					return;
 				}
+				try {
+
+					String perkMessage = "";
+					if (CivSettings.getString(CivSettings.perkConfig, "system.free_perks").equalsIgnoreCase("true")) {
+						resident.giveAllFreePerks();
+						perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+" ";
+					} else if (CivSettings.getString(CivSettings.perkConfig, "system.free_admin_perks").equalsIgnoreCase("true")) {
+						if (player.hasPermission(CivSettings.MINI_ADMIN) || player.hasPermission(CivSettings.FREE_PERKS)) {
+							resident.giveAllFreePerks();
+							perkMessage = CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg1")+": ";
+							perkMessage += "Weather"+", ";
+						}
+					}
+					if (player.hasPermission(CivSettings.ARCTIC_PERKS))
+					{
+						resident.giveAllArcticPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Arctic")+", ";
+					}
+					if (player.hasPermission(CivSettings.ATLANTEAN_PERKS))
+					{
+						resident.giveAllAtlanteanPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Atlantean")+", ";
+					}
+					if (player.hasPermission(CivSettings.AZTEC_PERKS))
+					{
+						resident.giveAllAztecPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Aztec")+", ";
+					}
+					if (player.hasPermission(CivSettings.CULTIST_PERKS))
+					{
+						resident.giveAllCultistPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Cultist")+", ";
+					}
+					if (player.hasPermission(CivSettings.EGYPTIAN_PERKS))
+					{
+						resident.giveAllEgyptianPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Egyptian")+", ";
+					}
+					if (player.hasPermission(CivSettings.ELVEN_PERKS))
+					{
+						resident.giveAllElvenPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Elven")+", ";
+					}
+					if (player.hasPermission(CivSettings.HELL_PERKS))
+					{
+						resident.giveAllHellPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Hell")+", ";
+					}
+					if (player.hasPermission(CivSettings.ROMAN_PERKS))
+					{
+						resident.giveAllRomanPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
+					}
+
+					if (player.hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
+					{
+						resident.giveAllNightLightsPerks();
+						perkMessage += "Night Lights"+", ";
+					}
+
+					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");
+					
+					CivMessage.send(resident, CivColor.LightGreen+perkMessage);
+				} catch (InvalidConfiguration e) {
+					e.printStackTrace();
+				}
 				
 				/* User was verified, lets see if it was the first time. */
-				PlatinumManager.givePlatinumOnce(resident,
-				CivSettings.platinumRewards.get("loginFirstVerified").name, 
-				CivSettings.platinumRewards.get("loginFirstVerified").amount, 
-				"Achievement! First time you've logged in while verified! %d");
+//				PlatinumManager.givePlatinumOnce(resident,
+//				CivSettings.platinumRewards.get("loginFirstVerified").name, 
+//				CivSettings.platinumRewards.get("loginFirstVerified").amount, 
+//				"Achievement! First time you've logged in while verified! %d");
 			}
 		}
 		
@@ -1412,7 +1513,7 @@ public class Resident extends SQLObject {
 				return;
 			}
 			
-			throw new CivException("Cannot invite a player who has left a different civilization within "+cooldownHours+" hours after leaving.");
+			throw new CivException(CivSettings.localize.localizedString("var_resident_cannotJoinCivJustLeft1",cooldownHours));
 		}	
 	}
 	
@@ -1513,7 +1614,7 @@ public class Resident extends SQLObject {
 		try {
 			Player player = CivGlobal.getPlayer(this);
 			if (player.isDead()) {
-				throw new CivException("Cannot trade with dead players.");
+				throw new CivException(CivSettings.localize.localizedString("resident_tradeErrorPlayerDead"));
 			}
 			Inventory inv = Bukkit.createInventory(player, 9*5, this.getName()+" : "+resident.getName());
 			
@@ -1528,13 +1629,13 @@ public class Resident extends SQLObject {
 				if ((i-start) == 8) {
 					ItemStack guiStack = LoreGuiItem.build(resident.getName()+" Confirm", 
 							CivData.WOOL, CivData.DATA_WOOL_RED, 
-							CivColor.LightGreen+"Waiting for "+CivColor.LightBlue+resident.getName(),
-							CivColor.LightGray+"to confirm this trade.");
+							CivColor.LightGreen+CivSettings.localize.localizedString("var_resident_tradeWait1",CivColor.LightBlue+resident.getName()),
+							CivColor.LightGray+" "+CivSettings.localize.localizedString("resident_tradeWait2"));
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("resident_tradeOffered"), 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else {
 					inv.setItem(i, signStack);
@@ -1544,27 +1645,27 @@ public class Resident extends SQLObject {
 			start = 4*9;
 			for (int i = start; i < (9 + start); i++) {
 				if ((i-start) == 8) {					
-					ItemStack guiStack = LoreGuiItem.build("Your Confirm", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.localize.localizedString("resident_tradeYourConfirm"), 
 							CivData.WOOL, CivData.DATA_WOOL_RED, 
-							CivColor.Gold+"<Click to Confirm Trade>");
+							CivColor.Gold+CivSettings.localize.localizedString("resident_tradeClicktoConfirm"));
 					inv.setItem(i, guiStack);
 					
 				} else if ((i-start) == 0){ 
-					ItemStack guiStack = LoreGuiItem.build("Remove Coins", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.localize.localizedString("resident_tradeRemove")+" "+CivSettings.CURRENCY_NAME, 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Gold+"Click to Remove 100 Coins.",
-							CivColor.Gold+"Shift-Click to Remove 1000 Coins.");
+							CivColor.Gold+CivSettings.localize.localizedString("resident_tradeRemove100")+" "+CivSettings.CURRENCY_NAME,
+							CivColor.Gold+CivSettings.localize.localizedString("resident_tradeRemove1000")+" "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 1) {
-					ItemStack guiStack = LoreGuiItem.build("Add Coins", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.localize.localizedString("resident_tradeAdd")+" "+CivSettings.CURRENCY_NAME, 
 							ItemManager.getId(Material.GOLD_INGOT), 0, 
-							CivColor.Gold+"Click to Add 100 Coins.",
-							CivColor.Gold+"Shift-Click to Add 1000 Coins.");
+							CivColor.Gold+CivSettings.localize.localizedString("resident_tradeAdd100")+" "+CivSettings.CURRENCY_NAME,
+							CivColor.Gold+CivSettings.localize.localizedString("resident_tradeAdd1000")+" "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				} else if ((i-start) == 7) {
-					ItemStack guiStack = LoreGuiItem.build("Coins Offered", 
+					ItemStack guiStack = LoreGuiItem.build(CivSettings.CURRENCY_NAME+" "+CivSettings.localize.localizedString("resident_tradeOffered"), 
 							ItemManager.getId(Material.NETHER_BRICK_ITEM), 0, 
-							CivColor.Yellow+"0 Coins");
+							CivColor.Yellow+"0 "+CivSettings.CURRENCY_NAME);
 					inv.setItem(i, guiStack);
 				}
 				else {
@@ -1590,8 +1691,8 @@ public class Resident extends SQLObject {
 			}
 
 			
-			CivMessage.sendError(this, "Couldn't trade: "+e.getMessage());
-			CivMessage.sendError(resident, "Couldn't trade: "+e.getMessage());
+			CivMessage.sendError(this, CivSettings.localize.localizedString("resident_tradeCouldNotTrade")+" "+e.getMessage());
+			CivMessage.sendError(resident, CivSettings.localize.localizedString("resident_tradeCouldNotTrade")+" "+e.getMessage());
 			return null;
 		}
 				
@@ -1654,13 +1755,13 @@ public class Resident extends SQLObject {
 	public void toggleItemMode() {
 		if (this.itemMode.equals("all")) {
 			this.itemMode = "rare";
-			CivMessage.send(this, CivColor.LightGreen+"Only displaying rare item drops.");
+			CivMessage.send(this, CivColor.LightGreen+CivSettings.localize.localizedString("resident_toggleItemRare"));
 		} else if (this.itemMode.equals("rare")) {
 			this.itemMode = "none";
-			CivMessage.send(this, CivColor.LightGreen+"No no longer displaying item drops.");
+			CivMessage.send(this, CivColor.LightGreen+CivSettings.localize.localizedString("resident_toggleItemNone"));
 		} else {
 			this.itemMode = "all";
-			CivMessage.send(this, CivColor.LightGreen+"Displaying all item drops.");
+			CivMessage.send(this, CivColor.LightGreen+CivSettings.localize.localizedString("resident_toggleItemAll"));
 		}
 		this.save();
 	}
@@ -1840,16 +1941,17 @@ public class Resident extends SQLObject {
 			return;
 		}
 		
-		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, "Perks");
+		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, CivSettings.localize.localizedString("resident_perksGuiHeading"));
 		
 		for (Object obj : perks.values()) {
 			Perk p = (Perk)obj;
+
 			if (p.getIdent().startsWith("temp"))
 			{
 				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
 						p.configPerk.type_id, 
-						p.configPerk.data, CivColor.LightBlue+"Click To View",
-						CivColor.LightBlue+"These Templates");
+						p.configPerk.data, CivColor.LightBlue+CivSettings.localize.localizedString("resident_perksGuiClickToView"),
+						CivColor.LightBlue+CivSettings.localize.localizedString("resident_perksGuiTheseTemplates"));
 				stack = LoreGuiItem.setAction(stack, "ShowTemplateType");
 				stack = LoreGuiItem.setActionData(stack, "perk", p.configPerk.id);
 
@@ -1857,10 +1959,10 @@ public class Resident extends SQLObject {
 			}
 			else if (p.getIdent().startsWith("perk"))
 			{
-				ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
+				ItemStack stack = LoreGuiItem.build(p.getDisplayName(), 
 						p.configPerk.type_id, 
-						p.configPerk.data, CivColor.Gold+"<Click To Activate>",
-						CivColor.LightBlue+"Count: "+p.count);
+						p.configPerk.data, CivColor.Gold+CivSettings.localize.localizedString("resident_perksGui_clickToActivate"),
+						"Unlimted Uses");
 				stack = LoreGuiItem.setAction(stack, "ActivatePerk");
 				stack = LoreGuiItem.setActionData(stack, "perk", p.configPerk.id);
 
@@ -1881,7 +1983,7 @@ public class Resident extends SQLObject {
 			return;
 		}
 		
-		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, "Templates for "+name);
+		Inventory inv = Bukkit.getServer().createInventory(player, CivTutorial.MAX_CHEST_SIZE*9, CivSettings.localize.localizedString("resident_perksGui_templatesHeading")+" "+name);
 		
 		for (Object obj : perks.values()) {
 			Perk p = (Perk)obj;
@@ -1889,7 +1991,7 @@ public class Resident extends SQLObject {
 			{
 			ItemStack stack = LoreGuiItem.build(p.configPerk.display_name, 
 					p.configPerk.type_id, 
-					p.configPerk.data, CivColor.Gold+"<Click To Activate>",
+					p.configPerk.data, CivColor.Gold+CivSettings.localize.localizedString("resident_perksGui_clickToActivate"),
 					CivColor.LightBlue+"Count: "+p.count);
 			stack = LoreGuiItem.setAction(stack, "ActivatePerk");
 			stack = LoreGuiItem.setActionData(stack, "perk", p.configPerk.id);

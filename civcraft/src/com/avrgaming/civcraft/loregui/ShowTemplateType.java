@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
@@ -22,6 +23,10 @@ public class ShowTemplateType implements GuiAction {
 			if (perk.getIdent().startsWith("template_arctic"))
 			{
 				resident.showTemplatePerks("arctic");
+			}
+			else if (perk.getIdent().startsWith("template_atlantean"))
+			{
+				resident.showTemplatePerks("atlantean");
 			}
 			else if (perk.getIdent().startsWith("template_aztec"))
 			{
@@ -48,7 +53,7 @@ public class ShowTemplateType implements GuiAction {
 				resident.showTemplatePerks("hell");
 			}
 		} else {
-			CivLog.error("Couldn't activate perk:"+perk_id+" cause it wasn't found in perks hashmap.");
+			CivLog.error(perk_id+" "+CivSettings.localize.localizedString("loreGui_perkActivationFailed"));
 		}
 	}
 

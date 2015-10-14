@@ -27,6 +27,7 @@ import org.bukkit.entity.Entity;
 import com.avrgaming.civcraft.cache.CannonExplosionProjectile;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
+import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -127,6 +128,10 @@ public class ProjectileCannonComponent extends ProjectileComponent {
 			setDamage(CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.damage"));
 			speed = CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.speed");
 			range = CivSettings.getDouble(CivSettings.warConfig, "cannon_tower.range");
+			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range"))
+			{
+				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_tower_range");
+			}
 			min_range = CivSettings.getDouble(CivSettings.warConfig, "cannon_tower.min_range");
 			splash = CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.splash");
 			fireRate = CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.fire_rate");
@@ -148,6 +153,9 @@ public class ProjectileCannonComponent extends ProjectileComponent {
 		this.halfSecondCount = halfSecondCount;
 	}
 
+	public Town getTown() {
+		return buildable.getTown();
+	}
 	
 	
 }

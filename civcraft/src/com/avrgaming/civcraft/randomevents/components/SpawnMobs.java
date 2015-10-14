@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.randomevents.RandomEventComponent;
 import com.avrgaming.civcraft.threading.TaskMaster;
@@ -45,8 +46,7 @@ public class SpawnMobs extends RandomEventComponent {
 					Bukkit.getServer().getWorld(tc.getChunkCoord().getWorldname()).spawnEntity(loc, type);
 				}
 				
-				sendMessage(amount+" "+type.toString()+" have spawned in the vincitiy of "+
-					(tc.getChunkCoord().getX()*16)+",64,"+(tc.getChunkCoord().getZ()*16));
+				sendMessage(CivSettings.localize.localizedString("var_re_spawnMobs",amount,type.toString(),(tc.getChunkCoord().getX()*16)+",64,"+(tc.getChunkCoord().getZ()*16)));
 			}
 		}
 

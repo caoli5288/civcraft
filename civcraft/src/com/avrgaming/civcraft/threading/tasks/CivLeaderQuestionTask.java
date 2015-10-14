@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.threading.tasks;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
@@ -38,9 +39,9 @@ public class CivLeaderQuestionTask extends QuestionBaseTask implements Runnable 
 	public void run() {	
 		
 		for (Resident resident : askedCivilization.getLeaderGroup().getMemberList()) {
-			CivMessage.send(resident, CivColor.LightGray+"Question from: "+CivColor.LightBlue+questionPlayer.getName());
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_prompt1")+" "+CivColor.LightBlue+questionPlayer.getName());
 			CivMessage.send(resident, CivColor.LightPurple+CivColor.BOLD+question);
-			CivMessage.send(resident, CivColor.LightGray+"Respond by typing "+CivColor.LightBlue+"/accept"+CivColor.LightGray+" or "+CivColor.LightBlue+"/deny");
+			CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_prompt2"));
 		}
 		
 		try {
@@ -48,7 +49,7 @@ public class CivLeaderQuestionTask extends QuestionBaseTask implements Runnable 
 				this.wait(timeout);
 			}
 		} catch (InterruptedException e) {
-			CivMessage.send(questionPlayer, CivColor.LightGray+"Task interrupted before a response could be given.");
+			CivMessage.send(questionPlayer, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_interrupted"));
 			cleanup();
 			return;
 		}
@@ -59,7 +60,7 @@ public class CivLeaderQuestionTask extends QuestionBaseTask implements Runnable 
 			return;
 		}
 		
-		CivMessage.send(questionPlayer, CivColor.LightGray+"No Response from civilization leaders");
+		CivMessage.send(questionPlayer, CivColor.LightGray+CivSettings.localize.localizedString("civleaderQtast_noResponse"));
 		cleanup();
 	}
 

@@ -19,7 +19,6 @@
 package com.avrgaming.civcraft.threading.timers;
 
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Map.Entry;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -34,12 +33,12 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.NotreDame;
+import com.avrgaming.civcraft.structure.wonders.TheColossus;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.structure.wonders.Colosseum;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.CivColor;
-import com.avrgaming.global.perks.PlatinumManager;
 
 public class DailyTimer implements Runnable {
 
@@ -93,32 +92,36 @@ public class DailyTimer implements Runnable {
 	}
 	
 	private void payCivUpkeep() {
-		Wonder colossus = CivGlobal.getWonderByConfigId("w_colossus");
-		if (colossus != null) {
-			try { 
-				colossus.processCoinsFromCulture();
-			} catch (Exception e) {
-				e.printStackTrace();
+		
+		for (Wonder wonder : CivGlobal.getWonders())
+		{
+			if (wonder != null)
+			{
+				if (wonder.getConfigId().equals("w_colossus")) {
+					try { 
+						((TheColossus)wonder).processCoinsFromCulture();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if (wonder.getConfigId().equals("w_notre_dame")) {
+					try {
+						((NotreDame)wonder).processPeaceTownCoins();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+				else if (wonder.getConfigId().equals("w_colosseum")) {
+					try {
+						((Colosseum)wonder).processCoinsFromColosseum();
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		
-		Wonder notredame = CivGlobal.getWonderByConfigId("w_notre_dame");
-		if (notredame != null) {
-			try {
-				((NotreDame)notredame).processPeaceTownCoins();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
-		Wonder colosseum = CivGlobal.getWonderByConfigId("w_colosseum");
-		if (colosseum != null) {
-			try {
-				((Colosseum)colosseum).processCoinsFromColosseum();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		
 		for (Civilization civ : CivGlobal.getCivs()) {
 			if (civ.isAdminCiv()) {
@@ -132,7 +135,7 @@ public class DailyTimer implements Runnable {
 				if (civ.getTreasury().inDebt()) {
 					civ.incrementDaysInDebt();
 				}
-				CivMessage.sendCiv(civ, CivColor.Yellow+"Paid "+total+" Coins in civ upkeep costs.");
+				CivMessage.sendCiv(civ, CivColor.Yellow+CivSettings.localize.localizedString("var_daily_civUpkeep",total,CivSettings.CURRENCY_NAME));
 				civ.save();
 			}
 			catch (Exception e) {
@@ -151,7 +154,8 @@ public class DailyTimer implements Runnable {
 				}
 				
 				t.save();
-				CivMessage.sendTown(t, "Paid "+total+" Coins in upkeep costs.");
+				CivMessage.sendTown(t, CivColor.Yellow+CivSettings.localize.localizedString("var_daily_townUpkeep",total,CivSettings.CURRENCY_NAME));
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -177,7 +181,7 @@ public class DailyTimer implements Runnable {
 					
 					double taxesToCiv = total*taxrate;
 					townTotal -= taxesToCiv;
-					CivMessage.sendTown(t, "Collected "+townTotal+" Coins in resident taxes."); 
+					CivMessage.sendTown(t, CivSettings.localize.localizedString("var_daily_residentTaxes",townTotal,CivSettings.CURRENCY_NAME)); 
 					t.depositTaxed(townTotal);	
 					
 					if (t.getDepositCiv().getId() == civ.getId()) {
@@ -197,7 +201,7 @@ public class DailyTimer implements Runnable {
 			
 			
 			//TODO make a better messaging system...
-			CivMessage.sendCiv(civ, "Collected "+total+" town taxes.");
+			CivMessage.sendCiv(civ, CivSettings.localize.localizedString("var_daily_townTaxes",total,CivSettings.CURRENCY_NAME));
 		}
 	
 	}
@@ -205,7 +209,6 @@ public class DailyTimer implements Runnable {
 	private void decrementResidentGraceCounters() {
 		
 		//TODO convert this from a countdown into a "days in debt" like civs have.
-		LinkedList<Resident> residentsToGive = new LinkedList<Resident>();
 		for (Resident resident : CivGlobal.getResidents()) {
 			if (!resident.hasTown()) {
 				continue;
@@ -215,19 +218,11 @@ public class DailyTimer implements Runnable {
 				if (resident.getDaysTilEvict() > 0) {
 					resident.decrementGraceCounters();
 				}
-				
-				
-				residentsToGive.add(resident);
-				
+								
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-		
-		PlatinumManager.giveManyPlatinumDaily(residentsToGive, 
-				CivSettings.platinumRewards.get("inTownDuringUpkeep").name,
-				CivSettings.platinumRewards.get("inTownDuringUpkeep").amount,
-				"Town taxes were collected, but its not all bad. You've earned %d!");
 		
 	}
 
