@@ -33,11 +33,13 @@ import com.avrgaming.civcraft.object.LibraryEnchantment;
 import com.avrgaming.civcraft.object.StoreMaterial;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.structure.Bank;
+import com.avrgaming.civcraft.structure.FishHatchery;
 import com.avrgaming.civcraft.structure.Grocer;
 import com.avrgaming.civcraft.structure.Library;
 import com.avrgaming.civcraft.structure.Quarry;
 import com.avrgaming.civcraft.structure.Store;
 import com.avrgaming.civcraft.structure.Structure;
+import com.avrgaming.civcraft.structure.TradeShip;
 import com.avrgaming.civcraft.structure.Trommel;
 
 public class ConfigTownUpgrade {
@@ -157,6 +159,52 @@ public class ConfigTownUpgrade {
 				library.addEnchant(enchant);
 				library.updateSignText();
 				CivMessage.sendTown(town, CivSettings.localize.localizedString("var_townupgrade_enchantment",args[1].trim()+" "+args[2]));
+			}
+			break;
+		case "set_fish_hatchery_level":
+			boolean didUpgradeFishery = false;
+			int fisheryLevel = 1;
+			for (Structure structure : town.getStructures()) {
+				if (structure.getConfigId().equalsIgnoreCase("ti_fish_hatchery")) {
+
+					if (structure != null && (structure instanceof FishHatchery)) {
+						FishHatchery fishery = (FishHatchery)structure;
+						if (fishery.getLevel() < Integer.valueOf(args[1].trim())) {
+							didUpgradeFishery = true;
+							fishery.setLevel(Integer.valueOf(args[1].trim()));
+							fishery.updateSignText();
+							town.saved_fish_hatchery_level = fishery.getLevel();
+							fisheryLevel = fishery.getLevel();
+						}
+					}
+				}
+			}
+			if (didUpgradeFishery)
+			{
+				CivMessage.sendTown(town, CivSettings.localize.localizedString("var_townupgrade_fish_hatchery",fisheryLevel));
+			}
+			break;
+		case "set_tradeship_upgrade_level":
+			boolean didUpgradeTradeShip = false;
+			int tradeshipLevel = 1;
+			for (Structure structure : town.getStructures()) {
+				if (structure.getConfigId().equalsIgnoreCase("ti_trade_ship")) {
+
+					if (structure != null && (structure instanceof FishHatchery)) {
+						TradeShip tradeShip = (TradeShip)structure;
+						if (tradeShip.getUpgradeLvl() < Integer.valueOf(args[1].trim())) {
+							didUpgradeFishery = true;
+							tradeShip.setUpgradeLvl(Integer.valueOf(args[1].trim()));
+							tradeShip.reprocessCommandSigns();
+							town.saved_tradeship_upgrade_levels = tradeShip.getLevel();
+							tradeshipLevel = tradeShip.getLevel();
+						}
+					}
+				}
+			}
+			if (didUpgradeTradeShip)
+			{
+				CivMessage.sendTown(town, CivSettings.localize.localizedString("var_townupgrade_tradeship",tradeshipLevel));
 			}
 			break;
 		case "set_grocer_level":

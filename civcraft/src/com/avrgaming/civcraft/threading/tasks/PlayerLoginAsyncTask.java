@@ -163,6 +163,10 @@ public class PlayerLoginAsyncTask implements Runnable {
 							CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_loginDuringWar"));
 						}
 					}
+					else if (!status.equals(Relation.Status.ALLY) && !status.equals(Relation.Status.PEACE)) {
+						resident.teleportHome();
+						CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_loginNotAllies"));
+					}
 					
 					CivMessage.sendCiv(cc.getCiv(), CivSettings.localize.localizedString("var_PlayerLoginAsync_inBorderAlert",(color+getPlayer().getDisplayName()+"("+relationName+")")));
 				}

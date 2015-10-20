@@ -155,6 +155,7 @@ public class War {
 			CivGlobal.trommelsEnabled = true;
 			CivGlobal.quarriesEnabled = true;
 			CivGlobal.tradeEnabled = true;
+			CivGlobal.fisheryEnabled = true;
 			
 			/* Delete any wartime file used to prevent reboots. */
 			File file = new File("wartime");
@@ -202,6 +203,7 @@ public class War {
 			CivGlobal.trommelsEnabled = false;
 			CivGlobal.quarriesEnabled = false;
 			CivGlobal.tradeEnabled = false;
+			CivGlobal.fisheryEnabled = false;
 			
 			try {
 				int mins = CivSettings.getInteger(CivSettings.warConfig, "war.time_length");

@@ -281,13 +281,6 @@ culture_biomes:
       growth: 0.0
       happiness: 0.03
       beakers: 3.0
-      
-    - name: VOLCANO
-      coins: 0.0
-      hammers: 1.0
-      growth: 0.0
-      happiness: 0.0
-      beakers: 5.0
 
     - name: JUNGLE_MOUNTAINS
       coins: 0.0

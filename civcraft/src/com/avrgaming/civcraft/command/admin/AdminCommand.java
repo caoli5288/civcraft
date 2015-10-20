@@ -168,8 +168,27 @@ public class AdminCommand extends CommandBase {
 			
 			/* Build the Category Inventory. */
 			for (ConfigMaterialCategory cat : ConfigMaterialCategory.getCategories()) {
+				int identifier;
+				if (cat.name.contains("Fish")) {
+					identifier = ItemManager.getId(Material.RAW_FISH);
+				}
+				else if (cat.name.contains("Catalyst")) {
+					identifier = ItemManager.getId(Material.BOOK);
+				}
+				else if (cat.name.contains("Gear")) {
+					identifier = ItemManager.getId(Material.IRON_SWORD);
+				}
+				else if (cat.name.contains("Materials")) {
+					identifier = ItemManager.getId(Material.WOOD_STEP);
+				}
+				else if (cat.name.contains("Tools")) {
+					identifier = ItemManager.getId(Material.IRON_SPADE);
+				}
+				else {
+					identifier = ItemManager.getId(Material.WRITTEN_BOOK);
+				}
 				ItemStack infoRec = LoreGuiItem.build(cat.name, 
-						ItemManager.getId(Material.WRITTEN_BOOK), 
+						identifier, 
 						0, 
 						CivColor.LightBlue+cat.materials.size()+" Items",
 						CivColor.Gold+"<Click To Open>");

@@ -2084,7 +2084,7 @@ var_town_missingFunds: "The town does not have the required [%0] [%1]."
 town_missingStructures: "The town does not have the required structures to buy this upgrade."
 town_buildwonder_NotOverworld: "Can only build wonders in the overworld ... for now."
 town_buildwonder_errorMissingUpgrade: "We require an upgrade we do not have yet."
-town_buildwonder_errorMissingTech: "We require an technology we do not have yet."
+town_buildwonder_errorMissingTech: "We require a technology we do not have yet."
 town_buildwonder_errorNotAvailable: "This wonder is not currently available."
 town_buildwonder_errorBuiltElsewhere: "This wonder is already built somewhere else."
 town_buildwonder_errorLimit1Casual: "Can only have one wonder of each type in your civilization in casual mode."
@@ -2641,7 +2641,6 @@ var_daily_townTaxes: "Collected [%0] [%1] in town taxes."
 
 effectEvent_noTownHall: "Your town does not have a town hall! Structures have no effect!"
 var_effectEvent_convertBeakers: "Converted [%0] beakers into [%1] culture as we are not research any new technologies."
-var_effectEvent_generatedCulture: "Generated [%0] culture."
 
 var_syncTrade_payout: "Generated [%0] from trade. [%0]"
 
@@ -2769,3 +2768,43 @@ war_kick_needAntiCheat2: "Visit https://www.minetexas.com/ to get it."
 pvpListenerError: "You are unable to damage players while protected."
 pvpListenerError2: "You are unable to damage protected players."
 pvpTimerEnded: "Your PvP protection has expired."
+
+
+# ----------------------------------------------------------------
+# =========================== BEGIN 1.75 =========================
+config_material_misc: "Misc"
+civGlobal_serverFullMsg: "Server is full for now, come back later."
+
+var_temple_cultureGenerated: "A temple also generated [%0] culture."
+var_effectEvent_generatedCulture: "Generated [%0] culture from other sources not listed."
+
+# =========================== Fish Hatchery =========================
+adcmd_lag_fishHatcherDesc: "Toggles Fish Hatcheries globally."
+adcmd_lag_fishHatchery: "Fish Hatcheries enabled:"
+fishery_sign_pool: "Fish\nHatchery\nPool"
+fishery_sign_poolOffline: "Pool\nOffline"
+var_fishery_pool_msg_online: "Fish Hatchery Pool [%0] is active."
+var_fishery_pool_msg_offline: "Fish Hatchery Pool [%0] is offline. Upgrade Fish Hatchery to activate"
+var_townupgrade_fish_hatchery: "Our Fish Hatchery is now level [%0]"
+
+# =========================== Trade Ship =========================
+var_tradeship_stagnated: "A level [%0] Trade Ship's production stagnated. [%1]"
+var_tradeship_productionGrew: "A level [%0] Trade Ship's production rose. [%1]"
+var_tradeship_lvlUp: "A Trade Ship gained a level. It is now level [%0]"
+var_tradeship_maxed: "A level [%0] Trade Ship is maxed. [%1]"
+var_tradeship_success: "Your Trade Ship generated [%0] [%1] and [%2] culture from selling [%3] units of cargo."
+tradeship_successSpecail: "It also brought back something specail! Check your Trade Ship's incoming cargo hold."
+tradeship_sign_input_notupgraded_line0: "Input not"
+tradeship_sign_input_notupgraded_line1: "Available"
+tradeship_sign_input_notupgraded_line2: "Upgrade"
+tradeship_sign_input_notupgraded_line3: "Required"
+
+tradeship_sign_output_notupgraded_line0: "Output not"
+tradeship_sign_output_notupgraded_line1: "Available"
+tradeship_sign_output_notupgraded_line2: "Upgrade"
+tradeship_sign_output_notupgraded_line3: "Required"
+var_townupgrade_tradeship: "Our Trade Ship is now level [%0]"
+
+# =========================== END 1.75 =========================
+# ----------------------------------------------------------------
+

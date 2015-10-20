@@ -22,10 +22,10 @@ trade_goodie_repo_days: 7
 ########### Trade Good Generation Options #######
 generation:
     # Minimum number of chunks trade goods can be apart
-    chunks_min: 8
+    chunks_min: 15
 
     # Maximum number of chunks trade goods should be apart
-    chunks_max: 50
+    chunks_max: 40
 
     # World size in x chunks (radius)
     chunks_x: 625

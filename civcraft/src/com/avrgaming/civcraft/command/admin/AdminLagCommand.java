@@ -34,6 +34,7 @@ public class AdminLagCommand extends CommandBase {
 		
 		commands.put("trommels", CivSettings.localize.localizedString("adcmd_lag_trommelsDesc"));
 		commands.put("quarries", CivSettings.localize.localizedString("adcmd_lag_quarryDesc"));
+		commands.put("fishery", CivSettings.localize.localizedString("adcmd_lag_fishHatcherDesc"));
 		commands.put("grinders", CivSettings.localize.localizedString("adcmd_lag_grinderDesc"));
 		commands.put("towers", CivSettings.localize.localizedString("adcmd_lag_towersDesc"));
 		commands.put("growth", CivSettings.localize.localizedString("adcmd_lag_growthDesc"));
@@ -69,6 +70,11 @@ public class AdminLagCommand extends CommandBase {
 	public void quarries_cmd() {
 		CivGlobal.quarriesEnabled = !CivGlobal.quarriesEnabled;
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_quarry")+" "+CivGlobal.quarriesEnabled);
+	}
+	
+	public void fishery_cmd() {
+		CivGlobal.fisheryEnabled = !CivGlobal.fisheryEnabled;
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_fishHatchery")+" "+CivGlobal.fisheryEnabled);
 	}
 	
 	public void towers_cmd() {

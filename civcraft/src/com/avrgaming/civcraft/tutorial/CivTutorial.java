@@ -169,15 +169,34 @@ public class CivTutorial {
 				if (cat.craftableCount == 0) {
 					continue;
 				}
-				
+
+				int identifier;
+				if (cat.name.contains("Fish")) {
+					identifier = ItemManager.getId(Material.RAW_FISH);
+				}
+				else if (cat.name.contains("Catalyst")) {
+					identifier = ItemManager.getId(Material.BOOK);
+				}
+				else if (cat.name.contains("Gear")) {
+					identifier = ItemManager.getId(Material.IRON_SWORD);
+				}
+				else if (cat.name.contains("Materials")) {
+					identifier = ItemManager.getId(Material.WOOD_STEP);
+				}
+				else if (cat.name.contains("Tools")) {
+					identifier = ItemManager.getId(Material.IRON_SPADE);
+				}
+				else {
+					identifier = ItemManager.getId(Material.WRITTEN_BOOK);
+				}
 				ItemStack infoRec = LoreGuiItem.build(cat.name, 
-						ItemManager.getId(Material.WRITTEN_BOOK), 
+						identifier, 
 						0, 
 						CivColor.LightBlue+cat.materials.size()+" "+CivSettings.localize.localizedString("tutorial_lore_items"),
 						CivColor.Gold+CivSettings.localize.localizedString("tutorial_lore_clickToOpen"));
 						infoRec = LoreGuiItem.setAction(infoRec, "OpenInventory");
 						infoRec = LoreGuiItem.setActionData(infoRec, "invType", "showGuiInv");
-						infoRec = LoreGuiItem.setActionData(infoRec, "invName", cat.name+" Recipes");
+						infoRec = LoreGuiItem.setActionData(infoRec, "invName", cat.name+" "+CivSettings.localize.localizedString("tutorial_lore_recipes"));
 						
 						craftingHelpInventory.addItem(infoRec);
 						

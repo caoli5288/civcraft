@@ -616,3 +616,31 @@ upgrades:
       require_tech: 'tech_alloys'
       require_structure: 'ti_quarry'
       category: 'quarry'
+
+# Fish Hatchery upgrades
+    - id: 'upgrade_fish_hatchery_level_2'
+      name: 'Fish Hatchery Pool 2'
+      action: 'set_fish_hatchery_level, 2'
+      cost: 25000.0
+      require_upgrade:
+      require_tech: 'tech_trade'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'
+
+    - id: 'upgrade_fish_hatchery_level_3'
+      name: 'Fish Hatchery Pool 3'
+      action: 'set_fish_hatchery_level, 3'
+      cost: 30000.0
+      require_upgrade: 'upgrade_fish_hatchery_level_2'
+      require_tech: 'tech_commerce'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'
+
+    - id: 'upgrade_fish_hatchery_level_4'
+      name: 'Fish Hatchery Pool 4'
+      action: 'set_fish_hatchery_level, 4'
+      cost: 50000.0
+      require_upgrade: 'upgrade_fish_hatchery_level_3'
+      require_tech: 'tech_global_trade'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'

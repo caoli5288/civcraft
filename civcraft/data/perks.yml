@@ -1934,12 +1934,12 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'perk_midieval_camp'
-      display_name: 'Midieval Camp'
+    - id: 'perk_medieval_camp'
+      display_name: 'Medieval Camp'
       item_id: 267
       data: 0
       components:
           - name: 'CustomPersonalTemplate'
-            theme: 'midieval'
+            theme: 'medieval'
             template: 'camp'
             id: 'camp'

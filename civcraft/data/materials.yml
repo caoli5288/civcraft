@@ -3394,7 +3394,7 @@ materials:
 #              - name: 'RightClickForItem'
 #                custom_id: 'mat_mercury'
 #                amount: '4'
-        
+
         - id: 'mat_mercury'
           item_id: 362
           item_data: 0
@@ -4190,6 +4190,374 @@ materials:
               - "lpl"
               - "pcp"
               - "lpl"
+
+
+#---- Fish (new for 1.75) ----
+        - id: 'mat_fish_brown_trout'
+          item_id: 349
+          item_data: 0
+          name: 'Brown Trout'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_brook_trout'
+          item_id: 349
+          item_data: 1
+          name: 'Brook Trout'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_cutthroat_trout'
+          item_id: 349
+          item_data: 1
+          name: 'Cutthroat Trout'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_rainbow_trout'
+          item_id: 349
+          item_data: 1
+          name: 'Rainbow Trout'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_atlantic_striped_bass'
+          item_id: 350
+          item_data: 0
+          name: 'Atlantic Striped Bass'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_pacific_ocean_perch'
+          item_id: 349
+          item_data: 1
+          name: 'Pacific Ocean Perch'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_acadian_redfish'
+          item_id: 349
+          item_data: 2
+          name: 'Acadian Redfish'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_widow_rockfish'
+          item_id: 349
+          item_data: 0
+          name: 'Widow Rockfish'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_atlantic_surfclam'
+          item_id: 353
+          item_data: 0
+          name: 'Atlantic Surf Clam'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_ocean_quahog'
+          item_id: 289
+          item_data: 0
+          name: 'Ocean Quahog'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_northern_quahog'
+          item_id: 337
+          item_data: 0
+          name: 'Northern Quahog'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_geoduck'
+          item_id: 414
+          item_data: 0
+          name: 'Geoduck'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_atlantic_cod'
+          item_id: 350
+          item_data: 0
+          name: 'Atlantic Cod'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_pacific_cod'
+          item_id: 349
+          item_data: 1
+          name: 'Pacific Cod'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_lingcod'
+          item_id: 350
+          item_data: 1
+          name: 'Lingcod'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_sablefish'
+          item_id: 349
+          item_data: 0
+          name: 'Sablefish'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_arrowtooth_flounder'
+          item_id: 349
+          item_data: 3
+          name: 'Arrowtooth Flounder'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_summer_flounder'
+          item_id: 349
+          item_data: 3
+          name: 'Summer Flounder'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_winter_flounder'
+          item_id: 349
+          item_data: 3
+          name: 'Winter Flounder'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_yellowtail_flounder'
+          item_id: 349
+          item_data: 3
+          name: 'Yellowtail Flounder'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_gag_grouper'
+          item_id: 349
+          item_data: 1
+          name: 'Gag Grouper'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_red_grouper'
+          item_id: 349
+          item_data: 2
+          name: 'Red Grouper'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_black_sea_bass'
+          item_id: 349
+          item_data: 0
+          name: 'Black Sea Bass'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_wreckfish'
+          item_id: 350
+          item_data: 0
+          name: 'Wreckfish'
+          shaped: true
+          craftable: false
+          shiny: true
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_fish'
+          item_id: 349
+          item_data: 0
+          name: 'Fish'
+          shaped: true
+          craftable: false
+          shiny: false
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightgreen>Fish Tier 1'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_salmon'
+          item_id: 349
+          item_data: 1
+          name: 'Salmon'
+          shaped: true
+          craftable: false
+          shiny: false
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightblue>Fish Tier 2'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_clownfish'
+          item_id: 349
+          item_data: 2
+          name: 'Clownfish'
+          shaped: true
+          craftable: false
+          shiny: false
+          tradeable: true
+          tradeValue: 5.0
+          category: '<lightpurple>Fish Tier 3'
+          components:
+              - name: 'NoRightClick'
+
+        - id: 'mat_fish_pufferfish'
+          item_id: 349
+          item_data: 3
+          name: 'Pufferfish'
+          shaped: true
+          craftable: false
+          shiny: false
+          tradeable: true
+          tradeValue: 5.0
+          category: '<gold>Fish Tier 4'
+          components:
+              - name: 'NoRightClick'
+
+#---- End Fish ----
 #
 # This is a list of removed recpies based on the typeID and 
 # data value of the vanilla item.

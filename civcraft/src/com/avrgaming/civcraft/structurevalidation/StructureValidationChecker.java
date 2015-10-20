@@ -32,7 +32,7 @@ public class StructureValidationChecker implements Runnable {
 			}
 			
 			try {
-				CivLog.warning("Doing a structure validate...");
+				CivLog.warning("Doing a structure validate... "+struct.getDisplayName());
 				struct.validate(null);
 			} catch (CivException e) {
 				e.printStackTrace();

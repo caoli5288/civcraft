@@ -48,7 +48,7 @@ public class PayCommand implements CommandExecutor {
 			
 			Resident payTo = CivGlobal.getResident(args[0]);
 			if (payTo == null) {
-				throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
+				throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults"));
 			}
 			
 			if (resident == payTo) {
