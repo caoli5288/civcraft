@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.CannonTower;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.TradeOutpost;
+import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
 import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ItemManager;
@@ -145,6 +146,18 @@ public class PostBuildSyncTask implements Runnable {
 					cannontower.setTurretLocation(absCoord);
 				}
 				
+				break;
+			case "/arrowfire":
+				if (buildable instanceof GrandShipIngermanland) {
+					GrandShipIngermanland arrowtower = (GrandShipIngermanland)buildable;
+					arrowtower.setArrowLocation(absCoord);
+				}
+				break;
+			case "/cannonfire":
+				if (buildable instanceof GrandShipIngermanland) {
+					GrandShipIngermanland cannontower = (GrandShipIngermanland)buildable;
+					cannontower.setCannonLocation(absCoord);
+				}	
 				break;
 			case "/sign":
 				structSign = CivGlobal.getStructureSign(absCoord);
@@ -322,7 +335,18 @@ public class PostBuildSyncTask implements Runnable {
 					CannonTower cannontower = (CannonTower)buildable;
 					cannontower.setTurretLocation(absCoord);
 				}
-				
+				break;
+			case "/arrowfire":
+				if (buildable instanceof GrandShipIngermanland) {
+					GrandShipIngermanland arrowtower = (GrandShipIngermanland)buildable;
+					arrowtower.setArrowLocation(absCoord);
+				}
+				break;
+			case "/cannonfire":
+				if (buildable instanceof GrandShipIngermanland) {
+					GrandShipIngermanland cannontower = (GrandShipIngermanland)buildable;
+					cannontower.setCannonLocation(absCoord);
+				}	
 				break;
 			case "/sign":
 				structSign = CivGlobal.getStructureSign(absCoord);

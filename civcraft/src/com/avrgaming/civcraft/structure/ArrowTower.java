@@ -69,19 +69,19 @@ public class ArrowTower extends Structure {
 		return (int) (info.max_hitpoints * rate);
 	}
 
-	/**
-	 * @param damage the damage to set
-	 */
-	public void setDamage(int damage) {
-		arrowComponent.setDamage(damage);
-	}
+//	/**
+//	 * @param damage the damage to set
+//	 */
+//	public void setDamage(int damage) {
+//		arrowComponent.setDamage(damage);
+//	}
 	
-	/**
-	 * @return the power
-	 */
-	public double getPower() {
-		return arrowComponent.getPower();
-	}
+//	/**
+//	 * @return the power
+//	 */
+//	public double getPower() {
+//		return arrowComponent.getPower();
+//	}
 
 	/**
 	 * @param power the power to set

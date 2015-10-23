@@ -9,9 +9,8 @@ import java.util.HashSet;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.block.Sign;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.components.AttributeBiomeRadiusPerLevel;
@@ -21,6 +20,7 @@ import com.avrgaming.civcraft.components.TradeShipResults;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigMineLevel;
 import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
@@ -133,13 +133,6 @@ public class TradeShip extends Structure {
 				} else {
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.AIR));
 					ItemManager.setData(absCoord.getBlock(), sb.getData());
-					
-//					Sign sign = (Sign)absCoord.getBlock().getState();
-//					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line0"));
-//					sign.setLine(1, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line1"));
-//					sign.setLine(2, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line2"));
-//					sign.setLine(3, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line3"));
-//					sign.update();
 				}
 				this.addStructureBlock(absCoord, false);
 				break;}
@@ -263,14 +256,16 @@ public class TradeShip extends Structure {
 		MultiInventory mInv = new MultiInventory();
 		
 		for (BlockCoord bcoord : this.goodsDepositPoints) {
-			Block b = bcoord.getBlock();
-			if (b.getState() instanceof Chest) {
-				try {
-				mInv.addInventory(((Chest)b.getState()).getInventory());
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+			task.syncLoadChunk(bcoord.getWorldname(), bcoord.getX(), bcoord.getZ());
+			Inventory tmp;
+			try {
+				tmp = task.getChestInventory(bcoord.getWorldname(), bcoord.getX(), bcoord.getY(), bcoord.getZ(), true);
+			} catch (CivTaskAbortException e) {
+				tradeResult = new TradeShipResults();
+				tradeResult.setResult(Result.STAGNATE);
+				return tradeResult;
 			}
+			mInv.addInventory(tmp);
 		}
 		
 		if (mInv.getInventoryCount() == 0) {
@@ -309,30 +304,50 @@ public class TradeShip extends Structure {
 		default:
 			break;
 		}
-		if (tradeResult.getConsumed() >= 1)
-		{
+		if (tradeResult.getConsumed() >= 1) {
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_tradeship_success",tradeResult.getMoney(),CivSettings.CURRENCY_NAME,tradeResult.getCulture(),tradeResult.getConsumed()));
 		}
-		if (tradeResult.getCulture() >= 1)
-		{
+		if (tradeResult.getCulture() >= 1) {
 			int total_culture = (int)Math.round(tradeResult.getCulture()*this.getTown().getCottageRate());
 
 			this.getTown().addAccumulatedCulture(total_culture);
 			this.getTown().save();
 		}
-		if (tradeResult.getReturnCargo().size() >= 1)
-		{
+		if (tradeResult.getMoney() >= 1) {
+			double total_coins = tradeResult.getMoney();
+			if (this.getTown().getBuffManager().hasBuff("buff_ingermanland_trade_ship_income")) {
+				total_coins *= this.getTown().getBuffManager().getEffectiveDouble("buff_ingermanland_trade_ship_income");
+			}
+			
+			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_trade_ship_income")) {
+				total_coins *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_trade_ship_income");
+			}
+			
+			double taxesPaid = total_coins*this.getTown().getDepositCiv().getIncomeTaxRate();
+
+			if (taxesPaid > 0) {
+				CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_tradeship_taxesPaid",total_coins,CivSettings.CURRENCY_NAME));
+			}
+			
+			this.getTown().getTreasury().deposit(total_coins - taxesPaid);
+			this.getTown().getDepositCiv().taxPayment(this.getTown(), taxesPaid);
+		}
+		
+		if (tradeResult.getReturnCargo().size() >= 1) {
 			MultiInventory multiInv = new MultiInventory();
+			
 			for (BlockCoord bcoord : this.goodsWithdrawPoints) {
-				Block b = bcoord.getBlock();
-				if (b.getState() instanceof Chest) {
-					try {
-						multiInv.addInventory(((Chest)b.getState()).getInventory());
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
+				task.syncLoadChunk(bcoord.getWorldname(), bcoord.getX(), bcoord.getZ());
+				Inventory tmp;
+				try {
+					tmp = task.getChestInventory(bcoord.getWorldname(), bcoord.getX(), bcoord.getY(), bcoord.getZ(), true);
+					multiInv.addInventory(tmp);
+				} catch (CivTaskAbortException e) {
+
+					e.printStackTrace();
 				}
 			}
+			
 			for (HashMap<String, String> item :tradeResult.getReturnCargo()) {
 				ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get(item.get("name")),Integer.parseInt(item.get("quantity")));
 				multiInv.addItem(newItem);

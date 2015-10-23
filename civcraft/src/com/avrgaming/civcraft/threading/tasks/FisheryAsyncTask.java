@@ -366,19 +366,33 @@ public class FisheryAsyncTask extends CivAsyncTask {
 		}
 		int biome = getBiome();
 
-		int randMax = 10;
+		int randMax = 100;
 		int biomeRand = rand.nextInt(randMax);
 		
 		switch (fishTier) {
 			case 0: //Fish Tier 0
-				if (biomeRand > 8) { 
+				if (biomeRand >= 95) { 
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_pufferfish"));
-				} else if (biomeRand > 6) {	
+				} else if (biomeRand > 85) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_clownfish"));
-				} else if (biomeRand > 3) {
+				} else if (biomeRand > 75) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_salmon"));
-				} else {
+				} else if (biomeRand > 50) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_fish"));
+				} else {
+					int junkRand = rand.nextInt(randMax);
+					if (junkRand > 90)
+					{
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_minnows"));
+					}else if (junkRand > 70) {
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tadpole"));
+					} else if (junkRand > 50) {
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_seaweed"));
+					} else if (junkRand > 30) {
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tangled_string"));
+					} else {
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_pond_scum"));
+					}
 				}
 				break;
 			case 1: //Fish Tier 1
@@ -388,7 +402,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 1: //Mountains
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_brown_trout"));
 					} else {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_gag_grouper"));
@@ -396,7 +410,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 2: //Flatter Lands
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_atlantic_striped_bass"));
 					} else {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_arrowtooth_flounder"));
@@ -404,7 +418,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 3: // Oceans, Mushroom, Swamps, Ice
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_atlantic_cod"));
 					} else {
 						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_atlantic_surfclam"));
@@ -420,7 +434,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 1: //Mountains
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_brook_trout"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_red_grouper"));
@@ -428,7 +442,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 2: //Flatter Lands
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_pacific_ocean_perch"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_summer_flounder"));
@@ -436,7 +450,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 3: // Oceans, Mushroom, Swamps, Ice
-					if (biomeRand < 9) {
+					if (biomeRand < 90) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_pacific_cod"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_ocean_quahog"));
@@ -452,7 +466,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 1: //Mountains
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_cutthroat_trout"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_black_sea_bass"));
@@ -460,7 +474,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 2: //Flatter Lands
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_acadian_redfish"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_winter_flounder"));
@@ -468,7 +482,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 3: // Oceans, Mushroom, Swamps, Ice
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_lingcod"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_northern_quahog"));
@@ -484,7 +498,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 1: //Mountains
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_rainbow_trout"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_wreckfish"));
@@ -492,7 +506,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 2: //Flatter Lands
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_widow_rockfish"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_yellowtail_flounder"));
@@ -500,7 +514,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 					break;
 
 				case 3: // Oceans, Mushroom, Swamps, Ice
-					if (biomeRand < 8) {
+					if (biomeRand < 80) {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_sablefish"));
 					} else {
 					newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_fish_geoduck"));

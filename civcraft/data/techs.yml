@@ -473,3 +473,10 @@ techs:
      cost: 75000.0
      points: 18750
      require_techs: 'tech_advanced_hunting:tech_productivity:tech_agriculture'
+
+   - id: 'tech_grand_ship_ingermanland'
+     name: 'Grand Ship Ingermanland'
+     beaker_cost: 200000.0
+     cost: 200000.0
+     points: 80000
+     require_techs: 'tech_global_trade:tech_economics:tech_nationalism'

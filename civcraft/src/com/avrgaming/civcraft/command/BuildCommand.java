@@ -200,10 +200,10 @@ public class BuildCommand extends CommandBase {
 					leftString = ""+(sinfo.limit - town.getStructureTypeCount(sinfo.id));
 				}
 				
-				CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+
+				CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+" "+
 						CivColor.Yellow+
 						CivSettings.localize.localizedString("Cost")+" "+sinfo.cost+" "+
-						CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+" "+ 
+						CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+" "+sinfo.hammer_cost+" "+ 
 						CivSettings.localize.localizedString("Remaining")+" "+leftString);
 			}
 		}
@@ -222,10 +222,10 @@ public class BuildCommand extends CommandBase {
 				}
 				
 				if (Wonder.isWonderAvailable(sinfo.id)) {				
-					CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+
+					CivMessage.send(sender, CivColor.LightPurple+sinfo.displayName+" "+
 							CivColor.Yellow+
 							CivSettings.localize.localizedString("Cost")+" "+sinfo.cost+" "+
-							CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+sinfo.hammer_cost+" "+
+							CivSettings.localize.localizedString("Upkeep")+" "+sinfo.upkeep+" "+CivSettings.localize.localizedString("Hammers")+" "+sinfo.hammer_cost+" "+
 							CivSettings.localize.localizedString("Remaining")+" "+leftString);
 				} else {
 					Wonder wonder = CivGlobal.getWonderByConfigId(sinfo.id);

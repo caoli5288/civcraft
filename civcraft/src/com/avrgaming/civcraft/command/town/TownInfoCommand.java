@@ -333,7 +333,7 @@ public class TownInfoCommand extends CommandBase {
 			out.add(CivColor.LightPurple+CivSettings.localize.localizedString("cmd_town_info_tradecolorMax"));
 		}
 		out.add(CivColor.LightGray+CivSettings.localize.localizedString("cmd_town_info_tradeBaseValue")+" * ( 100% + ( 50% * MIN(ExtraGoods,"+goodMax+") )) = "+CivSettings.localize.localizedString("cmd_town_info_tradeGoodValue"));
-		out.add(CivColor.Green+"Total Trade: Good Total:"+" "+CivColor.Yellow+df.format(TradeGood.getTownBaseGoodPaymentViaGoodie(town))+" * "+df.format(town.getTradeRate())+" = "
+		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_town_info_tradeTotal")+" "+CivColor.Yellow+df.format(TradeGood.getTownBaseGoodPaymentViaGoodie(town))+" * "+df.format(town.getTradeRate())+" = "
 					+df.format(TradeGood.getTownTradePayment(town)));
 		
 		CivMessage.send(sender, out);
@@ -434,7 +434,7 @@ public class TownInfoCommand extends CommandBase {
 		out.add(CivColor.Green+CivSettings.localize.localizedString("SubTotal")+" "+CivColor.Yellow+total);
 		out.add(CivColor.Green+CivSettings.localize.localizedString("cmd_civ_gov_infoCottage")+" "+CivColor.Yellow+df.format(town.getCottageRate()*100)+"%");
 		total *= town.getCottageRate();
-		out.add(CivColor.Green+CivSettings.localize.localizedString("Total:")+" "+CivColor.Yellow+df.format(total)+" "+CivSettings.CURRENCY_NAME);
+		out.add(CivColor.Green+CivSettings.localize.localizedString("Total")+" "+CivColor.Yellow+df.format(total)+" "+CivSettings.CURRENCY_NAME);
 		
 		CivMessage.send(sender, out);
 	}
@@ -573,7 +573,7 @@ public class TownInfoCommand extends CommandBase {
 
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Civilization")+" "+CivColor.LightGreen+town.getCiv().getName());
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("TownLevel")+" "+CivColor.LightGreen+town.getLevel()+" ("+town.getLevelTitle()+") "+
-		CivColor.Green+CivSettings.localize.localizedString("Score:")+" "+CivColor.LightGreen+town.getScore());
+		CivColor.Green+CivSettings.localize.localizedString("Score")+" "+CivColor.LightGreen+town.getScore());
 		
 		if (town.getMayorGroup() == null) {
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Mayors")+" "+CivColor.Rose+CivSettings.localize.localizedString("none"));
@@ -606,7 +606,7 @@ public class TownInfoCommand extends CommandBase {
 			
 			
 			//CivMessage.send(sender, CivColor.Green+"Outposts: "+CivColor.LightGreen+town.getOutpostChunks().size()+" "+
-			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Growth:")+" "+CivColor.LightGreen+df.format(town.getGrowth().total)+" " +
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Growth")+" "+CivColor.LightGreen+df.format(town.getGrowth().total)+" " +
 									CivColor.Green+CivSettings.localize.localizedString("Hammers")+" "+CivColor.LightGreen+df.format(town.getHammers().total)+" "+
 									CivColor.Green+CivSettings.localize.localizedString("Beakers")+" "+CivColor.LightGreen+df.format(town.getBeakers().total));
 			
@@ -619,9 +619,9 @@ public class TownInfoCommand extends CommandBase {
 //			info.put("Happiness", CivColor.White+"("+CivColor.LightGreen+"H"+CivColor.Yellow+town.getHappinessTotal()
 //					+CivColor.White+"/"+CivColor.Rose+"U"+CivColor.Yellow+town.getUnhappinessTotal()+CivColor.White+") = "+
 //					CivColor.LightGreen+df.format(town.getHappinessPercentage()*100)+"%");
-			info.put("Happiness", CivColor.LightGreen+df.format(Math.floor(town.getHappinessPercentage()*100))+"%");
+			info.put(CivSettings.localize.localizedString("Happiness"), CivColor.LightGreen+df.format(Math.floor(town.getHappinessPercentage()*100))+"%");
 			ConfigHappinessState state = town.getHappinessState();
-			info.put("State", ""+CivColor.valueOf(state.color)+state.name);	
+			info.put(CivSettings.localize.localizedString("State"), ""+CivColor.valueOf(state.color)+state.name);	
 			CivMessage.send(sender, parent.makeInfoString(info, CivColor.Green, CivColor.LightGreen));
 			
 			

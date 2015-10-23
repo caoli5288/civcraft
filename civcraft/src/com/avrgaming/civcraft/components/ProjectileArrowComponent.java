@@ -47,9 +47,12 @@ public class ProjectileArrowComponent extends ProjectileComponent {
 			setDamage(CivSettings.getInteger(CivSettings.warConfig, "arrow_tower.damage"));
 			power = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.power");
 			range = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.range");
-			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range"))
+			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range") && this.getBuildable().getConfigId().equals("s_arrowtower"))
 			{
 				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_tower_range");
+			} else if (this.getTown().getBuffManager().hasBuff("buff_ingermanland_water_range") && this.getBuildable().getConfigId().equals("w_grand_ship_ingermanland") )
+			{
+				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_ingermanland_water_range");
 			}
 			min_range = CivSettings.getDouble(CivSettings.warConfig, "arrow_tower.min_range");
 			

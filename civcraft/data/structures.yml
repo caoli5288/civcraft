@@ -605,7 +605,7 @@ structures:
     check_event: 
     update_event: fish_hatchery_process
     onBuild_event:
-    limit: 1
+    limit: 0
     allow_outside_town: true
     cost: 10000.0
     upkeep: 5000.0

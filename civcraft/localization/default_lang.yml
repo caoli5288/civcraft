@@ -2316,7 +2316,6 @@ buildable_preview_prompt2: "If this location looks good, type 'yes'. Otherwise, 
 buildable_TooCloseToBedrock: "Cannot build here, too close to bedrock."
 var_buildable_toocloseToSpawn1: "You must build at least [%0] blocks away from spawn."
 buildable_notInCulture: "Cannot build here, you need to build inside your culture."
-buildable_shipyard_notEnoughWater: "Cannot build shipyard here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
 buildable_structureExistsHere: "Cannot build here, structure already at this location."
 buildable_errorTILimit: "Cannot build tile improvement. Already at tile improvement limit."
 buildable_errorTIHere: "Cannot build a tile improvement on the same chunk as another tile improvement."
@@ -2774,9 +2773,15 @@ pvpTimerEnded: "Your PvP protection has expired."
 # =========================== BEGIN 1.75 =========================
 config_material_misc: "Misc"
 civGlobal_serverFullMsg: "Server is full for now, come back later."
+cmd_town_info_tradeTotal: "Total Trade: Good Total:"
+
+cmd_NameNoResults: "No matches for that name."
 
 var_temple_cultureGenerated: "A temple also generated [%0] culture."
 var_effectEvent_generatedCulture: "Generated [%0] culture from other sources not listed."
+Happiness: "Happiness"
+State: "State"
+var_buildable_notEnoughWater: "Cannot build [%0] here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
 
 # =========================== Fish Hatchery =========================
 adcmd_lag_fishHatcherDesc: "Toggles Fish Hatcheries globally."
@@ -2804,6 +2809,7 @@ tradeship_sign_output_notupgraded_line1: "Unavailable"
 var_tradeship_sign_output_notupgraded_line2: "Level [%0]"
 tradeship_sign_output_notupgraded_line3: "Required"
 var_townupgrade_tradeship: "Our Trade Ship is now level [%0]"
+var_tradeship_taxesPaid: "Paid [%0] [%1] in taxes from Trade Ship Income"
 
 # =========================== END 1.75 =========================
 # ----------------------------------------------------------------

@@ -91,6 +91,8 @@ import com.avrgaming.civcraft.structure.Capitol;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.Wall;
+import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
+import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.tasks.TradeGoodSignCleanupTask;
 import com.avrgaming.civcraft.template.Template;
 import com.avrgaming.civcraft.template.TemplateStream;
@@ -1231,6 +1233,11 @@ public class DebugCommand extends CommandBase {
 			for (Structure struct : town.getStructures()) {
 				if (struct instanceof ArrowTower) {
 					((ArrowTower)struct).setPower(Float.valueOf(args[1]));
+				}
+			}
+			for (Wonder wonder : town.getWonders()) {
+				if (wonder instanceof GrandShipIngermanland) {
+					((GrandShipIngermanland)wonder).setArrorPower(Float.valueOf(args[1]));
 				}
 			}
 		}

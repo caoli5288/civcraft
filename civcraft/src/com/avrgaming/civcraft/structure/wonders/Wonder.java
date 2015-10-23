@@ -393,6 +393,13 @@ public abstract class Wonder extends Buildable {
 				wonder = new MotherTree(rs);
 			}
 			break;
+		case "w_grand_ship_ingermanland":
+			if (rs == null) {
+				wonder = new GrandShipIngermanland(center, id, town);
+			} else {
+				wonder = new GrandShipIngermanland(rs);
+			}
+			break;
 		default:
 			throw new CivException(CivSettings.localize.localizedString("wonder_unknwon_type")+" "+id);
 		}

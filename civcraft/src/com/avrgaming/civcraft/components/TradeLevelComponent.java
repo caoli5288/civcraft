@@ -295,12 +295,7 @@ public class TradeLevelComponent extends Component {
 		}
 		Integer currentCultureRate = culture.get(this.level);
 		cultureEarned = currentCultureRate*countConsumed;
-		
 
-		CivLog.debug("moneyEarned: " + moneyEarned);
-		CivLog.debug("countConsumed: " + countConsumed);
-		CivLog.debug("cultureEarned: " + cultureEarned);
-		CivLog.debug("lastResult: " + lastResult);
 		lastTrade.setMoney(moneyEarned);
 		lastTrade.setConsumed(countConsumed);
 		lastTrade.setCulture(cultureEarned);

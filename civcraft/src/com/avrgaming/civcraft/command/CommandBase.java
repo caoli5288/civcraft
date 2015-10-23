@@ -398,7 +398,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults"));
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {
@@ -441,7 +441,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults")+" '"+args[index]+"'");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" '"+args[index]+"'");
 		}
 		
 		if (potentialMatches.size() != 1) {
@@ -484,7 +484,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults")+" '"+args[index]+"'");
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" '"+args[index]+"'");
 		}
 		
 		if (potentialMatches.size() != 1) {
@@ -539,7 +539,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults"));
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {
@@ -573,7 +573,7 @@ public abstract class CommandBase implements CommandExecutor {
 		
 		OfflinePlayer offplayer = Bukkit.getOfflinePlayer(args[index]);
 		if (offplayer == null) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults")+" "+args[index]);
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults")+" "+args[index]);
 		}
 		
 		return offplayer;
@@ -649,7 +649,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults"));
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		
@@ -693,7 +693,7 @@ public abstract class CommandBase implements CommandExecutor {
 		}
 		
 		if (potentialMatches.size() == 0) {
-			throw new CivException(CivSettings.localize.localizedString("var_cmd_NameNoResults"));
+			throw new CivException(CivSettings.localize.localizedString("cmd_NameNoResults"));
 		}
 		
 		if (potentialMatches.size() != 1) {

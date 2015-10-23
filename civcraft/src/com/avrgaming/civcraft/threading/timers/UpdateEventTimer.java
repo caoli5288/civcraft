@@ -29,7 +29,6 @@ import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.threading.TaskMaster;
-import com.avrgaming.civcraft.threading.tasks.FisheryAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.QuarryAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.TrommelAsyncTask;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -66,20 +65,12 @@ public class UpdateEventTimer extends CivAsyncTask {
 							}
 							
 							TaskMaster.asyncTask("trommel-"+struct.getCorner().toString(), new TrommelAsyncTask(struct), 0);
-						}
-						if (struct.getUpdateEvent().equals("quarry_process")) {
+						}else if (struct.getUpdateEvent().equals("quarry_process")) {
 							if (!CivGlobal.quarriesEnabled) {
 								continue;
 							}
 							
 							TaskMaster.asyncTask("quarry-"+struct.getCorner().toString(), new QuarryAsyncTask(struct), 0);
-						}
-						if (struct.getUpdateEvent().equals("fish_hatchery_process")) {
-							if (!CivGlobal.fisheryEnabled) {
-								continue;
-							}
-							
-							TaskMaster.asyncTask("fishHatchery-"+struct.getCorner().toString(), new FisheryAsyncTask(struct), 0);
 						}
 					}
 					
