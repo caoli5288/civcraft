@@ -113,7 +113,7 @@ public class TradeShip extends Structure {
 			}
 		}
 		
-		TaskMaster.syncTask(new SyncTask(tpl, corner), TimeTools.toTicks(3));
+		TaskMaster.syncTask(new SyncTask(tpl, corner), TimeTools.toTicks(1));
 
 	}
 	
@@ -123,9 +123,9 @@ public class TradeShip extends Structure {
 			BlockCoord absCoord = new BlockCoord(corner.getBlock().getRelative(relativeCoord.getX(), relativeCoord.getY(), relativeCoord.getZ()));
 
 			switch (sb.command) {
-			case "/incoming":
-				Integer inID = Integer.valueOf(sb.keyvalues.get("id"));
-				if (this.getUpgradeLvl() >= inID+1) {
+			case "/incoming":{
+				Integer ID = Integer.valueOf(sb.keyvalues.get("id"));
+				if (this.getUpgradeLvl() >= ID+1) {
 					this.goodsWithdrawPoints.add(absCoord);
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.CHEST));
 					byte data3 = CivData.convertSignDataToChestData((byte)sb.getData());
@@ -142,28 +142,97 @@ public class TradeShip extends Structure {
 //					sign.update();
 				}
 				this.addStructureBlock(absCoord, false);
-				break;
-			case "/outgoing":
-				Integer outID = Integer.valueOf(sb.keyvalues.get("id"));
-				if (this.getLevel() >= outID+1) {
+				break;}
+			case "/inSign":{
+				Integer ID = Integer.valueOf(sb.keyvalues.get("id"));
+				if (this.getUpgradeLvl() >= ID+1) {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
+					
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_input_line0"));
+					sign.setLine(1, ""+(ID+1));
+					sign.setLine(2, "");
+					sign.setLine(3, "");
+					sign.update();
+				} else {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
+					
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_input_line0"));
+					sign.setLine(1, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line1"));
+					sign.setLine(2, (CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line2")));
+					sign.setLine(3, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line3"));
+					sign.update();
+				}
+				this.addStructureBlock(absCoord, false);
+				break;}
+			case "/outgoing":{
+				Integer ID = Integer.valueOf(sb.keyvalues.get("id"));
+				
+				if (this.getLevel() >= (ID*2)+1) {
 					this.goodsDepositPoints.add(absCoord);
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.CHEST));
 					byte data3 = CivData.convertSignDataToChestData((byte)sb.getData());
 					ItemManager.setData(absCoord.getBlock(), data3);
+					this.addStructureBlock(absCoord, false);
 				} else {
 					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.AIR));
 					ItemManager.setData(absCoord.getBlock(), sb.getData());
+				}
+				break;}
+			case "/outSign":{
+				Integer ID = Integer.valueOf(sb.keyvalues.get("id"));
+				if (this.getLevel() >= (ID*2)+1) {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
 					
-//					Sign sign = (Sign)absCoord.getBlock().getState();
-//					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line0"));
-//					sign.setLine(1, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line1"));
-//					sign.setLine(2, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line2"));
-//					sign.setLine(3, CivSettings.localize.localizedString("tradeship_sign_input_notupgraded_line3"));
-//					sign.update();
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_output_line0"));
+					sign.setLine(1, ""+(ID+1));
+					sign.setLine(2, "");
+					sign.setLine(3, "");
+					sign.update();
+				} else {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
+					
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_output_line0"));
+					sign.setLine(1, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line1"));
+					sign.setLine(2, (CivSettings.localize.localizedString("var_tradeship_sign_output_notupgraded_line2",((ID*2)+1))));
+					sign.setLine(3, CivSettings.localize.localizedString("tradeship_sign_output_notupgraded_line3"));
+					sign.update();
 				}
 				this.addStructureBlock(absCoord, false);
-				break;
-			default:
+				break;}
+			case "/in":{
+				Integer ID = Integer.valueOf(sb.keyvalues.get("id"));
+				if (ID == 0) {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
+					
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_input_line0"));
+					sign.setLine(1, "1");
+					sign.setLine(2, "2");
+					sign.setLine(3, "");
+					sign.update();
+				} else {
+					ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
+					ItemManager.setData(absCoord.getBlock(), sb.getData());
+					
+					Sign sign = (Sign)absCoord.getBlock().getState();
+					sign.setLine(0, CivSettings.localize.localizedString("tradeship_sign_input_line0"));
+					sign.setLine(1, "3");
+					sign.setLine(2, "4");
+					sign.setLine(3, "");
+					sign.update();
+				}
+				this.addStructureBlock(absCoord, false);
+				break;}
+			default:{
 				/* Unrecognized command... treat as a literal sign. */
 				ItemManager.setTypeId(absCoord.getBlock(), ItemManager.getId(Material.WALL_SIGN));
 				ItemManager.setData(absCoord.getBlock(), sb.getData());
@@ -174,7 +243,9 @@ public class TradeShip extends Structure {
 				sign.setLine(2, sb.message[2]);
 				sign.setLine(3, sb.message[3]);
 				sign.update();
-				break;
+
+				this.addStructureBlock(absCoord, false);
+				break;}
 			}
 		}
 	}

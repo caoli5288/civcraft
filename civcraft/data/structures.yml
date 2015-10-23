@@ -264,27 +264,70 @@ tradeship_levels:
     - level: 1
       culture: 1
       maxTrade: 2
-      upgradeTrade: 128
+      upgradeTrade: 1024
+      # 8 hours
 
     - level: 2
-      culture: 2
-      maxTrade: 4
-      upgradeTrade: 256
+      culture: 1
+      maxTrade: 2
+      upgradeTrade: 2048
+      # 16 hours
 
     - level: 3
-      culture: 2
-      maxTrade: 6
-      upgradeTrade: 512
+      culture: 1
+      maxTrade: 4
+      upgradeTrade: 4096
+      # 2 Chests Active
+      # 16 Hours
 
     - level: 4
-      culture: 3
-      maxTrade: 8
-      upgradeTrade: 1024
+      culture: 2
+      maxTrade: 4
+      upgradeTrade: 8192
+      # 2 Chests Active
+      # 32 Hours
 
     - level: 5
+      culture: 2
+      maxTrade: 6
+      upgradeTrade: 12288
+      # 3 Chests Active
+      # 32 Hours
+
+    - level: 6
+      culture: 2
+      maxTrade: 6
+      upgradeTrade: 24576
+      # 3 Chests Active
+      # 64 Hours
+
+    - level: 7
+      culture: 3
+      maxTrade: 8
+      upgradeTrade: 32768
+      # 4 Chests Active
+      # 64 Hours
+
+    - level: 8
+      culture: 3
+      maxTrade: 8
+      upgradeTrade: 65536
+      # 4 Chests Active
+      # 128 Hours
+
+    - level: 9
+      culture: 3
+      maxTrade: 10
+      upgradeTrade: 81920
+      # 5 Chests Active
+      # 128 Hours
+
+    - level: 10
       culture: 4
       maxTrade: 10
-      upgradeTrade: 2048
+      upgradeTrade: 163840
+      # 5 Chests Active
+      # 256 Hours
 
 ##################### Farm Settings ##########################
 farm:
