@@ -11,7 +11,7 @@ public class ConfigTradeShipLevel {
 	public int level;	/* Current level number */
 	public int upgradeTrade; /* Number of redstone this mine consumes */
 	public int maxTrade; /* Number of times that consumes must be met to level up */
-	public int culture; /* hammers generated each time hour */
+	public double culture; /* hammers generated each time hour */
 	
 	public static void loadConfig(FileConfiguration cfg, Map<Integer, ConfigTradeShipLevel> levels) {
 		levels.clear();
@@ -19,7 +19,7 @@ public class ConfigTradeShipLevel {
 		for (Map<?, ?> level : tradeship_levels) {
 			ConfigTradeShipLevel tradeship_level = new ConfigTradeShipLevel();
 			tradeship_level.level = (Integer)level.get("level");
-			tradeship_level.culture = (Integer)level.get("culture");
+			tradeship_level.culture = (Double)level.get("culture");
 			tradeship_level.upgradeTrade = (Integer)level.get("upgradeTrade");
 			tradeship_level.maxTrade = (Integer)level.get("maxTrade"); 
 			levels.put(tradeship_level.level, tradeship_level);

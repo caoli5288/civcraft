@@ -51,6 +51,12 @@ items:
       type_id: 287
       data: 0
       value: 1
+
+    - id: 6
+      name: 'Leather'
+      type_id: 334
+      data: 0
+      value: 1
     
     - id: 7
       name: 'Feather'
@@ -94,12 +100,6 @@ items:
       data: 0
       value: 20
 
-    - id: 135
-      name: 'Leather'
-      type_id: 334
-      data: 0
-      value: 1
-
     - id: 15
       name: 'Tungsten Ore'
       type_id: 0
@@ -112,6 +112,20 @@ items:
       type_id: 0
       data: 0
       custom_id: 'mat_chromium_ore'
+      value: 1
+
+    - id: 94
+      name: 'Crystal Fragment'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_metallic_crystal_fragment_1'
+      value: 1
+    
+    - id: 95
+      name: 'Ionic Fragment'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_ionic_crystal_fragment_1'
       value: 1
 
 # Floor 2 Left side Front Corner
@@ -145,12 +159,6 @@ items:
       data: 0
       value: 3
  
-    - id: 127
-      name: 'Nether Wart'
-      type_id: 372
-      data: 0
-      value: 8
- 
  # Food Stuff 
    
     - id: 128
@@ -183,7 +191,7 @@ items:
       data: 0
       value: 100
 
-    - id: 140
+    - id: 133
       name: 'Sponge'
       type_id: 19
       data: 0

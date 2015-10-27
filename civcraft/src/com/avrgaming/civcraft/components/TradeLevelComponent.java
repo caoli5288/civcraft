@@ -36,7 +36,7 @@ public class TradeLevelComponent extends Component {
 	 */
 	private double consumeRate;
 
-	private int cultureEarned;
+	private double cultureEarned;
 
 	private double moneyEarned;
 
@@ -54,7 +54,7 @@ public class TradeLevelComponent extends Component {
 	 * Contains a hashmap of levels and counts configured for this component.
 	 */
 	private HashMap<Integer, Integer> levelCounts = new HashMap<Integer, Integer>();
-	private HashMap<Integer, Integer> culture = new HashMap<Integer, Integer>();
+	private HashMap<Integer, Double> culture = new HashMap<Integer, Double>();
 
 	/* Inventory we're trying to pull from. */
 	private MultiInventory source;
@@ -156,7 +156,7 @@ public class TradeLevelComponent extends Component {
 		levelCounts.put(level, count);
 	}
 
-	public void addCulture(int level, int cultureCount) {
+	public void addCulture(int level, Double cultureCount) {
 		culture.put(level, cultureCount);
 	}
 
@@ -248,7 +248,7 @@ public class TradeLevelComponent extends Component {
 	public TradeShipResults processConsumption() {
 		lastTrade = new TradeShipResults();
 		moneyEarned = 0;
-		cultureEarned = 0;
+		cultureEarned = 0.0;
 		int countConsumed = 0;
 
 		Integer currentCountMax = levelCounts.get(this.level);
@@ -293,12 +293,12 @@ public class TradeLevelComponent extends Component {
 			lastTrade.setResult(lastResult);
 			// return lastTrade;
 		}
-		Integer currentCultureRate = culture.get(this.level);
+		Double currentCultureRate = culture.get(this.level);
 		cultureEarned = currentCultureRate*countConsumed;
 
 		lastTrade.setMoney(moneyEarned);
 		lastTrade.setConsumed(countConsumed);
-		lastTrade.setCulture(cultureEarned);
+		lastTrade.setCulture((int) Math.round(cultureEarned));
 		return lastTrade;
 
 	}

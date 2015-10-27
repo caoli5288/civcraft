@@ -1042,7 +1042,6 @@ var_cmd_civ_info_upkeepTownInvalid: "Civilization has no town named '[%0]'"
 var_cmd_civ_info_upkeepTownHeading1: "Town of [%0] Upkeep Details"
 cmd_civ_info_help: "Subcommands available: See /civ info help"
 var_cmd_civ_info_showHeading: "Civilization of [%0]"
-var_cmd_civ_info_daysTillVictory: "[%0] is [%1] days away from a [%2] victory!"
 cmd_civ_info_showTax: "Income Tax Rate:"
 cmd_civ_info_showScience: "Science Percentage:"
 var_cmd_civ_info_showBeakersTowardEnlight: "[%0] has [%1] beakers on The Enlightenment."
@@ -2782,6 +2781,7 @@ var_effectEvent_generatedCulture: "Generated [%0] culture from other sources not
 Happiness: "Happiness"
 State: "State"
 var_buildable_notEnoughWater: "Cannot build [%0] here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
+var_cmd_civ_info_daysTillVictoryNew: "The Civilization of [%0] is [%1] days away from a [%2] victory!"
 
 # =========================== Fish Hatchery =========================
 adcmd_lag_fishHatcherDesc: "Toggles Fish Hatcheries globally."

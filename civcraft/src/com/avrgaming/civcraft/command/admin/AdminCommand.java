@@ -184,6 +184,9 @@ public class AdminCommand extends CommandBase {
 				else if (cat.name.contains("Tools")) {
 					identifier = ItemManager.getId(Material.IRON_SPADE);
 				}
+				else if (cat.name.contains("Eggs")) {
+					identifier = ItemManager.getId(Material.MONSTER_EGG);
+				}
 				else {
 					identifier = ItemManager.getId(Material.WRITTEN_BOOK);
 				}

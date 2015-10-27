@@ -48,6 +48,9 @@ town:
     # Number of days a mayor must be inactive before being able to be reclaimed
     mayor_inactive_days: 7
 
+    # The Lighthouse Trade ship coin boost (Default 1.2 [20%])
+    lighthouse_trade_ship_boost: 1.2
+
 # Town upgrade levels, determines 'size' of town.
 # level - the numeric level.
 # title - the display name for this level.

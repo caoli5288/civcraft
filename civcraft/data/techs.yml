@@ -172,7 +172,7 @@ techs:
      cost: 10000.0
      points: 500
      require_techs: 'tech_code_of_laws'
-   
+
    - id: 'tech_priesthood'
      name: 'Priesthood'
      beaker_cost: 2000.0
@@ -235,6 +235,13 @@ techs:
      cost: 15000.0
      points: 625
      require_techs: 'tech_priesthood'
+
+   - id: 'tech_exploration'
+     name: 'Exploration'
+     beaker_cost: 2500.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_sailing'
    
    - id: 'tech_taxation'
      name: 'Taxation'
@@ -479,4 +486,4 @@ techs:
      beaker_cost: 200000.0
      cost: 200000.0
      points: 80000
-     require_techs: 'tech_global_trade:tech_economics:tech_nationalism'
+     require_techs: 'tech_exploration:tech_economics:tech_nationalism'

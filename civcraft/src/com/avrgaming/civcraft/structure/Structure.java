@@ -323,6 +323,13 @@ public class Structure extends Buildable {
 				struct = (Pasture) new Pasture(rs);
 			}
 			break;
+		case "ti_lighthouse":
+			if (rs == null) {
+				struct = (Lighthouse) new Lighthouse(center, id, town);
+			} else {
+				struct = (Lighthouse) new Lighthouse(rs);
+			}
+			break;
 		default:
 			// This structure is generic, just create a structure type. 
 			// TODO should ANY structure be generic?

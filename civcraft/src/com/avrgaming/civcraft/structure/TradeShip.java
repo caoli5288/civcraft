@@ -21,6 +21,7 @@ import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigMineLevel;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
+import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
@@ -280,7 +281,7 @@ public class TradeShip extends Structure {
 		return tradeResult;
 	}
 	
-	public void process_trade_ship(CivAsyncTask task) throws InterruptedException {	
+	public void process_trade_ship(CivAsyncTask task) throws InterruptedException, InvalidConfiguration {	
 		TradeShipResults tradeResult = this.consume(task);
 		CivLog.debug("moneyEarned: " + tradeResult.getMoney());
 		CivLog.debug("countConsumed: " + tradeResult.getConsumed());
@@ -321,6 +322,10 @@ public class TradeShip extends Structure {
 			
 			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_trade_ship_income")) {
 				total_coins *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_trade_ship_income");
+			}
+			if (this.getTown().getStructureTypeCount("s_lighthouse") >=1)
+			{
+				total_coins *= CivSettings.getDouble(CivSettings.townConfig, "town.mayor_inactive_days");
 			}
 			
 			double taxesPaid = total_coins*this.getTown().getDepositCiv().getIncomeTaxRate();

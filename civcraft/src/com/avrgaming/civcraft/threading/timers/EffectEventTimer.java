@@ -111,7 +111,7 @@ public class EffectEventTimer extends CivAsyncTask {
 					TradeShip tradeShip = (TradeShip)struct;
 					try {
 						tradeShip.process_trade_ship(this);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException | InvalidConfiguration e) {
 						e.printStackTrace();
 					}
 				}
