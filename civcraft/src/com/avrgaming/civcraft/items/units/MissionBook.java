@@ -51,6 +51,7 @@ import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Cottage;
+import com.avrgaming.civcraft.structure.FishingBoat;
 import com.avrgaming.civcraft.structure.Granary;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.TownHall;
@@ -364,6 +365,11 @@ public class MissionBook extends UnitItemMaterial {
 		Structure tradeoutpost = cc.getCiv().getNearestStructureInTowns(player.getLocation());
 		if (!(tradeoutpost instanceof TradeOutpost)) {
 			throw new CivException(CivSettings.localize.localizedString("missionBook_pirate_errorNottrade"));
+		}
+		if ((tradeoutpost instanceof FishingBoat)) {
+			if (tradeoutpost.getTown().getBuffManager().hasBuff("buff_ingermanland_fishing_boat_immunity")){
+				throw new CivException(CivSettings.localize.localizedString("missionBook_pirate_errorImmunity"));
+			}
 		}
 		
 		double distance = player.getLocation().distance(((TradeOutpost)tradeoutpost).getTradeOutpostTower().getLocation());

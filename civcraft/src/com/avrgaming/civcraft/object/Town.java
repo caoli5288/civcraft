@@ -1645,7 +1645,7 @@ public class Town extends SQLObject {
 
 		Buildable inProgress  = getCurrentStructureInProgress();
 		if (inProgress != null) {
-			throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorCurrentlyBuilding")+" "+inProgress.getDisplayName()+" "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorCurrentlyBuilding",inProgress.getDisplayName())+". "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
 		}
 		
 		try {
