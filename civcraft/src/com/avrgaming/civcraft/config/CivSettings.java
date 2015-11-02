@@ -605,6 +605,17 @@ public class CivSettings {
 		return ret;
 	}
 	
+	public static Boolean getBooleanStructure(String path) {
+		Boolean ret;
+		try {
+			ret = getBoolean(structureConfig, path);
+		} catch (InvalidConfiguration e) {
+			ret = false;
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 	public static int getIntegerStructure(String path) {
 		Integer ret;
 		try {
@@ -650,6 +661,15 @@ public class CivSettings {
 		}
 		
 		double data = cfg.getDouble(path);
+		return data;
+	}
+	
+	public static boolean getBoolean(FileConfiguration cfg, String path) throws InvalidConfiguration {
+		if (!cfg.contains(path)) {
+			throw new InvalidConfiguration("Could not get configuration boolean "+path);
+		}
+		
+		boolean data = cfg.getBoolean(path);
 		return data;
 	}
 

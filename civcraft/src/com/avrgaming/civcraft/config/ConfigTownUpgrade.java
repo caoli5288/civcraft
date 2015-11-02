@@ -193,7 +193,7 @@ public class ConfigTownUpgrade {
 					if (structure != null && (structure instanceof FishHatchery)) {
 						TradeShip tradeShip = (TradeShip)structure;
 						if (tradeShip.getUpgradeLvl() < Integer.valueOf(args[1].trim())) {
-							didUpgradeFishery = true;
+							didUpgradeTradeShip = true;
 							tradeShip.setUpgradeLvl(Integer.valueOf(args[1].trim()));
 							tradeShip.reprocessCommandSigns();
 							town.saved_tradeship_upgrade_levels = tradeShip.getLevel();

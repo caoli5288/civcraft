@@ -46,7 +46,7 @@ mysql:
    database: game
    username: user
    password: 'PasswordForDatabaseUser'
-   table_prefix: 
+   table_prefix: ''
    min_conns: '5'
    max_conns: '10'
    parts: '3'

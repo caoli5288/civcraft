@@ -2510,8 +2510,6 @@ wall_firstLocation: "First location placed, place another to start building a wa
 
 # "Can only build a wall in 100.0 block segments, pick a closer location"
 var_wall_maxLength: "Can only build a wall in [%0] block segments, pick a closer location"
-var_wall_cannotAfford: "You cannot afford to pay [%0] [%1] for a wall %d blocks long."
-var_wall_buildSuccess: "Paid [%0] [%1] for a wall %d blocks long."
 wall_build_tooHigh: "Cannot build here, wall is too high."
 wall_build_recursionHalt: "ERROR: Building wall blocks exceeded recusion limit! Halted to keep server alive."
 wall_repair_invalid: "This wall is no longer valid and cannot be repaired. Walls can no longer overlap with protected structure blocks, demolish this wall instead."
@@ -2783,6 +2781,9 @@ State: "State"
 var_buildable_notEnoughWater: "Cannot build [%0] here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
 var_cmd_civ_info_daysTillVictoryNew: "The Civilization of [%0] is [%1] days away from a [%2] victory!"
 missionBook_pirate_errorImmunity: "You cannot pirate from this fishing boat because it is guarded by the Grand Ship Ingermanland"
+
+var_wall_cannotAfford: "You cannot afford to pay [%0] [%1] for a wall [%2] blocks long."
+var_wall_buildSuccess: "Paid [%0] [%1] for a wall [%2] blocks long."
 
 # =========================== Fish Hatchery =========================
 adcmd_lag_fishHatcherDesc: "Toggles Fish Hatcheries globally."

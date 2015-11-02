@@ -4,7 +4,6 @@ package com.avrgaming.civcraft.structure;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.HashSet;
 
 import org.bukkit.Location;
@@ -22,7 +21,6 @@ import com.avrgaming.civcraft.config.ConfigMineLevel;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
-import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -276,7 +274,7 @@ public class TradeShip extends Structure {
 		}
 		getConsumeComponent().setSource(mInv);
 		getConsumeComponent().setConsumeRate(1.0);
-		tradeResult = getConsumeComponent().processConsumption();
+		tradeResult = getConsumeComponent().processConsumption(this.getUpgradeLvl()-1);
 		getConsumeComponent().onSave();		
 		return tradeResult;
 	}
@@ -353,9 +351,8 @@ public class TradeShip extends Structure {
 				}
 			}
 			
-			for (HashMap<String, String> item :tradeResult.getReturnCargo()) {
-				ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get(item.get("name")),Integer.parseInt(item.get("quantity")));
-				multiInv.addItem(newItem);
+			for (ItemStack item :tradeResult.getReturnCargo()) {
+				multiInv.addItem(item);
 			}
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("tradeship_successSpecail"));
 		}

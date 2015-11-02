@@ -652,7 +652,7 @@ upgrades:
 
     - id: 'upgrade_tradeship_level_2'
       name: 'Upgrade Trade Ship Level 2'
-      action: 'set_library_level, 2'
+      action: 'set_tradeship_upgrade_level, 2'
       cost: 50000.0
       require_upgrade:
       require_tech: 'tech_commerce'
@@ -661,7 +661,7 @@ upgrades:
   
     - id: 'upgrade_tradeship_level_3'
       name: 'Upgrade Trade Ship Level 3'
-      action: 'set_library_level, 3'
+      action: 'set_tradeship_upgrade_level, 3'
       cost: 100000.0
       require_upgrade: 'upgrade_tradeship_level_2'
       require_tech: 'tech_global_trade'
@@ -670,9 +670,27 @@ upgrades:
   
     - id: 'upgrade_tradeship_level_4'
       name: 'Upgrade Trade Ship Level 4'
-      action: 'set_library_level, 4'
+      action: 'set_tradeship_upgrade_level, 4'
       cost: 250000.0
       require_upgrade: 'upgrade_tradeship_level_3'
       require_tech: 'tech_nationalism'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_5'
+      name: 'Upgrade Trade Ship Level 5'
+      action: 'set_tradeship_upgrade_level, 5'
+      cost: 500000.0
+      require_upgrade: 'upgrade_tradeship_level_4'
+      require_tech: 'tech_innovation'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_6'
+      name: 'Upgrade Trade Ship Level 6'
+      action: 'set_tradeship_upgrade_level, 6'
+      cost: 1000000.0
+      require_upgrade: 'upgrade_tradeship_level_6'
+      require_tech: 'tech_scientific_method'
       require_structure: 'ti_trade_ship'
       category: 'Trade Ship'

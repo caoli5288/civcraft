@@ -1,8 +1,9 @@
 package com.avrgaming.civcraft.components;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+
+import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.components.TradeLevelComponent.Result;
 
@@ -13,7 +14,7 @@ public class TradeShipResults {
     private int culture;
     private int consumed;
 
-	private List<HashMap<String, String>> returnCargo = new LinkedList<HashMap<String, String>>();
+	private List<ItemStack> returnCargo = new LinkedList<ItemStack>();
     
     public TradeShipResults() {
 		this.money = 0;
@@ -54,15 +55,15 @@ public class TradeShipResults {
 		this.consumed = consumed;
 	}
 	
-	public void addReturnCargo(HashMap<String, String> cargo) {
+	public void addReturnCargo(ItemStack cargo) {
 		this.returnCargo.add(cargo);
 	}
 
-	public List<HashMap<String, String>> getReturnCargo() {
+	public List<ItemStack> getReturnCargo() {
 		return returnCargo;
 	}
 
-	public void setReturnCargo(List<HashMap<String, String>> returnCargo) {
+	public void setReturnCargo(List<ItemStack> returnCargo) {
 		this.returnCargo = returnCargo;
 	}
 
