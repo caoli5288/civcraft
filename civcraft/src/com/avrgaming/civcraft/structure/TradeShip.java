@@ -22,7 +22,6 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivData;
-import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
@@ -281,9 +280,6 @@ public class TradeShip extends Structure {
 	
 	public void process_trade_ship(CivAsyncTask task) throws InterruptedException, InvalidConfiguration {	
 		TradeShipResults tradeResult = this.consume(task);
-		CivLog.debug("moneyEarned: " + tradeResult.getMoney());
-		CivLog.debug("countConsumed: " + tradeResult.getConsumed());
-		CivLog.debug("cultureEarned: " + tradeResult.getCulture());
 		
 		Result result = tradeResult.getResult();
 		switch (result) {

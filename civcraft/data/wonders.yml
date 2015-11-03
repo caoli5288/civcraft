@@ -222,7 +222,7 @@ wonders:
     onBuild_event:
     ignore_floating: true
     limit: 1
-    cost: 1000000.0
+    cost: 1500000.0
     upkeep: 10000.0
     hammer_cost: 1000000.0
     points: 500000

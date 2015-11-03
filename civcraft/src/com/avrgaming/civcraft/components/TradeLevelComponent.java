@@ -218,7 +218,6 @@ public class TradeLevelComponent extends Component {
 			int rand1 = rand.nextInt(MaxRand);
 
 			if (rand1 < (int)(HUGEPACK_CHANCE*MaxRand)) {
-				CivLog.debug("HUGEPACK_CHANCE: " + HUGEPACK_CHANCE*MaxRand);
 				if (itemID.contains("_egg")) {
 					if (itemID.contains("_egg_4")) {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4"),2));
@@ -286,7 +285,6 @@ public class TradeLevelComponent extends Component {
 					newItems.add(ItemManager.createItemStack(CivData.EMERALD, emeraldRand));
 				}
 			} else if (rand1 < (int)(BIGPACK_CHANCE*MaxRand)) {
-				CivLog.debug("BIGPACK_CHANCE: " + BIGPACK_CHANCE*MaxRand);
 				if (itemID.contains("_egg")) {
 					if (itemID.contains("_egg_4")) {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
@@ -333,8 +331,6 @@ public class TradeLevelComponent extends Component {
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3"), (rand.nextInt(3))+1));
 				}
 			} else if (rand1 < (int)(MEDIUMPACK_CHANCE*MaxRand)) {
-
-				CivLog.debug("MEDIUMPACK_CHANCE: " + MEDIUMPACK_CHANCE*MaxRand);
 				if (itemID.contains("_egg")) {
 					if (itemID.contains("_egg_4")) {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
@@ -360,7 +356,6 @@ public class TradeLevelComponent extends Component {
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2"), (rand.nextInt(3))+1));
 				}
 			}  else if (rand1 < (int)(PACK_CHANCE*MaxRand)) {
-				CivLog.debug("PACK_CHANCE: " + PACK_CHANCE*MaxRand);
 				if (itemID.contains("_egg")) {
 					if (itemID.contains("_egg_4")) {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_4")));
@@ -455,7 +450,6 @@ public class TradeLevelComponent extends Component {
 //			return lastTrade;
 //		}
 		int stacksToConsume = hasCountToConsume();
-		CivLog.debug("Stacks to Consume: " + stacksToConsume);
 		if (stacksToConsume >= 1) {
 			countConsumed = consumeFromInventory(stacksToConsume);
 
