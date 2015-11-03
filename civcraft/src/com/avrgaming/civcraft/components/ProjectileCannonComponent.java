@@ -128,9 +128,12 @@ public class ProjectileCannonComponent extends ProjectileComponent {
 			setDamage(CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.damage"));
 			speed = CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.speed");
 			range = CivSettings.getDouble(CivSettings.warConfig, "cannon_tower.range");
-			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range"))
+			if (this.getTown().getBuffManager().hasBuff("buff_great_lighthouse_tower_range") && this.getBuildable().getConfigId().equals("s_cannontower") )
 			{
 				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_great_lighthouse_tower_range");
+			} else if (this.getTown().getBuffManager().hasBuff("buff_ingermanland_water_range") && this.getBuildable().getConfigId().equals("w_grand_ship_ingermanland") )
+			{
+				range *= this.getTown().getBuffManager().getEffectiveDouble("buff_ingermanland_water_range");
 			}
 			min_range = CivSettings.getDouble(CivSettings.warConfig, "cannon_tower.min_range");
 			splash = CivSettings.getInteger(CivSettings.warConfig, "cannon_tower.splash");

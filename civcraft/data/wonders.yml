@@ -209,6 +209,25 @@ wonders:
     points: 250000
     max_hitpoints: 5000
     regen_rate: 6
+
+  - id: w_grand_ship_ingermanland
+    template: grand_ship_ingermanland
+    template_y_shift: -8
+    displayName: 'Grand Ship Ingermanland'
+    require_tech: 'tech_grand_ship_ingermanland'
+    require_upgrade:
+    check_event:
+    effect_event:
+    update_event:
+    onBuild_event:
+    ignore_floating: true
+    limit: 1
+    cost: 1500000.0
+    upkeep: 10000.0
+    hammer_cost: 1000000.0
+    points: 500000
+    max_hitpoints: 2000
+    regen_rate: 2
 # Wonder Buffs
 #
 # To de-complicate the structure/wonder relationship the buffs for wonders
@@ -264,9 +283,16 @@ wonder_buffs:
    - id: w_great_lighthouse
      buffs:
          - buff_great_lighthouse_tower_range
+         - buff_great_lighthouse_trade_ship_income
 
    - id: w_mother_tree
      buffs:
          - buff_mother_tree_growth
          - buff_mother_tree_tile_improvement_cost
          - buff_mother_tree_tile_improvement_bonus
+
+   - id: w_grand_ship_ingermanland
+     buffs:
+         - buff_ingermanland_fishing_boat_immunity
+         - buff_ingermanland_trade_ship_income
+         - buff_ingermanland_water_range

@@ -22,11 +22,13 @@ public class GreatLighthouse extends Wonder {
 	@Override
 	protected void addBuffs() {
 		addBuffToTown(this.getTown(), "buff_great_lighthouse_tower_range");
+		addBuffToCiv(this.getCiv(), "buff_great_lighthouse_trade_ship_income");
 	}
 	
 	@Override
 	protected void removeBuffs() {
 		removeBuffFromTown(this.getTown(), "buff_great_lighthouse_tower_range");
+		removeBuffFromCiv(this.getCiv(), "buff_great_lighthouse_trade_ship_income");
 	}
 	
 	@Override

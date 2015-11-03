@@ -65,8 +65,7 @@ public class UpdateEventTimer extends CivAsyncTask {
 							}
 							
 							TaskMaster.asyncTask("trommel-"+struct.getCorner().toString(), new TrommelAsyncTask(struct), 0);
-						}
-						if (struct.getUpdateEvent().equals("quarry_process")) {
+						}else if (struct.getUpdateEvent().equals("quarry_process")) {
 							if (!CivGlobal.quarriesEnabled) {
 								continue;
 							}

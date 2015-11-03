@@ -1042,7 +1042,6 @@ var_cmd_civ_info_upkeepTownInvalid: "Civilization has no town named '[%0]'"
 var_cmd_civ_info_upkeepTownHeading1: "Town of [%0] Upkeep Details"
 cmd_civ_info_help: "Subcommands available: See /civ info help"
 var_cmd_civ_info_showHeading: "Civilization of [%0]"
-var_cmd_civ_info_daysTillVictory: "[%0] is [%1] days away from a [%2] victory!"
 cmd_civ_info_showTax: "Income Tax Rate:"
 cmd_civ_info_showScience: "Science Percentage:"
 var_cmd_civ_info_showBeakersTowardEnlight: "[%0] has [%1] beakers on The Enlightenment."
@@ -2084,7 +2083,7 @@ var_town_missingFunds: "The town does not have the required [%0] [%1]."
 town_missingStructures: "The town does not have the required structures to buy this upgrade."
 town_buildwonder_NotOverworld: "Can only build wonders in the overworld ... for now."
 town_buildwonder_errorMissingUpgrade: "We require an upgrade we do not have yet."
-town_buildwonder_errorMissingTech: "We require an technology we do not have yet."
+town_buildwonder_errorMissingTech: "We require a technology we do not have yet."
 town_buildwonder_errorNotAvailable: "This wonder is not currently available."
 town_buildwonder_errorBuiltElsewhere: "This wonder is already built somewhere else."
 town_buildwonder_errorLimit1Casual: "Can only have one wonder of each type in your civilization in casual mode."
@@ -2316,7 +2315,6 @@ buildable_preview_prompt2: "If this location looks good, type 'yes'. Otherwise, 
 buildable_TooCloseToBedrock: "Cannot build here, too close to bedrock."
 var_buildable_toocloseToSpawn1: "You must build at least [%0] blocks away from spawn."
 buildable_notInCulture: "Cannot build here, you need to build inside your culture."
-buildable_shipyard_notEnoughWater: "Cannot build shipyard here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
 buildable_structureExistsHere: "Cannot build here, structure already at this location."
 buildable_errorTILimit: "Cannot build tile improvement. Already at tile improvement limit."
 buildable_errorTIHere: "Cannot build a tile improvement on the same chunk as another tile improvement."
@@ -2512,8 +2510,6 @@ wall_firstLocation: "First location placed, place another to start building a wa
 
 # "Can only build a wall in 100.0 block segments, pick a closer location"
 var_wall_maxLength: "Can only build a wall in [%0] block segments, pick a closer location"
-var_wall_cannotAfford: "You cannot afford to pay [%0] [%1] for a wall %d blocks long."
-var_wall_buildSuccess: "Paid [%0] [%1] for a wall %d blocks long."
 wall_build_tooHigh: "Cannot build here, wall is too high."
 wall_build_recursionHalt: "ERROR: Building wall blocks exceeded recusion limit! Halted to keep server alive."
 wall_repair_invalid: "This wall is no longer valid and cannot be repaired. Walls can no longer overlap with protected structure blocks, demolish this wall instead."
@@ -2641,7 +2637,6 @@ var_daily_townTaxes: "Collected [%0] [%1] in town taxes."
 
 effectEvent_noTownHall: "Your town does not have a town hall! Structures have no effect!"
 var_effectEvent_convertBeakers: "Converted [%0] beakers into [%1] culture as we are not research any new technologies."
-var_effectEvent_generatedCulture: "Generated [%0] culture."
 
 var_syncTrade_payout: "Generated [%0] from trade. [%0]"
 
@@ -2769,3 +2764,55 @@ war_kick_needAntiCheat2: "Visit https://www.minetexas.com/ to get it."
 pvpListenerError: "You are unable to damage players while protected."
 pvpListenerError2: "You are unable to damage protected players."
 pvpTimerEnded: "Your PvP protection has expired."
+
+
+# ----------------------------------------------------------------
+# =========================== BEGIN 1.75 =========================
+config_material_misc: "Misc"
+civGlobal_serverFullMsg: "Server is full for now, come back later."
+cmd_town_info_tradeTotal: "Total Trade: Good Total:"
+
+cmd_NameNoResults: "No matches for that name."
+
+var_temple_cultureGenerated: "A temple also generated [%0] culture."
+var_effectEvent_generatedCulture: "Generated [%0] culture from other sources not listed."
+Happiness: "Happiness"
+State: "State"
+var_buildable_notEnoughWater: "Cannot build [%0] here, you need to be in a majority of ocean, river, or beach biome. Try repositioning it if you are."
+var_cmd_civ_info_daysTillVictoryNew: "The Civilization of [%0] is [%1] days away from a [%2] victory!"
+missionBook_pirate_errorImmunity: "You cannot pirate from this fishing boat because it is guarded by the Grand Ship Ingermanland"
+
+var_wall_cannotAfford: "You cannot afford to pay [%0] [%1] for a wall [%2] blocks long."
+var_wall_buildSuccess: "Paid [%0] [%1] for a wall [%2] blocks long."
+
+# =========================== Fish Hatchery =========================
+adcmd_lag_fishHatcherDesc: "Toggles Fish Hatcheries globally."
+adcmd_lag_fishHatchery: "Fish Hatcheries enabled:"
+fishery_sign_pool: "Fish\nHatchery\nPool"
+fishery_sign_poolOffline: "Pool\nOffline"
+var_fishery_pool_msg_online: "Fish Hatchery Pool [%0] is active."
+var_fishery_pool_msg_offline: "Fish Hatchery Pool [%0] is offline. Upgrade Fish Hatchery to activate"
+var_townupgrade_fish_hatchery: "Our Fish Hatchery is now level [%0]"
+
+# =========================== Trade Ship =========================
+var_tradeship_stagnated: "A level [%0] Trade Ship's production stagnated. [%1]"
+var_tradeship_productionGrew: "A level [%0] Trade Ship's production rose. [%1]"
+var_tradeship_lvlUp: "A Trade Ship gained a level. It is now level [%0]"
+var_tradeship_maxed: "A level [%0] Trade Ship is maxed. [%1]"
+var_tradeship_success: "Your Trade Ship generated [%0] [%1] and [%2] culture from selling [%3] units of cargo."
+tradeship_successSpecail: "It also brought back something specail! Check your Trade Ship's incoming cargo hold."
+tradeship_sign_input_line0: "Incoming"
+tradeship_sign_input_notupgraded_line1: "Unavailable"
+tradeship_sign_input_notupgraded_line2: "Town Upgrade"
+tradeship_sign_input_notupgraded_line3: "Required"
+
+tradeship_sign_output_line0: "Outgoing"
+tradeship_sign_output_notupgraded_line1: "Unavailable"
+var_tradeship_sign_output_notupgraded_line2: "Level [%0]"
+tradeship_sign_output_notupgraded_line3: "Required"
+var_townupgrade_tradeship: "Our Trade Ship is now level [%0]"
+var_tradeship_taxesPaid: "Paid [%0] [%1] in taxes from Trade Ship Income"
+
+# =========================== END 1.75 =========================
+# ----------------------------------------------------------------
+

@@ -68,9 +68,9 @@ public class CannonTower extends Structure {
 		return (int) (info.max_hitpoints * rate);
 	}
 	
-	public void setDamage(int damage) {
-		cannonComponent.setDamage(damage);
-	}
+//	public void setDamage(int damage) {
+//		cannonComponent.setDamage(damage);
+//	}
 
 
 	public void setTurretLocation(BlockCoord absCoord) {

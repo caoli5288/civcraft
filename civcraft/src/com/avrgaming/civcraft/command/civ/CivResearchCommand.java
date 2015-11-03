@@ -140,7 +140,7 @@ public class CivResearchCommand extends CommandBase {
 		
 		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_Available"));
 		for (ConfigTech tech : techs) {
-			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+CivSettings.localize.localizedString("Cost:")+" "+
+			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+CivSettings.localize.localizedString("Cost")+" "+
 					CivColor.Yellow+tech.cost+CivColor.LightGray+" "+CivSettings.localize.localizedString("Beakers")+" "+
 					CivColor.Yellow+tech.beaker_cost);
 		}

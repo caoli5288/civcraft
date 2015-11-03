@@ -176,7 +176,7 @@ public class CivGlobal {
 	
 	public static Integer maxPlayers = -1;
 	public static HashSet<String> betaPlayers = new HashSet<String>();
-	public static String fullMessage = "Server is full for now, come back later.";
+	public static String fullMessage = "";
 	public static Boolean betaOnly = false;
 	
 	//TODO convert this to completely static?
@@ -184,6 +184,7 @@ public class CivGlobal {
 
 	public static boolean trommelsEnabled = true;
 	public static boolean quarriesEnabled = true;
+	public static boolean fisheryEnabled = true;
 	public static boolean mobGrinderEnabled = true;
 	public static boolean towersEnabled = true;
 	public static boolean growthEnabled = true;

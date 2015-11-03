@@ -155,7 +155,9 @@ public class Town extends SQLObject {
 	/* XXX kind of a hacky way to save the bank's level information between build undo calls */
 	public int saved_bank_level = 1;
 	public int saved_trommel_level = 1;
+	public int saved_tradeship_upgrade_levels = 1;
 	public int saved_quarry_level = 1;
+	public int saved_fish_hatchery_level = 1;
 	public double saved_bank_interest_amount = 0;
 	
 	/* Happiness Stuff */
@@ -1643,7 +1645,7 @@ public class Town extends SQLObject {
 
 		Buildable inProgress  = getCurrentStructureInProgress();
 		if (inProgress != null) {
-			throw new CivException(CivSettings.localize.localizedString("town_buildwonder_errorCurrentlyBuilding")+" "+inProgress.getDisplayName()+" "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
+			throw new CivException(CivSettings.localize.localizedString("var_town_buildwonder_errorCurrentlyBuilding",inProgress.getDisplayName())+". "+CivSettings.localize.localizedString("town_buildwonder_errorOneAtATime"));
 		}
 		
 		try {

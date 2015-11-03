@@ -228,7 +228,7 @@ public class CivInfoCommand extends CommandBase {
 				if (civ == EndGameCondition.getCivFromSessionData(entry.value)) {
 					Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
 					
-					CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictory",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
+					CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictoryNew",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
 							CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White,CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
 					break;
 				}

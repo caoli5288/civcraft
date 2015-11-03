@@ -307,6 +307,13 @@ buffs:
       stackable: false
       parent:
 
+    - id: 'buff_great_lighthouse_trade_ship_income'
+      name: 'Lighthouse Trade Ship Income'
+      description: 'Trade Ships earn 20% more for selling items'
+      value: '1.2'
+      stackable: false
+      parent:
+
 # Mother Tree buffs
     - id: 'buff_mother_tree_growth'
       name: 'Mother Tree Growth Bonus'
@@ -326,5 +333,27 @@ buffs:
       name: 'Mother Tree Tile Improvment Bonus'
       description: 'Can build twice as many tile improvments in this town.'
       value: '0.20'
+      stackable: false
+      parent:
+
+# Grand Ship Ingermanland Buffs
+    - id: 'buff_ingermanland_fishing_boat_immunity'
+      name: 'Ingermanland Fishing Boat Immunity'
+      description: 'Fishing Boats are immune to Espionage missions.'
+      value: '1.0'
+      stackable: false
+      parent:
+
+    - id: 'buff_ingermanland_trade_ship_income'
+      name: 'Ingermanland Trade Ship Income'
+      description: 'Trade Ships earn 30% more for selling items'
+      value: '1.3'
+      stackable: false
+      parent:
+
+    - id: 'buff_ingermanland_water_range'
+      name: 'Ingermanland Navy Range'
+      description: 'Navy Vessels have 50% greater attack range'
+      value: '1.5'
       stackable: false
       parent:

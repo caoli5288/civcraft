@@ -6,7 +6,7 @@
 ################ Bank Settings ################
 #TODO add bank config options
 
-################# Trommel Settings #############
+################# Quarry Settings #################
 quarry:
     max: 100000
     despotism_rate: 2.0
@@ -20,6 +20,18 @@ quarry:
     tungsten_chance: 0.0009
     rare_chance: 0.0004
 
+
+################# Fish Hatchery Settings #################
+fishery:
+    tierMax: 10000
+    t0_rate: 1.0
+    t1_rate: 0.5
+    t2_rate: 0.05
+    t3_rate: 0.01
+    t4_rate: 0.001
+
+
+################# Trommel Settings #################
 trommel:
     despotism_rate: 2.0
     penalty_rate: 0.8
@@ -84,8 +96,7 @@ trommel_andesite:
     refined_tungsten_chance: 0.00010
     crystal_chance: 0.00005
 
-
-################# Mob Grinder Settings #############
+################# Mob Grinder Settings #################
 mobGrinder:
     t1_chance: 0.5
     t2_chance: 0.1
@@ -97,7 +108,7 @@ mobGrinder:
     tribalism_rate: 1.5
     penalty_rate: 0.8
 
-################ Grocer Settings ###############
+################# Grocer Settings #################
 grocer_levels:
     - level: 1
       itemName: 'Fish'
@@ -126,9 +137,10 @@ grocer_levels:
       itemData: 0
       amount: 1
       price: 50.0
-################# Blacksmith Settings ##############
+################# Blacksmith Settings #################
 blacksmith:
     forge_cost: 2500.0
+
 ################# Cottage Settings #################
 cottage_levels:
    - level: 1
@@ -178,7 +190,7 @@ cottage_levels:
          - 319,1
      count: 288
      coins: 450.0
-################### Temple Settings #######################
+################# Temple Settings #################
 temple:
     # rate which temple modifies total culture output
     culture_bonus: 0.15
@@ -220,7 +232,7 @@ temple_levels:
          - 423,10
       count: 144
 
-############################### Mine Settings #################
+################# Mine Settings #################
 mine_levels:
     - level: 1
       hammers: 100.00
@@ -246,6 +258,82 @@ mine_levels:
       hammers: 300.00
       amount: 30
       count: 144
+
+################# Trade Ship Settings #################
+tradeship_levels:
+    - level: 1
+      culture: 0.1
+      maxTrade: 2
+      upgradeTrade: 1024
+      # 8 hours
+
+    - level: 2
+      culture: 0.2
+      maxTrade: 2
+      upgradeTrade: 2048
+      # 16 hours
+
+    - level: 3
+      culture: 0.3
+      maxTrade: 4
+      upgradeTrade: 4096
+      # 2 Chests Active
+      # 16 Hours
+
+    - level: 4
+      culture: 0.4
+      maxTrade: 4
+      upgradeTrade: 8192
+      # 2 Chests Active
+      # 32 Hours
+
+    - level: 5
+      culture: 0.5
+      maxTrade: 6
+      upgradeTrade: 12288
+      # 3 Chests Active
+      # 32 Hours
+
+    - level: 6
+      culture: 0.6
+      maxTrade: 6
+      upgradeTrade: 24576
+      # 3 Chests Active
+      # 64 Hours
+
+    - level: 7
+      culture: 0.7
+      maxTrade: 8
+      upgradeTrade: 32768
+      # 4 Chests Active
+      # 64 Hours
+
+    - level: 8
+      culture: 0.8
+      maxTrade: 8
+      upgradeTrade: 65536
+      # 4 Chests Active
+      # 128 Hours
+
+    - level: 9
+      culture: 0.9
+      maxTrade: 10
+      upgradeTrade: 81920
+      # 5 Chests Active
+      # 128 Hours
+
+    - level: 10
+      culture: 1.0
+      maxTrade: 10
+      upgradeTrade: 163840
+      # 5 Chests Active
+      # 256 Hours
+tradeship:
+    pack_chance: 0.05
+    mediumpack_chance: 0.01
+    bigpack_chance: 0.005
+    hugepack_chance: 0.001
+
 ##################### Farm Settings ##########################
 farm:
     # Number of crops that will grow per 100% of growth rate.
@@ -253,6 +341,13 @@ farm:
 
     # Number of seconds it takes for a growth tick to fire, cannot be less than 1.
     grow_tick_rate: 60
+
+    #keep this set to false to use the whole chunk height for growth in a farm chunk (Classic Behavior)
+    uses_range: false
+    #This the range above the base y in which the farm will grow.
+    #Use this to add additional height in which to grow.
+    #The default of 4 limits growth to the original height of the structure
+    grow_range_y: 4
 
 ##################### Windmill Settings #####################
 windmill:
@@ -297,7 +392,7 @@ barracks:
 
     # tier dampen
     tier_damp: 0.175
-    
+
 
 #################### Stable Settings ########################
 # Here is where we can configure which items go with which horses
@@ -458,6 +553,62 @@ structures:
           attribute: 'CULTURE'
           value: '50.0'
 
+  - id: s_lighthouse
+    template: lighthouse
+    template_y_shift: -1
+    displayName: Lighthouse
+    require_tech: 'tech_exploration'
+    require_structure: 's_shipyard'
+    effect_event:
+    limit: 1
+    cost: 50000.0
+    upkeep: 1000.0
+    hammer_cost: 3000.0
+    points: 5000
+    max_hitpoints: 500
+    ignore_floating: false
+    components:
+        - name: 'AttributeBiome'
+          biomes: 'OCEAN'
+          attribute: 'GROWTH'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'DEEP_OCEAN'
+          attribute: 'GROWTH'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'RIVER'
+          attribute: 'GROWTH'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_OCEAN'
+          attribute: 'GROWTH'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_RIVER'
+          attribute: 'GROWTH'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'DEEP_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'RIVER'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_RIVER'
+          attribute: 'HAMMERS'
+          value: '0.5'
+
   - id: s_bank
     template: bank
     template_y_shift: 0
@@ -492,6 +643,24 @@ structures:
     hammer_cost: 800.0
     points: 1500
     max_hitpoints: 200
+
+  - id: ti_fish_hatchery
+    template: fish_hatchery
+    template_y_shift: 0
+    displayName: Fish Hatchery
+    require_upgrade:
+    require_tech: 'tech_automation'
+    effect_event: 
+    check_event: 
+    update_event: fish_hatchery_process
+    onBuild_event:
+    limit: 0
+    allow_outside_town: true
+    cost: 10000.0
+    upkeep: 5000.0
+    hammer_cost: 5000.0
+    points: 1500
+    max_hitpoints: 100
 
   - id: ti_quarry
     template: quarry
@@ -739,11 +908,35 @@ structures:
         - name: 'AttributeBiome'
           biomes: 'OCEAN'
           attribute: 'HAMMERS'
-          value: '0.02'
+          value: '0.5'
         - name: 'AttributeBiome'
-          biomes: 'OCEAN'
-          attribute: 'GROWTH'
-          value: '0.05'
+          biomes: 'DEEP_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'RIVER'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_RIVER'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'BEACH'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'STONE_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.5'
+        - name: 'AttributeBiome'
+          biomes: 'COLD_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.5'
   
   - id: ti_mine
     template: mine
@@ -807,6 +1000,101 @@ structures:
     points: 3000
     max_hitpoints: 500
     ignore_floating: true
+    components:
+        - name: 'AttributeBiome'
+          biomes: 'OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'DEEP_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'RIVER'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_RIVER'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'BEACH'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'STONE_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.05'
+        - name: 'AttributeBiome'
+          biomes: 'COLD_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.05'
+
+  - id: ti_trade_ship
+    template: trade_ship
+    template_y_shift: -5
+    displayName: Trade Ship
+    require_upgrade:
+    require_tech: 'tech_exploration'
+    require_structure: 's_shipyard'
+    effect_event: process_trade_ship
+    check_event:
+    update_event:
+    onBuild_event:
+    limit: 1
+    cost: 50000.0
+    upkeep: 1000.0
+    hammer_cost: 2000.0
+    tile_improvement: true
+    points: 3000
+    max_hitpoints: 500
+    ignore_floating: true
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'HAPPINESS'
+          value: '2.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'CULTURE'
+          value: '100.0'
+        - name: 'AttributeBiome'
+          biomes: 'OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'DEEP_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'RIVER'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_OCEAN'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'FROZEN_RIVER'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'BEACH'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'STONE_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'AttributeBiome'
+          biomes: 'COLD_BEACH'
+          attribute: 'HAMMERS'
+          value: '0.2'
+        - name: 'TradeLevelComponent'
   
   - id: ti_farm
     template: farm

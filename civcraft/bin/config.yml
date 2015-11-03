@@ -46,23 +46,13 @@ mysql:
    database: game
    username: user
    password: 'PasswordForDatabaseUser'
-   table_prefix: 
+   table_prefix: ''
    min_conns: '5'
    max_conns: '10'
    parts: '3'
    
 global_database:
     database: global
-    hostname: localhost
-    port: '3306'
-    username: user
-    password: 'PasswordForDatabaseUser'
-    min_conns: '5'
-    max_conns: '10'
-    parts: '3'
-    
-perk_database:
-    database: perks
     hostname: localhost
     port: '3306'
     username: user

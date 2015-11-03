@@ -110,6 +110,7 @@ public class CivSettings {
 	public static Map<Integer, ConfigCottageLevel> cottageLevels = new HashMap<Integer, ConfigCottageLevel>();
 	public static Map<Integer, ConfigMineLevel> mineLevels = new HashMap<Integer, ConfigMineLevel>();
 	public static Map<Integer, ConfigTempleLevel> templeLevels = new HashMap<Integer, ConfigTempleLevel>();
+	public static Map<Integer, ConfigTradeShipLevel> tradeShipLevels = new HashMap<Integer, ConfigTradeShipLevel>();
 	
 	public static FileConfiguration wonderConfig; /* wonders.yml */
 	public static Map<String, ConfigBuildableInfo> wonders = new HashMap<String, ConfigBuildableInfo>();
@@ -231,6 +232,7 @@ public class CivSettings {
 
 		CivLog.debug(localize.localizedString("welcome_string","test",1337,100.50));
 		CURRENCY_NAME = localize.localizedString("civ_currencyName");
+		CivGlobal.fullMessage = CivSettings.localize.localizedString("civGlobal_serverFullMsg");
 		
 		// Check for required data folder, if it's not there export it.
 		CivSettings.validateFiles();
@@ -454,6 +456,7 @@ public class CivSettings {
 		ConfigValidMod.loadConfig(nocheatConfig, validMods);
 		ConfigArena.loadConfig(arenaConfig, arenas);
 		ConfigFishing.loadConfig(fishingConfig, fishingDrops);
+		ConfigTradeShipLevel.loadConfig(structureConfig, tradeShipLevels);
 	
 		ConfigRemovedRecipes.removeRecipes(materialsConfig, removedRecipies );
 		CivGlobal.preGenerator.preGenerate();
@@ -602,6 +605,17 @@ public class CivSettings {
 		return ret;
 	}
 	
+	public static Boolean getBooleanStructure(String path) {
+		Boolean ret;
+		try {
+			ret = getBoolean(structureConfig, path);
+		} catch (InvalidConfiguration e) {
+			ret = false;
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 	public static int getIntegerStructure(String path) {
 		Integer ret;
 		try {
@@ -647,6 +661,15 @@ public class CivSettings {
 		}
 		
 		double data = cfg.getDouble(path);
+		return data;
+	}
+	
+	public static boolean getBoolean(FileConfiguration cfg, String path) throws InvalidConfiguration {
+		if (!cfg.contains(path)) {
+			throw new InvalidConfiguration("Could not get configuration boolean "+path);
+		}
+		
+		boolean data = cfg.getBoolean(path);
 		return data;
 	}
 

@@ -749,14 +749,14 @@ public abstract class Buildable extends SQLObject {
 			}
 		}
 		
-		if (this.getConfigId().equals("s_shipyard")) {
+		if (this.getConfigId().equals("s_shipyard") || this.getConfigId().equals("ti_tradeship") || this.getConfigId().equals("w_grand_ship_ingermanland")) {
 			if (!centerBlock.getBiome().equals(Biome.OCEAN) && 
 				!centerBlock.getBiome().equals(Biome.BEACH) &&
 				!centerBlock.getBiome().equals(Biome.DEEP_OCEAN) &&
 				!centerBlock.getBiome().equals(Biome.RIVER) &&
 				!centerBlock.getBiome().equals(Biome.FROZEN_OCEAN) &&
 				!centerBlock.getBiome().equals(Biome.FROZEN_RIVER)) {
-				throw new CivException(CivSettings.localize.localizedString("buildable_shipyard_notEnoughWater"));
+				throw new CivException(CivSettings.localize.localizedString("var_buildable_notEnoughWater",this.getDisplayName()));
 			}
 		}
 		

@@ -103,11 +103,13 @@ import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.road.RoadBlock;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.BuildableLayer;
+import com.avrgaming.civcraft.structure.CannonTower;
 import com.avrgaming.civcraft.structure.Farm;
 import com.avrgaming.civcraft.structure.Pasture;
 //import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.Wall;
 import com.avrgaming.civcraft.structure.farm.FarmChunk;
+import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
 import com.avrgaming.civcraft.threading.CivAsyncTask;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.FireWorkTask;
@@ -299,7 +301,14 @@ public class BlockListener implements Listener {
 
 				cfc.setHit(true);
 				cfc.destroy(event.getDamager());
-				event.setDamage((double)cfc.getFromTower().getDamage());
+				Buildable whoFired = cfc.getWhoFired();
+				if (whoFired.getConfigId().equals("s_cannontower"))
+				{
+					event.setDamage((double)((CannonTower)whoFired).getDamage());
+				} else if (whoFired.getConfigId().equals("w_grand_ship_ingermanland"))
+				{
+					event.setDamage((double)((GrandShipIngermanland)whoFired).getCannonDamage());
+				}
 			}
 		}
 

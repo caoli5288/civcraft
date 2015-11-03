@@ -20,7 +20,7 @@ public class ConfigMaterial {
 	public int item_id;
 	public int item_data;
 	public String name;
-	public String category = "Misc";
+	public String category = CivSettings.localize.localizedString("config_material_misc");
 	public String categoryCivColortripped = category;
 	public int tier;
 	
@@ -29,11 +29,14 @@ public class ConfigMaterial {
 	public boolean craftable = false;
 	public String required_tech = null;
 	public boolean shaped = false;
+	public boolean shiny = false;
+	public boolean tradeable = false;
 	public HashMap<String, ConfigIngredient> ingredients;
 	public String[] shape;
 	public List<HashMap<String, String>> components = new LinkedList<HashMap<String, String>>();
 	public boolean vanilla = false;
 	public int amount = 1;
+	public double tradeValue = 0;
 	
 	@SuppressWarnings("unchecked")
 	public static void loadConfig(FileConfiguration cfg, Map<String, ConfigMaterial> materials){
@@ -48,6 +51,7 @@ public class ConfigMaterial {
 			mat.item_data = (Integer)b.get("item_data");
 			mat.name = (String)b.get("name");
 			mat.name = CivColor.colorize(mat.name);
+			
 			
 			String category = (String)b.get("category");
 			if (category != null) {
@@ -90,6 +94,24 @@ public class ConfigMaterial {
 			Boolean shaped = (Boolean)b.get("shaped");
 			if (shaped != null) {
 				mat.shaped = shaped;
+			}
+
+			Boolean isShiny = (Boolean)b.get("shiny");
+			if (isShiny != null) {
+
+				mat.shiny = isShiny;
+			}
+			
+			Boolean isTradeable = (Boolean)b.get("tradeable");
+			if (isTradeable != null) {
+
+				mat.tradeable = isTradeable;
+			}
+			
+			Double tValue = (Double)b.get("tradeValue");
+			if (tValue != null)
+			{
+				mat.tradeValue = tValue;
 			}
 			
 			Boolean vanilla = (Boolean)b.get("vanilla");

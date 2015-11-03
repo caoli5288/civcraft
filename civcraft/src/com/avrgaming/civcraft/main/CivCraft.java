@@ -97,7 +97,7 @@ import com.avrgaming.civcraft.threading.tasks.ScoutTowerTask;
 import com.avrgaming.civcraft.threading.timers.AnnouncementTimer;
 import com.avrgaming.civcraft.threading.timers.BeakerTimer;
 import com.avrgaming.civcraft.threading.timers.ChangeGovernmentTimer;
-import com.avrgaming.civcraft.threading.timers.GrinderEventTimer;
+import com.avrgaming.civcraft.threading.timers.UpdateMinuteEventTimer;
 import com.avrgaming.civcraft.threading.timers.PlayerLocationCacheUpdate;
 import com.avrgaming.civcraft.threading.timers.PlayerProximityComponentTimer;
 import com.avrgaming.civcraft.threading.timers.ReduceExposureTimer;
@@ -148,7 +148,7 @@ public final class CivCraft extends JavaPlugin {
 		
 		// Structure event timers
 		TaskMaster.asyncTimer("UpdateEventTimer", new UpdateEventTimer(), TimeTools.toTicks(1));
-		TaskMaster.asyncTimer("GrinderEventTimer", new GrinderEventTimer(), TimeTools.toTicks(60));
+		TaskMaster.asyncTimer("UpdateMinuteEventTimer", new UpdateMinuteEventTimer(), TimeTools.toTicks(20));
 		TaskMaster.asyncTimer("RegenTimer", new RegenTimer(), TimeTools.toTicks(5));
 
 		TaskMaster.asyncTimer("BeakerTimer", new BeakerTimer(60), TimeTools.toTicks(60));

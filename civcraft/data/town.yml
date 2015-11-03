@@ -48,6 +48,9 @@ town:
     # Number of days a mayor must be inactive before being able to be reclaimed
     mayor_inactive_days: 7
 
+    # The Lighthouse Trade ship coin boost (Default 1.2 [20%])
+    lighthouse_trade_ship_boost: 1.2
+
 # Town upgrade levels, determines 'size' of town.
 # level - the numeric level.
 # title - the display name for this level.
@@ -616,3 +619,78 @@ upgrades:
       require_tech: 'tech_alloys'
       require_structure: 'ti_quarry'
       category: 'quarry'
+
+# Fish Hatchery upgrades
+    - id: 'upgrade_fish_hatchery_level_2'
+      name: 'Fish Hatchery Pool 2'
+      action: 'set_fish_hatchery_level, 2'
+      cost: 25000.0
+      require_upgrade:
+      require_tech: 'tech_trade'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'
+
+    - id: 'upgrade_fish_hatchery_level_3'
+      name: 'Fish Hatchery Pool 3'
+      action: 'set_fish_hatchery_level, 3'
+      cost: 30000.0
+      require_upgrade: 'upgrade_fish_hatchery_level_2'
+      require_tech: 'tech_commerce'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'
+
+    - id: 'upgrade_fish_hatchery_level_4'
+      name: 'Fish Hatchery Pool 4'
+      action: 'set_fish_hatchery_level, 4'
+      cost: 50000.0
+      require_upgrade: 'upgrade_fish_hatchery_level_3'
+      require_tech: 'tech_global_trade'
+      require_structure: 'ti_fish_hatchery'
+      category: 'Fish Hatchery'
+
+# Trade Ship Upgrades
+
+    - id: 'upgrade_tradeship_level_2'
+      name: 'Upgrade Trade Ship Level 2'
+      action: 'set_tradeship_upgrade_level, 2'
+      cost: 50000.0
+      require_upgrade:
+      require_tech: 'tech_commerce'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_3'
+      name: 'Upgrade Trade Ship Level 3'
+      action: 'set_tradeship_upgrade_level, 3'
+      cost: 100000.0
+      require_upgrade: 'upgrade_tradeship_level_2'
+      require_tech: 'tech_global_trade'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_4'
+      name: 'Upgrade Trade Ship Level 4'
+      action: 'set_tradeship_upgrade_level, 4'
+      cost: 250000.0
+      require_upgrade: 'upgrade_tradeship_level_3'
+      require_tech: 'tech_nationalism'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_5'
+      name: 'Upgrade Trade Ship Level 5'
+      action: 'set_tradeship_upgrade_level, 5'
+      cost: 500000.0
+      require_upgrade: 'upgrade_tradeship_level_4'
+      require_tech: 'tech_innovation'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
+  
+    - id: 'upgrade_tradeship_level_6'
+      name: 'Upgrade Trade Ship Level 6'
+      action: 'set_tradeship_upgrade_level, 6'
+      cost: 1000000.0
+      require_upgrade: 'upgrade_tradeship_level_6'
+      require_tech: 'tech_scientific_method'
+      require_structure: 'ti_trade_ship'
+      category: 'Trade Ship'
