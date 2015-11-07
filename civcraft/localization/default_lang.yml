@@ -2638,7 +2638,7 @@ var_daily_townTaxes: "Collected [%0] [%1] in town taxes."
 effectEvent_noTownHall: "Your town does not have a town hall! Structures have no effect!"
 var_effectEvent_convertBeakers: "Converted [%0] beakers into [%1] culture as we are not research any new technologies."
 
-var_syncTrade_payout: "Generated [%0] from trade. [%0]"
+var_syncTrade_payout: "Generated [%0] from trade."
 
 
 # =========================== Tutorial Messages =========================
@@ -2816,3 +2816,8 @@ var_tradeship_taxesPaid: "Paid [%0] [%1] in taxes from Trade Ship Income"
 # =========================== END 1.75 =========================
 # ----------------------------------------------------------------
 
+# ----------------------------------------------------------------
+# =========================== BEGIN 1.76 =========================
+
+# =========================== END 1.76 =========================
+# ----------------------------------------------------------------

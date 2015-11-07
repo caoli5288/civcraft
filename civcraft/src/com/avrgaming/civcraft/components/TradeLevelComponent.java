@@ -197,7 +197,10 @@ public class TradeLevelComponent extends Component {
 			}
 
 			AttributeUtil attrs = new AttributeUtil(stack);
-			if (attrs.getCivCraftProperty("tradeable").equalsIgnoreCase("true")) {
+			String tradeable = attrs.getCivCraftProperty("tradeable");
+			if (tradeable == null)
+				break;
+			if (tradeable.equalsIgnoreCase("true")) {
 				if (stacksToConsume < thisLevelConsumptions) {
 					stacksToConsume++;
 				} else {

@@ -181,6 +181,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 			//TODO set default modes?
 			resident.showWarnings(getPlayer());
 			resident.loadPerks(getPlayer());
+			resident.calculateWalkingModifier(getPlayer());
 			
 			/* Send Anti-Cheat challenge to player. */
 			if (ACManager.isEnabled())

@@ -1445,6 +1445,7 @@ public class Town extends SQLObject {
 			out += "<h3><b>"+this.getName()+"</b> (<i>"+this.getCiv().getName()+"</i>)</h3>";		
 			out += "<b>"+CivSettings.localize.localizedString("Mayors")+" "+this.getMayorGroup().getMembersString()+"</b>";
 		} catch (Exception e) {
+			CivLog.debug("Town: "+this.getName());
 			e.printStackTrace();
 		}
 		

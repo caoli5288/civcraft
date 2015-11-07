@@ -628,7 +628,7 @@ upgrades:
       require_upgrade:
       require_tech: 'tech_trade'
       require_structure: 'ti_fish_hatchery'
-      category: 'Fish Hatchery'
+      category: 'Fish-Hatchery'
 
     - id: 'upgrade_fish_hatchery_level_3'
       name: 'Fish Hatchery Pool 3'
@@ -637,7 +637,7 @@ upgrades:
       require_upgrade: 'upgrade_fish_hatchery_level_2'
       require_tech: 'tech_commerce'
       require_structure: 'ti_fish_hatchery'
-      category: 'Fish Hatchery'
+      category: 'Fish-Hatchery'
 
     - id: 'upgrade_fish_hatchery_level_4'
       name: 'Fish Hatchery Pool 4'
@@ -646,7 +646,7 @@ upgrades:
       require_upgrade: 'upgrade_fish_hatchery_level_3'
       require_tech: 'tech_global_trade'
       require_structure: 'ti_fish_hatchery'
-      category: 'Fish Hatchery'
+      category: 'Fish-Hatchery'
 
 # Trade Ship Upgrades
 
@@ -657,7 +657,7 @@ upgrades:
       require_upgrade:
       require_tech: 'tech_commerce'
       require_structure: 'ti_trade_ship'
-      category: 'Trade Ship'
+      category: 'TradeShip'
   
     - id: 'upgrade_tradeship_level_3'
       name: 'Upgrade Trade Ship Level 3'
@@ -666,7 +666,7 @@ upgrades:
       require_upgrade: 'upgrade_tradeship_level_2'
       require_tech: 'tech_global_trade'
       require_structure: 'ti_trade_ship'
-      category: 'Trade Ship'
+      category: 'TradeShip'
   
     - id: 'upgrade_tradeship_level_4'
       name: 'Upgrade Trade Ship Level 4'
@@ -675,7 +675,7 @@ upgrades:
       require_upgrade: 'upgrade_tradeship_level_3'
       require_tech: 'tech_nationalism'
       require_structure: 'ti_trade_ship'
-      category: 'Trade Ship'
+      category: 'TradeShip'
   
     - id: 'upgrade_tradeship_level_5'
       name: 'Upgrade Trade Ship Level 5'
@@ -684,7 +684,7 @@ upgrades:
       require_upgrade: 'upgrade_tradeship_level_4'
       require_tech: 'tech_innovation'
       require_structure: 'ti_trade_ship'
-      category: 'Trade Ship'
+      category: 'TradeShip'
   
     - id: 'upgrade_tradeship_level_6'
       name: 'Upgrade Trade Ship Level 6'
@@ -693,4 +693,4 @@ upgrades:
       require_upgrade: 'upgrade_tradeship_level_6'
       require_tech: 'tech_scientific_method'
       require_structure: 'ti_trade_ship'
-      category: 'Trade Ship'
+      category: 'TradeShip'

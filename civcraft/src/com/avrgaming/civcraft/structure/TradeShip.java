@@ -299,9 +299,6 @@ public class TradeShip extends Structure {
 		default:
 			break;
 		}
-		if (tradeResult.getConsumed() >= 1) {
-			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_tradeship_success",tradeResult.getMoney(),CivSettings.CURRENCY_NAME,tradeResult.getCulture(),tradeResult.getConsumed()));
-		}
 		if (tradeResult.getCulture() >= 1) {
 			int total_culture = (int)Math.round(tradeResult.getCulture()*this.getTown().getCottageRate());
 
@@ -324,10 +321,13 @@ public class TradeShip extends Structure {
 			
 			double taxesPaid = total_coins*this.getTown().getDepositCiv().getIncomeTaxRate();
 
-			if (taxesPaid > 0) {
-				CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_tradeship_taxesPaid",total_coins,CivSettings.CURRENCY_NAME));
+			if (total_coins >= 1) {
+				CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_tradeship_success",total_coins,CivSettings.CURRENCY_NAME,tradeResult.getCulture(),tradeResult.getConsumed()));
 			}
-			
+			if (taxesPaid > 0) {
+				CivMessage.sendTown(this.getTown(), CivColor.Yellow+CivSettings.localize.localizedString("var_tradeship_taxesPaid",taxesPaid,CivSettings.CURRENCY_NAME));
+			}
+
 			this.getTown().getTreasury().deposit(total_coins - taxesPaid);
 			this.getTown().getDepositCiv().taxPayment(this.getTown(), taxesPaid);
 		}
