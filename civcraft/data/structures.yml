@@ -342,12 +342,12 @@ farm:
     # Number of seconds it takes for a growth tick to fire, cannot be less than 1.
     grow_tick_rate: 60
 
-    #keep this set to false to use the whole chunk height for growth in a farm chunk (Classic Behavior)
-    uses_range: false
-    #This the range above the base y in which the farm will grow.
-    #Use this to add additional height in which to grow.
-    #The default of 4 limits growth to the original height of the structure
-    grow_range_y: 4
+    # #keep this set to false to use the whole chunk height for growth in a farm chunk (Classic Behavior)
+    # uses_range: false
+    # #This the range above the base y in which the farm will grow.
+    # #Use this to add additional height in which to grow.
+    # #The default of 4 limits growth to the original height of the structure
+    # grow_range_y: 4
 
 ##################### Windmill Settings #####################
 windmill:

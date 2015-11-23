@@ -216,9 +216,11 @@ public class PlayerListener implements Listener {
 			event.getFrom().getBlockY() == event.getTo().getBlockY()) {
 			return;
 		}
-		
-		/* Get the Modified Speed for the player. */
-		setModifiedMovementSpeed(event.getPlayer());
+		if (!CivGlobal.speedChunks)
+		{
+			/* Get the Modified Speed for the player. */
+			setModifiedMovementSpeed(event.getPlayer());
+		}
 				
 		ChunkCoord fromChunk = new ChunkCoord(event.getFrom());
 		ChunkCoord toChunk = new ChunkCoord(event.getTo());
@@ -226,6 +228,11 @@ public class PlayerListener implements Listener {
 		// Haven't moved chunks.
 		if (fromChunk.equals(toChunk)) {
 			return;
+		}
+		if (CivGlobal.speedChunks)
+		{
+			/* Get the Modified Speed for the player. */
+			setModifiedMovementSpeed(event.getPlayer());
 		}
 		
 		TaskMaster.asyncTask(PlayerChunkNotifyAsyncTask.class.getSimpleName(), 

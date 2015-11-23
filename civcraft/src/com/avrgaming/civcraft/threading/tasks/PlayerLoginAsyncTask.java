@@ -151,7 +151,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 					String color = PlayerChunkNotifyAsyncTask.getNotifyColor(cc, status, getPlayer());
 					String relationName = status.name();
 					
-					if (War.isWarTime() && status.equals(Relation.Status.WAR)) {
+					if (War.isWarTime() && status.equals(Relation.Status.WAR) && !cc.getCiv().isAdminCiv()) {
 						/* 
 						 * Test for players who were not logged in when war time started.
 						 * If they were not logged in, they are enemies, and are inside our borders
@@ -163,7 +163,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 							CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_loginDuringWar"));
 						}
 					}
-					else if (!status.equals(Relation.Status.ALLY) && !status.equals(Relation.Status.PEACE)) {
+					else if (!status.equals(Relation.Status.ALLY) && !status.equals(Relation.Status.PEACE) && !cc.getCiv().isAdminCiv()) {
 						resident.teleportHome();
 						CivMessage.send(resident, CivColor.LightGray+CivSettings.localize.localizedString("PlayerLoginAsync_loginNotAllies"));
 					}

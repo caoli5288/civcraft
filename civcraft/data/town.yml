@@ -690,7 +690,7 @@ upgrades:
       name: 'Upgrade Trade Ship Level 6'
       action: 'set_tradeship_upgrade_level, 6'
       cost: 1000000.0
-      require_upgrade: 'upgrade_tradeship_level_6'
+      require_upgrade: 'upgrade_tradeship_level_5'
       require_tech: 'tech_scientific_method'
       require_structure: 'ti_trade_ship'
       category: 'TradeShip'

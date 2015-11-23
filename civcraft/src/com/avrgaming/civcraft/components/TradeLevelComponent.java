@@ -182,14 +182,10 @@ public class TradeLevelComponent extends Component {
 		return (int) Math.max(1, amount * this.consumeRate);
 	}
 
-	private int hasCountToConsume() {
+	private int hasCountToConsume(int thisLevelConsumptions) {
 
-		Integer thisLevelConsumptions = getConsumedAmount(consumptions
-				.get(this.level));
+		thisLevelConsumptions+= getConsumedAmount(consumptions.get(this.level));
 		int stacksToConsume = 0;
-		if (thisLevelConsumptions == null) {
-			return stacksToConsume;
-		}
 
 		for (ItemStack stack : source.getContents()) {
 			if (stack == null) {
@@ -443,7 +439,7 @@ public class TradeLevelComponent extends Component {
 		cultureEarned = 0.0;
 		int countConsumed = 0;
 
-		Integer currentCountMax = levelCounts.get(this.level) + updgradeLevel;
+		Integer currentCountMax = levelCounts.get(this.level);
 
 //		if (currentCountMax == null) {
 //			CivLog.error("Couldn't get current level count, level was:"
@@ -452,7 +448,7 @@ public class TradeLevelComponent extends Component {
 //			lastTrade.setResult(lastResult);
 //			return lastTrade;
 //		}
-		int stacksToConsume = hasCountToConsume();
+		int stacksToConsume = hasCountToConsume((updgradeLevel*2));
 		if (stacksToConsume >= 1) {
 			countConsumed = consumeFromInventory(stacksToConsume);
 
@@ -485,8 +481,10 @@ public class TradeLevelComponent extends Component {
 			lastTrade.setResult(lastResult);
 			// return lastTrade;
 		}
-		Double currentCultureRate = culture.get(this.level) + (updgradeLevel/5);
-		cultureEarned = currentCultureRate*countConsumed;
+		Double currentCultureRate = culture.get(this.level);
+		Double cultureUpgradeModifier = (updgradeLevel/5.0);
+
+		cultureEarned = (currentCultureRate+cultureUpgradeModifier)*countConsumed;
 
 		lastTrade.setMoney(moneyEarned);
 		lastTrade.setConsumed(countConsumed);

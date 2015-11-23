@@ -190,14 +190,14 @@ public class ConfigTownUpgrade {
 			for (Structure structure : town.getStructures()) {
 				if (structure.getConfigId().equalsIgnoreCase("ti_trade_ship")) {
 
-					if (structure != null && (structure instanceof FishHatchery)) {
+					if (structure != null && (structure instanceof TradeShip)) {
 						TradeShip tradeShip = (TradeShip)structure;
 						if (tradeShip.getUpgradeLvl() < Integer.valueOf(args[1].trim())) {
 							didUpgradeTradeShip = true;
 							tradeShip.setUpgradeLvl(Integer.valueOf(args[1].trim()));
 							tradeShip.reprocessCommandSigns();
-							town.saved_tradeship_upgrade_levels = tradeShip.getLevel();
-							tradeshipLevel = tradeShip.getLevel();
+							town.saved_tradeship_upgrade_levels = tradeShip.getUpgradeLvl();
+							tradeshipLevel = tradeShip.getUpgradeLvl();
 						}
 					}
 				}

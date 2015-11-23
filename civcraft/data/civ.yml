@@ -60,6 +60,9 @@ global:
    # Attempt to validate structures to make sure they're not floating.
    structure_validation: 'true'
 
+   # Have speed checks only on chunk changes. default false
+   speed_check_chunks: false
+
 civ:
     # Amount of coins required to start a civilization
     cost: 100000.0

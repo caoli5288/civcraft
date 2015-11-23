@@ -194,6 +194,7 @@ public class CivGlobal {
 	public static boolean warningsEnabled = true;
 	public static boolean tradeEnabled = true;
 	public static boolean loadCompleted = false;
+	public static boolean speedChunks = false;
 
 	public static ArrayList<Town> orphanTowns = new ArrayList<Town>();
 	public static ArrayList<Civilization> orphanCivs = new ArrayList<Civilization>();
@@ -274,6 +275,15 @@ public class CivGlobal {
 		objective2.setDisplayName("OBJECTIVE2 NAME HERE");*/
 		
 		checkForInvalidStructures();
+
+		try {
+			speedChunks = CivSettings.getBoolean(CivSettings.civConfig, "global.speed_check_chunks");
+		} catch (InvalidConfiguration e) {
+			speedChunks = false;
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		loadCompleted = true;
 	}
 	

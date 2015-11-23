@@ -46,7 +46,7 @@ public class InteractiveCivName implements InteractiveResponse {
 			return;
 		}
 
-		if (!StringUtils.isAlpha(message)) {
+		if (!StringUtils.isAlpha(message) || !StringUtils.isAsciiPrintable(message)) {
 			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_civ_invalid"));
 			return;
 		}

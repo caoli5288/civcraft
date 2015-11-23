@@ -1,6 +1,6 @@
 name: CivCraft
 main: com.avrgaming.civcraft.main.CivCraft
-version: 1.753
+version: 1.755
 
 commands:
     town:

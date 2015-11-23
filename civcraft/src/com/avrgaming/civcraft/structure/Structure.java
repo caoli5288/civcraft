@@ -465,6 +465,42 @@ public class Structure extends Buildable {
 		SQL.updateNamedObject(this, hashmap, TABLE_NAME);
 	}
 	
+	public void deleteSkipUndo() throws SQLException {
+		super.delete();
+		
+		if (this.getTown() != null) {
+			/* Release trade goods if we are a trade outpost. */
+			if (this instanceof TradeOutpost) {
+				//TODO move to trade outpost delete..
+				TradeOutpost outpost = (TradeOutpost)this;
+				
+				if (outpost.getGood() != null) {
+					outpost.getGood().setStruct(null);
+					outpost.getGood().setTown(null);
+					outpost.getGood().setCiv(null);
+					outpost.getGood().save();
+				}
+			}
+			
+			if (!(this instanceof Wall || this instanceof FortifiedWall || this instanceof Road))
+			{
+			try {
+				this.undoFromTemplate();	
+			} catch (IOException | CivException e1) {
+				e1.printStackTrace();
+				this.fancyDestroyStructureBlocks();
+			}
+			}
+						
+			CivGlobal.removeStructure(this);
+			this.getTown().removeStructure(this);
+			this.unbindStructureBlocks();
+		}
+		
+		SQL.deleteNamedObject(this, TABLE_NAME);
+	}
+	
+	
 	@Override
 	public void delete() throws SQLException {
 		super.delete();
