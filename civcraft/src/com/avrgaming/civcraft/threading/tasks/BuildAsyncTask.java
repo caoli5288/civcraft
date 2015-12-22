@@ -116,7 +116,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 				if (inProgress != null && inProgress != buildable) {
 					CivMessage.sendTown(buildable.getTown(), CivSettings.localize.localizedString("var_buildAsync_wonderHaltedOtherConstruction",inProgress.getDisplayName()));
 					try {
-						Thread.sleep(600000); //10 min notify.
+						Thread.sleep(60000); //1 min notify.
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					} 

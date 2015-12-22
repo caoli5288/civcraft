@@ -808,7 +808,10 @@ public abstract class Buildable extends SQLObject {
 		
 		if (centerBlock.getLocation().getY() <= 7) {
 			throw new CivException(CivSettings.localize.localizedString("buildable_errorTooLow"));
+		}
 		
+		if (centerBlock.getLocation().getY() < CivGlobal.minBuildHeight) {
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 		
 		if ((regionY + centerBlock.getLocation().getBlockY()) >= 255) {

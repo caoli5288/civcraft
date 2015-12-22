@@ -156,6 +156,20 @@ public class Wall extends Structure {
 	{
 	}
 	
+	public void deleteOnDisband() throws SQLException {
+		if (this.wallBlocks != null) {
+			for (WallBlock wb : this.wallBlocks.values()) {
+				wb.delete();
+			}
+		}
+		
+		if (wallChunks != null) {
+			for (ChunkCoord coord : wallChunks) {
+				CivGlobal.removeWallChunk(this, coord);
+			}
+		}
+	}
+	
 	@Override 
 	public void delete() throws SQLException {
 		if (this.wallBlocks != null) {
@@ -360,7 +374,7 @@ public class Wall extends Structure {
 			throw new CivException(CivSettings.localize.localizedString("wall_build_tooHigh"));
 		}
 		
-		if (loc.getBlockY() <= 1) {
+		if (loc.getBlockY() < CivGlobal.minBuildHeight) {
 			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
 		}
 		

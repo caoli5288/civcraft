@@ -32,6 +32,7 @@ import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.util.CivColor;
+import com.avrgaming.civcraft.war.War;
 
 public class DisableTeleportEvent implements EventInterface {
 
@@ -73,14 +74,15 @@ public class DisableTeleportEvent implements EventInterface {
 	
 
 	public static void disableTeleport() throws IOException {
-
+		if (War.hasWars())
+		{
 		File file = new File(CivSettings.plugin.getDataFolder().getPath()+"/data/teleportsOff.txt");
 		if (!file.exists()) {
 			CivLog.warning("Configuration file: teleportsOff.txt was missing. Streaming to disk from Jar.");
 			CivSettings.streamResourceToDisk("/data/teleportsOff.txt");
 		}
 		
-		CivLog.info("Loading Configuration file: teleportsOff.txt");		
+		CivLog.info("Loading Configuration file: teleportsOff.txt");
 		
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
@@ -101,6 +103,7 @@ public class DisableTeleportEvent implements EventInterface {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return;
+		}
 		}
 	}
 	

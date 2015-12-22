@@ -60,6 +60,12 @@ global:
    # Attempt to validate structures to make sure they're not floating.
    structure_validation: 'true'
 
+   # Have speed checks only on chunk changes. Default: false
+   speed_check_chunks: false
+
+   # Minimum Build Height for Structures, Walls, and Roads. Default: 1
+   min_build_height: 1
+
 civ:
     # Amount of coins required to start a civilization
     cost: 100000.0

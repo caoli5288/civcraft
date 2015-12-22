@@ -249,6 +249,10 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 			throw new CivException(CivSettings.localize.localizedString("camp_checkWayTooHigh"));
 		}
 		
+		if (player.getLocation().getY() < CivGlobal.minBuildHeight) {
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
+		}
+		
 		int minsLeft = this.isWarCampCooldownLeft();
 		if (minsLeft > 0) {
 			throw new CivException(CivSettings.localize.localizedString("var_warcamp_oncooldown",minsLeft));

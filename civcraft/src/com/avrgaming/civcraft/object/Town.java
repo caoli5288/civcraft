@@ -18,6 +18,7 @@
  */
 package com.avrgaming.civcraft.object;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.DecimalFormat;
@@ -64,6 +65,7 @@ import com.avrgaming.civcraft.permission.PermissionGroup;
 import com.avrgaming.civcraft.randomevents.RandomEvent;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.structure.Buildable;
+import com.avrgaming.civcraft.structure.Mine;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
@@ -353,7 +355,7 @@ public class Town extends SQLObject {
 		/* Remove all structures in the town. */
 		if (this.structures != null) {
 			for (Structure struct : this.structures.values()) {
-				struct.delete();
+				struct.deleteSkipUndo();
 			}
 		}
 		
@@ -367,7 +369,13 @@ public class Town extends SQLObject {
 		if (this.wonders != null) {
 			for (Wonder wonder : wonders.values()) {
 				wonder.unbindStructureBlocks();
-				wonder.fancyDestroyStructureBlocks();
+				try {
+					wonder.undoFromTemplate();
+				} catch (IOException | CivException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					wonder.fancyDestroyStructureBlocks();
+				}
 				wonder.delete();
 			}
 		}
@@ -761,6 +769,11 @@ public class Town extends SQLObject {
 		/* Grab happiness generated from structures with components. */
 		double structures = 0;
 		for (Structure struct : this.structures.values()) {
+			if (struct instanceof Mine)
+			{
+				Mine mine = (Mine)struct;
+				structures += mine.getBonusHammers(); 
+			}
 			for (Component comp : struct.attachedComponents) {
 				if (comp instanceof AttributeBase) {
 					AttributeBase as = (AttributeBase)comp;
@@ -1445,6 +1458,7 @@ public class Town extends SQLObject {
 			out += "<h3><b>"+this.getName()+"</b> (<i>"+this.getCiv().getName()+"</i>)</h3>";		
 			out += "<b>"+CivSettings.localize.localizedString("Mayors")+" "+this.getMayorGroup().getMembersString()+"</b>";
 		} catch (Exception e) {
+			CivLog.debug("Town: "+this.getName());
 			e.printStackTrace();
 		}
 		
@@ -1712,7 +1726,7 @@ public class Town extends SQLObject {
 			Integer maxTileImprovements  = level.tile_improvements;
 			if (this.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
 			{
-				maxTileImprovements += maxTileImprovements;
+				maxTileImprovements *= 2;
 			}
 			if (this.getTileImprovementCount() > maxTileImprovements) {
 				return false;
@@ -1872,8 +1886,15 @@ public class Town extends SQLObject {
 		/* Grab any growth from culture. */
 		double cultureSource = 0;
 		for (CultureChunk cc : this.cultureChunks.values()) {
-			cultureSource += cc.getGrowth();
+			try {
+				cultureSource += cc.getGrowth();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				CivLog.debug(this.getName()+" - Culture Chunks: "+cc);
+			}
+
 		}
+		
 		sources.put("Culture Biomes", cultureSource);
 		total += cultureSource;
 		

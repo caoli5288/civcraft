@@ -47,7 +47,7 @@ public class SyncTradeTimer implements Runnable {
 				CivMessage.sendTown(town, CivColor.LightGreen+CivSettings.localize.localizedString("var_syncTrade_payout",(CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME),
 						CivSettings.localize.localizedString("var_cottage_grew_taxes",(df.format(taxesPaid)+" "+CivSettings.CURRENCY_NAME),town.getDepositCiv().getName())));
 			} else {
-				CivMessage.sendTown(town, CivColor.LightGreen+CivSettings.localize.localizedString("var_syncTrade_payout",(CivColor.Yellow+df.format(payment)+CivColor.LightGreen+""+CivSettings.CURRENCY_NAME),""));
+				CivMessage.sendTown(town, CivColor.LightGreen+CivSettings.localize.localizedString("var_syncTrade_payout",(CivColor.Yellow+df.format(payment)+CivColor.LightGreen+" "+CivSettings.CURRENCY_NAME),""));
 			}
 			
 			town.getTreasury().deposit(payment - taxesPaid);

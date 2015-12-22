@@ -232,8 +232,13 @@ public class FarmChunk {
 		// Over 100% means we do more than 1 crop, under 100% means we check that probability.
 		// So for example, if we have a 120% growth rate, every 10 ticks 1 crop *always* grows,
 		// and another has a 20% chance to grow.
-		
-		double effectiveGrowthRate = (double)this.town.getGrowth().total / (double)100;
+		double effectiveGrowthRate = 1.0;
+		try {
+			effectiveGrowthRate = (double)this.town.getGrowth().total / (double)100;
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			CivLog.debug("Farm at location" +this.getCoord()+" in town "+this.getTown().getName()+" Growth Error");
+		}
 		
 		for (Component comp : this.getFarm().attachedComponents) {
 			if (comp instanceof ActivateOnBiome) {
@@ -368,53 +373,32 @@ public class FarmChunk {
 	//}
 
 	public void populateCropLocationCache() {
-		this.lock.lock();
-		try {
-			this.cropLocationCache.clear();
-			BlockSnapshot bs = new BlockSnapshot();
-			
-
-			Boolean crops_uses_range = CivSettings.getBooleanStructure("farm.uses_range");
-			Integer crops_grow_range_y = CivSettings.getIntegerStructure("farm.grow_range_y");
-			Integer crops_grow_corner_y = this.struct.getCorner().getY();
-			
-			for (int x = 0; x < 16; x++) {
-				for (int z = 0; z < 16; z++) {
-					if (crops_uses_range) {
-						for (int y = crops_grow_corner_y; y < Math.max(crops_grow_corner_y+crops_grow_range_y, 256); y++) {			
-							
-							//Block nextBlock = this.struct.getCorner().getBlock().getChunk().getBlock(x, y, z);
-							//BlockCoord bcoord = new BlockCoord(nextBlock);
-							 bs.setFromSnapshotLocation(x, y, z, snapshot);
-							
-							if (CivData.canGrow(bs)) {
-								this.cropLocationCache.add(new BlockCoord(snapshot.getWorldName(), 
-											(snapshot.getX() << 4) + bs.getX(),
-											(bs.getY()),
-											(snapshot.getZ() << 4) + bs.getZ()));
-							}					
-						}
-					} else {
-						for (int y = 0; y < 256; y++) {					
-							
-							//Block nextBlock = this.struct.getCorner().getBlock().getChunk().getBlock(x, y, z);
-							//BlockCoord bcoord = new BlockCoord(nextBlock);
-							 bs.setFromSnapshotLocation(x, y, z, snapshot);
-							
-							if (CivData.canGrow(bs)) {
-								this.cropLocationCache.add(new BlockCoord(snapshot.getWorldName(), 
-											(snapshot.getX() << 4) + bs.getX(),
-											(bs.getY()),
-											(snapshot.getZ() << 4) + bs.getZ()));
-							}					
-						}
-					}
-				}
-			}
-		} finally {
-			this.lock.unlock();
-		}
-	}
+        this.lock.lock();
+        try {
+            this.cropLocationCache.clear();
+            BlockSnapshot bs = new BlockSnapshot();
+            
+            for (int x = 0; x < 16; x++) {
+                for (int z = 0; z < 16; z++) {
+                    for (int y = 0; y < 256; y++) {                 
+                        
+                        //Block nextBlock = this.struct.getCorner().getBlock().getChunk().getBlock(x, y, z);
+                        //BlockCoord bcoord = new BlockCoord(nextBlock);
+                         bs.setFromSnapshotLocation(x, y, z, snapshot);
+                        
+                        if (CivData.canGrow(bs)) {
+                            this.cropLocationCache.add(new BlockCoord(snapshot.getWorldName(), 
+                                        (snapshot.getX() << 4) + bs.getX(),
+                                        (bs.getY()),
+                                        (snapshot.getZ() << 4) + bs.getZ()));
+                        }                   
+                    }
+                }
+            }
+        } finally {
+            this.lock.unlock();
+        }
+    }
 
 	public int getMissedGrowthTicks() {
 		return missedGrowthTicks;

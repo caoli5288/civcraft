@@ -2523,7 +2523,7 @@ wonder_alreadyExistsHere: "There is a wonder already here."
 wonder_undo_error: "Couldn't find undo data! Destroying structure instead."
 var_wonder_undo_broadcast: "The [%0] has been unbuild by the town of [%1] in the civilization of [%2] with the undo command!"
 var_wonder_startedByCiv: "The Civilization of [%0] has started construction of [%1] in the town of [%2]!"
-var_wonder_destroyed: "The [%0] owned by the town of [%1] has been destroyed! Any town may not build it again."
+var_wonder_destroyed: "The [%0] owned by the town of [%1] has been destroyed! Any town may now build it again."
 wonder_unknwon_type: "Unknown wonder type:"
 var_colossus_generatedCoins: "The Colossus generated [%0] [%1] from [%2] culture chunks across the civ."
 var_colosseum_generatedCoins: "The Colosseum generated [%0] [%1] from ticket sales in [%2] towns across the world."
@@ -2638,7 +2638,7 @@ var_daily_townTaxes: "Collected [%0] [%1] in town taxes."
 effectEvent_noTownHall: "Your town does not have a town hall! Structures have no effect!"
 var_effectEvent_convertBeakers: "Converted [%0] beakers into [%1] culture as we are not research any new technologies."
 
-var_syncTrade_payout: "Generated [%0] from trade. [%0]"
+var_syncTrade_payout: "Generated [%0] from trade."
 
 
 # =========================== Tutorial Messages =========================
@@ -2816,3 +2816,14 @@ var_tradeship_taxesPaid: "Paid [%0] [%1] in taxes from Trade Ship Income"
 # =========================== END 1.75 =========================
 # ----------------------------------------------------------------
 
+# ----------------------------------------------------------------
+# =========================== BEGIN 1.76 =========================
+adcmd_lag_speedCheckOnChunk: "Toggles speed check updates to Chunks or always"
+
+adcmd_lag_SpeedCheck: "Speed Check on Chunk enabled:"
+var_buildable_tooCloseToCannonShip: "Cannot build here. Too close to another Cannon Ship at location [%0]"
+var_war_mostLethal: "Most Lethal: [%0]"
+war_wartimeSkippedHeading: "WarTime Has Been Skipped, No Civs at War."
+
+# =========================== END 1.76 =========================
+# ----------------------------------------------------------------

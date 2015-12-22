@@ -42,6 +42,7 @@ public class AdminLagCommand extends CommandBase {
 		commands.put("score", CivSettings.localize.localizedString("adcmd_lag_scoreDesc"));
 		commands.put("warning", CivSettings.localize.localizedString("adcmd_lag_warningDesc"));
 		commands.put("blockupdate", CivSettings.localize.localizedString("adcmd_lag_blockUpdateDesc"));
+		commands.put("speedchunks", CivSettings.localize.localizedString("adcmd_lag_speedCheckOnChunk"));
 		
 	}
 	
@@ -50,6 +51,11 @@ public class AdminLagCommand extends CommandBase {
 		
 		SyncBuildUpdateTask.UPDATE_LIMIT = blocks;
 		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_lag_blockupdateSet",blocks));
+	}
+	
+	public void speedchunks_cmd() {
+		CivGlobal.speedChunks = !CivGlobal.speedChunks;
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("adcmd_lag_SpeedCheck")+" "+CivGlobal.speedChunks);
 	}
 	
 	public void score_cmd() {
