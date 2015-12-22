@@ -124,12 +124,7 @@ public class PlayerListener implements Listener {
 			CivLog.info("[TELEPORT]"+" "+event.getPlayer().getName()+" "+"to:"+event.getTo().getBlockX()+","+event.getTo().getBlockY()+","+event.getTo().getBlockZ()+
 					" "+"from:"+event.getFrom().getBlockX()+","+event.getFrom().getBlockY()+","+event.getFrom().getBlockZ());
 			Player player = event.getPlayer();
-			if (!player.isOp() && !( player.hasPermission("civ.admin") 
-					|| player.hasPermission(CivSettings.TPALLY) || player.hasPermission(CivSettings.TPHOSTILE) 
-					|| player.hasPermission(CivSettings.TPNEUTRAL)  || player.hasPermission(CivSettings.TPHOSTILE)
-					 || player.hasPermission(CivSettings.TPWAR) || player.hasPermission(CivSettings.TPALL)
-					  || player.hasPermission(CivSettings.TPCAMP)
-					) ) {
+			if (!player.isOp() && !( player.hasPermission("civ.admin") || player.hasPermission(CivSettings.TPALL) ) ) {
 				CultureChunk cc = CivGlobal.getCultureChunk(new ChunkCoord(event.getTo()));
 				Camp toCamp = CivGlobal.getCampFromChunk(new ChunkCoord(event.getTo()));
 				Resident resident = CivGlobal.getResident(player);
@@ -156,7 +151,7 @@ public class PlayerListener implements Listener {
 					}
 				}
 				
-				if (toCamp != null && toCamp != resident.getCamp() && !(player.hasPermission(CivSettings.TPCAMP) || player.hasPermission(CivSettings.TPALL))) {
+				if (toCamp != null && toCamp != resident.getCamp() && !player.hasPermission(CivSettings.TPCAMP)) {
 						/* 
 						 * Deny telportation into Civ if not allied.
 						 */
