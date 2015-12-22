@@ -28,8 +28,10 @@ import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.object.StructureChest;
 import com.avrgaming.civcraft.object.StructureSign;
+import com.avrgaming.civcraft.structure.ArrowShip;
 import com.avrgaming.civcraft.structure.ArrowTower;
 import com.avrgaming.civcraft.structure.Buildable;
+import com.avrgaming.civcraft.structure.CannonShip;
 import com.avrgaming.civcraft.structure.CannonTower;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.TradeOutpost;
@@ -137,11 +139,16 @@ public class PostBuildSyncTask implements Runnable {
 				}
 				break;
 			case "/towerfire":
-				if (buildable instanceof ArrowTower) {
+				if (buildable instanceof ArrowShip) {
+					ArrowShip arrowship = (ArrowShip)buildable;
+					arrowship.setTurretLocation(absCoord);
+				} else if (buildable instanceof ArrowTower) {
 					ArrowTower arrowtower = (ArrowTower)buildable;
 					arrowtower.setTurretLocation(absCoord);
-				}
-				if (buildable instanceof CannonTower) {
+				} else if (buildable instanceof CannonShip) {
+					CannonShip cannonship = (CannonShip)buildable;
+					cannonship.setTurretLocation(absCoord);
+				} else if (buildable instanceof CannonTower) {
 					CannonTower cannontower = (CannonTower)buildable;
 					cannontower.setTurretLocation(absCoord);
 				}

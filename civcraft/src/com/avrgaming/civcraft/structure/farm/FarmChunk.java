@@ -232,8 +232,13 @@ public class FarmChunk {
 		// Over 100% means we do more than 1 crop, under 100% means we check that probability.
 		// So for example, if we have a 120% growth rate, every 10 ticks 1 crop *always* grows,
 		// and another has a 20% chance to grow.
-		
-		double effectiveGrowthRate = (double)this.town.getGrowth().total / (double)100;
+		double effectiveGrowthRate = 1.0;
+		try {
+			effectiveGrowthRate = (double)this.town.getGrowth().total / (double)100;
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			CivLog.debug("Farm at location" +this.getCoord()+" in town "+this.getTown().getName()+" Growth Error");
+		}
 		
 		for (Component comp : this.getFarm().attachedComponents) {
 			if (comp instanceof ActivateOnBiome) {

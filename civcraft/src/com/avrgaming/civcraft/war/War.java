@@ -131,11 +131,36 @@ public class War {
 	public static boolean isWarTime() {
 		return warTime;
 	}
+	
+	public static boolean hasWars() {
+		
+		for (Civilization civ : CivGlobal.getCivs()) {
+			for (Relation relation : civ.getDiplomacyManager().getRelations()) {
+				if (relation.getStatus().equals(Status.WAR)) {
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 
 	/**
 	 * @param warTime the warTime to set
 	 */
 	public static void setWarTime(boolean warTime) {
+		
+		if (warTime == true && !War.hasWars()) {
+
+			CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeSkippedHeading"));
+			try {
+				DisableTeleportEvent.enableTeleport();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return;
+		} else if (warTime == false && !War.isWarTime()) {
+			
+		}
 		
 		if (warTime == false) {
 			try {
@@ -163,7 +188,7 @@ public class War {
 		
 			CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeEndedHeading"));
 			/* display some stats. */
-			CivMessage.global("Most Lethal: "+WarStats.getTopKiller());
+			CivMessage.global(CivSettings.localize.localizedString("var_war_mostLethal",WarStats.getTopKiller()));
 			List<String> civs = WarStats.getCapturedCivs();
 			if (civs.size() > 0) {
 				for (String str : civs) {

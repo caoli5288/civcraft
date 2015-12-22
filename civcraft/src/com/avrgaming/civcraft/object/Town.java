@@ -1726,7 +1726,7 @@ public class Town extends SQLObject {
 			Integer maxTileImprovements  = level.tile_improvements;
 			if (this.getBuffManager().hasBuff("buff_mother_tree_tile_improvement_bonus"))
 			{
-				maxTileImprovements += maxTileImprovements;
+				maxTileImprovements *= 2;
 			}
 			if (this.getTileImprovementCount() > maxTileImprovements) {
 				return false;
@@ -1886,8 +1886,15 @@ public class Town extends SQLObject {
 		/* Grab any growth from culture. */
 		double cultureSource = 0;
 		for (CultureChunk cc : this.cultureChunks.values()) {
-			cultureSource += cc.getGrowth();
+			try {
+				cultureSource += cc.getGrowth();
+			} catch (NullPointerException e) {
+				e.printStackTrace();
+				CivLog.debug(this.getName()+" - Culture Chunks: "+cc);
+			}
+
 		}
+		
 		sources.put("Culture Biomes", cultureSource);
 		total += cultureSource;
 		

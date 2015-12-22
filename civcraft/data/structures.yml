@@ -1197,6 +1197,27 @@ structures:
     ignore_floating: true
     has_template: false
  
+  - id: s_arrowship
+    template: arrow_ship
+    template_y_shift: -5
+    displayName: Arrow Ship
+    require_upgrade:
+    require_tech: 'tech_artillery'
+    require_structure: 's_shipyard'
+    effect_event:
+    check_event:
+    update_event:
+    onBuild_event:
+    limit: 6
+    cost: 50000.0
+    upkeep: 1500.0
+    hammer_cost: 2500.0
+    max_hitpoints: 500
+    points: 4650
+    allow_outside_town: true
+    strategic: true
+    ignore_floating: true
+ 
   - id: s_arrowtower
     template: arrow_tower
     template_y_shift: 0
@@ -1216,6 +1237,27 @@ structures:
     allow_outside_town: true
     strategic: true
   
+  - id: s_cannonship
+    template: cannon_ship
+    template_y_shift: -5
+    displayName: Cannon Ship
+    require_upgrade:
+    require_tech: 'tech_advanced_artillery'
+    require_structure: 's_shipyard'
+    effect_event:
+    check_event:
+    update_event:
+    onBuild_event:
+    limit: 1
+    cost: 250000.0
+    upkeep: 3500.0
+    hammer_cost: 5000.0
+    max_hitpoints: 1000
+    points: 10000
+    allow_outside_town: true
+    strategic: true
+    ignore_floating: true
+  
   - id: s_cannontower
     template: cannon_tower
     template_y_shift: 0
@@ -1234,7 +1276,28 @@ structures:
     points: 10000
     allow_outside_town: true
     strategic: true
-  
+
+  - id: s_scoutship
+    template: scout_ship
+    template_y_shift: -5
+    displayName: Scout Ship
+    require_upgrade:
+    require_tech: 'tech_sailing'
+    require_structure: 's_shipyard'
+    effect_event:
+    check_event:
+    update_event:
+    onBuild_event:
+    limit: 4
+    cost: 15000.0
+    upkeep: 800.0
+    hammer_cost: 1500.0
+    max_hitpoints: 500
+    points: 3000
+    allow_outside_town: true
+    strategic: true
+    ignore_floating: true
+
   - id: s_scouttower
     template: scout_tower
     template_y_shift: 0

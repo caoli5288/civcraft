@@ -239,6 +239,13 @@ public class Structure extends Buildable {
 				struct = (Structure) new Capitol(rs);
 			}
 			break;
+		case "s_arrowship":
+			if (rs == null) {
+				struct = (ArrowShip) new ArrowShip(center, id, town);
+			} else {
+				struct = (ArrowShip) new ArrowShip(rs);
+			}
+			break;
 		case "s_arrowtower":
 			if (rs == null) {
 				struct = (Structure) new ArrowTower(center, id, town);
@@ -246,11 +253,25 @@ public class Structure extends Buildable {
 				struct = (Structure) new ArrowTower(rs);
 			}
 			break;
+		case "s_cannonship":
+			if (rs == null) {
+				struct = (CannonShip) new CannonShip(center, id, town);
+			} else {
+				struct = (CannonShip) new CannonShip(rs);
+			}
+			break;
 		case "s_cannontower":
 			if (rs == null) {
 				struct = (Structure) new CannonTower(center, id, town);
 			} else {
 				struct = (Structure) new CannonTower(rs);
+			}
+			break;
+		case "s_scoutship":
+			if (rs == null) {
+				struct = (ScoutShip) new ScoutShip(center, id, town);
+			} else {
+				struct = (ScoutShip) new ScoutShip(rs);
 			}
 			break;
 		case "s_scouttower":
@@ -484,19 +505,36 @@ public class Structure extends Buildable {
 			
 			if (!(this instanceof Wall || this instanceof FortifiedWall || this instanceof Road))
 			{
-			try {
-				this.undoFromTemplate();	
-			} catch (IOException | CivException e1) {
-				e1.printStackTrace();
-				this.fancyDestroyStructureBlocks();
-			}
+				try {
+					this.undoFromTemplate();	
+				} catch (IOException | CivException e1) {
+					e1.printStackTrace();
+					this.fancyDestroyStructureBlocks();
+				}
+				CivGlobal.removeStructure(this);
+				this.getTown().removeStructure(this);
+				this.unbindStructureBlocks();
+			} else {
+				CivGlobal.removeStructure(this);
+				this.getTown().removeStructure(this);
+				this.unbindStructureBlocks();
+				if (this instanceof Road)
+				{
+					Road road = (Road)this;
+					road.deleteOnDisband();
+				} else if (this instanceof Wall)
+				{
+					Wall wall = (Wall)this;
+					wall.deleteOnDisband();
+				}else if (this instanceof FortifiedWall)
+				{
+					FortifiedWall wall = (FortifiedWall)this;
+					wall.deleteOnDisband();
+				}
 			}
 						
-			CivGlobal.removeStructure(this);
-			this.getTown().removeStructure(this);
-			this.unbindStructureBlocks();
+			
 		}
-		
 		SQL.deleteNamedObject(this, TABLE_NAME);
 	}
 	

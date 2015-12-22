@@ -30,6 +30,7 @@ import com.avrgaming.civcraft.structure.Bank;
 import com.avrgaming.civcraft.structure.Blacksmith;
 import com.avrgaming.civcraft.structure.Grocer;
 import com.avrgaming.civcraft.structure.Library;
+import com.avrgaming.civcraft.structure.ScoutShip;
 import com.avrgaming.civcraft.structure.ScoutTower;
 import com.avrgaming.civcraft.structure.Stable;
 import com.avrgaming.civcraft.structure.Store;
@@ -87,6 +88,8 @@ public class TownSetCommand extends CommandBase {
 		for (Structure struct : town.getStructures()) {
 			if (struct instanceof ScoutTower) {
 				((ScoutTower)struct).setReportSeconds(rate);
+			} else if (struct instanceof ScoutShip) {
+				((ScoutShip)struct).setReportSeconds(rate);
 			}
 		}
 		

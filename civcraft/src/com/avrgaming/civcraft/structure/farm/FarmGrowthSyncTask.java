@@ -41,18 +41,19 @@ public class FarmGrowthSyncTask extends CivAsyncTask {
 			/* Since we're now async, we can wait on this lock. */
 			try {
 				if(!fc.lock.tryLock(TIMEOUT, TimeUnit.MILLISECONDS)) {
-					return;
+					System.out.println("FarmChunkError: Lock Error");
+					continue;
 				}
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
-				return;
+				continue;
 			}
 			try {
 				try {
 					fc.processGrowth(this);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-					return;
+					continue;
 				}
 			} finally {
 				fc.lock.unlock();

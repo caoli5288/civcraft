@@ -103,6 +103,7 @@ import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.road.RoadBlock;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.BuildableLayer;
+import com.avrgaming.civcraft.structure.CannonShip;
 import com.avrgaming.civcraft.structure.CannonTower;
 import com.avrgaming.civcraft.structure.Farm;
 import com.avrgaming.civcraft.structure.Pasture;
@@ -302,11 +303,11 @@ public class BlockListener implements Listener {
 				cfc.setHit(true);
 				cfc.destroy(event.getDamager());
 				Buildable whoFired = cfc.getWhoFired();
-				if (whoFired.getConfigId().equals("s_cannontower"))
-				{
+				if (whoFired.getConfigId().equals("s_cannontower")) {
 					event.setDamage((double)((CannonTower)whoFired).getDamage());
-				} else if (whoFired.getConfigId().equals("w_grand_ship_ingermanland"))
-				{
+				} else if (whoFired.getConfigId().equals("s_cannonship")) {
+					event.setDamage((double)((CannonShip)whoFired).getDamage());
+				} else if (whoFired.getConfigId().equals("w_grand_ship_ingermanland")) {
 					event.setDamage((double)((GrandShipIngermanland)whoFired).getCannonDamage());
 				}
 			}

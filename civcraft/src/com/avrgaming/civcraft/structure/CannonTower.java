@@ -104,6 +104,13 @@ public class CannonTower extends Structure {
 							throw new CivException(CivSettings.localize.localizedString("var_buildable_tooCloseToCannonTower",(center.getX()+","+center.getY()+","+center.getZ())));
 						}
 					}
+					if (struct instanceof CannonShip) {
+						BlockCoord center = struct.getCenterLocation();
+						double distance = center.distance(this.getCenterLocation());
+						if (distance <= build_distance) {
+							throw new CivException(CivSettings.localize.localizedString("var_buildable_tooCloseToCannonShip",(center.getX()+","+center.getY()+","+center.getZ())));
+						}
+					}
 				}
 			}
 		} catch (InvalidConfiguration e) {

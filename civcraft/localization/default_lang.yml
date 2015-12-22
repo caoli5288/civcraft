@@ -2821,5 +2821,9 @@ var_tradeship_taxesPaid: "Paid [%0] [%1] in taxes from Trade Ship Income"
 adcmd_lag_speedCheckOnChunk: "Toggles speed check updates to Chunks or always"
 
 adcmd_lag_SpeedCheck: "Speed Check on Chunk enabled:"
+var_buildable_tooCloseToCannonShip: "Cannot build here. Too close to another Cannon Ship at location [%0]"
+var_war_mostLethal: "Most Lethal: [%0]"
+war_wartimeSkippedHeading: "WarTime Has Been Skipped, No Civs at War."
+
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

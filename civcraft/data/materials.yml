@@ -4106,7 +4106,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_iron_sword, mat_hunting_bow'
+                allowed_materials: 'mat_iron_sword, mat_hunting_bow, mat_iron_axe'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4170,7 +4170,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_steel_sword, mat_recurve_bow'
+                allowed_materials: 'mat_steel_sword, mat_recurve_bow, mat_steel_axe'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4237,7 +4237,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_carbide_steel_sword, mat_longbow'
+                allowed_materials: 'mat_carbide_steel_sword, mat_longbow, mat_carbide_steel_axe'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4303,7 +4303,7 @@ materials:
               - name: 'NoRightClick'              
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_tungsten_sword, mat_marksmen_bow'
+                allowed_materials: 'mat_tungsten_sword, mat_marksmen_bow, mat_tungsten_axe'
                 chance: '50'
                 amount: '1'
           ingredients:

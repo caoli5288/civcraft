@@ -32,6 +32,7 @@ import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
+import com.avrgaming.civcraft.structure.ScoutShip;
 import com.avrgaming.civcraft.structure.ScoutTower;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.threading.TaskMaster;
@@ -116,7 +117,7 @@ public class EspionageMissionTask implements Runnable {
 						continue;
 					}
 					
-					if (struct instanceof ScoutTower) {
+					if (struct instanceof ScoutTower || struct instanceof ScoutShip) {
 						if (bcoord.distance(struct.getCenterLocation()) < range) {
 							amount += exposePerScout;							
 						}

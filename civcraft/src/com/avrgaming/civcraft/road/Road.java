@@ -155,6 +155,24 @@ public class Road extends Structure {
 	public void undoFromTemplate() {
 	}
 	
+	public void deleteOnDisband() {
+		CivGlobal.getSessionDB().delete_all(this.getSessionKey());
+		
+		LinkedList<RoadBlock> remove = new LinkedList<RoadBlock>();
+		for (RoadBlock rb : this.roadBlocks.values()) {
+			remove.add(rb);
+		}
+		
+		for (RoadBlock rb : remove) {
+			try {
+				rb.delete();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	@Override
 	public void delete() throws SQLException {
 		CivGlobal.getSessionDB().delete_all(this.getSessionKey());

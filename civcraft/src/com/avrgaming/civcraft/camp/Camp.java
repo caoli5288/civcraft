@@ -895,6 +895,10 @@ public class Camp extends Buildable {
 			throw new CivException(CivSettings.localize.localizedString("camp_checkWayTooHigh"));
 		}
 		
+		if (player.getLocation().getY() < CivGlobal.minBuildHeight) {
+			throw new CivException(CivSettings.localize.localizedString("cannotBuild_toofarUnderground"));
+		}
+		
 		if (!player.isOp()) {
 			Buildable.validateDistanceFromSpawn(centerBlock.getLocation());
 		}

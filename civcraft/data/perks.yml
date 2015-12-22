@@ -48,6 +48,16 @@ perks:
 #      components:
 #         - name: 'RenameCivOrTown'
 
+# ===== Holoska TEMPLATES
+    - id: 'perk_holoska_monument'
+      display_name: 'Eureka Monument Template'
+      item_id: 35
+      data: 7
+      components:
+          - name: 'CustomTemplate'
+            theme: 'holoska'
+            template: 'monument'
+
 # ===== Eureka TEMPLATES
     - id: 'perk_ea_monument'
       display_name: 'Eureka Monument Template'
@@ -1016,6 +1026,15 @@ perks:
             theme: 'hell'
             template: 'camp'
             id: 'camp'
+
+    - id: 'tpl_hell_fish_hatchery'
+      display_name: 'Hell Fish Hatchery'
+      item_id: 87
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'hell'
+            template: 'fish_hatchery'
 
     - id: 'tpl_hell_arrow_tower'
       display_name: 'Hell Arrow Tower Template'
