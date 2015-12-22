@@ -18,6 +18,8 @@
  */
 package com.avrgaming.civcraft.config;
 
+import localize.Localize;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -34,8 +36,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
-
-import localize.Localize;
 
 import org.apache.commons.io.FileUtils;
 import org.bukkit.Material;
@@ -215,6 +215,13 @@ public class CivSettings {
 	public static final String CULTIST_PERKS = "civ.cultistperks";
 	public static final String NIGHTLIGHTS_PERKS = "civ.nightlightperks";
 	public static final String ECON = "civ.econ";
+	public static final String TPALLY = "civ.tp.ally";
+	public static final String TPNEUTRAL = "civ.tp.neutral";
+	public static final String TPHOSTILE = "civ.tp.hostile";
+	public static final String TPWAR = "civ.tp.war";
+	public static final String TPPEACE = "civ.tp.peace";
+	public static final String TPCAMP = "civ.tp.camp";
+	public static final String TPALL = "civ.tp.*";
 	public static final int MARKET_COIN_STEP = 5;
 	public static final int MARKET_BUYSELL_COIN_DIFF = 30;
 	public static final int MARKET_STEP_THRESHOLD = 2;
