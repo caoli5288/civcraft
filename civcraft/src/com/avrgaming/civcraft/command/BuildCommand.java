@@ -178,8 +178,12 @@ public class BuildCommand extends CommandBase {
 		for (BuildAsyncTask task : town.build_tasks) {
 			Buildable b = task.buildable;
 			DecimalFormat df = new DecimalFormat();
+			double total = b.getHammerCost();
+			double current = b.getBuiltHammers();
+			double builtPercentage = current/total;
+			builtPercentage = Math.round(builtPercentage *100);
 			
-			CivMessage.send(sender, CivColor.LightPurple+b.getDisplayName()+": "+CivColor.Yellow+"("+df.format(b.getBuiltHammers()) + "/"+b.getHammerCost()+")"+
+			CivMessage.send(sender, CivColor.LightPurple+b.getDisplayName()+": "+CivColor.Yellow+builtPercentage+"% ("+df.format(current) + "/"+total+")"+
 					CivColor.LightPurple+" Blocks "+CivColor.Yellow+"("+b.builtBlockCount+"/"+b.getTotalBlockCount()+")");
 			
 			//CivMessage.send(sender, CivColor.LightPurple+b.getDisplayName()+" "+CivColor.Yellow+"("+

@@ -268,7 +268,7 @@ public class FisheryAsyncTask extends CivAsyncTask {
 	}
 	
 	private int getBiome() {
-		Biome biome = this.fishHatchery.getCorner().getBlock().getBiome();
+		Biome biome = this.fishHatchery.getBiome();
 		
 		if (biome.equals(Biome.BIRCH_FOREST_HILLS) ||
 				biome.equals(Biome.BIRCH_FOREST_MOUNTAINS) ||

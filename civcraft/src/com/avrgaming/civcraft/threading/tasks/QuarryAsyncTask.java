@@ -220,7 +220,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.GOLD))*randMax))) {
 						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.REDSTONE))*randMax))) {
-						int itemRand = rand.nextInt(5);
+						int itemRand = rand.nextInt(5)+1;
 						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.IRON))*randMax))) {
 						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
@@ -303,7 +303,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.GOLD))*randMax))) {
 						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.REDSTONE))*randMax))) {
-						int itemRand = rand.nextInt(5);
+						int itemRand = rand.nextInt(5)+1;
 						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.IRON))*randMax))) {
 						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
