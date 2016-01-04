@@ -1248,7 +1248,7 @@ public class Resident extends SQLObject {
 		
 	}
 	
-	public void giveAllNightLightsPerks() {
+	public void giveAllMedievalPerks() {
 		int perkCount;
 		try {
 			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
@@ -1260,7 +1260,7 @@ public class Resident extends SQLObject {
 		for (ConfigPerk p : CivSettings.perks.values()) {
 			Perk perk = new Perk(p);
 			
-			if (perk.getIdent().startsWith("prem_tpl_nightlights") || perk.getIdent().startsWith("template_nightlights"))
+			if (perk.getIdent().startsWith("prem_tpl_medieval") || perk.getIdent().startsWith("template_medieval"))
 			{
 				perk.count = perkCount;
 				this.perks.put(perk.getIdent(), perk);
@@ -1437,10 +1437,10 @@ public class Resident extends SQLObject {
 						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
 					}
 
-					if (player.hasPermission(CivSettings.NIGHTLIGHTS_PERKS))
+					if (player.hasPermission(CivSettings.MEDIEVAL_PERKS))
 					{
-						resident.giveAllNightLightsPerks();
-						perkMessage += "Night Lights"+", ";
+						resident.giveAllMedievalPerks();
+						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Medieval")+", ";
 					}
 
 					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");

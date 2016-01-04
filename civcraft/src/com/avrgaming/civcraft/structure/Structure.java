@@ -38,6 +38,7 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
+import com.avrgaming.civcraft.object.StructureSign;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.template.Template;
@@ -505,6 +506,10 @@ public class Structure extends Buildable {
 			
 			if (!(this instanceof Wall || this instanceof FortifiedWall || this instanceof Road))
 			{
+				/* Remove StructureSigns */
+				for (StructureSign sign : this.getSigns()) {
+					sign.delete();
+				}
 				try {
 					this.undoFromTemplate();	
 				} catch (IOException | CivException e1) {

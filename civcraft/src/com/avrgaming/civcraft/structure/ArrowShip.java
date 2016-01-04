@@ -2,6 +2,7 @@ package com.avrgaming.civcraft.structure;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 
 import org.bukkit.Location;
 
@@ -10,10 +11,13 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.BlockCoord;
+import com.avrgaming.civcraft.util.SimpleBlock;
 
 public class ArrowShip extends Structure {
 
 	ProjectileArrowComponent arrowComponent;
+	private HashMap<Integer, ProjectileArrowComponent> arrowTowers = new HashMap<Integer, ProjectileArrowComponent>();
+
 	
 	protected ArrowShip(Location center, String id, Town town)
 			throws CivException {
@@ -29,6 +33,22 @@ public class ArrowShip extends Structure {
 		super.loadSettings();
 		arrowComponent = new ProjectileArrowComponent(this, this.getCenterLocation().getLocation());
 		arrowComponent.createComponent(this);
+	}
+	
+	public void onPostBuild(BlockCoord absCoord, SimpleBlock commandBlock) {		
+		if (commandBlock.command.equals("/towerfire")) {
+			String id = commandBlock.keyvalues.get("id");
+			Integer towerID = Integer.valueOf(id);
+			
+			if (!arrowTowers.containsKey(towerID)) {
+				
+				ProjectileArrowComponent arrowTower = new ProjectileArrowComponent(this, absCoord.getLocation());
+				arrowTower.createComponent(this);
+				arrowTower.setTurretLocation(absCoord);
+				
+				arrowTowers.put(towerID, arrowTower);
+			}
+		}
 	}
 
 	/**

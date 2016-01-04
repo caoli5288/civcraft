@@ -374,7 +374,12 @@ public class TradeLevelComponent extends Component {
 						break;
 					}
 				} else {
-					newItems.add(ItemManager.createItemStack(CivData.IRON_INGOT, 1));
+					int ironRand = (rand.nextInt(4))+1;
+					if (ironRand >= 3) {
+						newItems.add(ItemManager.createItemStack(CivData.GUNPOWDER, 1));
+					} else {
+						newItems.add(ItemManager.createItemStack(CivData.IRON_INGOT, 1));
+					}
 				}
 			}
 		}

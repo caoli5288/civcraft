@@ -103,13 +103,25 @@ public class Capitol extends TownHall {
 		if (!War.isWarTime()) {
 			return;
 		}
+		Boolean hasPermission = false;
+		if((resident.getTown().isMayor(resident)) || (resident.getTown().getAssistantGroup().hasMember(resident)) || (resident.getCiv().getLeaderGroup().hasMember(resident)) || (resident.getCiv().getAdviserGroup().hasMember(resident))){
+			hasPermission = true;
+		}
 		
 		switch (sign.getAction()) {
 		case "prev":
-			changeIndex((index-1));
+			if(hasPermission){
+				changeIndex((index-1));
+			} else {
+				CivMessage.sendError(resident, CivSettings.localize.localizedString("capitol_Sign_noPermission"));
+			}
 			break;
 		case "next":
-			changeIndex((index+1));
+			if(hasPermission){
+				changeIndex((index+1));
+			} else {
+				CivMessage.sendError(resident, CivSettings.localize.localizedString("capitol_Sign_noPermission"));
+			}
 			break;
 		case "respawn":
 			ArrayList<RespawnLocationHolder> respawnables =  this.getTown().getCiv().getAvailableRespawnables();

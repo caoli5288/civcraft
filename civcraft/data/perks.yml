@@ -131,6 +131,13 @@ perks:
     #   components:
     #       - name: 'CustomTemplate'
 
+    # - id: 'template_medieval'
+    #   display_name: 'Medieval Template'
+    #   item_id: 267
+    #   data: 0
+    #   components:
+    #       - name: 'CustomTemplate'
+
 ############ ARCTIC THEME
     - id: 'tpl_arctic_camp'
       display_name: 'Arctic Camp'

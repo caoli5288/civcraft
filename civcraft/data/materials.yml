@@ -1743,7 +1743,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '5'
+                value: '4.5'
               - name: 'LeatherColor'
                 color: '339933'
               - name: 'NoVanillaDurability'
@@ -1799,7 +1799,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '5.0'
+                value: '4.5'
               - name: 'LeatherColor'
                 color: '339933'
               - name: 'NoVanillaDurability'
@@ -1857,7 +1857,7 @@ materials:
           category: '<gold>Gear Tier 4'
           components:
               - name: 'Defense'
-                value: '6.5'
+                value: '6.0'
               - name: 'LeatherColor'
                 color: 'FF0000'
               - name: 'NoVanillaDurability'
@@ -2194,7 +2194,7 @@ materials:
           category: '<lightgreen>Gear Tier 1'
           components:
               - name: 'Defense'
-                value: '2.5'
+                value: '0.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2218,7 +2218,7 @@ materials:
           category: '<lightgreen>Gear Tier 1'
           components:
               - name: 'Defense'
-                value: '3.5'
+                value: '1.0'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2242,7 +2242,7 @@ materials:
           category: '<lightgreen>Gear Tier 1'
           components:
               - name: 'Defense'
-                value: '2.5'
+                value: '0.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2267,7 +2267,7 @@ materials:
           category: '<lightgreen>Gear Tier 1'
           components:
               - name: 'Defense'
-                value: '1.5'
+                value: '0.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2294,7 +2294,7 @@ materials:
           category: '<lightblue>Gear Tier 2'
           components:
               - name: 'Defense'
-                value: '4'
+                value: '2.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2319,7 +2319,7 @@ materials:
           category: '<lightblue>Gear Tier 2'
           components:
               - name: 'Defense'
-                value: '3'
+                value: '2'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2344,7 +2344,7 @@ materials:
           category: '<lightblue>Gear Tier 2'
           components:
               - name: 'Defense'
-                value: '5' 
+                value: '3.0'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2369,7 +2369,7 @@ materials:
           category: '<lightblue>Gear Tier 2'
           components:
               - name: 'Defense'
-                value: '4' 
+                value: '2.5' 
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2512,7 +2512,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '5.5'
+                value: '4'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2537,7 +2537,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '6.5'
+                value: '4.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2562,7 +2562,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '5.5'
+                value: '4'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2587,7 +2587,7 @@ materials:
           category: '<lightpurple>Gear Tier 3'
           components:
               - name: 'Defense'
-                value: '4.5'
+                value: '4'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2672,7 +2672,7 @@ materials:
           category: '<gold>Gear Tier 4'
           components:
               - name: 'Defense'
-                value: '5.5'
+                value: '4.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2697,7 +2697,7 @@ materials:
           category: '<gold>Gear Tier 4'
           components:
               - name: 'Defense'
-                value: '8.5'
+                value: '5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2722,7 +2722,7 @@ materials:
           category: '<gold>Gear Tier 4'
           components:
               - name: 'Defense'
-                value: '7'
+                value: '4.5'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -2747,7 +2747,7 @@ materials:
           category: '<gold>Gear Tier 4'
           components:
               - name: 'Defense'
-                value: '7'
+                value: '4'
               - name: 'NoVanillaDurability'
               - name: 'DurabilityOnDeath'
                 value: '0.1'
@@ -4371,7 +4371,7 @@ materials:
           item_id: 154
           item_data: 0
           name: 'Hopper'
-          craftable: true
+          craftable: false
           shaped: true
           vanilla: false
           required_techs: 'tech_machinery'

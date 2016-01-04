@@ -52,6 +52,10 @@ public class ShowTemplateType implements GuiAction {
 			{
 				resident.showTemplatePerks("hell");
 			}
+			else if (perk.getIdent().startsWith("template_medieval"))
+			{
+				resident.showTemplatePerks("medieval");
+			}
 		} else {
 			CivLog.error(perk_id+" "+CivSettings.localize.localizedString("loreGui_perkActivationFailed"));
 		}

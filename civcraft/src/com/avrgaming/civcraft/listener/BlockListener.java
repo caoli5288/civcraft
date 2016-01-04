@@ -1124,6 +1124,12 @@ public class BlockListener implements Listener {
 					case JUNGLE_DOOR:
 					case ACACIA_DOOR:
 					case DARK_OAK_DOOR:
+                    case ACACIA_FENCE_GATE:
+                    case BIRCH_FENCE_GATE:
+                    case DARK_OAK_FENCE_GATE: 
+                    case FENCE_GATE:
+                    case SPRUCE_FENCE_GATE:
+                    case JUNGLE_FENCE_GATE: 
 						return;
 					default:
 						break;

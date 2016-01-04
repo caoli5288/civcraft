@@ -118,13 +118,27 @@ public class TradeGoodPopulator extends BlockPopulator {
     		structSign.setText(sign.getLines());
     		structSign.setDirection(ItemManager.getData(sign.getData()));
     		CivGlobal.addStructureSign(structSign);
+            ProtectedBlock pbsign = new ProtectedBlock(new BlockCoord(signBlock), ProtectedBlock.Type.TRADE_MARKER);
+            CivGlobal.addProtectedBlock(pbsign);
+            if (sync) {
+                try {
+                	pbsign.saveNow();
+                    structSign.saveNow();
+                } catch (SQLException e) {
+                	e.printStackTrace();
+                }
+            } else {
+            	pbsign.save();
+                structSign.save();
+            }
     	}
+        
     	if (sync) {
-    	try {
-			new_good.saveNow();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+	    	try {
+				new_good.saveNow();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
     	} else {
     		new_good.save();
     	}

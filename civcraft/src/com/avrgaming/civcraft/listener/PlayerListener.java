@@ -130,11 +130,11 @@ public class PlayerListener implements Listener {
 				if (cc != null && cc.getCiv() != resident.getCiv() && !cc.getCiv().isAdminCiv()) {
 					Relation.Status status = cc.getCiv().getDiplomacyManager().getRelationStatus(player);
 					if (!(status.equals(Relation.Status.ALLY) && player.hasPermission(CivSettings.TPALLY) )
-							|| !(status.equals(Relation.Status.NEUTRAL) && player.hasPermission(CivSettings.TPNEUTRAL)) 
-							|| !(status.equals(Relation.Status.HOSTILE) && player.hasPermission(CivSettings.TPHOSTILE))
-							|| !(status.equals(Relation.Status.PEACE) && player.hasPermission(CivSettings.TPWAR))
-							|| !(status.equals(Relation.Status.WAR) && player.hasPermission(CivSettings.TPWAR))
-							|| !player.hasPermission(CivSettings.TPALL)
+							&& !(status.equals(Relation.Status.NEUTRAL) && player.hasPermission(CivSettings.TPNEUTRAL)) 
+							&& !(status.equals(Relation.Status.HOSTILE) && player.hasPermission(CivSettings.TPHOSTILE))
+							&& !(status.equals(Relation.Status.PEACE) && player.hasPermission(CivSettings.TPWAR))
+							&& !(status.equals(Relation.Status.WAR) && player.hasPermission(CivSettings.TPWAR))
+							&& !player.hasPermission(CivSettings.TPALL)
 							) {
 						/* 
 						 * Deny telportation into Civ if not allied.

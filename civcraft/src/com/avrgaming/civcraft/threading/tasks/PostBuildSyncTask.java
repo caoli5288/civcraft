@@ -201,14 +201,14 @@ public class PostBuildSyncTask implements Runnable {
 				if (ItemManager.getId(block) != CivData.CHEST) {		
 					byte chestData = CivData.convertSignDataToChestData((byte)sb.getData());
 					ItemManager.setTypeId(block, CivData.CHEST);
-					ItemManager.setData(block, chestData, true);
+					ItemManager.setData(block, chestData, true);}
 				
 					Chest chest = (Chest)block.getState();
 					MaterialData data = chest.getData();
-					ItemManager.setData(data, chestData);
+//					ItemManager.setData(data, chestData);
 					chest.setData(data);
 					chest.update();
-				}
+//				}
 				
 				break;
 			}
@@ -390,14 +390,14 @@ public class PostBuildSyncTask implements Runnable {
 				if (ItemManager.getId(block) != CivData.CHEST) {		
 					byte chestData = CivData.convertSignDataToChestData((byte)sb.getData());
 					ItemManager.setTypeId(block, CivData.CHEST);
-					ItemManager.setData(block, chestData, true);
+					ItemManager.setData(block, chestData, true); }
 				
 					Chest chest = (Chest)block.getState();
 					MaterialData data = chest.getData();
-					ItemManager.setData(data, chestData);
+//					ItemManager.setData(data, chestData);
 					chest.setData(data);
 					chest.update();
-				}
+//				}
 				
 				break;
 			}

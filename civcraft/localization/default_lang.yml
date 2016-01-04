@@ -2825,5 +2825,14 @@ var_buildable_tooCloseToCannonShip: "Cannot build here. Too close to another Can
 var_war_mostLethal: "Most Lethal: [%0]"
 war_wartimeSkippedHeading: "WarTime Has Been Skipped, No Civs at War."
 
+PlayerLoginAsync_perk_Medieval: "Medieval"
+adcmd_build_changeNearestDesc: "[town] [Theme] Change the nearest structure in the town to the entered template Theme. Confirmation is required."
+
+var_adcmd_build_wouldChangeTheme: "Would change the [%0] at location [%1] to the [%2] theme. Are you sure? Type '/ad changenearest [town] [theme] yes' to confirm."
+adcmd_build_wouldChangeTheme_NoTheme: "Please enter a theme, for example: default, aztec, roman"
+
+newItemLore_Defense: "Defense Bonus"
+capitol_Sign_noPermission: "You must be a Mayor, Leader, Advisor, or Assistant to change the respawn Town."
+
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

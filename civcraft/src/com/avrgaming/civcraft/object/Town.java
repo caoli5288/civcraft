@@ -3045,6 +3045,10 @@ public class Town extends SQLObject {
 		for (Perk perk : resident.getPersonalTemplatePerks(info)) {
 			perks.add(perk);
 		}
+		for (Perk perk : resident.getUnboundTemplatePerks(perks, info))
+		{
+			perks.add(perk);
+		}
 		
 		return perks;
 	}

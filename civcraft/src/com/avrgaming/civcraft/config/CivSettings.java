@@ -213,7 +213,7 @@ public class CivSettings {
 	public static final String HELL_PERKS = "civ.hellperks";
 	public static final String ELVEN_PERKS = "civ.elvenperks";
 	public static final String CULTIST_PERKS = "civ.cultistperks";
-	public static final String NIGHTLIGHTS_PERKS = "civ.nightlightperks";
+	public static final String MEDIEVAL_PERKS = "civ.medievalperks";
 	public static final String ECON = "civ.econ";
 	public static final String TPALLY = "civ.tp.ally";
 	public static final String TPNEUTRAL = "civ.tp.neutral";
@@ -556,7 +556,12 @@ public class CivSettings {
 		switchItems.add(Material.ACACIA_DOOR);
 		switchItems.add(Material.DARK_OAK_DOOR);
 		
-		
+		// 1.7 additions
+		switchItems.add(Material.ACACIA_FENCE_GATE);
+		switchItems.add(Material.BIRCH_FENCE_GATE);
+		switchItems.add(Material.DARK_OAK_FENCE_GATE);
+		switchItems.add(Material.SPRUCE_FENCE_GATE);
+		switchItems.add(Material.JUNGLE_FENCE_GATE);
 	}
 	
 	private static void initBlockPlaceExceptions() {
