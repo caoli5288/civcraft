@@ -113,7 +113,7 @@ public class CivTutorial {
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_campQuest_Line4")
 					));
 			
-			tutorialInventory.setItem(18,getInfoBookForItem("mat_found_camp"));
+//			tutorialInventory.setItem(18,getInfoBookForItem("mat_found_camp"));
 			
 			tutorialInventory.setItem(10, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+CivSettings.localize.localizedString("tutorial_civQuest_heading"), ItemManager.getId(Material.BOOK_AND_QUILL), 0, 
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_civQuest_Line1"),
@@ -123,7 +123,7 @@ public class CivTutorial {
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_civQuest_Line5")
 					));
 			
-			tutorialInventory.setItem(19,getInfoBookForItem("mat_found_civ"));
+//			tutorialInventory.setItem(19,getInfoBookForItem("mat_found_civ"));
 			
 			tutorialInventory.setItem(11, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+CivSettings.localize.localizedString("tutorial_needRecipe_heading"), ItemManager.getId(Material.WORKBENCH), 0, 
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_needRecipe_Line1"),

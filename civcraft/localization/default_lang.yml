@@ -1879,7 +1879,7 @@ customItem_NoEnchanting: "Items cannot be enchanted with enchantment tables."
 customItem_restrictedItemsRemoved: "Restricted vanilla items in your inventory have been removed."
 customItem_enchantTableDisabled: "Cannot use enchantment tables. XP and Levels disabled in CivCraft."
 customItem_anvilDisabled: "Cannot use anvils. XP and Levels disabled in CivCraft."
-var_customItem_Pickup: "You've Picked up [%0] [%1]"
+var_customItem_Pickup: "You picked up [%0] [%1]"
 
 # =========================== Hero Chat Messages =========================
 hc_prefix_far: "[Far]:"
