@@ -26,7 +26,6 @@ import org.bukkit.Location;
 
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.BlockCoord;
@@ -295,15 +294,15 @@ public class Trommel extends Structure {
 		double increase = chance*this.getTown().getBuffManager().getEffectiveDouble(Buff.EXTRACTION);
 		chance += increase;
 		
-		try {
-			if (this.getTown().getGovernment().id.equals("gov_despotism")) {
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.despotism_rate");
-			} else if (this.getTown().getGovernment().id.equals("gov_theocracy") || this.getTown().getGovernment().id.equals("gov_monarchy")){
-				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.penalty_rate");
-			}
-		} catch (InvalidConfiguration e) {
-			e.printStackTrace();
-		}
+//		try {
+//			if (this.getTown().getGovernment().id.equals("gov_despotism")) {
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.despotism_rate");
+//			} else if (this.getTown().getGovernment().id.equals("gov_theocracy") || this.getTown().getGovernment().id.equals("gov_monarchy")){
+//				chance *= CivSettings.getDouble(CivSettings.structureConfig, "trommel.penalty_rate");
+//			}
+//		} catch (InvalidConfiguration e) {
+//			e.printStackTrace();
+//		}
 		return chance;
 	}
 	

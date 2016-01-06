@@ -25,6 +25,7 @@ import java.util.Random;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
 import com.avrgaming.civcraft.main.CivData;
@@ -426,7 +427,26 @@ public class TrommelAsyncTask extends CivAsyncTask {
 		if (this.trommel.lock.tryLock()) {
 			try {
 				try {
-					processTrommelUpdate();
+					if (this.trommel.getTown().getGovernment().id.equals("gov_theocracy") || this.trommel.getTown().getGovernment().id.equals("gov_monarchy")){
+						Random rand = new Random();
+						int randMax = 100;
+						int rand1 = rand.nextInt(randMax);
+						Double chance = CivSettings.getDouble(CivSettings.structureConfig, "trommel.penalty_rate") * 100;
+						if (rand1 < chance)
+						{
+							processTrommelUpdate();
+							debug(this.trommel, "Not penalized");
+						} else {
+
+							debug(this.trommel, "Skip Due to Penalty");
+						}
+					} else {
+						processTrommelUpdate();
+						if (this.trommel.getTown().getGovernment().id.equals("gov_despotism")) {
+							debug(this.trommel, "Doing Bonus");
+							processTrommelUpdate();
+						}
+					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
