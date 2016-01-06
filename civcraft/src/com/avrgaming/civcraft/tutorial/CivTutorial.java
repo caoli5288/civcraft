@@ -112,9 +112,7 @@ public class CivTutorial {
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_campQuest_Line3"),
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_campQuest_Line4")
 					));
-			
-//			tutorialInventory.setItem(18,getInfoBookForItem("mat_found_camp"));
-			
+						
 			tutorialInventory.setItem(10, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+CivSettings.localize.localizedString("tutorial_civQuest_heading"), ItemManager.getId(Material.BOOK_AND_QUILL), 0, 
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_civQuest_Line1"),
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_civQuest_Line2"),
@@ -123,7 +121,6 @@ public class CivTutorial {
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_civQuest_Line5")
 					));
 			
-//			tutorialInventory.setItem(19,getInfoBookForItem("mat_found_civ"));
 			
 			tutorialInventory.setItem(11, LoreGuiItem.build(CivColor.LightBlue+ChatColor.BOLD+CivSettings.localize.localizedString("tutorial_needRecipe_heading"), ItemManager.getId(Material.WORKBENCH), 0, 
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_needRecipe_Line1"),
@@ -132,6 +129,32 @@ public class CivTutorial {
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_needRecipe_Line4"),
 					ChatColor.RESET+CivSettings.localize.localizedString("tutorial_needRecipe_Line5")
 					));
+			
+			for (ConfigMaterialCategory cat : ConfigMaterialCategory.getCategories()) {
+			for (ConfigMaterial mat : cat.materials.values()) {
+				if (mat.id.equals("mat_found_civ"))
+				{
+				ItemStack stack = getInfoBookForItem(mat.id);
+				if (stack != null) {
+					stack = LoreGuiItem.setAction(stack, "TutorialRecipe");
+					tutorialInventory.setItem(19,LoreGuiItem.asGuiItem(stack));
+				}
+				} else if (mat.id.equals("mat_found_camp")) {
+					ItemStack stack = getInfoBookForItem(mat.id);
+					if (stack != null) {
+						stack = LoreGuiItem.setAction(stack, "TutorialRecipe");
+						tutorialInventory.setItem(18,LoreGuiItem.asGuiItem(stack));
+					}
+				}
+			}
+			}
+			
+			/* Add back buttons. */
+			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, CivSettings.localize.localizedString("tutorial_lore_backToCategories"));
+			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
+			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
+			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
+			tutorialInventory.setItem(26, backButton);
 		
 			LoreGuiItemListener.guiInventories.put(tutorialInventory.getName(), tutorialInventory);
 		}
@@ -221,6 +244,13 @@ public class CivTutorial {
 				
 				LoreGuiItemListener.guiInventories.put(inv.getName(), inv);
 			}
+			
+			/* Add back buttons. */
+			ItemStack backButton = LoreGuiItem.build("Back", ItemManager.getId(Material.MAP), 0, CivSettings.localize.localizedString("tutorial_lore_backToCategories"));
+			backButton = LoreGuiItem.setAction(backButton, "OpenInventory");
+			backButton = LoreGuiItem.setActionData(backButton, "invType", "showGuiInv");
+			backButton = LoreGuiItem.setActionData(backButton, "invName", guiInventory.getName());
+			craftingHelpInventory.setItem(LoreGuiItem.MAX_INV_SIZE-1, backButton);
 			
 			LoreGuiItemListener.guiInventories.put(craftingHelpInventory.getName(), craftingHelpInventory);
 		}
