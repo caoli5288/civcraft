@@ -1287,6 +1287,9 @@ public class Civilization extends SQLObject {
 		}
 		for (Relation relation : deletedRelations) {
 			try {
+				if (relation.getStatus() == Relation.Status.WAR) {
+					relation.setStatus(Relation.Status.NEUTRAL);
+				}
 				relation.delete();
 			} catch (SQLException e) {
 				e.printStackTrace();
