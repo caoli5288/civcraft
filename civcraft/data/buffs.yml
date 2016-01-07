@@ -30,7 +30,7 @@ buffs:
     - id: 'buff_monopoly'
       name: 'Monopoly'
       description: 'Increases coin output from all trade goods in use by <lightgreen>3%<r> <gold>Stackable<r>'
-      value: '0.3'
+      value: '0.03'
       stackable: true
       parent:
     
