@@ -194,7 +194,7 @@ public abstract class Wonder extends Buildable {
 		
 		for (Wonder wonder : CivGlobal.getWonders()) {
 			if (wonder.getConfigId().equals(configId)) {
-				if (wonder.getConfigId().equals("w_colosseum"))
+				if (wonder.getConfigId().equals("w_colosseum") || wonder.getConfigId().equals("w_battledome"))
 				{
 					return true;
 				}
@@ -398,6 +398,13 @@ public abstract class Wonder extends Buildable {
 				wonder = new GrandShipIngermanland(center, id, town);
 			} else {
 				wonder = new GrandShipIngermanland(rs);
+			}
+			break;
+		case "w_battledome":
+			if (rs == null) {
+				wonder = new Battledome(center, id, town);
+			} else {
+				wonder = new Battledome(rs);
 			}
 			break;
 		default:
