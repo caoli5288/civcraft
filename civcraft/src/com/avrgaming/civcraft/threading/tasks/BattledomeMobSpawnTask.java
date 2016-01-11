@@ -2,8 +2,8 @@ package com.avrgaming.civcraft.threading.tasks;
 
 import java.util.HashSet;
 
-import org.bukkit.Bukkit;
-import org.bukkit.World;
+//import org.bukkit.Bukkit;
+//import org.bukkit.World;
 
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.structure.wonders.Battledome;
@@ -31,9 +31,9 @@ public class BattledomeMobSpawnTask extends CivAsyncTask {
 			debug(battledome, "Battledome inactive...");
 			return;
 		}
-		World world = Bukkit.getWorld("world");
+//		World world = Bukkit.getWorld("world");
 
-        world.spawnCreature(pLoc, EntityType.SKELETON);
+//        world.spawnCreature(pLoc, EntityType.SKELETON);
 		
 		debug(battledome, "Processing Battledome...");
 	}

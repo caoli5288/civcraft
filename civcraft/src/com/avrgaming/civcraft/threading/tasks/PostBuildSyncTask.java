@@ -33,6 +33,7 @@ import com.avrgaming.civcraft.structure.ArrowTower;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.CannonShip;
 import com.avrgaming.civcraft.structure.CannonTower;
+import com.avrgaming.civcraft.structure.TeslaTower;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.TradeOutpost;
 import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
@@ -341,6 +342,10 @@ public class PostBuildSyncTask implements Runnable {
 				if (buildable instanceof CannonTower) {
 					CannonTower cannontower = (CannonTower)buildable;
 					cannontower.setTurretLocation(absCoord);
+				}
+				if (buildable instanceof TeslaTower) {
+					TeslaTower teslaTower = (TeslaTower)buildable;
+					teslaTower.setTurretLocation(absCoord);
 				}
 				break;
 			case "/arrowfire":

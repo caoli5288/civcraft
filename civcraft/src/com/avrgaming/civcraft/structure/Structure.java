@@ -352,6 +352,13 @@ public class Structure extends Buildable {
 				struct = (Lighthouse) new Lighthouse(rs);
 			}
 			break;
+		case "s_teslatower":
+			if (rs == null) {
+				struct = (TeslaTower) new TeslaTower(center, id, town);
+			} else {
+				struct = (TeslaTower) new TeslaTower(rs);
+			}
+			break;
 		default:
 			// This structure is generic, just create a structure type. 
 			// TODO should ANY structure be generic?
