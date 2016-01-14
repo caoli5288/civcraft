@@ -152,6 +152,22 @@ public class Structure extends Buildable {
 				struct = (Structure) new Library(rs);
 			}
 			break;	
+			
+		case "s_university":
+			if (rs == null) {
+				struct = (Structure) new University(center, id, town);
+			} else {
+				struct = (Structure) new University(rs);
+			}
+			break;	
+			
+		case "s_school":
+			if (rs == null) {
+				struct = (Structure) new School(center, id, town);
+			} else {
+				struct = (Structure) new School(rs);
+			}
+			break;	
 		
 		case "s_blacksmith":
 			if (rs == null) {

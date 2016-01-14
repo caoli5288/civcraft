@@ -68,6 +68,7 @@ techs:
      points: 125
      require_techs:
 
+#Tier 2
    - id: 'tech_archery'
      name: 'Archery'
      beaker_cost: 1000.0
@@ -131,6 +132,7 @@ techs:
      points: 250
      require_techs: 'tech_religion'
 
+#Tier 3
    - id: 'tech_advanced_masonry'
      name: 'Advanced Masonry'
      beaker_cost: 2000.0
@@ -180,6 +182,7 @@ techs:
      points: 500
      require_techs: 'tech_brewing'
 
+#Tier 4
    - id: 'tech_leather_refinement'
      name: 'Leather Refinement'
      beaker_cost: 2500.0
@@ -221,6 +224,13 @@ techs:
      cost: 15000.0
      points: 625
      require_techs: 'tech_trade'
+
+   - id: 'tech_education'
+     name: 'Education'
+     beaker_cost: 2500.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_advanced_hunting'
  
    - id: 'tech_monarchy'
      name: 'Monarchy'
@@ -242,7 +252,8 @@ techs:
      cost: 15000.0
      points: 625
      require_techs: 'tech_sailing'
-   
+
+#Tier 5
    - id: 'tech_taxation'
      name: 'Taxation'
      beaker_cost: 10000.0
@@ -263,14 +274,15 @@ techs:
      cost: 75000.0
      points: 5000
      require_techs: 'tech_taxation'
-   
+
+#Tier 6
    - id: 'tech_global_trade'
      name: 'Global Trade'
      beaker_cost: 20000.0
      cost: 75000.0
      points: 5000
      require_techs: 'tech_commerce'
-   
+
    - id: 'tech_economics'
      name: 'Economics'
      beaker_cost: 20000.0
@@ -284,7 +296,8 @@ techs:
      cost: 75000.0
      points: 5000
      require_techs: 'tech_fermentation'
-   
+
+#Tier 7
    - id: 'tech_tanning'
      name: 'Tanning'
      beaker_cost: 17500.0
@@ -334,6 +347,13 @@ techs:
      points: 8750
      require_techs: 'tech_economics'
 
+   - id: 'tech_scientific_method'
+     name: 'Scientific Method'
+     beaker_cost: 35000.0
+     cost: 300000.0
+     points: 8750
+     require_techs: 'tech_economics,tech_education'
+
    - id: 'tech_alchemy'
      name: 'Alchemy'
      beaker_cost: 35000.0
@@ -341,6 +361,7 @@ techs:
      points: 8750
      require_techs: 'tech_malting'
 
+#Tier 8
    - id: 'tech_construction'
      name: 'Construction'
      beaker_cost: 70000.0
@@ -348,6 +369,14 @@ techs:
      points: 17500
      require_techs: 'tech_nationalism'
 
+   - id: 'tech_electricity'
+     name: 'Electricity'
+     beaker_cost: 70000.0
+     cost: 1000000.0
+     points: 17500
+     require_techs: 'tech_alchemy,tech_scientific_method,tech_advanced_efficiency'
+
+#Tier 9
    - id: 'tech_advanced_efficiency'
      name: 'Advanced Efficiency'
      beaker_cost: 35000.0
@@ -362,6 +391,7 @@ techs:
      points: 50000
      require_techs: 'tech_construction'
 
+#Tier 10
    - id: 'tech_composites'
      name: 'Composites'
      beaker_cost: 175000.0
@@ -390,19 +420,13 @@ techs:
      points: 43750
      require_techs: 'tech_advanced_efficiency:tech_innovation:tech_folded_steel'
 
-   - id: 'tech_scientific_method'
-     name: 'Scientific Method'
-     beaker_cost: 350000.0
-     cost: 2500000.0
-     points: 87500
-     require_techs: 'tech_innovation'
-
+#Tier 11
    - id: 'tech_enlightenment'
      name: 'Enlightenment'
      beaker_cost: 7500000.0
      cost: 50000000.0
      points: 375000
-     require_techs: 'tech_composites:tech_laminates:tech_forging:tech_tempering:tech_advanced_artillery:tech_advanced_efficiency:tech_scientific_method:tech_alchemy:tech_automation:tech_global_trade'
+     require_techs: 'tech_composites:tech_laminates:tech_forging:tech_tempering:tech_advanced_artillery:tech_advanced_efficiency:tech_scientific_method:tech_electricity:tech_automation:tech_global_trade'
 
    - id: 'tech_great_pyramid'
      name: 'Great Pyramid'
@@ -451,7 +475,7 @@ techs:
      beaker_cost: 175000.0
      cost: 175000.0
      points: 43750
-     require_techs: 'tech_alchemy:tech_global_trade:tech_scientific_method:tech_advanced_efficiency' 
+     require_techs: 'tech_electricity:tech_global_trade:tech_scientific_method:tech_advanced_efficiency' 
 
    - id: 'tech_colosseum'
      name: 'Colosseum'

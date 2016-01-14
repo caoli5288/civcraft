@@ -66,10 +66,12 @@ import com.avrgaming.civcraft.randomevents.RandomEvent;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Mine;
+import com.avrgaming.civcraft.structure.School;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.TownHall;
 import com.avrgaming.civcraft.structure.TradeOutpost;
+import com.avrgaming.civcraft.structure.University;
 import com.avrgaming.civcraft.structure.Wall;
 import com.avrgaming.civcraft.structure.wonders.Wonder;
 import com.avrgaming.civcraft.template.Template;
@@ -2651,6 +2653,31 @@ public class Town extends SQLObject {
 		additional += rate*getBuffManager().getEffectiveDouble("buff_greatlibrary_extra_beakers");
 		rate += additional;
 		rates.put("Goodies/Wonders", additional);
+		
+		double education = 0.0;
+		for (Structure struct : this.structures.values()) {
+			for (Component comp : struct.attachedComponents) {
+				if (comp instanceof AttributeBase) {
+					AttributeBase as = (AttributeBase)comp;
+					if (as.getString("attribute").equalsIgnoreCase("BEAKERBOOST")) {
+						double boostPerRes = as.getGenerated();
+						int maxBoost = 0;
+
+						if (struct instanceof University) {
+							maxBoost = 5;
+						}
+						else if (struct instanceof School) {
+							maxBoost = 10;
+						}
+						int resCount = Math.min(this.getResidentCount(),maxBoost);
+						education += (boostPerRes * resCount);
+					}
+				}
+			}
+		}
+		
+		rate += education;
+		rates.put("Education", education);
 
 		return new AttrSource(rates, rate, null);
 	}

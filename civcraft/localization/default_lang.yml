@@ -2368,8 +2368,6 @@ fishingBoat_tooDeep: "You must be close to the water's surface to build this str
 #---- Grocer.java ----
 # "Bought 1 fish for 10 Coins"
 var_grocer_msgBought: "Bought [%0] [%1] for [%2]"
-# "Paid the town of Spawn 50 Coins in non-resident taxes"
-var_grocer_msgPaidTaxes: "Paid the town of %s %s in non-resident taxes"
 #These are for the grocer signs.
 grocer_sign_buy: "Buy"
 grocer_sign_for: "For"
@@ -2834,6 +2832,11 @@ adcmd_build_wouldChangeTheme_NoTheme: "Please enter a theme, for example: defaul
 
 newItemLore_Defense: "Defense Bonus"
 capitol_Sign_noPermission: "You must be a Mayor, Leader, Advisor, or Assistant to change the respawn Town."
+
+university_sign: "Univesity Of"
+
+# "Paid the town of Spawn 50 Coins in non-resident taxes"
+var_grocer_msgPaidTaxes: "Paid the town of [%0] [%1] in non-resident taxes"
 
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
