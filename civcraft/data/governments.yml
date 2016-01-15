@@ -5,6 +5,7 @@
 
 # Maximum Number of hours to remain in anarchy after switching governments.
 anarchy_duration: 24
+notre_dame_max_anarchy: 2
 
 ######################################################################
 #               CivCraft Governments
