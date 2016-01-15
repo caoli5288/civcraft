@@ -158,7 +158,8 @@ public class TownInfoCommand extends CommandBase {
 		
 		AttrSource beakerSources = town.getBeakers();
 		CivMessage.send(sender, beakerSources.getSourceDisplayString(CivColor.Green, CivColor.LightGreen));
-		CivMessage.send(sender, beakerSources.getRateDisplayString(CivColor.Green, CivColor.LightGreen));
+//		CivMessage.send(sender, beakerSources.getRateDisplayString(CivColor.Green, CivColor.LightGreen));
+		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("cmd_civ_gov_infoBeaker")+" "+CivColor.LightGreen+(town.getBeakerRate().total*100+"%"));
 		CivMessage.send(sender, beakerSources.getTotalDisplayString(CivColor.Green, CivColor.LightGreen));
 	
 	}

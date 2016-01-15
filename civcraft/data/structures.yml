@@ -148,7 +148,7 @@ cottage_levels:
          - 297,1
          - 391,1
      count: 24
-     coins: 75.0
+     coins: 100.0
 
    - level: 2
      consumes:
@@ -156,7 +156,7 @@ cottage_levels:
          - 391,2
          - 392,1
      count: 48
-     coins: 150.0
+     coins: 200.0
 
    - level: 3
      consumes:
@@ -164,7 +164,7 @@ cottage_levels:
          - 391,3
          - 392,2
      count: 96
-     coins: 225.0
+     coins: 300.0
 
    - level: 4
      consumes:
@@ -172,7 +172,7 @@ cottage_levels:
          - 391,4
          - 392,3
      count: 120
-     coins: 300.0
+     coins: 400.0
    
    - level: 5
      consumes:
@@ -180,7 +180,7 @@ cottage_levels:
          - 391,5
          - 392,4
      count: 144
-     coins: 375.0
+     coins: 500.0
 
    - level: 6
      consumes:
@@ -189,7 +189,7 @@ cottage_levels:
          - 392,6
          - 319,1
      count: 288
-     coins: 450.0
+     coins: 600.0
 ################# Temple Settings #################
 temple:
     # rate which temple modifies total culture output
@@ -235,27 +235,27 @@ temple_levels:
 ################# Mine Settings #################
 mine_levels:
     - level: 1
-      hammers: 100.00
+      hammers: 150.00
       amount: 10
       count: 24
    
     - level: 2
-      hammers: 150.00
+      hammers: 200.00
       amount: 15
       count: 48
     
     - level: 3
-      hammers: 200.00
+      hammers: 275.00
       amount: 20
       count: 96
     
     - level: 4
-      hammers: 250.00
+      hammers: 350.00
       amount: 25
       count: 120
     
     - level: 5
-      hammers: 300.00
+      hammers: 400.00
       amount: 30
       count: 144
 
@@ -580,46 +580,38 @@ structures:
     max_hitpoints: 500
     ignore_floating: false
     components:
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'GROWTH'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'DEEP_OCEAN'
-          attribute: 'GROWTH'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'RIVER'
-          attribute: 'GROWTH'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_OCEAN'
-          attribute: 'GROWTH'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_RIVER'
-          attribute: 'GROWTH'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN'
+          value: '200.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'DEEP_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'RIVER'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_RIVER'
-          attribute: 'HAMMERS'
-          value: '0.5'
+          value: '200'
+
+  - id: s_museum
+    template: museum
+    template_y_shift: -1
+    displayName: Museum
+    require_tech: 'tech_archaeology'
+    require_structure: 
+    effect_event:
+    limit: 1
+    cost: 100000.0
+    upkeep: 1000.0
+    hammer_cost: 5000.0
+    points: 10000
+    max_hitpoints: 1000
+    ignore_floating: false
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'HAPPINESS'
+          value: '1.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'CULTURE'
+          value: '300.0'
 
   - id: s_bank
     template: bank
@@ -747,11 +739,11 @@ structures:
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'BEAKERS'
-          value: '50.0'
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN,TAGIA,DESERT'
-          attribute: 'BEAKERS'
-          value: '0.05'
+          value: '100.0'
+        # - name: 'AttributeBiome'
+        #   biomes: 'OCEAN,TAGIA,DESERT'
+        #   attribute: 'BEAKERS'
+        #   value: '0.05'
 
   - id: s_university
     template: university
@@ -920,10 +912,10 @@ structures:
     points: 1000
     max_hitpoints: 100
     components:
-        - name: 'AttributeBiomeRadiusPerLevel'
-          attribute: 'COINS'
-          biomes: 'DESERT:5,BEACH:5,RIVER:5,JUNGLE:5'
-          base_value: '15.0'
+        # - name: 'AttributeBiomeRadiusPerLevel'
+        #   attribute: 'COINS'
+        #   biomes: 'DESERT:5,BEACH:5,RIVER:5,JUNGLE:5'
+        #   base_value: '15.0'
         - name: 'ConsumeLevelComponent'
 
   - id: s_temple
@@ -997,38 +989,10 @@ structures:
     max_hitpoints: 300
     ignore_floating: true
     components:
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'DEEP_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'RIVER'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_RIVER'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'BEACH'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'STONE_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.5'
-        - name: 'AttributeBiome'
-          biomes: 'COLD_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.5'
+          value: '200'
   
   - id: ti_mine
     template: mine
@@ -1047,11 +1011,12 @@ structures:
     hammer_cost: 900.0
     points: 6200
     max_hitpoints: 300
+    allow_outside_town: false
     components:
-        - name: 'AttributeBiomeRadiusPerLevel'
-          attribute: 'HAMMERS'
-          biomes: 'EXTREME_HILLS:3,SMALL_MOUNTAINS:3,ICE_MOUNTAINS:3,DESERT_HILLS:1,FOREST_HILLS:1,TAGIA_HILLS:1,JUNGLE_HILLS:1'
-          base_value: '7.0'
+        # - name: 'AttributeBiomeRadiusPerLevel'
+        #   attribute: 'HAMMERS'
+        #   biomes: 'EXTREME_HILLS:3,SMALL_MOUNTAINS:3,ICE_MOUNTAINS:3,DESERT_HILLS:1,FOREST_HILLS:1,TAGIA_HILLS:1,JUNGLE_HILLS:1'
+        #   base_value: '7.0'
         - name: 'ConsumeLevelComponent'
 
   - id: ti_trade_outpost
@@ -1093,38 +1058,10 @@ structures:
     max_hitpoints: 500
     ignore_floating: true
     components:
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'DEEP_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'RIVER'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_RIVER'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'BEACH'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'STONE_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.05'
-        - name: 'AttributeBiome'
-          biomes: 'COLD_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.05'
+          value: '50'
 
   - id: ti_trade_ship
     template: trade_ship
@@ -1154,38 +1091,14 @@ structures:
           type: 'direct'
           attribute: 'CULTURE'
           value: '100.0'
-        - name: 'AttributeBiome'
-          biomes: 'OCEAN'
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'GROWTH'
+          value: '100.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'DEEP_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'RIVER'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_OCEAN'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'FROZEN_RIVER'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'BEACH'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'STONE_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.2'
-        - name: 'AttributeBiome'
-          biomes: 'COLD_BEACH'
-          attribute: 'HAMMERS'
-          value: '0.2'
+          value: '100'
         - name: 'TradeLevelComponent'
   
   - id: ti_farm
