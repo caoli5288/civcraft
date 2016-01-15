@@ -769,13 +769,14 @@ public class Town extends SQLObject {
 		sources.put("Culture Biomes", cultureHammers);
 		total += cultureHammers; 
 		
-		/* Grab happiness generated from structures with components. */
+		/* Grab hammers generated from structures with components. */
 		double structures = 0;
+		double mines = 0;
 		for (Structure struct : this.structures.values()) {
 			if (struct instanceof Mine)
 			{
 				Mine mine = (Mine)struct;
-				structures += mine.getBonusHammers(); 
+				mines += mine.getBonusHammers(); 
 			}
 			for (Component comp : struct.attachedComponents) {
 				if (comp instanceof AttributeBase) {
@@ -786,6 +787,8 @@ public class Town extends SQLObject {
 				}
 			}
 		}
+
+		sources.put("Mines", mines);
 
 		total += structures;
 		sources.put("Structures", structures);
@@ -2655,30 +2658,30 @@ public class Town extends SQLObject {
 		rate += additional;
 		rates.put("Goodies/Wonders", additional);
 		
-		double education = 0.0;
-		for (Structure struct : this.structures.values()) {
-			for (Component comp : struct.attachedComponents) {
-				if (comp instanceof AttributeBase) {
-					AttributeBase as = (AttributeBase)comp;
-					if (as.getString("attribute").equalsIgnoreCase("BEAKERBOOST")) {
-						double boostPerRes = as.getGenerated();
-						int maxBoost = 0;
-
-						if (struct instanceof University) {
-							maxBoost = 5;
-						}
-						else if (struct instanceof School || struct instanceof ResearchLab) {
-							maxBoost = 10;
-						}
-						int resCount = Math.min(this.getResidentCount(),maxBoost);
-						education += (boostPerRes * resCount);
-					}
-				}
-			}
-		}
-		
-		rate += education;
-		rates.put("Education", education);
+//		double education = 0.0;
+//		for (Structure struct : this.structures.values()) {
+//			for (Component comp : struct.attachedComponents) {
+//				if (comp instanceof AttributeBase) {
+//					AttributeBase as = (AttributeBase)comp;
+//					if (as.getString("attribute").equalsIgnoreCase("BEAKERBOOST")) {
+//						double boostPerRes = as.getGenerated();
+//						int maxBoost = 0;
+//
+//						if (struct instanceof University) {
+//							maxBoost = 5;
+//						}
+//						else if (struct instanceof School || struct instanceof ResearchLab) {
+//							maxBoost = 10;
+//						}
+//						int resCount = Math.min(this.getResidentCount(),maxBoost);
+//						education += (boostPerRes * resCount);
+//					}
+//				}
+//			}
+//		}
+//		
+//		rate += education;
+//		rates.put("Education", education);
 
 		return new AttrSource(rates, rate, null);
 	}
@@ -2731,10 +2734,38 @@ public class Town extends SQLObject {
 		
 		beakers += wondersTrade;
 		sources.put("Goodies/Wonders", wondersTrade);
+		
+		double education = 0.0;
+		for (Structure struct : this.structures.values()) {
+			for (Component comp : struct.attachedComponents) {
+				if (comp instanceof AttributeBase) {
+					AttributeBase as = (AttributeBase)comp;
+					if (as.getString("attribute").equalsIgnoreCase("BEAKERBOOST")) {
+						double boostPerRes = as.getGenerated();
+						int maxBoost = 0;
+
+						if (struct instanceof University) {
+							maxBoost = 5;
+						}
+						else if (struct instanceof School || struct instanceof ResearchLab) {
+							maxBoost = 10;
+						}
+						int resCount = Math.min(this.getResidentCount(),maxBoost);
+						education += (boostPerRes * resCount);
+					}
+				}
+			}
+		}
+		double educationBeakers = (beakers*education);
+		beakers += educationBeakers;
+		sources.put("Education", educationBeakers);
 
 		/* Make sure we never give out negative beakers. */
 		beakers = Math.max(beakers, 0);
 		AttrSource rates = getBeakerRate();
+		
+		
+		
 		beakers = beakers*rates.total;
 		
 		if (beakers < 0) {
