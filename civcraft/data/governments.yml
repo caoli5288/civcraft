@@ -3,7 +3,7 @@
 # This file contains all of the different governments and related settings
 #
 
-# Number of hours to remain in anarchy after switching governments.
+# Maximum Number of hours to remain in anarchy after switching governments.
 anarchy_duration: 24
 
 ######################################################################

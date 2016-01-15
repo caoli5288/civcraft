@@ -167,6 +167,14 @@ public class Structure extends Buildable {
 			} else {
 				struct = (Structure) new School(rs);
 			}
+			break;
+			
+		case "s_research_lab":
+			if (rs == null) {
+				struct = (Structure) new ResearchLab(center, id, town);
+			} else {
+				struct = (Structure) new ResearchLab(rs);
+			}
 			break;	
 		
 		case "s_blacksmith":

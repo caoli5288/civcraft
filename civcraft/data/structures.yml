@@ -806,6 +806,33 @@ structures:
           attribute: 'BEAKERBOOST'
           value: '0.01'
 
+  - id: s_research_lab
+    template: school
+    template_y_shift: 0
+    displayName: Research Lab
+    require_upgrade:
+    require_structure: 's_school'
+    require_tech: 'tech_plastics'
+    effect_event:
+    check_event:
+    update_event:
+    onBuild_event:
+    limit: 1
+    cost: 100000.0
+    upkeep: 2000.0
+    hammer_cost: 10000.0
+    points: 10000
+    max_hitpoints: 1000
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'BEAKERS'
+          value: '300.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'BEAKERBOOST'
+          value: '0.01'
+
   - id: s_grocer
     template: grocer
     template_y_shift: 0
@@ -898,7 +925,7 @@ structures:
           biomes: 'DESERT:5,BEACH:5,RIVER:5,JUNGLE:5'
           base_value: '15.0'
         - name: 'ConsumeLevelComponent'
-  
+
   - id: s_temple
     template: temple
     template_y_shift: 0
@@ -925,7 +952,7 @@ structures:
           attribute: 'HAPPINESS'
           value: '5.0'
         - name: 'ConsumeLevelComponent'
-  
+
   - id: s_monument
     template: monument
     template_y_shift: -2
@@ -1360,6 +1387,28 @@ structures:
     points: 20000
     allow_outside_town: true
     strategic: true
+
+  - id: s_broadcast_tower
+    template: broadcast_tower
+    template_y_shift: -1
+    displayName: Broadcast Tower
+    require_upgrade:
+    require_tech: 'tech_radio'
+    effect_event:
+    check_event: 
+    update_event: 
+    onBuild_event:
+    limit: 1
+    cost: 200000.0
+    upkeep: 2000.0
+    hammer_cost: 10000.0
+    points: 25000
+    max_hitpoints: 1500
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'CULTURE'
+          value: '200.0'
 
   - id: s_scoutship
     template: scout_ship

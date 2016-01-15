@@ -66,6 +66,7 @@ import com.avrgaming.civcraft.randomevents.RandomEvent;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.structure.Buildable;
 import com.avrgaming.civcraft.structure.Mine;
+import com.avrgaming.civcraft.structure.ResearchLab;
 import com.avrgaming.civcraft.structure.School;
 import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.structure.Temple;
@@ -2666,7 +2667,7 @@ public class Town extends SQLObject {
 						if (struct instanceof University) {
 							maxBoost = 5;
 						}
-						else if (struct instanceof School) {
+						else if (struct instanceof School || struct instanceof ResearchLab) {
 							maxBoost = 10;
 						}
 						int resCount = Math.min(this.getResidentCount(),maxBoost);

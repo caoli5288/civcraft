@@ -39,6 +39,7 @@ potions:
 taxation_cottage_buff: 2.0
 
 # Definitions for technologies.
+#Ancient era
 techs:
    - id: 'tech_agriculture'
      name: 'Agriculture'
@@ -46,6 +47,7 @@ techs:
      cost: 5000.0
      points: 125
      require_techs:
+     era: 0
 
    - id: 'tech_armory'
      name: 'Armory'
@@ -53,28 +55,32 @@ techs:
      cost: 5000.0
      points: 125
      require_techs:
-     
+     era: 0
+
    - id: 'tech_mining'
      name: 'Mining'
      beaker_cost: 500.0
      cost: 5000.0
      points: 125
      require_techs:
-   
+     era: 0
+
    - id: 'tech_religion'
      name: 'Religion'
      beaker_cost: 500.0
      cost: 5000.0
      points: 125
      require_techs:
+     era: 0
 
-#Tier 2
+#Classical era
    - id: 'tech_archery'
      name: 'Archery'
      beaker_cost: 1000.0
      cost: 7500.0
      points: 250
      require_techs: 'tech_armory'
+     era: 1
 
    - id: 'tech_blacksmithing'
      name: 'Blacksmithing'
@@ -82,6 +88,7 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_armory'
+     era: 1
 
    - id: 'tech_metal_casting'
      name: 'Metal Casting'
@@ -89,13 +96,7 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_armory'
-
-   - id: 'tech_masonry'
-     name: 'Masonry'
-     beaker_cost: 1000.0
-     cost: 7500.0
-     points: 250
-     require_techs: 'tech_mining'
+     era: 1
 
    - id: 'tech_productivity'
      name: 'Productivity'
@@ -103,13 +104,23 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_mining'
-   
+     era: 1
+
+   - id: 'tech_masonry'
+     name: 'Masonry'
+     beaker_cost: 1000.0
+     cost: 7500.0
+     points: 250
+     require_techs: 'tech_mining'
+     era: 1
+
    - id: 'tech_pottery'
      name: 'Pottery'
      beaker_cost: 1000.0
      cost: 7500.0
      points: 250
      require_techs: 'tech_agriculture'
+     era: 1
 
    - id: 'tech_hunting'
      name: 'Hunting'
@@ -117,6 +128,7 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_agriculture'
+     era: 1
 
    - id: 'tech_code_of_laws'
      name: 'Code of Laws'
@@ -124,6 +136,7 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_religion'
+     era: 1
 
    - id: 'tech_brewing'
      name: 'Brewing'
@@ -131,14 +144,7 @@ techs:
      cost: 7500.0
      points: 250
      require_techs: 'tech_religion'
-
-#Tier 3
-   - id: 'tech_advanced_masonry'
-     name: 'Advanced Masonry'
-     beaker_cost: 2000.0
-     cost: 10000.0
-     points: 500
-     require_techs: 'tech_masonry'
+     era: 1
 
    - id: 'tech_sailing'
      name: 'Sailing'
@@ -146,27 +152,39 @@ techs:
      cost: 10000.0
      points: 500
      require_techs: 'tech_productivity'
-   
+     era: 1
+
+   - id: 'tech_advanced_masonry'
+     name: 'Advanced Masonry'
+     beaker_cost: 2000.0
+     cost: 10000.0
+     points: 500
+     require_techs: 'tech_masonry'
+     era: 1
+
    - id: 'tech_automation'
      name: 'Automation'
      beaker_cost: 2000.0
      cost: 10000.0
      points: 500
      require_techs: 'tech_pottery'
-   
+     era: 1
+
    - id: 'tech_trade'
      name: 'Trade'
      beaker_cost: 2000.0
      cost: 10000.0
      points: 500
      require_techs: 'tech_hunting'
+     era: 1
 
    - id: 'tech_advanced_hunting'
      name: 'Advanced Hunting'
-     beaker_cost: 5000.0
-     cost: 20000.0
-     points: 1000
+     beaker_cost: 2000.0
+     cost: 10000.0
+     points: 500
      require_techs: 'tech_hunting:tech_metal_casting'
+     era: 1
 
    - id: 'tech_writing'
      name: 'Writing'
@@ -174,6 +192,7 @@ techs:
      cost: 10000.0
      points: 500
      require_techs: 'tech_code_of_laws'
+     era: 1
 
    - id: 'tech_priesthood'
      name: 'Priesthood'
@@ -181,136 +200,153 @@ techs:
      cost: 10000.0
      points: 500
      require_techs: 'tech_brewing'
+     era: 1
 
-#Tier 4
-   - id: 'tech_leather_refinement'
-     name: 'Leather Refinement'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_archery:tech_advanced_masonry:tech_automation'
-
+#Medieval era
    - id: 'tech_fletching'
      name: 'Fletching'
-     beaker_cost: 2500.0
+     beaker_cost: 5000.0
      cost: 15000.0
      points: 625
      require_techs: 'tech_archery:tech_advanced_masonry:tech_automation'
+     era: 2
+
+   - id: 'tech_leather_refinement'
+     name: 'Leather Refinement'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_archery:tech_advanced_masonry:tech_automation'
+     era: 2
 
    - id: 'tech_alloys'
      name: 'Alloys'
-     beaker_cost: 2500.0
+     beaker_cost: 5000.0
      cost: 15000.0
      points: 625
      require_techs: 'tech_blacksmithing:tech_advanced_masonry:tech_automation'
+     era: 2
 
    - id: 'tech_sword_smithing'
      name: 'Sword Smithing'
-     beaker_cost: 2500.0
+     beaker_cost: 5000.0
      cost: 15000.0
      points: 625
      require_techs: 'tech_metal_casting:tech_advanced_masonry:tech_automation'
-   
-   - id: 'tech_artillery'
-     name: 'Artillery'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_advanced_masonry'
+     era: 2
 
-   - id: 'tech_commerce'
-     name: 'Commerce'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_trade'
-
-   - id: 'tech_education'
-     name: 'Education'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_advanced_hunting'
- 
-   - id: 'tech_monarchy'
-     name: 'Monarchy'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_writing'
-  
-   - id: 'tech_fermentation'
-     name: 'Fermentation'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_priesthood'
-
-   - id: 'tech_exploration'
-     name: 'Exploration'
-     beaker_cost: 2500.0
-     cost: 15000.0
-     points: 625
-     require_techs: 'tech_sailing'
-
-#Tier 5
    - id: 'tech_taxation'
      name: 'Taxation'
-     beaker_cost: 10000.0
+     beaker_cost: 5000.0
      cost: 40000.0
      points: 2500
      require_techs: 'tech_sailing'
-   
+     era: 2
+
+   - id: 'tech_exploration'
+     name: 'Exploration'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_sailing'
+     era: 2
+
+   - id: 'tech_artillery'
+     name: 'Artillery'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_advanced_masonry'
+     era: 2
+
+   - id: 'tech_commerce'
+     name: 'Commerce'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_trade'
+     era: 2
+
+   - id: 'tech_education'
+     name: 'Education'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_advanced_hunting'
+     era: 2
+
+   - id: 'tech_monarchy'
+     name: 'Monarchy'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_writing'
+     era: 2
+
+   - id: 'tech_fermentation'
+     name: 'Fermentation'
+     beaker_cost: 5000.0
+     cost: 15000.0
+     points: 625
+     require_techs: 'tech_priesthood'
+     era: 2
+
+   - id: 'tech_efficiency'
+     name: 'Efficiency'
+     beaker_cost: 10000.0
+     cost: 40000.0
+     points: 2500
+     require_techs: 'tech_taxation'
+     era: 2
+
+   - id: 'tech_advanced_artillery'
+     name: 'Advanced Artillery'
+     beaker_cost: 10000.0
+     cost: 40000.0
+     points: 2500
+     require_techs: 'tech_artillery'
+     era: 2
+
+   - id: 'tech_global_trade'
+     name: 'Global Trade'
+     beaker_cost: 10000.0
+     cost: 40000.0
+     points: 2500
+     require_techs: 'tech_commerce:tech_artillery'
+     era: 2
+
    - id: 'tech_currency'
      name: 'Currency'
      beaker_cost: 10000.0
      cost: 40000.0
      points: 2500
      require_techs: 'tech_monarchy'
-   
-   - id: 'tech_efficiency'
-     name: 'Efficiency'
-     beaker_cost: 20000.0
-     cost: 75000.0
-     points: 5000
-     require_techs: 'tech_taxation'
-
-#Tier 6
-   - id: 'tech_global_trade'
-     name: 'Global Trade'
-     beaker_cost: 20000.0
-     cost: 75000.0
-     points: 5000
-     require_techs: 'tech_commerce'
-
-   - id: 'tech_economics'
-     name: 'Economics'
-     beaker_cost: 20000.0
-     cost: 100000.0
-     points: 5000
-     require_techs: 'tech_currency'
+     era: 2
 
    - id: 'tech_malting'
      name: 'Malting'
-     beaker_cost: 20000.0
-     cost: 75000.0
-     points: 5000
+     beaker_cost: 10000.0
+     cost: 40000.0
+     points: 2500
      require_techs: 'tech_fermentation'
+     era: 2
 
-#Tier 7
-   - id: 'tech_tanning'
-     name: 'Tanning'
-     beaker_cost: 17500.0
-     cost: 75000.0
-     points: 4375
-     require_techs: 'tech_efficiency:tech_malting:tech_leather_refinement'
-
+#Renaissance era
    - id: 'tech_tillering'
      name: 'Tillering'
      beaker_cost: 17500.0
      cost: 75000.0
      points: 4375
      require_techs: 'tech_efficiency:tech_malting:tech_fletching'
+     era: 3
+
+   - id: 'tech_tanning'
+     name: 'Tanning'
+     beaker_cost: 17500.0
+     cost: 75000.0
+     points: 4375
+     require_techs: 'tech_efficiency:tech_malting:tech_leather_refinement'
+     era: 3
 
    - id: 'tech_chemical_bonding'
      name: 'Chemical Bonding'
@@ -318,6 +354,7 @@ techs:
      cost: 75000.0
      points: 4375
      require_techs: 'tech_efficiency:tech_malting:tech_alloys'
+     era: 3
 
    - id: 'tech_folded_steel'
      name: 'Folded Steel'
@@ -325,86 +362,113 @@ techs:
      cost: 75000.0
      points: 4375
      require_techs: 'tech_efficiency:tech_malting:tech_sword_smithing'
-
-   - id: 'tech_advanced_artillery'
-     name: 'Advanced Artillery'
-     beaker_cost: 35000.0
-     cost: 150000.0
-     points: 8750
-     require_techs: 'tech_artillery'
+     era: 3
 
    - id: 'tech_machinery'
      name: 'Machinery'
-     beaker_cost: 35000.0
-     cost: 150000.0
-     points: 8750
+     beaker_cost: 17500.0
+     cost: 75000.0
+     points: 4375
      require_techs: 'tech_efficiency'
-
-   - id: 'tech_nationalism'
-     name: 'Nationalism'
-     beaker_cost: 35000.0
-     cost: 300000.0
-     points: 8750
-     require_techs: 'tech_economics'
-
-   - id: 'tech_scientific_method'
-     name: 'Scientific Method'
-     beaker_cost: 35000.0
-     cost: 300000.0
-     points: 8750
-     require_techs: 'tech_economics,tech_education'
+     era: 3
 
    - id: 'tech_alchemy'
      name: 'Alchemy'
-     beaker_cost: 35000.0
-     cost: 150000.0
+     beaker_cost: 17500.0
+     cost: 75000.0
      points: 8750
-     require_techs: 'tech_malting'
+     require_techs: 'tech_malting:tech_advanced_artillery'
+     era: 3
 
-#Tier 8
-   - id: 'tech_construction'
-     name: 'Construction'
-     beaker_cost: 70000.0
-     cost: 1000000.0
-     points: 17500
-     require_techs: 'tech_nationalism'
+   - id: 'tech_economics'
+     name: 'Economics'
+     beaker_cost: 17500.0
+     cost: 75000.0
+     points: 4375
+     require_techs: 'tech_currency:tech_global_trade'
+     era: 3
 
-   - id: 'tech_electricity'
-     name: 'Electricity'
-     beaker_cost: 70000.0
-     cost: 1000000.0
-     points: 17500
-     require_techs: 'tech_alchemy,tech_scientific_method,tech_advanced_efficiency'
-
-#Tier 9
    - id: 'tech_advanced_efficiency'
      name: 'Advanced Efficiency'
      beaker_cost: 35000.0
      cost: 150000.0
      points: 8750
      require_techs: 'tech_machinery'
+     era: 3
+
+   - id: 'tech_scientific_method'
+     name: 'Scientific Method'
+     beaker_cost: 35000.0
+     cost: 150000.0
+     points: 8750
+     require_techs: 'tech_economics:tech_education:tech_machinery'
+     era: 3
+
+   - id: 'tech_nationalism'
+     name: 'Nationalism'
+     beaker_cost: 35000.0
+     cost: 150000.0
+     points: 8750
+     require_techs: 'tech_economics'
+     era: 3
+
+   - id: 'tech_construction'
+     name: 'Construction'
+     beaker_cost: 35000.0
+     cost: 150000.0
+     points: 8750
+     require_techs: 'tech_economics:tech_machinery'
+     era: 3
+
+#Industrial era
+   - id: 'tech_electricity'
+     name: 'Electricity'
+     beaker_cost: 70000.0
+     cost: 1000000.0
+     points: 17500
+     require_techs: 'tech_alchemy:tech_scientific_method:tech_advanced_efficiency'
+     era: 4
+
+   - id: 'tech_fertilizer'
+     name: 'Fertilizer'
+     beaker_cost: 100000.0
+     cost: 1500000.0
+     points: 50000
+     require_techs: 'tech_scientific_method'
+     era: 4
 
    - id: 'tech_innovation'
      name: 'Innovation'
-     beaker_cost: 200000.0
+     beaker_cost: 100000.0
      cost: 1500000.0
      points: 50000
-     require_techs: 'tech_construction'
+     require_techs: 'tech_construction:tech_nationalism:tech_electricity'
+     era: 4
 
-#Tier 10
-   - id: 'tech_composites'
-     name: 'Composites'
-     beaker_cost: 175000.0
-     cost: 2500000.0
-     points: 43750
-     require_techs: 'tech_advanced_efficiency:tech_innovation:tech_tanning'
+   - id: 'tech_archaeology'
+     name: 'Archaeology'
+     beaker_cost: 100000.0
+     cost: 1500000.0
+     points: 50000
+     require_techs: 'tech_construction:tech_nationalism:tech_electricity'
+     era: 4
 
+#Modern era
    - id: 'tech_laminates'
      name: 'Laminates'
      beaker_cost: 175000.0
      cost: 2500000.0
      points: 43750
      require_techs: 'tech_advanced_efficiency:tech_innovation:tech_tillering'
+     era: 5
+
+   - id: 'tech_composites'
+     name: 'Composites'
+     beaker_cost: 175000.0
+     cost: 2500000.0
+     points: 43750
+     require_techs: 'tech_advanced_efficiency:tech_innovation:tech_tanning'
+     era: 5
 
    - id: 'tech_forging'
      name: 'Forging'
@@ -412,6 +476,7 @@ techs:
      cost: 2500000.0
      points: 43750
      require_techs: 'tech_advanced_efficiency:tech_innovation:tech_chemical_bonding'
+     era: 5
 
    - id: 'tech_tempering'
      name: 'Tempering'
@@ -419,15 +484,61 @@ techs:
      cost: 2500000.0
      points: 43750
      require_techs: 'tech_advanced_efficiency:tech_innovation:tech_folded_steel'
+     era: 5
 
-#Tier 11
+    - id: 'tech_radio'
+     name: 'Radio'
+     beaker_cost: 175000.0
+     cost: 2500000.0
+     points: 43750
+     require_techs: 'tech_innovation'
+     era: 5
+
+    - id: 'tech_biology'
+     name: 'Biology'
+     beaker_cost: 175000.0
+     cost: 2500000.0
+     points: 43750
+     require_techs: 'tech_fertilizer'
+     era: 5
+
+   - id: 'tech_refrigeration'
+     name: 'Refrigeration'
+     beaker_cost: 250000.0
+     cost: 3000000.0
+     points: 60000
+     require_techs: 'tech_advanced_efficiency:tech_biology'
+     era: 5
+
+   - id: 'tech_plastics'
+     name: 'Plastics'
+     beaker_cost: 250000.0
+     cost: 3000000.0
+     points: 60000
+     require_techs: 'tech_radio'
+     era: 5
+
+   - id: 'tech_military_science'
+     name: 'Refrigeration'
+     beaker_cost: 250000.0
+     cost: 3000000.0
+     points: 60000
+     require_techs: 'tech_laminates:tech_composites:tech_forging:tech_tempering:tech_radio'
+     era: 5
+
+#Atomic era
+
+
+#Information era
    - id: 'tech_enlightenment'
      name: 'Enlightenment'
      beaker_cost: 7500000.0
      cost: 50000000.0
      points: 375000
-     require_techs: 'tech_composites:tech_laminates:tech_forging:tech_tempering:tech_advanced_artillery:tech_advanced_efficiency:tech_scientific_method:tech_electricity:tech_automation:tech_global_trade'
+     require_techs: 'tech_military_science:tech_refrigeration:tech_plastics'
+     era: 7
 
+#Wonders
    - id: 'tech_great_pyramid'
      name: 'Great Pyramid'
      beaker_cost: 75000.0
@@ -461,7 +572,7 @@ techs:
      beaker_cost: 50000.0
      cost: 50000.0
      points: 12500
-     require_techs: 'tech_advanced_artillery:tech_machinery'
+     require_techs: 'tech_alchemy:tech_machinery'
 
    - id: 'tech_notre_dame'
      name: 'Notre Dame'

@@ -1142,7 +1142,7 @@ public class CivGlobal {
 		return false;		
 	}
 
-	public static boolean hasTimeElapsed(SessionEntry se, int seconds) {
+	public static boolean hasTimeElapsed(SessionEntry se, double seconds) {
 		long now = System.currentTimeMillis();
 		int secondsBetween = getSecondsBetween(se.time, now);
 		

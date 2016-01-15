@@ -141,8 +141,15 @@ buffs:
 
     - id: 'buff_noanarchy'
       name: 'No Anarchy'
-      description: 'Civilization does not experience anarchy when switching governments.'
+      description: 'Civilization spends 50% less time in anarchy, with a max of 2 hours.'
       value: '0'
+      stackable: false
+      parent:
+
+    - id: 'buff_reduced_anarchy'
+      name: 'Reduced Anarchy'
+      description: 'Civilization spends 50% less time in anarchy per resident'
+      value: '0.5'
       stackable: false
       parent:
 
