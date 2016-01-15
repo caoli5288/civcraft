@@ -1851,6 +1851,12 @@ public class Town extends SQLObject {
 		rates.put("Government", newRate - rate);
 		rate = newRate;
 		
+		if (this.getCiv().hasTechnology("tech_fertilizer")) {
+			double techRate = 0.3;
+			rates.put("Technology", techRate);
+			rate += techRate;
+		}
+		
 		/* Wonders and Goodies. */
 		double additional = this.getBuffManager().getEffectiveDouble(Buff.GROWTH_RATE);
 		additional += this.getBuffManager().getEffectiveDouble("buff_hanging_gardens_growth");
