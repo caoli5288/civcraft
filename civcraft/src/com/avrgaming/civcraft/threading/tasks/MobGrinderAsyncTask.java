@@ -113,6 +113,9 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 				if (stack == null) {
 					continue;
 				}
+				if (!LoreMaterial.isCustom(stack)) {
+					continue;
+				}
 				String itemID = LoreMaterial.getMaterial(stack).getId();
 				try {
 					ItemStack newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get(itemID));
@@ -455,6 +458,8 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_1")));
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_1")));
 					}
+				} else {
+					continue;
 				}
 				if (newItems.size() >= 1)
 				{

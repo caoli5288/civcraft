@@ -194,13 +194,13 @@ public class TradeLevelComponent extends Component {
 
 			AttributeUtil attrs = new AttributeUtil(stack);
 			String tradeable = attrs.getCivCraftProperty("tradeable");
-			if (tradeable == null)
-				break;
-			if (tradeable.equalsIgnoreCase("true")) {
-				if (stacksToConsume < thisLevelConsumptions) {
-					stacksToConsume++;
-				} else {
-					break;
+			if (tradeable != null) {
+				if (tradeable.equalsIgnoreCase("true")) {
+					if (stacksToConsume < thisLevelConsumptions) {
+						stacksToConsume++;
+					} else {
+						break;
+					}
 				}
 			}
 		}
@@ -280,8 +280,12 @@ public class TradeLevelComponent extends Component {
 						break;
 					}
 				} else {
-					int emeraldRand = (rand.nextInt(5))+1;
-					newItems.add(ItemManager.createItemStack(CivData.EMERALD, emeraldRand));
+					int emeraldRand = (rand.nextInt(4))+1;
+					if (emeraldRand >= 3) {
+						newItems.add(ItemManager.createItemStack(CivData.GUNPOWDER, 3));
+					} else {
+						newItems.add(ItemManager.createItemStack(CivData.EMERALD, 1));
+					}
 				}
 			} else if (rand1 < (int)(BIGPACK_CHANCE*MaxRand)) {
 				if (itemID.contains("_egg")) {
@@ -323,8 +327,12 @@ public class TradeLevelComponent extends Component {
 						break;
 					}
 				} else {
-					int diamondRand = (rand.nextInt(3))+1;
-					newItems.add(ItemManager.createItemStack(CivData.DIAMOND, diamondRand));
+					int diamondRand = (rand.nextInt(4))+1;
+					if (diamondRand >= 3) {
+						newItems.add(ItemManager.createItemStack(CivData.GUNPOWDER, 2));
+					} else {
+						newItems.add(ItemManager.createItemStack(CivData.DIAMOND, 1));
+					}
 
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_3"), (rand.nextInt(3))+1));
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_3"), (rand.nextInt(3))+1));
@@ -349,8 +357,13 @@ public class TradeLevelComponent extends Component {
 						break;
 					}
 				} else {
-					int goldRand = (rand.nextInt(3))+1;
-					newItems.add(ItemManager.createItemStack(CivData.GOLD_INGOT, goldRand));
+					int goldRand = (rand.nextInt(4))+1;
+					if (goldRand >= 3) {
+						newItems.add(ItemManager.createItemStack(CivData.GUNPOWDER, 2));
+					} else {
+						newItems.add(ItemManager.createItemStack(CivData.GOLD_INGOT, 1));
+					}
+					
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_fragment_2"), (rand.nextInt(3))+1));
 					newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_fragment_2"), (rand.nextInt(3))+1));
 				}
@@ -406,27 +419,30 @@ public class TradeLevelComponent extends Component {
 			}
 
 			AttributeUtil attrs = new AttributeUtil(stack);
-			if (attrs.getCivCraftProperty("tradeable").equalsIgnoreCase("true")) {
-				if (stacksToConsume > 0) {
-					Integer countInStack = stack.getAmount();
-					String tradeValue = attrs.getCivCraftProperty("tradeValue");
-					if (tradeValue != null) {
-						double valueForStack = Double.parseDouble(tradeValue);
-						double moneyForStack = countInStack * valueForStack;
-						monetaryValue += moneyForStack;
-					} else {
-						CivLog.debug("tradeValue null for item");
-					}
-
-					processItemsFromStack(stack);
-					countConsumed += countInStack;
-					stacksToConsume--;
-					/* Consume what we can */
-					try {
-						source.removeItem(stack);
-					} catch (CivException e) {
-						e.printStackTrace();
-						return 0;
+			String tradeable = attrs.getCivCraftProperty("tradeable");
+			if (tradeable != null) {
+				if (tradeable.equalsIgnoreCase("true")) {
+					if (stacksToConsume > 0) {
+						Integer countInStack = stack.getAmount();
+						String tradeValue = attrs.getCivCraftProperty("tradeValue");
+						if (tradeValue != null) {
+							double valueForStack = Double.parseDouble(tradeValue);
+							double moneyForStack = countInStack * valueForStack;
+							monetaryValue += moneyForStack;
+						} else {
+							CivLog.debug("tradeValue null for item");
+						}
+	
+						processItemsFromStack(stack);
+						countConsumed += countInStack;
+						stacksToConsume--;
+						/* Consume what we can */
+						try {
+							source.removeItem(stack);
+						} catch (CivException e) {
+							e.printStackTrace();
+							return 0;
+						}
 					}
 				}
 			}
