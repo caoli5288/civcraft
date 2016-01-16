@@ -98,19 +98,9 @@ public class ProjectileLightningComponent extends ProjectileComponent {
 //		TaskMaster.syncTask(follow);
 //		
 		World world = turretLoc.getWorld();
-//		Random rand = new Random();
-//		for (int i = 0; i < 10; i++) {
-//			SyncDelay task = new SyncDelay();
-//			task.world = world;
-//			task.x = turretLoc.getX() + (rand.nextInt(5) - 2.5);
-//			task.y = turretLoc.getY() + (rand.nextInt(5) - 2.5);
-//			task.z = turretLoc.getZ() + (rand.nextInt(5) - 2.5);
-//			TaskMaster.syncTask(task, rand.nextInt(7));
-//		}
-		
 		Location location = targetEntity.getLocation();
-        world.strikeLightning(location);
-	
+		world.strikeLightning(location);
+
 //		SyncExplode explode = new SyncExplode();
 //		explode.world = world;
 //		explode.x = targetEntity.getLocation().getX();

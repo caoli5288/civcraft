@@ -97,14 +97,14 @@ public class TeslaTower extends Structure {
 			
 			for (Town town : this.getTown().getCiv().getTowns()) {
 				for (Structure struct : town.getStructures()) {
-					if (struct instanceof CannonTower) {
+					if (struct instanceof TeslaTower) {
 						BlockCoord center = struct.getCenterLocation();
 						double distance = center.distance(this.getCenterLocation());
 						if (distance <= build_distance) {
 							throw new CivException(CivSettings.localize.localizedString("var_buildable_tooCloseToTeslaTower",(center.getX()+","+center.getY()+","+center.getZ())));
 						}
 					}
-//					if (struct instanceof TeslaTower) {
+//					if (struct instanceof CannonTower) {
 //						BlockCoord center = struct.getCenterLocation();
 //						double distance = center.distance(this.getCenterLocation());
 //						if (distance <= build_distance) {

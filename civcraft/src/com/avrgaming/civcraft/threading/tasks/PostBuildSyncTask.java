@@ -152,6 +152,9 @@ public class PostBuildSyncTask implements Runnable {
 				} else if (buildable instanceof CannonTower) {
 					CannonTower cannontower = (CannonTower)buildable;
 					cannontower.setTurretLocation(absCoord);
+				} else if (buildable instanceof TeslaTower) {
+					TeslaTower teslaTower = (TeslaTower)buildable;
+					teslaTower.setTurretLocation(absCoord);
 				}
 				
 				break;
@@ -335,15 +338,19 @@ public class PostBuildSyncTask implements Runnable {
 				}
 				break;
 			case "/towerfire":
-				if (buildable instanceof ArrowTower) {
+				if (buildable instanceof ArrowShip) {
+					ArrowShip arrowship = (ArrowShip)buildable;
+					arrowship.setTurretLocation(absCoord);
+				} else if (buildable instanceof ArrowTower) {
 					ArrowTower arrowtower = (ArrowTower)buildable;
 					arrowtower.setTurretLocation(absCoord);
-				}
-				if (buildable instanceof CannonTower) {
+				} else if (buildable instanceof CannonShip) {
+					CannonShip cannonship = (CannonShip)buildable;
+					cannonship.setTurretLocation(absCoord);
+				} else if (buildable instanceof CannonTower) {
 					CannonTower cannontower = (CannonTower)buildable;
 					cannontower.setTurretLocation(absCoord);
-				}
-				if (buildable instanceof TeslaTower) {
+				} else if (buildable instanceof TeslaTower) {
 					TeslaTower teslaTower = (TeslaTower)buildable;
 					teslaTower.setTurretLocation(absCoord);
 				}
