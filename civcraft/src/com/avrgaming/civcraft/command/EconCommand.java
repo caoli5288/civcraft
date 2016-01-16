@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.command;
 
 import java.sql.SQLException;
 
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.config.CivSettings;
@@ -126,9 +127,13 @@ public class EconCommand extends CommandBase {
 	}
 	
 	private void validEcon() throws CivException {
-		if (!getPlayer().isOp() || !getPlayer().hasPermission(CivSettings.ECON)) {
-			throw new CivException(CivSettings.localize.localizedString("cmd_MustBeOP"));
-		}		
+		// Allow Console commands to manipulate the economy.
+		if(!(sender instanceof ConsoleCommandSender))
+		{
+			if (!getPlayer().isOp() || !getPlayer().hasPermission(CivSettings.ECON)) {
+				throw new CivException(CivSettings.localize.localizedString("cmd_MustBeOP"));
+			}
+		}
 	}
 	
 	public void add_cmd() throws CivException {
