@@ -50,6 +50,9 @@ public class SQLUpdate implements Runnable {
 				
 				SQLObject obj = saveObjects.poll();
 				if (obj == null) {
+					if (saveObjects.isEmpty()) {
+						Thread.sleep(500);
+					}
 					continue;
 				}
 				
