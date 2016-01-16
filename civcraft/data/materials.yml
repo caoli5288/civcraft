@@ -4807,6 +4807,7 @@ materials:
           craftable: true
           vanilla: true
           shaped: false
+          required_techs: 'tech_advanced_artillery'
           components:
               - name: 'AllowBlockPlace'
           ingredients:

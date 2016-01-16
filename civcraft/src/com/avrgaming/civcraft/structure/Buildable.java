@@ -772,7 +772,7 @@ public abstract class Buildable extends SQLObject {
 		}
 		
 		if (this.isTileImprovement()) {
-//			ignoreBorders = true;
+			ignoreBorders = true;
 			ConfigTownLevel level = CivSettings.townLevels.get(getTown().getLevel());
 
 			Integer maxTileImprovements  = level.tile_improvements;
