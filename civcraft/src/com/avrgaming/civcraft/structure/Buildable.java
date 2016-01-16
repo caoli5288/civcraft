@@ -94,6 +94,7 @@ import com.avrgaming.civcraft.util.FireworkEffectPlayer;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
 import com.avrgaming.civcraft.util.SimpleBlock.Type;
+import com.avrgaming.civcraft.war.War;
 import com.avrgaming.global.perks.Perk;
 import com.wimbli.WorldBorder.BorderData;
 import com.wimbli.WorldBorder.Config;
@@ -464,7 +465,11 @@ public abstract class Buildable extends SQLObject {
 		CivMessage.send(player, CivColor.Yellow+ChatColor.BOLD+CivSettings.localize.localizedString("buildable_preview_prompt1"));
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildable_preview_prompt2"));
 		Resident resident = CivGlobal.getResident(player);
-		resident.startPreviewTask(tpl, centerLoc.getBlock(), player.getUniqueId());
+		
+		if (!War.isWarTime())
+		{
+			resident.startPreviewTask(tpl, centerLoc.getBlock(), player.getUniqueId());
+		}
 		
 		/* Run validation on position. */
 		//validate(player, this, tpl, centerLoc, null);
