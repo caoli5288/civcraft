@@ -1336,7 +1336,7 @@ materials:
           shaped: false
           tradeable: true
           tradeValue: 10.0
-          category: '<gold>Tier 4 Materials'
+          category: '<gold>Tier 3 Materials'
           ingredients:
               - type_id: 0
                 custom_id: 'mat_milled_lumber'
@@ -1351,11 +1351,11 @@ materials:
           shaped: true
           tradeable: true
           tradeValue: 10.0
-          category: '<gold>Tier 4 Materials'
+          category: '<gold>Tier 3 Materials'
           ingredients:
               - type_id: 0
                 data: 0
-                custom_id: 'mat_carbide_steel_plate'
+                custom_id: 'mat_steel_ingot'
                 letter: 'p'
           shape:
               - "ppp"
