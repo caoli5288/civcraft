@@ -124,7 +124,14 @@ buffs:
       value: '0.15'
       stackable: false
       parent:
-    
+
+    - id: 'buff_profit_sharing'
+      name: 'Rush'
+      description: 'Reduces the coin cost of all technology researches by <lightgreen>5%<r>'
+      value: '0.05'
+      stackable: false
+      parent:
+  
     - id: 'buff_sabotage'
       name: 'Sabotage'
       description: 'Greatly increases the effectivenes of sabotage missions by <lightgreen>50%<r>'

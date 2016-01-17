@@ -60,7 +60,7 @@ public class CivResearchCommand extends CommandBase {
 			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_NotFound",techname));
 		}
 		
-		if (!civ.getTreasury().hasEnough(tech.cost)) {
+		if (!civ.getTreasury().hasEnough(tech.getAdjustedTechCost(civ))) {
 			throw new CivException(CivSettings.localize.localizedString("var_cmd_civ_research_NotEnough1",CivSettings.CURRENCY_NAME,tech.name));
 		}
 		
@@ -141,7 +141,7 @@ public class CivResearchCommand extends CommandBase {
 		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_Available"));
 		for (ConfigTech tech : techs) {
 			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+CivSettings.localize.localizedString("Cost")+" "+
-					CivColor.Yellow+tech.cost+CivColor.LightGray+" "+CivSettings.localize.localizedString("Beakers")+" "+
+					CivColor.Yellow+tech.getAdjustedTechCost(civ)+CivColor.LightGray+" "+CivSettings.localize.localizedString("Beakers")+" "+
 					CivColor.Yellow+tech.beaker_cost);
 		}
 				

@@ -1062,9 +1062,10 @@ public class Civilization extends SQLObject {
 		if (this.getResearchTech() != null) {
 			throw new CivException(CivSettings.localize.localizedString("var_civ_research_switchAlert1",this.getResearchTech().name));
 		}
+		double cost = tech.getAdjustedTechCost(this);
 		
-		if (!this.getTreasury().hasEnough(tech.cost)) {
-			throw new CivException(CivSettings.localize.localizedString("var_civ_research_notEnoughMoney",tech.cost,CivSettings.CURRENCY_NAME));
+		if (!this.getTreasury().hasEnough(cost)) {
+			throw new CivException(CivSettings.localize.localizedString("var_civ_research_notEnoughMoney",cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		if (this.hasTech(tech.id)) {
@@ -1078,7 +1079,7 @@ public class Civilization extends SQLObject {
 		this.setResearchTech(tech);
 		this.setResearchProgress(0.0);
 	
-		this.getTreasury().withdraw(tech.cost);
+		this.getTreasury().withdraw(cost);
 		TaskMaster.asyncTask(new UpdateTechBar(this),0);
 	}
 

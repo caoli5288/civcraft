@@ -28,6 +28,7 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Civilization;
+import com.avrgaming.civcraft.object.Town;
 
 public class ConfigTech {
 	public String id;
@@ -55,6 +56,20 @@ public class ConfigTech {
 			tech_maps.put(tech.id, tech);
 		}
 		CivLog.info("Loaded "+tech_maps.size()+" technologies.");
+	}
+	
+	public double getAdjustedTechCost(Civilization civ) {
+		double rate = 1.0;
+		
+		for (Town town : civ.getTowns())
+		{
+			if (town.getBuffManager().hasBuff("buff_profit_sharing"))
+			{
+				rate -= town.getBuffManager().getEffectiveDouble("buff_profit_sharing");
+			}
+		}
+		
+		return (this.cost * Math.max(rate,0.75));
 	}
 	
 	
