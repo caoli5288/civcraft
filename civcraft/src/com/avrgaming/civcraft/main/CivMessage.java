@@ -98,30 +98,14 @@ public class CivMessage {
 				TitleAPI.sendTitle(player, fadeIn, show, fadeOut, title, subTitle);
 			}
 		} else {
-			send(sender, title+" "+subTitle);
+			send(sender, title);
+			send(sender, subTitle);
 		}
 	}
 	
 	
 	public static void sendTitle(Object sender, String title, String subTitle) {
-		if (CivSettings.hasTitleAPI) {
-			Player player = null;
-			if ((sender instanceof Player)) {
-				player = (Player) sender;
-			} else if (sender instanceof Resident) {
-				try {
-					player = CivGlobal.getPlayer(((Resident) sender));
-				} catch (CivException e) {
-					// No player online
-				}
-			}
-			if (player != null)
-			{
-				sendTitle(player, 10, 20, 5, title, subTitle);
-			}
-		} else {
-			send(sender, title+" "+subTitle);
-		}
+		sendTitle(sender, 10, 20, 5, title, subTitle);
 	}
 	
 	public static void send(Object sender, String line) {
