@@ -429,7 +429,12 @@ public class Resident extends SQLObject {
 				this.setCombatInfo(true);
 				break;
 			case "titleapi":
+				if (CivSettings.hasTitleAPI)
+				{
 				this.setTitleAPI(true);
+				} else {
+					this.setTitleAPI(false);
+				}
 				break;
 			case "itemmoderare":
 				this.itemMode = "rare";
