@@ -38,6 +38,7 @@ public class ResidentToggleCommand extends CommandBase {
 		commands.put("showscout", CivSettings.localize.localizedString("cmd_res_toggle_showscoutDesc"));
 		commands.put("combatinfo", CivSettings.localize.localizedString("cmd_res_toggle_combatinfoDesc"));
 		commands.put("itemdrops", CivSettings.localize.localizedString("cmd_res_toggle_itemdropsDesc"));
+		commands.put("titles", CivSettings.localize.localizedString("cmd_res_toggle_itemdropsDesc"));
 		
 	}
 	public void itemdrops_cmd() throws CivException {
@@ -64,6 +65,10 @@ public class ResidentToggleCommand extends CommandBase {
 	}
 	
 	public void combatinfo_cmd() throws CivException {
+		toggle();
+	}
+	
+	public void titles_cmd() throws CivException {
 		toggle();
 	}
 	
@@ -95,6 +100,10 @@ public class ResidentToggleCommand extends CommandBase {
 		case "combatinfo":
 			resident.setCombatInfo(!resident.isCombatInfo());
 			result = resident.isCombatInfo();
+			break;
+		case "titles":
+			resident.setTitleAPI(!resident.isTitleAPI());
+			result = resident.isTitleAPI();
 			break;
 		case "itemdrops":
 			resident.toggleItemMode();

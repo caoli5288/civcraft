@@ -104,6 +104,7 @@ public class Resident extends SQLObject {
 	private boolean civChat = false;
 	private boolean adminChat = false;
 	private boolean combatInfo = false;
+	private boolean titleAPI = true;
 	
 	private boolean usesAntiCheat = false;
 	
@@ -387,6 +388,9 @@ public class Resident extends SQLObject {
 		if (this.combatInfo) {
 			flagString += "combatinfo,";
 		}
+		if (this.isTitleAPI()) {
+			flagString += "titleapi,";
+		}
 		
 		if (this.itemMode.equals("rare")) {
 			flagString += "itemModeRare,";
@@ -423,6 +427,9 @@ public class Resident extends SQLObject {
 				break;
 			case "combatinfo":
 				this.setCombatInfo(true);
+				break;
+			case "titleapi":
+				this.setTitleAPI(true);
 				break;
 			case "itemmoderare":
 				this.itemMode = "rare";
@@ -2048,5 +2055,13 @@ public class Resident extends SQLObject {
 			}
 		}
 		this.walkingModifier = speed;
+	}
+
+	public boolean isTitleAPI() {
+		return titleAPI;
+	}
+
+	public void setTitleAPI(boolean titleAPI) {
+		this.titleAPI = titleAPI;
 	}
 }
