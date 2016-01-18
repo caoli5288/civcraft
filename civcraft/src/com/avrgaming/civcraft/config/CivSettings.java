@@ -229,6 +229,8 @@ public class CivSettings {
 	
 	public static Localize localize;
 	
+	public static boolean hasTitleAPI = false;
+	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;
 		
@@ -311,6 +313,10 @@ public class CivSettings {
 		
 		if (CivSettings.plugin.hasPlugin("VanishNoPacket")) {
 			hasVanishNoPacket = true;
+		}
+		
+		if (CivSettings.plugin.hasPlugin("TitleAPI")) {
+			hasTitleAPI = true;
 		}
 
 	}

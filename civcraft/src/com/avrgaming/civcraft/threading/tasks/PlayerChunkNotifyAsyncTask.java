@@ -126,59 +126,65 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 			return;
 		}
 		
-		String out = "";
+		String title = "";
+		String subTitle = "";
 		
 		//We've entered a camp.
 		if (toCamp != null && toCamp != fromCamp) {
-			out += CivColor.Gold+CivSettings.localize.localizedString("var_playerChunkNotify_enterCamp",toCamp.getName())+" "+CivColor.Rose+"[PvP]";
+			title += CivColor.Gold+CivSettings.localize.localizedString("var_playerChunkNotify_enterCamp",toCamp.getName())+" "+CivColor.Rose+"[PvP]";
 		}
 		
 		if (toCamp == null && fromCamp != null) {
-			out += getToWildMessage();
+			title += getToWildMessage();
 		}
 		
 		// From Wild, to town
 		if (fromTc == null && toTc != null) {			
 			// To Town
-			out += getToTownMessage(toTc.getTown(), toTc);
+			Town t = toTc.getTown();
+			title += getToTownMessage(t, toTc);
+			if (t.isOutlaw(resident)) {
+				subTitle += CivColor.Red+CivSettings.localize.localizedString("town_border_outlaw");
+			}
+			
 		}
 		
 		// From a town... to the wild
 		if (fromTc != null && toTc == null) {
-			out += getToWildMessage();
+			title += getToWildMessage();
 		}
 		
 		// To another town(should never happen with culture...)
 		if (fromTc != null && toTc != null && fromTc.getTown() != toTc.getTown()) {
-			out += getToTownMessage(toTc.getTown(), toTc);
+			title += getToTownMessage(toTc.getTown(), toTc);
 		}
 		
 		if (toTc != null) {
-			out += toTc.getOnEnterString(player, fromTc);
+			subTitle += toTc.getOnEnterString(player, fromTc);
 		}
 		
 		// Leaving culture to the wild.
 		if (fromCc != null && toCc == null) {
-			out += fromCc.getOnLeaveString();
+			title += fromCc.getOnLeaveString();
 		}
 		
 		// Leaving wild, entering culture. 
 		if (fromCc == null && toCc != null) {
-			out += toCc.getOnEnterString();
+			title += toCc.getOnEnterString();
 			onCultureEnter(toCc);
 		}
 		
 		//Leaving one civ's culture, into another. 
 		if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
-			out += fromCc.getOnLeaveString() +" | "+ toCc.getOnEnterString();
+			title += fromCc.getOnLeaveString() +" | "+ toCc.getOnEnterString();
 			onCultureEnter(toCc);
 		}
 		
-		if (!out.equals("")) {
+		if (!title.equals("")) {
 			//ItemMessage im = new ItemMessage(CivCraft.getPlugin());
 			//im.sendMessage(player, CivColor.BOLD+out, 3);
-			
-			CivMessage.send(player, out);
+			CivMessage.sendTitle(player, title, subTitle);
+//			CivMessage.send(player, title);
 		}
 		
 		if (resident.isShowInfo()) {

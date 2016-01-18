@@ -38,6 +38,7 @@ import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.CivColor;
+import com.connorlinfoot.titleapi.TitleAPI;
 
 public class CivMessage {
 
@@ -79,6 +80,27 @@ public class CivMessage {
 		} catch (CivException e) {
 		}
 		CivLog.info(line);	
+	}
+	
+	public static void sendTitle(Object sender, String title, String subTitle) {
+		if (CivSettings.hasTitleAPI) {
+			Player player = null;
+			if ((sender instanceof Player)) {
+				player = (Player) sender;
+			} else if (sender instanceof Resident) {
+				try {
+					player = CivGlobal.getPlayer(((Resident) sender));
+				} catch (CivException e) {
+					// No player online
+				}
+			}
+			if (player != null)
+			{
+				TitleAPI.sendTitle(player, 10, 20, 5, title, subTitle);
+			}
+		} else {
+			send(sender, title+" "+subTitle);
+		}
 	}
 	
 	public static void send(Object sender, String line) {
