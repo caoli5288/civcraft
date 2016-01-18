@@ -186,9 +186,8 @@ public class War {
 			File file = new File("wartime");
 			file.delete();
 		
-			CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeEndedHeading"));
+			CivMessage.globalTitle(CivColor.Yellow+CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeEndedHeading"),CivSettings.localize.localizedString("var_war_mostLethal",WarStats.getTopKiller()));
 			/* display some stats. */
-			CivMessage.global(CivSettings.localize.localizedString("var_war_mostLethal",WarStats.getTopKiller()));
 			List<String> civs = WarStats.getCapturedCivs();
 			if (civs.size() > 0) {
 				for (String str : civs) {
@@ -208,8 +207,17 @@ public class War {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
+			
+			int mins = 0;
+			try {
+				mins = CivSettings.getInteger(CivSettings.warConfig, "war.time_length");
+			} catch (InvalidConfiguration e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			
 			/* War time has started. */
-			CivMessage.globalHeading(CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeBeginHeading"));
+			CivMessage.globalTitle(CivColor.Red+CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeBeginHeading"),CivSettings.localize.localizedString("war_wartimeBegin_title_length",mins));
 			War.setStart(new Date());
 			War.repositionPlayers(CivSettings.localize.localizedString("war_wartimeBeginOutOfPosition"));
 			//War.vassalTownsWithNoTownHalls();
@@ -230,15 +238,11 @@ public class War {
 			CivGlobal.tradeEnabled = false;
 			CivGlobal.fisheryEnabled = false;
 			
-			try {
-				int mins = CivSettings.getInteger(CivSettings.warConfig, "war.time_length");
-				Calendar endCal = Calendar.getInstance();
-				endCal.add(Calendar.MINUTE, mins);
+			Calendar endCal = Calendar.getInstance();
+			endCal.add(Calendar.MINUTE, mins);
 
-				War.setEnd(endCal.getTime());
-			} catch (InvalidConfiguration e) {
-				e.printStackTrace();
-			}
+			War.setEnd(endCal.getTime());
+			
 		}
 		
 		War.warTime = warTime;

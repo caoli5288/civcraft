@@ -30,6 +30,7 @@ import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.Relation;
 import com.avrgaming.civcraft.object.Resident;
@@ -126,6 +127,8 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 			return;
 		}
 		
+		Civilization civilization = resident.getCiv();
+		
 		String title = "";
 		String subTitle = "";
 		
@@ -143,8 +146,12 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 			// To Town
 			Town t = toTc.getTown();
 			title += getToTownMessage(t, toTc);
-			if (t.isOutlaw(resident)) {
-				subTitle += CivColor.Red+CivSettings.localize.localizedString("town_border_outlaw");
+			if (resident.getTown() == toTc.getTown()) {
+				subTitle += CivSettings.localize.localizedString("var_civ_border_welcomeHome", player.getName());
+			} else {
+				if (t.isOutlaw(resident)) {
+					subTitle += CivColor.Red+CivSettings.localize.localizedString("town_border_outlaw");
+				}
 			}
 			
 		}
@@ -171,6 +178,12 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		// Leaving wild, entering culture. 
 		if (fromCc == null && toCc != null) {
 			title += toCc.getOnEnterString();
+			if (civilization != null) {
+				if (civilization == toCc.getCiv()) {
+					subTitle += CivSettings.localize.localizedString("var_civ_border_welcomeBack", player.getName());
+				} else {
+					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
+				}			}
 			onCultureEnter(toCc);
 		}
 		
@@ -178,6 +191,13 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
 			title += fromCc.getOnLeaveString() +" | "+ toCc.getOnEnterString();
 			onCultureEnter(toCc);
+			if (civilization != null) {
+				if (civilization == toCc.getCiv()) {
+					subTitle += CivSettings.localize.localizedString("var_civ_border_welcomeBack", player.getName());
+				} else {
+					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
+				}
+			}
 		}
 		
 		if (!title.equals("")) {

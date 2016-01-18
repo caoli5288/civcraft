@@ -2838,5 +2838,12 @@ university_sign: "Univesity Of"
 # "Paid the town of Spawn 50 Coins in non-resident taxes"
 var_grocer_msgPaidTaxes: "Paid the town of [%0] [%1] in non-resident taxes"
 
+town_border_outlaw: "You are an outlaw here."
+var_civ_border_welcomeBack: "Welcome Back, [%0]"
+var_civ_border_welcomeHome: "Welcome Home, [%0]"
+var_civ_border_relation: "Current Status: [%0]"
+
+war_wartimeBegin_title_length: "War time will last for [%0] minutes."
+
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
