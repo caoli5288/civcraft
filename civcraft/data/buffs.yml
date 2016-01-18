@@ -126,7 +126,7 @@ buffs:
       parent:
 
     - id: 'buff_profit_sharing'
-      name: 'Rush'
+      name: 'Profit Sharing'
       description: 'Reduces the coin cost of all technology researches by <lightgreen>5%<r>'
       value: '0.05'
       stackable: false
