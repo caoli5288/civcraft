@@ -277,13 +277,15 @@ public class CustomItemManager implements Listener {
 					/* Arrow was fired by a tower. */
 					afc.setHit(true);
 					afc.destroy(event.getDamager());
-					
-					Resident defenderResident = CivGlobal.getResident(defendingPlayer);
-					if (defenderResident != null && defenderResident.hasTown() && 
-							defenderResident.getTown().getCiv() == afc.getFromTower().getTown().getCiv()) {
-						/* Prevent friendly fire from arrow towers. */
-						event.setCancelled(true);
-						return;
+					if (defendingPlayer != null)
+					{
+						Resident defenderResident = CivGlobal.getResident(defendingPlayer);
+						if (defenderResident != null && defenderResident.hasTown() && 
+								defenderResident.getTown().getCiv() == afc.getFromTower().getTown().getCiv()) {
+							/* Prevent friendly fire from arrow towers. */
+							event.setCancelled(true);
+							return;
+						}
 					}
 					
 					/* Return after arrow tower does damage, do not apply armor defense. */
