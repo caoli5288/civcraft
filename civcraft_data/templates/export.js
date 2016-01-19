@@ -38,56 +38,70 @@ var r_x = region.getWidth();
 var r_y = region.getHeight();
 var r_z = region.getLength();
 
-var iter = new RegionIterator(region);
+var iter = region.iterator()
 
 try {
-	f.write(r_x+";"+r_y+";"+r_z+"\n");
-	for (var z = 0; z < r_z; z++) {
-		for ( var y = 0; y < r_y; y++) {
-			for (var x = 0; x < r_x; x++) {
-				var blkVect = iter.next();
-				var blkId = session.getBlockType(blkVect);
-				var blkData = session.getBlockData(blkVect);
-				
-				f.write(x+":"+y+":"+z+",");
-				f.write(blkId+":"+blkData);
-				if (blkId === WALLSIGN || blkId == SIGNPOST) {
-					var sign =  session.rawGetBlock(blkVect);
-					f.write(",");
-					f.write(sign.getText()[0]+",");
-					f.write(sign.getText()[1]+",");
-					f.write(sign.getText()[2]+",");
-					f.write(sign.getText()[3]+"\n");
-				}
-				else {
-					f.write("\n");
+    f.write(r_x+";"+r_y+";"+r_z+"\n");
+    for (var z = 0; z < r_z; z++) {
+        for ( var y = 0; y < r_y; y++) {
+            for (var x = 0; x < r_x; x++) {
+                var blkVect = iter.next();
+                var blk = session.getBlock(blkVect);
+                var blkId = blk.getId();
+                var blkData = blk.getData();
+                
+                f.write(x+":"+y+":"+z+",");
+                f.write(blkId+":"+blkData);
+                if (blkId === WALLSIGN || blkId == SIGNPOST) {
+                    var line1 = blk.getNbtData().getString("Text1").replace("\"", "");
+                    var line2 = blk.getNbtData().getString("Text2").replace("\"", "");
+                    var line3 = blk.getNbtData().getString("Text3").replace("\"", "");
+                    var line4 = blk.getNbtData().getString("Text4").replace("\"", "");
+                    var text = "],text:}";
+                    var extra = "{extra:[";
+                    line1 = line1.replace(extra, "");
+                    line1 = line1.replace(text, "");
+                    line2 = line2.replace(extra, "");
+                    line2 = line2.replace(text, "");
+                    line3 = line3.replace(extra, "");
+                    line3 = line3.replace(text, "");
+                    line4 = line4.replace(extra, "");
+                    line4 = line4.replace(text, "");
+                    f.write(",");
+                    f.write(((line1.equals("null"))? "": line1)+",");
+                    f.write(((line2.equals("null"))? "": line2)+",");
+                    f.write(((line3.equals("null"))? "": line3)+",");
+                    f.write(((line4.equals("null"))? "": line4)+"\n");
+                }
+                else {
+                    f.write("\n");
 
-				}
-			}
-		}
-	}
+                }
+            }
+        }
+    }
 
 
 
 }
 finally
 {
-	f.close();
+    f.close();
 }
 
 
 /*var origin = player.getBlockIn();
 
 for (var x = 0; x < width; x++) {
-	for (var y = 0; y < height; y++) {
-	    var c = new Color(img.getRGB(x, y));
-	    var data = findClosestWoolColor(c,colors);
-			// Added this to enable the user to create images upright
-	    // rather than flat on the ground
-			if (!upright) {
-		sess.setBlock(origin.add(x, 0, y), new BaseBlock(35, data));
-			} else {
-		sess.setBlock(origin.add(x, height - y, 0), new BaseBlock(35, data));
-			}
-	}
+    for (var y = 0; y < height; y++) {
+        var c = new Color(img.getRGB(x, y));
+        var data = findClosestWoolColor(c,colors);
+            // Added this to enable the user to create images upright
+        // rather than flat on the ground
+            if (!upright) {
+        sess.setBlock(origin.add(x, 0, y), new BaseBlock(35, data));
+            } else {
+        sess.setBlock(origin.add(x, height - y, 0), new BaseBlock(35, data));
+            }
+    }
 }*/
