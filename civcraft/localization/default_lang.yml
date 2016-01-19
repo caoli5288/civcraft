@@ -2845,5 +2845,7 @@ var_civ_border_relation: "Current Status: [%0]"
 
 war_wartimeBegin_title_length: "War time will last for [%0] minutes."
 
+cmd_res_toggle_titleAPIDesc: "Toggles displaying of on screen titles."
+
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

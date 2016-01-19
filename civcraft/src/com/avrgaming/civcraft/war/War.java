@@ -217,7 +217,7 @@ public class War {
 			}
 			
 			/* War time has started. */
-			CivMessage.globalTitle(CivColor.Red+CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeBeginHeading"),CivSettings.localize.localizedString("war_wartimeBegin_title_length",mins));
+			CivMessage.globalTitle(CivColor.Red+CivColor.BOLD+CivSettings.localize.localizedString("war_wartimeBeginHeading"),CivSettings.localize.localizedString("war_wartimeBegin_title_length",mins/60.0));
 			War.setStart(new Date());
 			War.repositionPlayers(CivSettings.localize.localizedString("war_wartimeBeginOutOfPosition"));
 			//War.vassalTownsWithNoTownHalls();
