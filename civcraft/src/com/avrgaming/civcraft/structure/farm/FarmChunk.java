@@ -228,6 +228,10 @@ public class FarmChunk {
 			return;
 		}
 		
+		if (this.town == null) {
+			return;
+		}
+		
         // Lets let a growth rate of 100% mean 1 crop grows every 10 ticks(1/2 second)
 		// Over 100% means we do more than 1 crop, under 100% means we check that probability.
 		// So for example, if we have a 120% growth rate, every 10 ticks 1 crop *always* grows,
