@@ -1969,7 +1969,7 @@ var_civ_found_townExists: "A town already exists with the name of '[%0]"
 civ_found_mustleavecamp: "You must first leave your camp before founding a civilization."
 var_civ_found_errorTooClose1: "You cannot found a civilization here. You are too close to the culture of [%0]! [%1] is your current distance, needs to be at least [%2]"
 civ_found_databaseException: "We detected and internal inconsistency with the database. Try founding your civ again, if the problem persists, contact an admin."
-var_civ_found_success1: "The Civilization of [%0] has been founded by [%1], with [%2] as it's capitol!"
+
 var_civ_found_invalidName: "'[%0]' is not a valid name, please choose another."
 var_civ_debtAnnounce: "[%0] is in debt by [%1] [%2]!"
 var_civ_fellIntoRuin: "[%0] and its towns have fallen into ruin!"
@@ -2843,9 +2843,11 @@ var_civ_border_welcomeBack: "Welcome Back, [%0]"
 var_civ_border_welcomeHome: "Welcome Home, [%0]"
 var_civ_border_relation: "Current Status: [%0]"
 
-war_wartimeBegin_title_length: "War time will last for [%0] minutes."
+war_wartimeBegin_title_length: "War time will last for [%0] hours."
 
 cmd_res_toggle_titleAPIDesc: "Toggles displaying of on screen titles."
 
+var_civ_found_successTitle: "The Civilization of [%0] has been founded by [%1], with [%2] as it's capitol!"
+var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
