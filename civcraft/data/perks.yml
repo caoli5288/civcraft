@@ -77,7 +77,40 @@ perks:
 
     - id: 'template_arctic'
       display_name: 'Arctic Templates'
+      simple_name: "arctic"
       item_id: 79
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+
+    - id: 'template_aztec'
+      display_name: 'Aztec Templates'
+      simple_name: "aztec"
+      item_id: 98
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+
+    - id: 'template_egyptian'
+      display_name: 'Egyptian Templates'
+      simple_name: "egyptian"
+      item_id: 24
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+
+    - id: 'template_roman'
+      display_name: 'Roman Templates'
+      simple_name: "roman"
+      item_id: 155
+      data: 2
+      components:
+          - name: 'CustomTemplate'
+
+    - id: 'template_hell'
+      display_name: 'Hell Templates'
+      simple_name: "hell"
+      item_id: 87
       data: 0
       components:
           - name: 'CustomTemplate'
@@ -88,34 +121,6 @@ perks:
     #   data: 0
     #   components:
     #       - name: 'CustomTemplate'
-
-    - id: 'template_aztec'
-      display_name: 'Aztec Templates'
-      item_id: 98
-      data: 2
-      components:
-          - name: 'CustomTemplate'
-
-    - id: 'template_egyptian'
-      display_name: 'Egyptian Templates'
-      item_id: 24
-      data: 2
-      components:
-          - name: 'CustomTemplate'
-
-    - id: 'template_roman'
-      display_name: 'Roman Templates'
-      item_id: 155
-      data: 2
-      components:
-          - name: 'CustomTemplate'
-
-    - id: 'template_hell'
-      display_name: 'Hell Template'
-      item_id: 87
-      data: 0
-      components:
-          - name: 'CustomTemplate'
 
     # - id: 'template_elven'
     #   display_name: 'Elven Template'

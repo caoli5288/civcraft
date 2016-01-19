@@ -1154,6 +1154,26 @@ public class Resident extends SQLObject {
 	public void setOnRoad(boolean onRoad) {
 		this.onRoad = onRoad;
 	}
+	
+	public void giveTemplate(String name) {
+		int perkCount;
+		try {
+			perkCount = CivSettings.getInteger(CivSettings.perkConfig, "system.free_perk_count");
+		} catch (InvalidConfiguration e) {
+			e.printStackTrace();
+			return;
+		}
+		for (ConfigPerk p : CivSettings.perks.values()) {
+			Perk perk = new Perk(p);
+			
+			if (perk.getIdent().startsWith(("tpl_"+name).toLowerCase()) || perk.getIdent().startsWith(("prem_tpl_"+name).toLowerCase()) || perk.getIdent().startsWith(("template_"+name).toLowerCase()))
+			{
+				perk.count = perkCount;
+				this.perks.put(perk.getIdent(), perk);
+			}
+		}
+		
+	}
 
 	public void giveAllArcticPerks() {
 		int perkCount;
@@ -1408,51 +1428,12 @@ public class Resident extends SQLObject {
 							perkMessage += "Weather"+", ";
 						}
 					}
-					if (player.hasPermission(CivSettings.ARCTIC_PERKS))
-					{
-						resident.giveAllArcticPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Arctic")+", ";
-					}
-					if (player.hasPermission(CivSettings.ATLANTEAN_PERKS))
-					{
-						resident.giveAllAtlanteanPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Atlantean")+", ";
-					}
-					if (player.hasPermission(CivSettings.AZTEC_PERKS))
-					{
-						resident.giveAllAztecPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Aztec")+", ";
-					}
-					if (player.hasPermission(CivSettings.CULTIST_PERKS))
-					{
-						resident.giveAllCultistPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Cultist")+", ";
-					}
-					if (player.hasPermission(CivSettings.EGYPTIAN_PERKS))
-					{
-						resident.giveAllEgyptianPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Egyptian")+", ";
-					}
-					if (player.hasPermission(CivSettings.ELVEN_PERKS))
-					{
-						resident.giveAllElvenPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Elven")+", ";
-					}
-					if (player.hasPermission(CivSettings.HELL_PERKS))
-					{
-						resident.giveAllHellPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Hell")+", ";
-					}
-					if (player.hasPermission(CivSettings.ROMAN_PERKS))
-					{
-						resident.giveAllRomanPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Roman")+", ";
-					}
-
-					if (player.hasPermission(CivSettings.MEDIEVAL_PERKS))
-					{
-						resident.giveAllMedievalPerks();
-						perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perk_Medieval")+", ";
+					
+					for (ConfigPerk p : CivSettings.templates.values()) {
+						if (player.hasPermission("civ."+p.simple_name+"perks")) {
+							resident.giveTemplate(p.simple_name);
+							perkMessage += p.display_name+", ";
+						}
 					}
 
 					perkMessage += CivSettings.localize.localizedString("PlayerLoginAsync_perksMsg2");

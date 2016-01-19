@@ -152,6 +152,7 @@ public class CivSettings {
 	
 	public static FileConfiguration perkConfig; /* perks.yml */
 	public static Map<String, ConfigPerk> perks = new HashMap<String, ConfigPerk>();
+	public static Map<String, ConfigPerk> templates = new HashMap<String, ConfigPerk>();
 
 	public static FileConfiguration enchantConfig; /* enchantments.yml */
 	public static Map<String, ConfigEnchant> enchants = new HashMap<String, ConfigEnchant>();
@@ -455,6 +456,7 @@ public class CivSettings {
 		ConfigUnit.loadConfig(unitConfig, units);
 		ConfigMission.loadConfig(espionageConfig, missions);
 		ConfigPerk.loadConfig(perkConfig, perks);
+		ConfigPerk.loadTemplates(perkConfig, templates);
 		ConfigCampLonghouseLevel.loadConfig(campConfig, longhouseLevels);
 		ConfigCampUpgrade.loadConfig(campConfig, campUpgrades);
 		ConfigMarketItem.loadConfig(marketConfig, marketItems);
