@@ -54,6 +54,7 @@ public class DailyTimer implements Runnable {
 			try {
 				try {
 					CivLog.info("---- Running Daily Timer -----");
+					CivMessage.globalTitle(CivColor.LightBlue+CivSettings.localize.localizedString("general_upkeep_tick"), "");
 					collectTownTaxes();
 					payTownUpkeep();
 					payCivUpkeep();
@@ -82,6 +83,7 @@ public class DailyTimer implements Runnable {
 					
 				} finally {
 					CivLog.info("Daily timer is finished, setting true.");
+					CivMessage.globalTitle(CivColor.LightBlue+CivSettings.localize.localizedString("general_upkeep_tick_finish"), "");
 					DailyEvent.dailyTimerFinished = true;
 				}
 			} finally {

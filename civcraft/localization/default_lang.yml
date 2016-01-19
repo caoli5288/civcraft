@@ -2849,5 +2849,8 @@ cmd_res_toggle_titleAPIDesc: "Toggles displaying of on screen titles."
 
 var_civ_found_successTitle: "The Civilization of [%0] has been founded by [%1], with [%2] as it's capitol!"
 var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
+
+general_upkeep_tick: "Starting Daily Upkeep Processing"
+general_upkeep_tick_finish: "Daily Upkeep Finished"
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
