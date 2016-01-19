@@ -2852,5 +2852,14 @@ var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
 
 general_upkeep_tick: "Starting Daily Upkeep Processing"
 general_upkeep_tick_finish: "Daily Upkeep Finished"
+
+announce_classicalEra: "The Classical Era"
+announce_medievalEra: "The Medieval Era"
+announce_renaissanceEra: "The Renaissance Era"
+announce_industrialEra: "The Industrial Era"
+announce_modernEra: "The Modern Era"
+announce_atomicEra: "The Atomic Era"
+announce_informationEra: "The Information Era"
+var_announce_newEraCiv: "Has been achieved by [%0]."
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

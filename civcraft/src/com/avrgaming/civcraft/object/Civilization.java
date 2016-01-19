@@ -73,6 +73,7 @@ public class Civilization extends SQLObject {
 	
 	private int color;
 	private int daysInDebt = 0;
+	private int currentEra = 0;
 	private double incomeTaxRate;
 	private double sciencePercentage;
 	private ConfigTech researchTech = null;
@@ -242,6 +243,13 @@ public class Civilization extends SQLObject {
 		this.setTreasury(new EconObject(this));
 		this.getTreasury().setBalance(rs.getDouble("coins"), false);
 		this.getTreasury().setDebt(rs.getDouble("debt"));
+
+		for (ConfigTech tech : this.getTechs())
+		{
+			if (tech.era > this.getCurrentEra()) {
+				this.setCurrentEra(tech.era);
+			}
+		}
 	}
 
 	@Override
@@ -373,6 +381,10 @@ public class Civilization extends SQLObject {
 	}
 	
 	public void addTech(ConfigTech t) {
+		if (t.era > this.getCurrentEra()) {
+			this.setCurrentEra(t.era);
+		}
+		
 		CivGlobal.researchedTechs.add(t.id.toLowerCase());
 		techs.put(t.id, t);
 		
@@ -1882,6 +1894,19 @@ public class Civilization extends SQLObject {
 		
 		ItemStack stack = ItemManager.spawnPlayerHead(leader, message+" ("+leader+")");
 		return stack;
+	}
+
+	public int getCurrentEra() {
+		return currentEra;
+	}
+
+	public void setCurrentEra(int currentEra) {
+		this.currentEra = currentEra;
+		
+		if (this.currentEra > CivGlobal.highestCivEra)
+		{
+			CivGlobal.setCurrentEra(this.currentEra, this);
+		}
 	}
 	
 }
