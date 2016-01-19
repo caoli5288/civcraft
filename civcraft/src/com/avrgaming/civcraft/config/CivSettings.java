@@ -423,9 +423,11 @@ public class CivSettings {
 	}
 	
 	public static void reloadPerks() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
-
+		perks.clear();
+		templates.clear();
 		perkConfig = loadCivConfig("perks.yml");
 		ConfigPerk.loadConfig(perkConfig, perks);
+		ConfigPerk.loadTemplates(perkConfig, templates);
 	}
 	
 	public static void reloadNoCheat() throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
