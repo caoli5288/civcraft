@@ -59,6 +59,11 @@ public class PlayerLoginAsyncTask implements Runnable {
 	@Override
 	public void run() {
 		try {
+			if (playerUUID == null || getPlayer() == null)
+			{
+				CivLog.info("Skipping PlayerLoginAsyncTask, otherwise NPE.");
+				return;
+			}
 			CivLog.info("Running PlayerLoginAsyncTask for "+getPlayer().getName()+" UUID("+playerUUID+")");
 			//Resident resident = CivGlobal.getResident(getPlayer().getName());
 			Resident resident = CivGlobal.getResidentViaUUID(playerUUID);
