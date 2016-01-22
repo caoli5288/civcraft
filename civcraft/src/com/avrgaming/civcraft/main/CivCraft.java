@@ -117,6 +117,7 @@ public final class CivCraft extends JavaPlugin {
 
 	private boolean isError = false;	
 	private static JavaPlugin plugin;	
+	public static boolean isDisable = false;
 	
 	private void startTimers() {
 		
@@ -301,6 +302,13 @@ public final class CivCraft extends JavaPlugin {
 		startTimers();
 				
 		//creativeInvPacketManager.init(this);		
+	}
+	
+	@Override
+	public void onDisable() {
+		super.onDisable();
+		isDisable = true;
+		SQLUpdate.save();
 	}
 	
 	public boolean hasPlugin(String name) {
