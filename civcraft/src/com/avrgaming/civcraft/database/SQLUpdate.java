@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.database;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import com.avrgaming.civcraft.object.SQLObject;
+import com.avrgaming.civcraft.main.CivCraft;
 
 public class SQLUpdate implements Runnable {
 	
@@ -43,11 +44,30 @@ public class SQLUpdate implements Runnable {
 		saveObjects.add(obj);
 	}
 	
+	public static void save() {
+		for (SQLObject obj : saveObjects) {
+			if (obj != null) {
+				try {
+					obj.saveNow();
+					Integer count = statSaveCompletions.get(obj.getClass().getSimpleName());
+					if (count == null) {
+						count = 0;
+					}
+					statSaveCompletions.put(obj.getClass().getSimpleName(), ++count);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	@Override
 	public void run() {	
 		while(true) {
 			try {
-				
+				if (CivCraft.isDisable) {
+					break;
+				}
 				SQLObject obj = saveObjects.poll();
 				if (obj == null) {
 					if (saveObjects.isEmpty()) {
