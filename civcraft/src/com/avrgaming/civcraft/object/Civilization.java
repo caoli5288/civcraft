@@ -597,7 +597,7 @@ public class Civilization extends SQLObject {
 			CivGlobal.addCiv(civ);
 			ItemStack newStack = new ItemStack(Material.AIR);
 			player.setItemInHand(newStack);
-			CivMessage.globalTitle(CivSettings.localize.localizedString("var_civ_found_successTitle",civ.getName()),CivSettings.localize.localizedString("var_civ_found_successSubTitle",player.getName(),civ.getCapitolName()));
+			CivMessage.globalTitle(CivSettings.localize.localizedString("var_civ_found_successTitle",civ.getName()),CivSettings.localize.localizedString("var_civ_found_successSubTitle",civ.getCapitolName(),player.getName()));
 			
 		} catch (InvalidNameException e) {
 			throw new CivException(CivSettings.localize.localizedString("var_civ_found_invalidName",name));

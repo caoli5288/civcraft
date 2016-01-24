@@ -55,6 +55,7 @@ public class TownChunk extends SQLObject {
 	private double value;
 	private double price;
 	private boolean outpost;
+	private boolean canUnclaim = true;
 	
 	public PlotPermissions perms = new PlotPermissions();
 	
@@ -91,6 +92,7 @@ public class TownChunk extends SQLObject {
 				 "`for_sale` bool NOT NULL DEFAULT '0'," +
 				 "`value` float NOT NULL DEFAULT '0'," +
 				 "`price` float NOT NULL DEFAULT '0'," +
+				 "`canunclaim` bool DEFAULT '1'," +
 				 "`outpost` bool DEFAULT '0'," +			 
 			//	 "FOREIGN KEY (owner_id) REFERENCES "+SQL.tb_prefix+Resident.TABLE_NAME+"(id),"+
 			//	 "FOREIGN KEY (town_id) REFERENCES "+SQL.tb_prefix+Town.TABLE_NAME+"(id),"+
@@ -139,6 +141,7 @@ public class TownChunk extends SQLObject {
 		this.value = rs.getDouble("value");
 		this.price = rs.getDouble("price");
 		this.outpost = rs.getBoolean("outpost");
+		this.setCanUnclaim(rs.getBoolean("canunclaim"));
 		
 		if (!this.outpost) {
 			try {
@@ -246,6 +249,7 @@ public class TownChunk extends SQLObject {
 		}
 		
 		TownChunk tc = new TownChunk(town, coord);
+		tc.setCanUnclaim(true);
 		
 		if (!outpost) {
 			if (!tc.isOnEdgeOfOwnership()) {
@@ -388,6 +392,8 @@ public class TownChunk extends SQLObject {
 		}
 		
 		TownChunk tc = new TownChunk(town, coord);
+		
+		tc.setCanUnclaim(false);
 		
 		try {
 			town.addTownChunk(tc);
@@ -546,6 +552,14 @@ public class TownChunk extends SQLObject {
 
 	public void setOutpost(boolean outpost) {
 		this.outpost = outpost;
+	}
+
+	public boolean getCanUnclaim() {
+		return canUnclaim;
+	}
+
+	public void setCanUnclaim(boolean canUnclaim) {
+		this.canUnclaim = canUnclaim;
 	}
 
 

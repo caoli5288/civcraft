@@ -2847,7 +2847,7 @@ war_wartimeBegin_title_length: "War time will last for [%0] hours."
 
 cmd_res_toggle_titleAPIDesc: "Toggles displaying of on screen titles."
 
-var_civ_found_successTitle: "The Civilization of [%0] has been founded by [%1], with [%2] as it's capitol!"
+var_civ_found_successTitle: "New Civilization of [%0]!"
 var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
 
 general_upkeep_tick: "Starting Daily Upkeep Processing"
@@ -2861,5 +2861,8 @@ announce_modernEra: "The Modern Era"
 announce_atomicEra: "The Atomic Era"
 announce_informationEra: "The Information Era"
 var_announce_newEraCiv: "Has been achieved by [%0]."
+
+
+cmd_town_unclaim_errorTownHall: "You cannot unclaim a town chunk containing your town hall."
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

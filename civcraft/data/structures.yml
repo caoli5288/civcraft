@@ -527,7 +527,7 @@ structures:
     effect_event: generate_culture:25
     update_event:
     onBuild_event:
-    limit: 2
+    limit: 1
     cost: 10000.0
     upkeep: 0.0
     hammer_cost: 600.0
@@ -551,7 +551,7 @@ structures:
     effect_event: generate_culture:50
     update_event:
     onBuild_event:
-    limit: 2
+    limit: 1
     cost: 50000.0
     upkeep: 0.0
     hammer_cost: 600.0
