@@ -1823,7 +1823,7 @@ public class Town extends SQLObject {
 			struct.onDemolish();
 			struct.unbindStructureBlocks();
 			this.removeStructure(struct);
-			struct.delete();
+			struct.deleteSkipUndo();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new CivException(CivSettings.localize.localizedString("internalDatabaseException"));
