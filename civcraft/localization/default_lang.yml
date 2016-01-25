@@ -2862,7 +2862,7 @@ announce_atomicEra: "The Atomic Era"
 announce_informationEra: "The Information Era"
 var_announce_newEraCiv: "Has been achieved by [%0]."
 
-
 cmd_town_unclaim_errorTownHall: "You cannot unclaim a town chunk containing your town hall."
+stable_missingTech_MilitaryScience: "You need the technology 'Military Science' in order to buy this."
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

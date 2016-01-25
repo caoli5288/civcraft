@@ -100,6 +100,11 @@ public class Stable extends Structure {
 					CivMessage.sendError(player, CivSettings.localize.localizedString("stable_unknownHorse"));
 					return;
 				}
+				if (horse_id >= 5 && !getCiv().hasTechnology("tech_military_science"))
+				{
+					CivMessage.sendError(player, CivSettings.localize.localizedString("stable_missingTech_MilitaryScience"));
+					return;
+				}
 				
 				Resident resident = CivGlobal.getResident(player);
 				if (!horse.mule) {
@@ -174,6 +179,11 @@ public class Stable extends Structure {
 			public void process(Player player) {
 
 				Resident resident = CivGlobal.getResident(player);
+				if ((item_id >= 417 && item_id <= 419)  && !getCiv().hasTechnology("tech_military_science"))
+				{
+					CivMessage.sendError(player, CivSettings.localize.localizedString("stable_missingTech_MilitaryScience"));
+					return;
+				}
 				
 				double paid;
 				if (resident.getTown() != getTown()) {

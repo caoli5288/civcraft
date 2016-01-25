@@ -18,8 +18,10 @@
  */
 package com.avrgaming.civcraft.database;
 
+import java.sql.SQLException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
+
 import com.avrgaming.civcraft.object.SQLObject;
 import com.avrgaming.civcraft.main.CivCraft;
 
