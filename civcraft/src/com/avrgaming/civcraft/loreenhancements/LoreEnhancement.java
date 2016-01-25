@@ -40,6 +40,11 @@ public abstract class LoreEnhancement {
 		case CivData.IRON_SWORD:
 		case CivData.GOLD_SWORD:
 		case CivData.DIAMOND_SWORD:
+		case CivData.WOOD_AXE:
+		case CivData.STONE_AXE:
+		case CivData.IRON_AXE:
+		case CivData.GOLD_AXE:
+		case CivData.DIAMOND_AXE:
 		case CivData.BOW:
 			return true;
 		default:
