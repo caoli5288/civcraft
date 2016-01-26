@@ -48,6 +48,16 @@ perks:
 #      components:
 #         - name: 'RenameCivOrTown'
 
+# ===== Lightz TEMPLATES
+    - id: 'perk_lightz_monument'
+      display_name: 'Lightz Monument Template'
+      item_id: 35
+      data: 3
+      components:
+          - name: 'CustomTemplate'
+            theme: 'lightz'
+            template: 'monument'
+
 # ===== Holoska TEMPLATES
     - id: 'perk_holoska_monument'
       display_name: 'Eureka Monument Template'
