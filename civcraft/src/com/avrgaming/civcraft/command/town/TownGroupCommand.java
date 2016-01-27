@@ -119,7 +119,7 @@ public class TownGroupCommand extends CommandBase {
 		grp.removeMember(oldMember);
 		grp.save();
 		
-		CivMessage.sendSuccess(sender, oldMember.getName()+" "+CivSettings.localize.localizedString("var_cmd_town_group_removeSuccess1",grp.getName(),town.getName()));
+		CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_cmd_town_group_removeSuccess1",oldMember.getName(),grp.getName(),town.getName()));
 		
 		try {
 			Player newPlayer = CivGlobal.getPlayer(oldMember);
