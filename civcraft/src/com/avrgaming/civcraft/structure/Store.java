@@ -50,6 +50,7 @@ public class Store extends Structure {
 		super(center, id, town);
 		nonMemberFeeComponent = new NonMemberFeeComponent(this);
 		nonMemberFeeComponent.onSave();
+		setLevel(town.saved_store_level);
 	}
 	
 	protected Store(ResultSet rs) throws SQLException, CivException {

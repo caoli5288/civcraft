@@ -42,6 +42,7 @@ public class Quarry extends Structure {
 	
 	protected Quarry(Location center, String id, Town town) throws CivException {
 		super(center, id, town);	
+		setLevel(town.saved_quarry_level);
 	}
 	
 	public Quarry(ResultSet rs) throws SQLException, CivException {

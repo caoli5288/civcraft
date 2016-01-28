@@ -62,6 +62,8 @@ public class Bank extends Structure {
 		super(center, id, town);
 		nonMemberFeeComponent = new NonMemberFeeComponent(this);
 		nonMemberFeeComponent.onSave();
+		setLevel(town.saved_bank_level);
+		setInterestRate(town.saved_bank_interest_amount);
 	}
 	
 	public Bank(ResultSet rs) throws SQLException, CivException {

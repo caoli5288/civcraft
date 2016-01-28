@@ -145,6 +145,7 @@ public class Library extends Structure {
 		super(center, id, town);
 		nonMemberFeeComponent = new NonMemberFeeComponent(this);
 		nonMemberFeeComponent.onSave();
+		setLevel(town.saved_library_level);
 	}
 
 	public Library(ResultSet rs) throws SQLException, CivException {

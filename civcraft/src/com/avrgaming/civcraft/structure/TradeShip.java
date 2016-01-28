@@ -47,6 +47,7 @@ public class TradeShip extends Structure {
 	
 	protected TradeShip(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
+		setUpgradeLvl(town.saved_tradeship_upgrade_levels);
 	}
 
 	public TradeShip(ResultSet rs) throws SQLException, CivException {
