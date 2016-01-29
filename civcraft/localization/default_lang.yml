@@ -2853,6 +2853,7 @@ var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
 general_upkeep_tick: "Starting Daily Upkeep Processing"
 general_upkeep_tick_finish: "Daily Upkeep Finished"
 
+announce_ancientEra: "The Ancient Era"
 announce_classicalEra: "The Classical Era"
 announce_medievalEra: "The Medieval Era"
 announce_renaissanceEra: "The Renaissance Era"
@@ -2864,5 +2865,11 @@ var_announce_newEraCiv: "Has been achieved by [%0]."
 
 cmd_town_unclaim_errorTownHall: "You cannot unclaim a town chunk containing your town hall."
 stable_missingTech_MilitaryScience: "You need the technology 'Military Science' in order to buy this."
+cmd_civ_research_eraDesc: "Shows your current technicalogical era, and the era of the most advanced Civ."
+cmd_civ_research_era: "Civilization Era"
+var_cmd_civ_research_highestEra: "The Highest Era achieved this age is [%0]"
+var_cmd_civ_research_currentEra: "Your Civilization is in [%0]"
+var_cmd_civ_research_eraDiscount: "You are currently receiving a [%0]% discount on the Beaker and [%1] cost of Technologies you research."
+cmd_civ_research_eraNoDiscount: "You are not receiving a discount on the cost of Technologies you research."
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

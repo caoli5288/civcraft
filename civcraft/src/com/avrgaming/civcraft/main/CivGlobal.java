@@ -379,38 +379,43 @@ public class CivGlobal {
 		}
 	}
 	
+	public static String localizedEraString(int era) {
+		String newEra = "";
+		switch (era) {
+		case 0: //ANCIENT
+			newEra = "announce_ancientEra";
+			break;
+		case 1: //CLASSICAL
+			newEra = "announce_classicalEra";
+			break;
+		case 2: //MEDIEVAL
+			newEra = "announce_medievalEra";
+			break;
+		case 3: //RENAISSANCE
+			newEra = "announce_renaissanceEra";
+			break;
+		case 4: //INDUSTRIAL
+			newEra = "announce_industrialEra";
+			break;
+		case 5: //MODERN
+			newEra = "announce_modernEra";
+			break;
+		case 6: //ATOMIC
+			newEra = "announce_atomicEra";
+			break;
+		case 7: //INFORMATION
+			newEra = "announce_informationEra";
+			break;
+		default:
+			break;
+		}
+		return CivSettings.localize.localizedString(newEra);
+	}
+	
 	public static void setCurrentEra(int era, Civilization civ) {
 		if (era > highestCivEra) {
 			highestCivEra = era;
-			String newEra = "";
-			switch (highestCivEra) {
-				case 0: //ANCIENT
-					return;
-				case 1: //CLASSICAL
-					newEra = "announce_classicalEra";
-					break;
-				case 2: //MEDIEVAL
-					newEra = "announce_medievalEra";
-					break;
-				case 3: //RENAISSANCE
-					newEra = "announce_renaissanceEra";
-					break;
-				case 4: //INDUSTRIAL
-					newEra = "announce_industrialEra";
-					break;
-				case 5: //MODERN
-					newEra = "announce_modernEra";
-					break;
-				case 6: //ATOMIC
-					newEra = "announce_atomicEra";
-					break;
-				case 7: //INFORMATION
-					newEra = "announce_informationEra";
-					break;
-				default:
-					break;
-			}
-			CivMessage.globalTitle(CivColor.Green+CivSettings.localize.localizedString(newEra), CivColor.LightGreen+CivSettings.localize.localizedString("var_announce_newEraCiv", civ.getName()));
+			CivMessage.globalTitle(CivColor.Green+ localizedEraString(highestCivEra) , CivColor.LightGreen+CivSettings.localize.localizedString("var_announce_newEraCiv", civ.getName()));
 			
 		}
 	}

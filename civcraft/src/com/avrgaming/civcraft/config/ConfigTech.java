@@ -58,6 +58,19 @@ public class ConfigTech {
 		CivLog.info("Loaded "+tech_maps.size()+" technologies.");
 	}
 	
+	public static double eraRate(Civilization civ) {
+		double rate = 1.0;
+		double era = CivGlobal.highestCivEra - civ.getCurrentEra();
+		if (era > 0) {
+			rate = (era/10);
+		}
+		return rate;
+	}
+	
+	public double getAdjustedBeakerCost(Civilization civ) {
+		return Math.floor(this.beaker_cost*=eraRate(civ));
+	}
+	
 	public double getAdjustedTechCost(Civilization civ) {
 		double rate = 1.0;
 		
@@ -68,8 +81,10 @@ public class ConfigTech {
 				rate -= town.getBuffManager().getEffectiveDouble("buff_profit_sharing");
 			}
 		}
+		rate = Math.max(rate, 0.75);
+		rate -= eraRate(civ);
 		
-		return (this.cost * Math.max(rate,0.75));
+		return Math.floor(this.cost * rate);
 	}
 	
 	

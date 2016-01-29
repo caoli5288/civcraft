@@ -44,6 +44,7 @@ public class CivResearchCommand extends CommandBase {
 		commands.put("on", CivSettings.localize.localizedString("cmd_civ_research_onDesc"));
 		commands.put("change", CivSettings.localize.localizedString("cmd_civ_research_changeDesc"));
 		commands.put("finished", CivSettings.localize.localizedString("cmd_civ_research_finishedDesc"));
+		commands.put("era", CivSettings.localize.localizedString("cmd_civ_research_eraDesc"));
 	}
 	
 	public void change_cmd() throws CivException {
@@ -126,8 +127,8 @@ public class CivResearchCommand extends CommandBase {
 		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_current"));
 		
 		if (civ.getResearchTech() != null) {
-			int percentageComplete = (int)((civ.getResearchProgress() / civ.getResearchTech().beaker_cost)*100);
-			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_research_current",civ.getResearchTech().name,percentageComplete,(civ.getResearchProgress()+" / "+civ.getResearchTech().beaker_cost)));
+			int percentageComplete = (int)((civ.getResearchProgress() / civ.getResearchTech().getAdjustedBeakerCost(civ))*100);
+			CivMessage.send(sender, CivSettings.localize.localizedString("var_cmd_civ_research_current",civ.getResearchTech().name,percentageComplete,(civ.getResearchProgress()+" / "+civ.getResearchTech().getAdjustedBeakerCost(civ))));
 		} else {
 			CivMessage.send(sender, CivSettings.localize.localizedString("cmd_civ_research_NotAnything"));
 		}
@@ -142,10 +143,27 @@ public class CivResearchCommand extends CommandBase {
 		for (ConfigTech tech : techs) {
 			CivMessage.send(sender, tech.name+CivColor.LightGray+" "+CivSettings.localize.localizedString("Cost")+" "+
 					CivColor.Yellow+tech.getAdjustedTechCost(civ)+CivColor.LightGray+" "+CivSettings.localize.localizedString("Beakers")+" "+
-					CivColor.Yellow+tech.beaker_cost);
+					CivColor.Yellow+tech.getAdjustedBeakerCost(civ));
 		}
 				
 	}
+	
+	public void era_cmd() throws CivException {
+		Civilization civ = getSenderCiv();
+		
+		CivMessage.sendHeading(sender, CivSettings.localize.localizedString("cmd_civ_research_era"));
+		CivMessage.send(sender, CivColor.White+CivSettings.localize.localizedString("var_cmd_civ_research_currentEra", CivColor.LightBlue+CivGlobal.localizedEraString(civ.getCurrentEra())));
+		CivMessage.send(sender, CivColor.White+CivSettings.localize.localizedString("var_cmd_civ_research_highestEra", CivColor.LightBlue+CivGlobal.localizedEraString(CivGlobal.highestCivEra)));
+		
+		double eraRate = ConfigTech.eraRate(civ);
+		if (eraRate == 1.0) {
+			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_research_eraNoDiscount"));
+		} else {
+			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("var_cmd_civ_research_eraDiscount",(eraRate*100),CivSettings.CURRENCY_NAME));
+			
+		}
+	}
+	
 	
 	
 	@Override

@@ -1040,12 +1040,12 @@ public class Civilization extends SQLObject {
 		
 		if (beakers == 0) {
 			return;
-		}	
+		}
 		
 		TaskMaster.asyncTask(new UpdateTechBar(this), 0);
 		setResearchProgress(getResearchProgress() + beakers);
 		
-		if (getResearchProgress() >= getResearchTech().beaker_cost) {
+		if (getResearchProgress() >= getResearchTech().getAdjustedBeakerCost(this)) {
 			CivMessage.sendCiv(this, CivSettings.localize.localizedString("var_civ_research_Discovery",getResearchTech().name));
 			this.addTech(this.getResearchTech());
 			this.setResearchProgress(0);
@@ -1056,7 +1056,7 @@ public class Civilization extends SQLObject {
 			return;
 		}
 		
-		int percentageComplete = (int)((getResearchProgress() / this.getResearchTech().beaker_cost)*100);
+		int percentageComplete = (int)((getResearchProgress() / this.getResearchTech().getAdjustedBeakerCost(this))*100);
 		if ((percentageComplete % 10) == 0) {
 			
 			if (percentageComplete != lastTechPercentage) {

@@ -58,7 +58,7 @@ public class UpdateTechBar extends CivAsyncTask {
 			
 			SimpleBlock sb; 
 			if (civ.getResearchTech() != null) {
-				percentageDone = (civ.getResearchProgress() / civ.getResearchTech().beaker_cost);
+				percentageDone = (civ.getResearchProgress() / civ.getResearchTech().getAdjustedBeakerCost(civ));
 				/* Get the number of blocks to light up. */
 				int size = townhall.getTechBarSize();
 				int blockCount = (int)(percentageDone*townhall.getTechBarSize()); 
