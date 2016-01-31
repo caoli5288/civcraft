@@ -32,6 +32,7 @@ public class ConfigStableHorse {
 	public double health;
 	public boolean mule;
 	public String variant;
+	public String name;
 	
 	public static void loadConfig(FileConfiguration cfg, Map<Integer, ConfigStableHorse> horses) {
 		horses.clear();
@@ -43,6 +44,7 @@ public class ConfigStableHorse {
 			horse.jump = (Double)level.get("jump");
 			horse.health = (Double)level.get("health");
 			horse.variant = (String)level.get("variant");
+			horse.name = (String)level.get("name");
 			
 			Boolean mule = (Boolean)level.get("mule");
 			if (mule == null || mule == false) {

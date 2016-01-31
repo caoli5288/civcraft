@@ -485,6 +485,7 @@ stable_horses:
       jump: 0.8
       health: 20.0
       variant: 'BROWN'
+      name: 'Horse'
 
       # Trusty Steed
     - id: 2
@@ -492,6 +493,7 @@ stable_horses:
       jump: 0.8
       health: 30.0
       variant: 'BLACK'
+      name: "Trusty Steed"
 
       # Thoroughbred
     - id: 3
@@ -499,6 +501,7 @@ stable_horses:
       jump: 0.8
       health: 45.0
       variant: 'WHITE'
+      name: "Thoroughbred"
 
      # mule
     - id: 4
@@ -507,6 +510,7 @@ stable_horses:
       health: 20.0
       mule: true
       variant: 'BLACK'
+      name: "Mule"
 
       # War Horse
     - id: 5
@@ -514,6 +518,7 @@ stable_horses:
       jump: 1.0
       health: 53.0
       variant: 'CHESTNUT'
+      name: "War Horse"
 
 ################# Road Settings ######################
 road:
