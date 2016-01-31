@@ -60,7 +60,7 @@ public class ConfigTech {
 	
 	public static double eraRate(Civilization civ) {
 		double rate = 1.0;
-		double era = CivGlobal.highestCivEra - civ.getCurrentEra();
+		double era = (CivGlobal.highestCivEra-1) - civ.getCurrentEra();
 		if (era > 0) {
 			rate = (era/10);
 		}
@@ -68,7 +68,9 @@ public class ConfigTech {
 	}
 	
 	public double getAdjustedBeakerCost(Civilization civ) {
-		return Math.floor(this.beaker_cost*=eraRate(civ));
+		double rate = 1.0;
+		rate -= eraRate(civ);
+		return Math.floor(this.beaker_cost*=rate);
 	}
 	
 	public double getAdjustedTechCost(Civilization civ) {

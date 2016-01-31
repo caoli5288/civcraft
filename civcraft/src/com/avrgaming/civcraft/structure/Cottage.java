@@ -246,7 +246,7 @@ public class Cottage extends Structure {
 		
 		if (taxesPaid > 0) {
 			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_cottage_grew_base",getConsumeComponent().getLevel(),stateMessage,total_coins,CivSettings.CURRENCY_NAME,
-					CivColor.Yellow+CivSettings.localize.localizedString("var_cottage_grew_taxes",taxesPaid,this.getTown().getDepositCiv().getName())));
+					CivColor.Yellow+CivSettings.localize.localizedString("var_cottage_grew_taxes",Math.floor(taxesPaid),this.getTown().getDepositCiv().getName())));
 		} else {
 			CivMessage.sendTown(this.getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("var_cottage_grew_base",getConsumeComponent().getLevel(),stateMessage,total_coins,CivSettings.CURRENCY_NAME,""));
 		}
