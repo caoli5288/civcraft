@@ -154,7 +154,7 @@ tesla_tower:
 
     # Tesla tower fire rate
     # Defined in number of half-seconds to delay. Higher numbers is lower fire rate.
-    fire_rate: 20
+    fire_rate: 6
 
 wall:
    # Maximum height walls can be built at.

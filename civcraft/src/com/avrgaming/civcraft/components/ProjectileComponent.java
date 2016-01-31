@@ -143,6 +143,12 @@ public abstract class ProjectileComponent extends Component {
 		return false;
 	}
 	
+	private boolean isLit(Player player) {
+		Location loc1 = player.getLocation();
+		return ((loc1.getWorld()).getBlockAt(loc1).getLightFromSky() >= 15);
+
+	}
+	
 	private boolean canSee(Player player, Location loc2) {
 		Location loc1 = player.getLocation();
 		Vec3D vec1 = new Vec3D(loc1.getX(), loc1.getY() + player.getEyeHeight(), loc1.getZ());
@@ -212,9 +218,15 @@ public abstract class ProjectileComponent extends Component {
 				return;
 			}
 			
-			// XXX todo convert this to not use a player so we can async...
-			if (!this.canSee(player, turretLoc)) {
-				continue;
+			if (!this.getBuildable().getConfigId().equals("s_teslatower")) {
+				// XXX todo convert this to not use a player so we can async...
+				if (!this.canSee(player, turretLoc)) {
+					continue;
+				}
+			} else {
+				if (!this.isLit(player)) {
+					continue;
+				}
 			}
 		
 			if (isWithinRange(player.getLocation(), range)) {
