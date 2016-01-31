@@ -1514,7 +1514,7 @@ public class BlockListener implements Listener {
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onCreatureSpawnEvent(CreatureSpawnEvent event) {
-		if (War.isWarTime()) {
+		if (War.isWarTime() && !event.getEntity().getType().equals(EntityType.HORSE)) {
 			if (!event.getSpawnReason().equals(SpawnReason.BREEDING)){
 				event.setCancelled(true);
 				return;
