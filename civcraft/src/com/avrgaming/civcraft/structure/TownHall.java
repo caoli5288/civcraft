@@ -563,6 +563,9 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 	}
 
 	public void onCannonDamage(int damage, CannonProjectile projectile) throws CivException {
+		if (!this.getCiv().getDiplomacyManager().isAtWar()) {
+			return;
+		}
 		this.hitpoints -= damage;
 
 //		Resident resident = projectile.whoFired;
@@ -593,7 +596,9 @@ public class TownHall extends Structure implements RespawnLocationHolder {
 	}
 	
 	public void onTNTDamage(int damage) {
-		
+		if (!this.getCiv().getDiplomacyManager().isAtWar()) {
+			return;
+		}
 		if (hitpoints >= damage+1) {
 			this.hitpoints -= damage;
 			CivMessage.sendCiv(getCiv(), CivSettings.localize.localizedString("var_townHall_tntHit",this.getDisplayName(),("("+this.hitpoints+"/"+this.getMaxHitPoints()+")")));

@@ -1164,8 +1164,10 @@ public abstract class Buildable extends SQLObject {
 	}
 	
 	public void onDamage(int amount, World world, Player player, BlockCoord coord, BuildableDamageBlock hit) {
+		if (!this.getCiv().getDiplomacyManager().isAtWar()) {
+			return;
+		}
 		boolean wasTenPercent = false;
-		
 		if(hit.getOwner().isDestroyed()) {
 			if (player != null) {
 				CivMessage.sendError(player, CivSettings.localize.localizedString("var_buildable_alreadyDestroyed",hit.getOwner().getDisplayName()));
