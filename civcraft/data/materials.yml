@@ -3487,7 +3487,8 @@ materials:
           craftable: true
           category: '<lightgreen>Eggs Tier 1'
           ingredients:
-              - type_id: 368
+              - type_id: 0
+                custom_id: 'mat_ender_pearl'
                 data: 0
                 letter: 't'
               - type_id: 0
@@ -4389,6 +4390,21 @@ materials:
               - "s s"
               - "scs"
               - " s "
+
+        - id: 'mat_ender_pearl'
+          item_id: 368
+          item_data: 0
+          name: 'Ender Pearl'
+          craftable: false
+          shaped: false
+          category: '<lightgreen>Tier 1 Materials'
+          components:
+              - name: 'NoRightClick'
+          ingredients:
+              - type_id: 0
+                custom_id: 'mat_ender_pearl'
+                data: 0
+                count: 9
         
         - id: 'mat_vanilla_slime'
           item_id: 341
@@ -5367,12 +5383,12 @@ removed_recipes:
     - type_id: 313
       data: 0
 
-    # ender pearl
-    - type_id: 368
-      data: 0
-
     # Eye of ender
     - type_id: 381
+      data: 0
+    
+    # Beacon
+    - type_id: 138
       data: 0
     
     # Hopper
@@ -5431,8 +5447,6 @@ removed_recipes:
     # Armor stand
     - type_id: 416
       data: 0
-
-
 
       
 # Amount of tungston to drop
