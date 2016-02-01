@@ -4372,7 +4372,7 @@ materials:
           item_id: 154
           item_data: 0
           name: 'Hopper'
-          craftable: false
+          craftable: true
           shaped: true
           vanilla: false
           required_techs: 'tech_machinery'

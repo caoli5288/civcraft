@@ -192,7 +192,7 @@ upgrades:
       cost: 500000.0
       action: 'set_town_level,8'
       require_upgrade: 'upgrade_town_level_7'
-      require_tech: 'tech_innovation'
+      require_tech: 'tech_scientific_method'
       category: 'Town'
 
     - id: 'upgrade_town_level_9'
@@ -200,7 +200,7 @@ upgrades:
       cost: 1000000.0
       action: 'set_town_level,9'
       require_upgrade: 'upgrade_town_level_8'
-      require_tech: 'tech_scientific_method'
+      require_tech: 'tech_innovation'
       category: 'Town'
 
    
@@ -273,7 +273,7 @@ upgrades:
       cost: 22000.0
       action: 'set_bank_level,9'
       require_upgrade: 'upgrade_bank_level_8'
-      require_tech: 'tech_innovation'
+      require_tech: 'tech_scientific_method'
       require_structure: 's_bank'
       category: 'Bank'
     
@@ -282,7 +282,7 @@ upgrades:
       cost: 24000.0
       action: 'set_bank_level,10'
       require_upgrade: 'upgrade_bank_level_9'
-      require_tech: 'tech_scientific_method'
+      require_tech: 'tech_innovation'
       require_structure: 's_bank'
       category: 'Bank'
 
@@ -682,7 +682,7 @@ upgrades:
       action: 'set_tradeship_upgrade_level, 5'
       cost: 500000.0
       require_upgrade: 'upgrade_tradeship_level_4'
-      require_tech: 'tech_innovation'
+      require_tech: 'tech_scientific_method'
       require_structure: 'ti_trade_ship'
       category: 'TradeShip'
   
@@ -691,6 +691,6 @@ upgrades:
       action: 'set_tradeship_upgrade_level, 6'
       cost: 1000000.0
       require_upgrade: 'upgrade_tradeship_level_5'
-      require_tech: 'tech_scientific_method'
+      require_tech: 'tech_innovation'
       require_structure: 'ti_trade_ship'
       category: 'TradeShip'
