@@ -27,6 +27,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -261,6 +262,17 @@ public class CustomItemManager implements Listener {
 		Player defendingPlayer = null;
 		if (event.getEntity() instanceof Player) {
 			defendingPlayer = (Player)event.getEntity();
+		}
+		
+		if (event.getDamager() instanceof LightningStrike) {
+			/* Return after Tesla tower does damage, do not apply armor defense. */
+			try {
+				event.setDamage(CivSettings.getInteger(CivSettings.warConfig, "tesla_tower.damage"));
+				return;
+			} catch (InvalidConfiguration e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		if (event.getDamager() instanceof Arrow) {

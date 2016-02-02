@@ -141,7 +141,7 @@ cannon_tower:
 
 tesla_tower:
     # Damage done by lightning blast
-    damage: 5
+    damage: 8
 
     # Tesla tower range
     range: 150.0
