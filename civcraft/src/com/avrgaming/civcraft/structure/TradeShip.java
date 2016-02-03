@@ -35,7 +35,7 @@ import com.avrgaming.civcraft.util.MultiInventory;
 import com.avrgaming.civcraft.util.SimpleBlock;
 import com.avrgaming.civcraft.util.TimeTools;
 
-public class TradeShip extends Structure {
+public class TradeShip extends WaterStructure {
 	
 	private int upgradeLevel = 1;
 	private int tickLevel = 1;

@@ -13,7 +13,7 @@ import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.BlockCoord;
 
-public class CannonShip extends Structure {
+public class CannonShip extends WaterStructure {
 
 	ProjectileCannonComponent cannonComponent;
 	

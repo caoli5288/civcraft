@@ -308,9 +308,9 @@ public class Structure extends Buildable {
 			break;
 		case "s_shipyard":
 			if (rs == null) {
-				struct = (Structure) new WaterStructure(center, id, town);
+				struct = (Structure) new Shipyard(center, id, town);
 			} else {
-				struct = (Structure) new WaterStructure(rs);
+				struct = (Structure) new Shipyard(rs);
 			}
 			break;
 		case "ti_wall":

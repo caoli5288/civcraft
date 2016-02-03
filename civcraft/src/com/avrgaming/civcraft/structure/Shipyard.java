@@ -11,7 +11,7 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
 
-public class Shipyard extends Structure {
+public class Shipyard extends WaterStructure {
 	
 	protected Shipyard(Location center, String id, Town town) throws CivException {
 		super(center, id, town);

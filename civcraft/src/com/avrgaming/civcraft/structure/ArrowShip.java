@@ -13,7 +13,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.SimpleBlock;
 
-public class ArrowShip extends Structure {
+public class ArrowShip extends WaterStructure {
 
 	ProjectileArrowComponent arrowComponent;
 	private HashMap<Integer, ProjectileArrowComponent> arrowTowers = new HashMap<Integer, ProjectileArrowComponent>();

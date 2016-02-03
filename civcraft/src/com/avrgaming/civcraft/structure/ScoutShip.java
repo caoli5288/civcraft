@@ -19,7 +19,7 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.CivColor;
 
-public class ScoutShip extends Structure {
+public class ScoutShip extends WaterStructure {
 
 	double range;
 	private PlayerProximityComponent proximityComponent;
