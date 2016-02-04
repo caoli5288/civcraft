@@ -12,8 +12,8 @@ step_count: 512
 # the percentage at which the buy price is above the sell price
 rate: 0.15
 
-# Shelf 1 left side, front id:0-4 back id:15-19
 
+# Shelf 1 left side, front 0-4
 items:
     - id: 0
       name: 'Cobblestone'
@@ -45,7 +45,7 @@ items:
       type_id: 0
       data: 0
       value: 1
-    
+# Shelf 1 right side, front 5-9
     - id: 5
       name: 'String'
       type_id: 287
@@ -69,37 +69,41 @@ items:
       type_id: 372
       data: 0
       value: 1
-    
+
     - id: 9
-      name: 'Wood Oak'
-      type_id: 17
-      data: 0
-      value: 1
-
-    - id: 10
-      name: 'Wood Spruce'
-      type_id: 17
-      data: 1
-      value: 1
-    
-    - id: 11
-      name: 'Wood Birch'
-      type_id: 17 
-      data: 2
-      value: 1
-
-    - id: 12
-      name: 'Wood Jungle'
-      type_id: 17 
-      data: 3
-      value: 1
-
-    - id: 13
       name: 'Bones'
       type_id: 352
       data: 0
       value: 20
 
+# Shelf 1 right side, back 10-14
+    - id: 10
+      name: 'Wood Oak'
+      type_id: 17
+      data: 0
+      value: 1
+
+    - id: 11
+      name: 'Wood Spruce'
+      type_id: 17
+      data: 1
+      value: 1
+    
+    - id: 12
+      name: 'Wood Birch'
+      type_id: 17 
+      data: 2
+      value: 1
+
+    - id: 13
+      name: 'Wood Jungle'
+      type_id: 17 
+      data: 3
+      value: 1
+
+#14 is corrupt in some templates, do not use.
+
+# Shelf 1 left side, back 15-19
     - id: 15
       name: 'Tungsten Ore'
       type_id: 0
@@ -114,21 +118,352 @@ items:
       custom_id: 'mat_chromium_ore'
       value: 1
 
+    - id: 17
+      name: 'Gunpowder'
+      type_id: 289
+      data: 0
+      value: 50
+
+    - id: 18
+      name: 'Gravel'
+      type_id: 13
+      data: 0
+      value: 1
+
+# Shelf 2 left side, front 20-24
+    - id: 20
+      name: 'Pond Scum'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_pond_scum'
+      value: 1
+
+    - id: 21
+      name: 'Tangled String'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_tangled_string'
+      value: 1
+
+    - id: 22
+      name: 'Seaweed'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_seaweed'
+      value: 1
+
+    - id: 23
+      name: 'Minnows'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_minnows'
+      value: 1
+
+    - id: 24
+      name: 'Tadpole'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_tadpole'
+      value: 1
+
+# Shelf 2 right side, front 25-29
+    - id: 25
+      name: 'Wood Acacia'
+      type_id: 162
+      data: 0
+      value: 1
+
+    - id: 26
+      name: 'Wood Dark Oak'
+      type_id: 162
+      data: 1
+      value: 1
+
+# Shelf 2 right side, back 30-34
+# Shelf 2 left side, back 35-39
+    - id: 35
+      name: 'Sponge'
+      type_id: 19
+      data: 0
+      value: 3
+
+    - id: 36
+      name: 'Prismarine'
+      type_id: 168
+      data: 0
+      value: 1
+
+    - id: 37
+      name: 'Prismarine Brick'
+      type_id: 168
+      data: 1
+      value: 1
+
+    - id: 38
+      name: 'Dark Prismarine'
+      type_id: 168
+      data: 2
+      value: 1
+
+    - id: 39
+      name: 'Sea Lantern'
+      type_id: 169
+      data: 0
+      value: 50
+
+# Shelf 3 left side, front 40-44
+# Shelf 3 right side, front 45-49
+
+# Shelf 3 right side, back 50-54
+    - id: 50
+      name: 'White Wool'
+      type_id: 35
+      data: 0
+      value: 1
+
+    - id: 51
+      name: 'Orange Wool'
+      type_id: 35
+      data: 1
+      value: 1
+
+    - id: 52
+      name: 'Magenta Wool'
+      type_id: 35
+      data: 2
+      value: 1
+
+    - id: 53
+      name: 'Light Blue Wool'
+      type_id: 35
+      data: 3
+      value: 1
+
+    - id: 54
+      name: 'Yellow Wool'
+      type_id: 35
+      data: 4
+      value: 1
+
+# Shelf 3 left side, back 55-59
+    - id: 55
+      name: 'Lime Wool'
+      type_id: 35
+      data: 5
+      value: 1
+
+    - id: 56
+      name: 'Pink Wool'
+      type_id: 35
+      data: 6
+      value: 1
+
+    - id: 57
+      name: 'Gray Wool'
+      type_id: 35
+      data: 7
+      value: 1
+
+    - id: 58
+      name: 'Light Gray Wool'
+      type_id: 35
+      data: 8
+      value: 1
+
+    - id: 59
+      name: 'Cyan Wool'
+      type_id: 35
+      data: 9
+      value: 1
+
+# Shelf 4 left side, front 60-64
+    - id: 60
+      name: 'Purple Wool'
+      type_id: 35
+      data: 10
+      value: 1
+
+    - id: 61
+      name: 'Blue Wool'
+      type_id: 35
+      data: 11
+      value: 1
+
+    - id: 62
+      name: 'Brown Wool'
+      type_id: 35
+      data: 12
+      value: 1
+
+    - id: 63
+      name: 'Green Wool'
+      type_id: 35
+      data: 13
+      value: 1
+
+    - id: 64
+      name: 'Red Wool'
+      type_id: 35
+      data: 14
+      value: 1
+
+# Shelf 4 right side, front 65-69
+    - id: 65
+      name: 'Black Wool'
+      type_id: 35
+      data: 15
+      value: 1
+
+
+# Shelf 4 right side, back 70-74
+# Shelf 4 left side, back 75-79
+
+# Left Side, rear wall 80-82
+# Right Side, rear wall 83-85
+
+# Floor 1 Left side Front Corner 86-89
+# Floor 1 Left side Wall-Front Corner 90-93
+
+# Floor 1 Right side Side-Front Corner 94-97
     - id: 94
       name: 'Crystal Fragment'
       type_id: 0
       data: 0
       custom_id: 'mat_metallic_crystal_fragment_1'
-      value: 1
+      value: 10
     
     - id: 95
       name: 'Ionic Fragment'
       type_id: 0
       data: 0
       custom_id: 'mat_ionic_crystal_fragment_1'
+      value: 10
+
+# Floor 2 Right side Rear 102-105
+    - id: 102
+      name: 'T1 Cow Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_cow_egg'
+      value: 10
+
+    - id: 103
+      name: 'T1 Chicken Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_chicken_egg'
+      value: 10
+
+    - id: 104
+      name: 'T1 Pig Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_pig_egg'
+      value: 10
+
+    - id: 105
+      name: 'T1 Sheep Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_sheep_egg'
+      value: 10
+
+# Floor 2 Right side Middle 106-109
+    - id: 106
+      name: 'T1 Rabbit Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_rabbit_egg'
+      value: 10
+
+    - id: 107
+      name: 'T1 Creeper Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_creeper_egg'
+      value: 10
+
+    - id: 108
+      name: 'T1 Enderman Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_enderman_egg'
+      value: 10
+
+    - id: 109
+      name: 'T1 Zombie Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_zombie_egg'
+      value: 10
+# Floor 2 Right side Forward 110-113
+    - id: 110
+      name: 'T1 Skeleton Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_skeleton_egg'
+      value: 10
+
+    - id: 111
+      name: 'T1 Spider Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_spider_egg'
+      value: 10
+
+    - id: 112
+      name: 'T1 Slime Egg'
+      type_id: 0
+      data: 0
+      custom_id: 'mat_slime_egg'
+      value: 10
+
+    # - id: 113
+    #   name: ''
+    #   type_id: 0
+    #   data: 0
+    #   value: 1
+
+# Floor 2 Right side Wall-Front Corner 114-117
+    - id: 114
+      name: 'Oak Sapling'
+      type_id: 6
+      data: 0
       value: 1
 
-# Floor 2 Left side Front Corner
+    - id: 115
+      name: 'Spruce Sapling'
+      type_id: 6
+      data: 1
+      value: 1
+
+    - id: 116
+      name: 'Birch Sapling'
+      type_id: 6
+      data: 2
+      value: 1
+
+    - id: 117
+      name: 'Jungle Sapling'
+      type_id: 6
+      data: 3
+      value: 1
+
+# Floor 2 Right side Front Corner 118-121
+    - id: 118
+      name: 'Acacia Sapling'
+      type_id: 6
+      data: 4
+      value: 1
+
+    - id: 119
+      name: 'Dark Oak Sapling'
+      type_id: 6
+      data: 5
+      value: 1
+
+
+# Floor 2 Left side Front Corner 122-125
     - id: 122
       name: 'Bread'
       type_id: 297
@@ -152,47 +487,57 @@ items:
       type_id: 86
       data: 0
       value: 4
- 
+# Floor 2 Left side Wall-Front Corner 126-129
     - id: 126
       name: 'Melon'
       type_id: 103
       data: 0
       value: 3
  
- # Food Stuff 
-   
+    - id: 127
+      name: 'Raw Mutton'
+      type_id: 423
+      data: 0
+      value: 5
+
     - id: 128
-      name: 'Fish'
+      name: 'Raw Fish'
       type_id: 349
       data: 0
       value: 5
- 
+
     - id: 129
+      name: 'Raw Salmon'
+      type_id: 349
+      data: 1
+      value: 5
+
+# Floor 2 Left side Forward 130-133
+    - id: 130
       name: 'Raw Beef'
       type_id: 363
       data: 0
       value: 5
  
-    - id: 130
+    - id: 131
       name: 'Raw Porkchop'
       type_id: 319
       data: 0
       value: 5
  
-    - id: 131
+    - id: 132
       name: 'Raw Chicken'
       type_id: 365
       data: 0
       value: 5
  
-    - id: 132
-      name: 'Gunpowder'
-      type_id: 289
-      data: 0
-      value: 100
-
     - id: 133
-      name: 'Sponge'
-      type_id: 19
+      name: 'Raw Rabbit'
+      type_id: 411
       data: 0
-      value: 1000
+      value: 5
+
+# Floor 2 Left side Middle 134-137
+
+# Floor 2 Left side Read 138-141
+#140,141 corrupt, do not use
