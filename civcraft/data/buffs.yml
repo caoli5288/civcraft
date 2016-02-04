@@ -79,7 +79,7 @@ buffs:
     - id: 'buff_fire_bomb'
       name: 'Fire Bomb'
       description: 'Increases damage of arrow/cannon towers by a <lightgreen>10%<r> Also makes arrow towers shoot flaming arrows <gold>Stackable<r>'
-      value: '1.0'
+      value: '0.1'
       stackable: false
       parent:
 
