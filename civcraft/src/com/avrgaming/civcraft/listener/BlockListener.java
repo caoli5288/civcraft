@@ -65,8 +65,6 @@ import org.bukkit.event.entity.EntityBreakDoorEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCreatePortalEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
@@ -77,7 +75,6 @@ import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.weather.LightningStrikeEvent;
 import org.bukkit.event.world.ChunkLoadEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
@@ -276,22 +273,6 @@ public class BlockListener implements Listener {
 			}
 		}
 	}
-	
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityDamageByEntityEvent(LightningStrikeEvent event) {
-//		CivLog.debug("LightningStrike: "+event.getLightning().getUniqueId());
-//		event.setCancelled(true);
-	}
-	
-	@EventHandler(priority = EventPriority.LOWEST)
-	public void onEntityDamageEvent(EntityDamageEvent event) {
-		if (event.getCause().equals(DamageCause.LIGHTNING))
-		{
-			
-//		CivLog.debug("onEntityDamageEvent LightningStrike: "+event.getEntity().getUniqueId());
-//		event.setCancelled(true);
-		}
-	}
 
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
@@ -303,10 +284,6 @@ public class BlockListener implements Listener {
 				return;
 			}
 		}
-
-		if (!(event.getEntity() instanceof Player)) {			
-			return;
-		}	
 		
 		if (event.getDamager() instanceof LightningStrike) {
 //			CivLog.debug("onEntityDamageByEntityEvent LightningStrike: "+event.getDamager().getUniqueId());
@@ -319,7 +296,7 @@ public class BlockListener implements Listener {
 		}
 
 		Player defender = (Player)event.getEntity();
-		/* Only protect agaisnt players and entities that players can throw. */
+		/* Only protect against players and entities that players can throw. */
 		if (!CivSettings.playerEntityWeapons.contains(event.getDamager().getType())) {
 			return;
 		}

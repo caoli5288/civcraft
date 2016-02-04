@@ -19,6 +19,7 @@
 package com.avrgaming.civcraft.listener;
 
 import gpl.AttributeUtil;
+import gpl.HorseModifier;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -27,6 +28,7 @@ import java.util.Random;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Horse;
 import org.bukkit.entity.LightningStrike;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -314,6 +316,12 @@ public class CustomItemManager implements Listener {
 			} else {
 				/* Non-civcraft items only do 0.5 damage. */
 				event.setDamage(0.5);
+			}
+		}
+		
+		if (event.getEntity() instanceof Horse) {
+			if (HorseModifier.isCivCraftHorse((LivingEntity) event.getEntity())) {
+				event.setDamage(event.getDamage()/2.0);
 			}
 		}
 		
