@@ -321,6 +321,7 @@ public class CustomItemManager implements Listener {
 		
 		if (event.getEntity() instanceof Horse) {
 			if (HorseModifier.isCivCraftHorse((LivingEntity) event.getEntity())) {
+				//Horses take 50% damage from all sources.
 				event.setDamage(event.getDamage()/2.0);
 			}
 		}

@@ -206,15 +206,6 @@ public class CivSettings {
 	public static final String HACKER = "civ.hacker";
 	public static final String MODERATOR = "civ.moderator";
 	public static final String FREE_PERKS = "civ.freeperks";
-	public static final String ARCTIC_PERKS = "civ.arcticperks";
-	public static final String ATLANTEAN_PERKS = "civ.atlanteanperks";
-	public static final String AZTEC_PERKS = "civ.aztecperks";
-	public static final String EGYPTIAN_PERKS = "civ.egyptianperks";
-	public static final String ROMAN_PERKS = "civ.romanperks";
-	public static final String HELL_PERKS = "civ.hellperks";
-	public static final String ELVEN_PERKS = "civ.elvenperks";
-	public static final String CULTIST_PERKS = "civ.cultistperks";
-	public static final String MEDIEVAL_PERKS = "civ.medievalperks";
 	public static final String ECON = "civ.econ";
 	public static final String TPALLY = "civ.tp.ally";
 	public static final String TPNEUTRAL = "civ.tp.neutral";
