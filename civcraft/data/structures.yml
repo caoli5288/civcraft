@@ -650,6 +650,26 @@ structures:
           attribute: 'CULTURE'
           value: '300.0'
 
+  - id: s_stadium
+    template: stadium
+    template_y_shift: 0
+    displayName: Stadium
+    require_tech: 'tech_refrigeration'
+    require_structure: 
+    effect_event:
+    limit: 1
+    cost: 150000.0
+    upkeep: 2000.0
+    hammer_cost: 7000.0
+    points: 15000
+    max_hitpoints: 2000
+    ignore_floating: false
+    components:
+        - name: 'AttributeStatic'
+          type: 'direct'
+          attribute: 'HAPPINESS'
+          value: '3.0'
+
   - id: s_bank
     template: bank
     template_y_shift: 0

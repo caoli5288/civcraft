@@ -136,6 +136,14 @@ public class Structure extends Buildable {
 				struct = (Structure) new Store(rs);
 			}
 			break;
+			
+		case "s_stadium":
+			if (rs == null) {
+				struct = (Structure) new Stadium(center, id, town);
+			} else {
+				struct = (Structure) new Stadium(rs);
+			}
+			break;
 		
 		case "s_grocer":
 			if (rs == null) {

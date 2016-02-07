@@ -29,8 +29,8 @@ buffs:
 
     - id: 'buff_monopoly'
       name: 'Monopoly'
-      description: 'Increases coin output from all trade goods in use by <lightgreen>3%<r> <gold>Stackable<r>'
-      value: '0.03'
+      description: 'Increases coin output from all trade goods in use by <lightgreen>15%<r> <gold>Stackable<r>'
+      value: '0.15'
       stackable: true
       parent:
     
@@ -69,6 +69,13 @@ buffs:
       stackable: false
       parent:
 
+    - id: 'buff_art_appreciation'
+      name: 'Art Appreciation'
+      description: 'Increases culture output of a town by <lightgreen>20%<r>'
+      value: '0.20'
+      stackable: false
+      parent:
+
     - id: 'buff_extraction'
       name: 'Extraction'
       description: 'Increases the Trommel chance of producing precious minerals by <lightgreen>50%<r> <gold>Stackable<r>'
@@ -78,8 +85,8 @@ buffs:
 
     - id: 'buff_fire_bomb'
       name: 'Fire Bomb'
-      description: 'Increases damage of arrow/cannon towers by a <lightgreen>10%<r> Also makes arrow towers shoot flaming arrows <gold>Stackable<r>'
-      value: '0.1'
+      description: 'Increases damage of arrow/cannon towers by <lightgreen>50%<r> Also makes arrow towers shoot flaming arrows <gold>Stackable<r>'
+      value: '0.5'
       stackable: false
       parent:
 
@@ -256,7 +263,7 @@ buffs:
 # Notre Dame buffs
     - id: 'buff_notre_dame_no_anarchy'
       name: 'Notre Dame Reduced Anarchy'
-      description: 'Civilization suffers 1/2 anarchy during government changes.'
+      description: 'Civilization suffers 1/2 anarchy time during government changes.'
       value: '0.5'
       stackable: false
       parent: 'buff_noanarchy'
@@ -300,15 +307,15 @@ buffs:
 #Colosseum Buffs
     - id: 'buff_colosseum_coins_from_towns'
       name: 'Colosseum Coins From Towns'
-      description: 'Grants 100 coins per day to the civilization for every town in the world.'
-      value: '100'
+      description: 'Grants 1000 coins per day to the civilization for every town in the world.'
+      value: '1000'
       stackable: false
       parent:
 
 #Globe Theatre Buffs
     - id: 'buff_globe_theatre_culture_from_towns'
       name: 'Globe Theatre Culture From Towns'
-      description: 'Increase culture by 1 for every town in the world.'
+      description: 'Increase culture by 100 for every town in the world.'
       value: '1'
       stackable: false
       parent:

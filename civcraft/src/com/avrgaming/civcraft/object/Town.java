@@ -605,6 +605,9 @@ public class Town extends SQLObject {
 		
 		double additional = this.getBuffManager().getEffectiveDouble(Buff.FINE_ART);
 		
+		if (this.getBuffManager().hasBuff("buff_art_appreciation")) {
+			additional += this.getBuffManager().getEffectiveDouble("buff_art_appreciation");
+		}
 		if (this.getBuffManager().hasBuff("buff_pyramid_culture")) {
 			additional += this.getBuffManager().getEffectiveDouble("buff_pyramid_culture");
 		}
