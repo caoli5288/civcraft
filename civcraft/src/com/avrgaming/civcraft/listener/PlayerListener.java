@@ -519,10 +519,6 @@ public class PlayerListener implements Listener {
 			defender = null;
 		}
 		
-		if (event.getDamager() instanceof LightningStrike) {
-			CivLog.debug("onEntityDamageByEntityMonitor Lightning");
-		}
-		
 		if (event.getDamager() instanceof Player) {
 			attacker = (Player)event.getDamager();
 		} else if (event.getDamager() instanceof Arrow) {
