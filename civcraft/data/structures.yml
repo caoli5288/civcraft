@@ -634,10 +634,10 @@ structures:
     require_structure: 
     effect_event:
     limit: 1
-    cost: 100000.0
+    cost: 75000.0
     upkeep: 1000.0
-    hammer_cost: 5000.0
-    points: 10000
+    hammer_cost: 3600.0
+    points: 8000
     max_hitpoints: 1000
     ignore_floating: false
     components:
@@ -658,17 +658,34 @@ structures:
     require_structure: 
     effect_event:
     limit: 1
-    cost: 150000.0
+    cost: 100000.0
     upkeep: 2000.0
     hammer_cost: 7000.0
-    points: 15000
-    max_hitpoints: 2000
+    points: 9000
+    max_hitpoints: 1000
     ignore_floating: false
     components:
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'HAPPINESS'
           value: '3.0'
+
+  - id: ti_hospital
+    template: hospital
+    template_y_shift: 0
+    displayName: Hospital
+    require_tech: 'tech_biology'
+    require_structure: 
+    allow_outside_town: false
+    effect_event:
+    limit: 1
+    cost: 75000.0
+    upkeep: 1000.0
+    hammer_cost: 5000.0
+    points: 5000
+    max_hitpoints: 2000
+    ignore_floating: false
+    tile_improvement: true
 
   - id: s_bank
     template: bank
@@ -717,6 +734,7 @@ structures:
     onBuild_event:
     limit: 0
     allow_outside_town: true
+    tile_improvement: true
     cost: 10000.0
     upkeep: 5000.0
     hammer_cost: 5000.0
@@ -735,6 +753,7 @@ structures:
     onBuild_event:
     limit: 1
     allow_outside_town: true
+    tile_improvement: true
     cost: 10000.0
     upkeep: 5000.0
     hammer_cost: 5000.0

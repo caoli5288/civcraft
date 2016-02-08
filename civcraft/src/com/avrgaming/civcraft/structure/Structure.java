@@ -144,6 +144,14 @@ public class Structure extends Buildable {
 				struct = (Structure) new Stadium(rs);
 			}
 			break;
+			
+		case "ti_hospital":
+			if (rs == null) {
+				struct = (Structure) new Hospital(center, id, town);
+			} else {
+				struct = (Structure) new Hospital(rs);
+			}
+			break;
 		
 		case "s_grocer":
 			if (rs == null) {
