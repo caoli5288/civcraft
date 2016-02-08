@@ -179,6 +179,8 @@ public class BonusGoodie extends LoreItem {
 				
 		if (isStackable()) {
 			lore.add(CivColor.LightBlue+"Stackable");
+		} else {
+			lore.add(CivColor.LightGray+"Not Stackable");
 		}
 		
 		this.setLore(stack, lore);
