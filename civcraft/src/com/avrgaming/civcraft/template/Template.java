@@ -114,6 +114,7 @@ public class Template {
 	public static void initAttachableTypes() {
 		attachableTypes.add(ItemManager.getId(Material.SAPLING));
 		attachableTypes.add(ItemManager.getId(Material.BED));
+		attachableTypes.add(ItemManager.getId(Material.BED_BLOCK));
 		attachableTypes.add(ItemManager.getId(Material.POWERED_RAIL));
 		attachableTypes.add(ItemManager.getId(Material.DETECTOR_RAIL));
 		attachableTypes.add(ItemManager.getId(Material.LONG_GRASS));
