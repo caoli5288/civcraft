@@ -123,10 +123,6 @@ public class Barracks extends Structure {
 			throw new CivException(CivSettings.localize.localizedString("var_barracks_atLimit",unit.name));
 		}
 		
-		if (!getTown().getTreasury().hasEnough(unit.cost)) {
-			throw new CivException(CivSettings.localize.localizedString("var_barracks_tooPoor",unit.name,unit.cost,CivSettings.CURRENCY_NAME));
-		}
-		
 		if (!unit.isAvailable(getTown())) {
 			throw new CivException(CivSettings.localize.localizedString("barracks_unavailable"));
 		}
@@ -139,6 +135,13 @@ public class Barracks extends Structure {
 			if (!this.getCiv().getLeaderGroup().hasMember(whoClicked) && !this.getCiv().getAdviserGroup().hasMember(whoClicked)) {
 				throw new CivException(CivSettings.localize.localizedString("barracks_trainSettler_NoPerms"));
 			}
+
+			unit.cost *= this.getCiv().getTownCount();
+			unit.hammer_cost *= this.getCiv().getTownCount();
+		}
+		
+		if (!getTown().getTreasury().hasEnough(unit.cost)) {
+			throw new CivException(CivSettings.localize.localizedString("var_barracks_tooPoor",unit.name,unit.cost,CivSettings.CURRENCY_NAME));
 		}
 		
 		
