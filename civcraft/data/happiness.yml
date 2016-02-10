@@ -28,12 +28,12 @@ happiness:
     distance_max: 15.0
 
     # Amount of happiness generated per war, as the aggressor
-    per_war: 3.0
+    per_war: 1.0
 
     # Amount of extra happiness generated per score difference between aggressor and victim civ.
     # Rounded to the nearest whole number (-1, -2, etc)
     per_war_score: 0.0001
-    per_war_score_max: 5.0
+    per_war_score_max: 3.0
     
     # Static Happiness Levels per town
     town_levels:
