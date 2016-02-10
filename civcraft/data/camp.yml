@@ -9,7 +9,7 @@ camp:
     regen_rate: 2
 
     # Number of hours a camp can survive without coal.
-    firepoints: 48
+    firepoints: 24
 
     # Number of coal it takes to revive one hour worth
     # of camp life.
