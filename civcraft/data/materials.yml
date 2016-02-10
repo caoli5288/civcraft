@@ -562,9 +562,9 @@ materials:
                 data: 0
                 count: 2
 
-        # Checked 10/8/13
+        # Changed 10/02/2016 (Item ID to Glass bottle instead of stew)
         - id: 'mat_sticky_resin'
-          item_id: 282
+          item_id: 374
           item_data: 0
           name: 'T2 Sticky Resin'
           craftable: true
