@@ -180,6 +180,36 @@ items:
       value: 1
 
 # Shelf 2 right side, back 30-34
+    - id: 30
+      name: 'Stone Brick'
+      type_id: 98
+      data: 0
+      value: 1
+
+    - id: 31
+      name: 'Mossy Brick'
+      type_id: 98
+      data: 0
+      value: 1
+
+    - id: 32
+      name: 'Cracked Brick'
+      type_id: 98
+      data: 2
+      value: 1
+
+    - id: 33
+      name: 'Chiseled Brick'
+      type_id: 98
+      data: 3
+      value: 1
+
+    - id: 34
+      name: 'Nether Brick'
+      type_id: 112
+      data: 0
+      value: 1
+    
 # Shelf 2 left side, back 35-39
     - id: 35
       name: 'Sponge'
@@ -213,6 +243,35 @@ items:
 
 # Shelf 3 left side, front 40-44
 # Shelf 3 right side, front 45-49
+    - id: 45
+      name: 'Polished Granite'
+      type_id: 1
+      data: 2
+      value: 1
+
+    - id: 46
+      name: 'Polished Diorite'
+      type_id: 1
+      data: 4
+      value: 1
+
+    - id: 47
+      name: 'Polished Andersite'
+      type_id: 1
+      data: 6
+      value: 1
+
+    - id: 48
+      name: 'Lapis Block'
+      type_id: 22
+      data: 0
+      value: 1
+
+#    - id: 49
+#      name: ''
+#      type_id: 
+#      data: 
+#      value: 
 
 # Shelf 3 right side, back 50-54
     - id: 50
