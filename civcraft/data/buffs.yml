@@ -184,8 +184,8 @@ buffs:
 
     - id: 'buff_pyramid_culture'
       name: 'Pyramid Culture Bonus' 
-      description: 'Increases culture output from civilization by 10%'
-      value: '0.1'
+      description: 'Increases culture output from civilization by 50%'
+      value: '0.5'
       stackable: false
       parent:
 
