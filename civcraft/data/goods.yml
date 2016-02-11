@@ -25,7 +25,7 @@ generation:
     chunks_min: 15
 
     # Maximum number of chunks trade goods should be apart
-    chunks_max: 40
+    chunks_max: 30
 
     # World size in x chunks (radius)
     chunks_x: 625
