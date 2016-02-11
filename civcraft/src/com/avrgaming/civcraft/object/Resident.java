@@ -1240,7 +1240,7 @@ public class Resident extends SQLObject {
 					}
 					
 					for (ConfigPerk p : CivSettings.templates.values()) {
-						if (player.hasPermission("civ.perk"+p.simple_name)) {
+						if (player.hasPermission("civ.perk."+p.simple_name)) {
 							resident.giveTemplate(p.simple_name);
 							perkMessage += p.display_name+", ";
 						}
