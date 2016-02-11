@@ -1498,6 +1498,7 @@ public abstract class Buildable extends SQLObject {
 	
 	@Override
 	public void delete() throws SQLException {
+		this.setEnabled(false);
 		for (Component comp : this.attachedComponents) {
 			comp.destroyComponent();
 		}

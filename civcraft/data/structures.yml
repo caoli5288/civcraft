@@ -667,8 +667,10 @@ structures:
     components:
         - name: 'AttributeStatic'
           type: 'direct'
+          attribute: 'UNHAPPINESS'
+          value: '-2.0'
           attribute: 'HAPPINESS'
-          value: '3.0'
+          value: '2.0'
 
   - id: ti_hospital
     template: hospital
@@ -937,7 +939,7 @@ structures:
     components:
         - name: 'AttributeStatic'
           type: 'direct'
-          attribute: 'HAPPINESS'
+          attribute: 'UNHAPPINESS'
           value: '-3.0'
         - name: 'AttributeStatic'
           type: 'direct'

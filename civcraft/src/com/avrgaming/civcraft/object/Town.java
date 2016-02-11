@@ -2851,10 +2851,7 @@ public class Town extends SQLObject {
 				if (comp instanceof AttributeBase) {
 					AttributeBase as = (AttributeBase)comp;
 					if (as.getString("attribute").equalsIgnoreCase("HAPPINESS")) {
-						double h = as.getGenerated();
-						if (h > 0) {
-							structures += h;
-						}
+						structures += as.getGenerated();
 					}
 				}
 			}
@@ -2978,11 +2975,8 @@ public class Town extends SQLObject {
 			for (Component comp : struct.attachedComponents) {
 				if (comp instanceof AttributeBase) {
 					AttributeBase as = (AttributeBase)comp;
-					if (as.getString("attribute").equalsIgnoreCase("HAPPINESS")) {
-						double h = as.getGenerated();
-						if (h < 0) {
-							structures += (h*-1);
-						}
+					if (as.getString("attribute").equalsIgnoreCase("UNHAPPINESS")) {
+						structures += as.getGenerated();					
 					}
 				}
 			}
