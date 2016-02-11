@@ -203,12 +203,6 @@ items:
       type_id: 98
       data: 3
       value: 1
-
-    - id: 34
-      name: 'Nether Brick'
-      type_id: 112
-      data: 0
-      value: 1
     
 # Shelf 2 left side, back 35-39
     - id: 35
