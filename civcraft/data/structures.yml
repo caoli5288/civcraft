@@ -132,11 +132,11 @@ grocer_levels:
       price: 20.0
  
     - level: 4
-      itemName: 'Pumpkin Pie'
-      itemId: 400
+      itemName: 'Golden Carrot'
+      itemId: 396
       itemData: 0
       amount: 1
-      price: 50.0
+      price: 30.0
 ################# Blacksmith Settings #################
 blacksmith:
     forge_cost: 2500.0
@@ -1458,7 +1458,7 @@ structures:
     allow_outside_town: false
     components:
         - name: 'AttributeWarUnhappiness'
-          value: '-3.0'
+          value: '-1.0'
   
   - id: ti_windmill
     template: windmill
