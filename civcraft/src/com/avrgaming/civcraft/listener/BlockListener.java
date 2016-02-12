@@ -284,7 +284,7 @@ public class BlockListener implements Listener {
 				return;
 			}
 		}
-		
+
 		if (event.getDamager() instanceof LightningStrike) {
 //			CivLog.debug("onEntityDamageByEntityEvent LightningStrike: "+event.getDamager().getUniqueId());
 			try {
@@ -294,8 +294,6 @@ public class BlockListener implements Listener {
 				e.printStackTrace();
 			}
 		}
-
-		Player defender = (Player)event.getEntity();
 		/* Only protect against players and entities that players can throw. */
 		if (!CivSettings.playerEntityWeapons.contains(event.getDamager().getType())) {
 			return;
@@ -322,6 +320,9 @@ public class BlockListener implements Listener {
 			}
 		}
 		
+		if (event.getEntity() instanceof Player) {
+
+			Player defender = (Player)event.getEntity();
 
 		coord.setFromLocation(event.getEntity().getLocation());
 		TownChunk tc = CivGlobal.getTownChunk(coord);
@@ -371,6 +372,7 @@ public class BlockListener implements Listener {
 			} else {
 
 			}
+		}
 		}
 
 		return;
