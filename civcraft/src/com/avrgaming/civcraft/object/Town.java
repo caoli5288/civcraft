@@ -33,6 +33,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.md_5.itag.iTag;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -514,11 +515,10 @@ public class Town extends SQLObject {
 			this.defaultGroup.addMember(res);
 			this.defaultGroup.save();
 		}
-		try {
-			iTag.instance.refreshPlayer(CivGlobal.getPlayer(res));
-		} catch (CivException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Player player = Bukkit.getPlayer(res.getUUID());
+		if (player != null)
+		{
+			iTag.instance.refreshPlayer(player);
 		}
 	}
 	
@@ -1285,11 +1285,10 @@ public class Town extends SQLObject {
 		
 		resident.save();
 		this.save();
-		try {
-			iTag.instance.refreshPlayer(CivGlobal.getPlayer(resident));
-		} catch (CivException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		Player player = Bukkit.getPlayer(resident.getUUID());
+		if (player != null)
+		{
+			iTag.instance.refreshPlayer(player);
 		}
 	}
 
