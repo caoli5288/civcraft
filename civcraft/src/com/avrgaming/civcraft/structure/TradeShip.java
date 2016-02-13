@@ -85,7 +85,7 @@ public class TradeShip extends WaterStructure {
 		reprocessCommandSigns();
 	}
 	
-	public void reprocessCommandSigns() {		
+	public void reprocessCommandSigns() {
 		/* Load in the template. */
 		//Template tpl = new Template();
 		Template tpl;
@@ -366,7 +366,10 @@ public class TradeShip extends WaterStructure {
 
 	public void setUpgradeLvl(int level) {
 		this.upgradeLevel = level;
-		this.reprocessCommandSigns();
+
+		if (this.isComplete()) {
+			this.reprocessCommandSigns();
+		}
 	}
 
 	public int getLevel() {
