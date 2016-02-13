@@ -71,6 +71,7 @@ import com.avrgaming.civcraft.listener.DisableXPListener;
 import com.avrgaming.civcraft.listener.HeroChatListener;
 import com.avrgaming.civcraft.listener.MarkerPlacementManager;
 import com.avrgaming.civcraft.listener.PlayerListener;
+import com.avrgaming.civcraft.listener.TagAPIListener;
 import com.avrgaming.civcraft.listener.armor.ArmorListener;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancementArenaItem;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterialListener;
@@ -222,6 +223,14 @@ public final class CivCraft extends JavaPlugin {
 		pluginManager.registerEvents(new PvPListener(), this);
 		pluginManager.registerEvents(new LoreEnhancementArenaItem(), this);
 
+		if (hasPlugin("iTag") || hasPlugin("TagAPI")) {
+			pluginManager.registerEvents(new TagAPIListener(), this);
+			CivLog.debug("TagAPI Registered");
+		} else {
+			CivLog.warning("TagAPI not found, not registering TagAPI hooks. This is fine if you're not using TagAPI.");
+
+		}
+		
 		if (hasPlugin("HeroChat")) {
 			pluginManager.registerEvents(new HeroChatListener(), this);
 		}

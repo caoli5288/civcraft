@@ -31,6 +31,8 @@ import java.util.LinkedList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.md_5.itag.iTag;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -511,6 +513,12 @@ public class Town extends SQLObject {
 		if (this.defaultGroup != null && !this.defaultGroup.hasMember(res)) {
 			this.defaultGroup.addMember(res);
 			this.defaultGroup.save();
+		}
+		try {
+			iTag.instance.refreshPlayer(CivGlobal.getPlayer(res));
+		} catch (CivException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -1277,6 +1285,12 @@ public class Town extends SQLObject {
 		
 		resident.save();
 		this.save();
+		try {
+			iTag.instance.refreshPlayer(CivGlobal.getPlayer(resident));
+		} catch (CivException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public double collectPlotTax() {	

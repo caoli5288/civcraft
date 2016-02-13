@@ -20,6 +20,8 @@ package com.avrgaming.civcraft.threading.sync;
 
 import java.util.Collection;
 
+import net.md_5.itag.iTag;
+
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.exception.CivException;
@@ -46,7 +48,8 @@ public class SyncUpdateTags implements Runnable {
 					if (player == resPlayer) {
 						continue;
 					}
-					
+					iTag.instance.refreshPlayer(player, resPlayer);
+					iTag.instance.refreshPlayer(resPlayer, player);
 				} catch (CivException e) {
 					// one of these players is not online.
 				}

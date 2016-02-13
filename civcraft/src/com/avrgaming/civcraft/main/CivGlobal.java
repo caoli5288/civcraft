@@ -103,6 +103,7 @@ import com.avrgaming.civcraft.threading.tasks.CivLeaderQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CivQuestionTask;
 import com.avrgaming.civcraft.threading.tasks.CultureProcessAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.PlayerQuestionTask;
+import com.avrgaming.civcraft.threading.tasks.UpdateTagBetweenCivsTask;
 import com.avrgaming.civcraft.threading.tasks.onLoadTask;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.BukkitObjects;
@@ -207,7 +208,7 @@ public class CivGlobal {
 	public static boolean installMode = false;
 	
 	public static int highestCivEra = 0;
-	
+		
 	public static void loadGlobals() throws SQLException, CivException {
 		
 		CivLog.heading("Loading CivCraft Objects From Database");
@@ -1549,6 +1550,11 @@ public class CivGlobal {
 			break;
 		}
 		CivMessage.global(CivSettings.localize.localizedString("var_civGlobal_relation_isNow",civ.getName(),out,otherCiv.getName()));
+		CivGlobal.updateTagsBetween(civ, otherCiv);
+	}
+	
+	private static void updateTagsBetween(Civilization civ, Civilization otherCiv) {
+		TaskMaster.asyncTask(new UpdateTagBetweenCivsTask(civ, otherCiv), 0);
 	}
 
 	public static void requestRelation(Civilization fromCiv, Civilization toCiv, String question, 
