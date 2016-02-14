@@ -2871,5 +2871,7 @@ var_cmd_civ_research_highestEra: "The Highest Era achieved is [%0]"
 var_cmd_civ_research_currentEra: "Your Civilization is in [%0]"
 var_cmd_civ_research_eraDiscount: "You are currently receiving a [%0]% discount on the Beaker and [%1] cost of Technologies you research."
 cmd_civ_research_eraNoDiscount: "You are not receiving a discount on the cost of Technologies you research."
+
+var_cmd_res_paydebtError2: "You are not currently in debt"
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------

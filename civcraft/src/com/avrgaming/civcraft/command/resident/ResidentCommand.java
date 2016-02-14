@@ -290,6 +290,10 @@ public class ResidentCommand extends CommandBase {
 
 	public void paydebt_cmd() throws CivException {
 		Resident resident = getResident();
+		
+		if (!resident.getTreasury().inDebt() || !resident.hasTown()) {
+			throw new CivException(CivSettings.localize.localizedString("var_cmd_res_paydebtError2"));
+		}
 	
 		if (!resident.getTreasury().hasEnough(resident.getTreasury().getDebt())) {
 			throw new CivException(CivSettings.localize.localizedString("var_cmd_res_paydebtError1",resident.getTreasury().getDebt(),CivSettings.CURRENCY_NAME));
