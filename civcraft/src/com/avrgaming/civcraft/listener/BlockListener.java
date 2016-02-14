@@ -294,10 +294,6 @@ public class BlockListener implements Listener {
 				e.printStackTrace();
 			}
 		}
-		/* Only protect against players and entities that players can throw. */
-		if (!CivSettings.playerEntityWeapons.contains(event.getDamager().getType())) {
-			return;
-		}
 
 		if (event.getDamager() instanceof Arrow) {
 
@@ -321,6 +317,11 @@ public class BlockListener implements Listener {
 		}
 		
 		if (event.getEntity() instanceof Player) {
+
+			/* Only protect against players and entities that players can throw. */
+			if (!CivSettings.playerEntityWeapons.contains(event.getDamager().getType())) {
+				return;
+			}
 
 			Player defender = (Player)event.getEntity();
 
