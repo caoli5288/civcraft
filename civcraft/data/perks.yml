@@ -65,16 +65,6 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'perk_medieval_camp'
-      display_name: 'Medieval Camp'
-      item_id: 267
-      data: 0
-      components:
-          - name: 'CustomPersonalTemplate'
-            theme: 'medieval'
-            template: 'camp'
-            id: 'camp'
-
     - id: 'perk_viking_camp'
       display_name: 'Viking Camp'
       item_id: 170
@@ -168,27 +158,31 @@ perks:
 
     - id: 'template_atlantean'
       display_name: 'Atlantean Templates'
+      simple_name: "atlantean"
       item_id: 169
       data: 0
       components:
           - name: 'CustomTemplate'
 
     - id: 'template_elven'
-      display_name: 'Elven Template'
+      display_name: 'Elven Templates'
+      simple_name: "elven"
       item_id: 18
       data: 3
       components:
           - name: 'CustomTemplate'
 
     - id: 'template_cultist'
-      display_name: 'Cultist Template'
+      display_name: 'Cultist Templates'
+      simple_name: "cultist"
       item_id: 397
       data: 1
       components:
           - name: 'CustomTemplate'
 
     - id: 'template_medieval'
-      display_name: 'Medieval Template'
+      display_name: 'Medieval Templates'
+      simple_name: "medieval"
       item_id: 267
       data: 0
       components:
@@ -1328,7 +1322,7 @@ perks:
 
 # ===== Elven TEMPLATES
 
-    - id: 'prem_tpl_elven_camp'
+    - id: 'tpl_elven_camp'
       display_name: 'Elven Camp'
       item_id: 18
       data: 3
@@ -1338,7 +1332,7 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'prem_tpl_elven_arrow_tower'
+    - id: 'tpl_elven_arrow_tower'
       display_name: 'Elven Arrow Tower Template'
       item_id: 18
       data: 3
@@ -1347,7 +1341,7 @@ perks:
             theme: 'elven'
             template: 'arrow_tower'
 
-    - id: 'prem_tpl_elven_bank'
+    - id: 'tpl_elven_bank'
       display_name: 'Elven Bank Template'
       item_id: 18
       data: 3
@@ -1356,7 +1350,7 @@ perks:
             theme: 'elven'
             template: 'bank'
 
-    - id: 'prem_tpl_elven_barracks'
+    - id: 'tpl_elven_barracks'
       display_name: 'Elven Barracks Template'
       item_id: 18
       data: 3
@@ -1365,7 +1359,7 @@ perks:
             theme: 'elven'
             template: 'barracks'
 
-    - id: 'prem_tpl_elven_cannon_tower'
+    - id: 'tpl_elven_cannon_tower'
       display_name: 'Elven Cannon Tower Template'
       item_id: 18
       data: 3
@@ -1374,7 +1368,7 @@ perks:
             theme: 'elven'
             template: 'cannon_tower'
 
-    - id: 'prem_tpl_elven_capitol'
+    - id: 'tpl_elven_capitol'
       display_name: 'Elven Capitol Template'
       item_id: 18
       data: 3
@@ -1384,7 +1378,7 @@ perks:
             template: 'capitol' 
             id: 's_capitol'
 
-    - id: 'prem_tpl_elven_cottage'
+    - id: 'tpl_elven_cottage'
       display_name: 'Elven Cottage Template'
       item_id: 18
       data: 3
@@ -1393,7 +1387,7 @@ perks:
             theme: 'elven'
             template: 'cottage'
 
-    - id: 'prem_tpl_elven_granary'
+    - id: 'tpl_elven_granary'
       display_name: 'Elven Granary Template'
       item_id: 18
       data: 3
@@ -1402,7 +1396,7 @@ perks:
             theme: 'elven'
             template: 'granary'
 
-    - id: 'prem_tpl_elven_grocer'
+    - id: 'tpl_elven_grocer'
       display_name: 'Elven Grocer Template'
       item_id: 18
       data: 3
@@ -1411,7 +1405,7 @@ perks:
             theme: 'elven'
             template: 'grocer'
 
-    - id: 'prem_tpl_elven_library'
+    - id: 'tpl_elven_library'
       display_name: 'Elven Library Template'
       item_id: 18
       data: 3
@@ -1420,7 +1414,7 @@ perks:
             theme: 'elven'
             template: 'library'
 
-    - id: 'prem_tpl_elven_market'
+    - id: 'tpl_elven_market'
       display_name: 'Elven Market Template'
       item_id: 18
       data: 3
@@ -1429,7 +1423,7 @@ perks:
             theme: 'elven'
             template: 'market'
 
-    - id: 'prem_tpl_elven_mine'
+    - id: 'tpl_elven_mine'
       display_name: 'Elven Mine Template'
       item_id: 18
       data: 3
@@ -1438,7 +1432,7 @@ perks:
             theme: 'elven'
             template: 'mine'
 
-    - id: 'prem_tpl_elven_monument'
+    - id: 'tpl_elven_monument'
       display_name: 'Elven Monument Template'
       item_id: 18
       data: 3
@@ -1447,7 +1441,7 @@ perks:
             theme: 'elven'
             template: 'monument'
 
-    - id: 'prem_tpl_elven_pasture'
+    - id: 'tpl_elven_pasture'
       display_name: 'Elven Pasture Template'
       item_id: 18
       data: 3
@@ -1456,7 +1450,7 @@ perks:
             theme: 'elven'
             template: 'pasture'
 
-    - id: 'prem_tpl_elven_scout_tower'
+    - id: 'tpl_elven_scout_tower'
       display_name: 'Elven Scout Tower Template'
       item_id: 18
       data: 3
@@ -1465,7 +1459,7 @@ perks:
             theme: 'elven'
             template: 'scout_tower'
 
-    - id: 'prem_tpl_elven_shipyard'
+    - id: 'tpl_elven_shipyard'
       display_name: 'Elven Shipyard Template'
       item_id: 18
       data: 3
@@ -1474,7 +1468,7 @@ perks:
             theme: 'elven'
             template: 'shipyard'
 
-    - id: 'prem_tpl_elven_stable'
+    - id: 'tpl_elven_stable'
       display_name: 'Elven Stable Template'
       item_id: 18
       data: 3
@@ -1483,7 +1477,7 @@ perks:
             theme: 'elven'
             template: 'stable'
 
-    - id: 'prem_tpl_elven_temple'
+    - id: 'tpl_elven_temple'
       display_name: 'Elven Temple Template'
       item_id: 18
       data: 3
@@ -1492,7 +1486,7 @@ perks:
             theme: 'elven'
             template: 'temple'
 
-    - id: 'prem_tpl_elven_trommel'
+    - id: 'tpl_elven_trommel'
       display_name: 'Elven Trommel Template'
       item_id: 18
       data: 3
@@ -1501,7 +1495,7 @@ perks:
             theme: 'elven'
             template: 'trommel'
 
-    - id: 'prem_tpl_elven_town_hall'
+    - id: 'tpl_elven_town_hall'
       display_name: 'Elven Town Hall Template'
       item_id: 18
       data: 3
@@ -1511,7 +1505,7 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-    - id: 'prem_tpl_elven_windmill'
+    - id: 'tpl_elven_windmill'
       display_name: 'Elven Windmill Template'
       item_id: 18
       data: 3
@@ -1520,7 +1514,7 @@ perks:
             theme: 'elven'
             template: 'windmill'
 
-    - id: 'prem_tpl_elven_blacksmith'
+    - id: 'tpl_elven_blacksmith'
       display_name: 'Elven Blacksmith Template'
       item_id: 18
       data: 3
@@ -1529,7 +1523,7 @@ perks:
             theme: 'elven'
             template: 'blacksmith'
 
-    - id: 'prem_tpl_elven_store'
+    - id: 'tpl_elven_store'
       display_name: 'Elven Store Template'
       item_id: 18
       data: 3
@@ -1538,7 +1532,7 @@ perks:
             theme: 'elven'
             template: 'store'
 
-    - id: 'prem_tpl_elven_trade_outpost'
+    - id: 'tpl_elven_trade_outpost'
       display_name: 'Elven Trade Outpost Template'
       item_id: 18
       data: 3
@@ -1547,7 +1541,7 @@ perks:
             theme: 'elven'
             template: 'trade_outpost'
 
-    - id: 'prem_tpl_elven_fortified_wall'
+    - id: 'tpl_elven_fortified_wall'
       display_name: 'Elven Fortified Wall Template'
       item_id: 18
       data: 3
@@ -1557,7 +1551,7 @@ perks:
             template: 'fortified_wall'
 
 # # ===== Cultist TEMPLATES
-    - id: 'prem_tpl_cultist_camp'
+    - id: 'tpl_cultist_camp'
       display_name: 'Cultist Camp'
       item_id: 397
       data: 1
@@ -1567,7 +1561,7 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'prem_tpl_cultist_arrow_tower'
+    - id: 'tpl_cultist_arrow_tower'
       display_name: 'Cultist Arrow Tower Template'
       item_id: 397
       data: 1
@@ -1576,7 +1570,7 @@ perks:
             theme: 'cultist'
             template: 'arrow_tower'
 
-    - id: 'prem_tpl_cultist_bank'
+    - id: 'tpl_cultist_bank'
       display_name: 'Cultist Bank Template'
       item_id: 397
       data: 1
@@ -1585,7 +1579,7 @@ perks:
             theme: 'cultist'
             template: 'bank'
 
-    - id: 'prem_tpl_cultist_barracks'
+    - id: 'tpl_cultist_barracks'
       display_name: 'Cultist Barracks Template'
       item_id: 397
       data: 1
@@ -1594,7 +1588,7 @@ perks:
             theme: 'cultist'
             template: 'barracks'
 
-    - id: 'prem_tpl_cultist_cannon_tower'
+    - id: 'tpl_cultist_cannon_tower'
       display_name: 'Cultist Cannon Tower Template'
       item_id: 397
       data: 1
@@ -1603,7 +1597,7 @@ perks:
             theme: 'cultist'
             template: 'cannon_tower'
 
-    - id: 'prem_tpl_cultist_capitol'
+    - id: 'tpl_cultist_capitol'
       display_name: 'Cultist Capitol Template'
       item_id: 397
       data: 1
@@ -1613,7 +1607,7 @@ perks:
             template: 'capitol' 
             id: 's_capitol'
 
-    - id: 'prem_tpl_cultist_cottage'
+    - id: 'tpl_cultist_cottage'
       display_name: 'Cultist Cottage Template'
       item_id: 397
       data: 1
@@ -1622,7 +1616,7 @@ perks:
             theme: 'cultist'
             template: 'cottage'
 
-    - id: 'prem_tpl_cultist_granary'
+    - id: 'tpl_cultist_granary'
       display_name: 'Cultist Granary Template'
       item_id: 397
       data: 1
@@ -1631,7 +1625,7 @@ perks:
             theme: 'cultist'
             template: 'granary'
 
-    - id: 'prem_tpl_cultist_grocer'
+    - id: 'tpl_cultist_grocer'
       display_name: 'Cultist Grocer Template'
       item_id: 397
       data: 1
@@ -1640,7 +1634,7 @@ perks:
             theme: 'cultist'
             template: 'grocer'
 
-    - id: 'prem_tpl_cultist_library'
+    - id: 'tpl_cultist_library'
       display_name: 'Cultist Library Template'
       item_id: 397
       data: 1
@@ -1649,7 +1643,7 @@ perks:
             theme: 'cultist'
             template: 'library'
 
-    - id: 'prem_tpl_cultist_market'
+    - id: 'tpl_cultist_market'
       display_name: 'Cultist Market Template'
       item_id: 397
       data: 1
@@ -1658,7 +1652,7 @@ perks:
             theme: 'cultist'
             template: 'market'
 
-    - id: 'prem_tpl_cultist_mine'
+    - id: 'tpl_cultist_mine'
       display_name: 'Cultist Mine Template'
       item_id: 397
       data: 1
@@ -1667,7 +1661,7 @@ perks:
             theme: 'cultist'
             template: 'mine'
 
-    - id: 'prem_tpl_cultist_monument'
+    - id: 'tpl_cultist_monument'
       display_name: 'Cultist Monument Template'
       item_id: 397
       data: 1
@@ -1676,7 +1670,7 @@ perks:
             theme: 'cultist'
             template: 'monument'
 
-    - id: 'prem_tpl_cultist_pasture'
+    - id: 'tpl_cultist_pasture'
       display_name: 'Cultist Pasture Template'
       item_id: 397
       data: 1
@@ -1685,7 +1679,7 @@ perks:
             theme: 'cultist'
             template: 'pasture'
 
-    - id: 'prem_tpl_cultist_scout_tower'
+    - id: 'tpl_cultist_scout_tower'
       display_name: 'Cultist Scout Tower Template'
       item_id: 397
       data: 1
@@ -1694,7 +1688,7 @@ perks:
             theme: 'cultist'
             template: 'scout_tower'
 
-    - id: 'prem_tpl_cultist_shipyard'
+    - id: 'tpl_cultist_shipyard'
       display_name: 'Cultist Shipyard Template'
       item_id: 397
       data: 3
@@ -1703,7 +1697,7 @@ perks:
             theme: 'cultist'
             template: 'shipyard'
 
-    - id: 'prem_tpl_cultist_stable'
+    - id: 'tpl_cultist_stable'
       display_name: 'Cultist Stable Template'
       item_id: 397
       data: 1
@@ -1712,7 +1706,7 @@ perks:
             theme: 'cultist'
             template: 'stable'
 
-    - id: 'prem_tpl_cultist_temple'
+    - id: 'tpl_cultist_temple'
       display_name: 'Cultist Temple Template'
       item_id: 397
       data: 1
@@ -1721,7 +1715,7 @@ perks:
             theme: 'cultist'
             template: 'temple'
 
-    - id: 'prem_tpl_cultist_trommel'
+    - id: 'tpl_cultist_trommel'
       display_name: 'Cultist Trommel Template'
       item_id: 397
       data: 1
@@ -1730,7 +1724,7 @@ perks:
             theme: 'cultist'
             template: 'trommel'
 
-    - id: 'prem_tpl_cultist_town_hall'
+    - id: 'tpl_cultist_town_hall'
       display_name: 'Cultist Town Hall Template'
       item_id: 397
       data: 1
@@ -1740,7 +1734,7 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-    - id: 'prem_tpl_cultist_windmill'
+    - id: 'tpl_cultist_windmill'
       display_name: 'Cultist Windmill Template'
       item_id: 397
       data: 1
@@ -1749,7 +1743,7 @@ perks:
             theme: 'cultist'
             template: 'windmill'
 
-    - id: 'prem_tpl_cultist_blacksmith'
+    - id: 'tpl_cultist_blacksmith'
       display_name: 'Cultist Blacksmith Template'
       item_id: 397
       data: 1
@@ -1758,7 +1752,7 @@ perks:
             theme: 'cultist'
             template: 'blacksmith'
 
-    - id: 'prem_tpl_cultist_store'
+    - id: 'tpl_cultist_store'
       display_name: 'Cultist Store Template'
       item_id: 397
       data: 1
@@ -1767,7 +1761,7 @@ perks:
             theme: 'cultist'
             template: 'store'
 
-    - id: 'prem_tpl_cultist_trade_outpost'
+    - id: 'tpl_cultist_trade_outpost'
       display_name: 'Cultist Trade Outpost Template'
       item_id: 397
       data: 1
@@ -1776,7 +1770,7 @@ perks:
             theme: 'cultist'
             template: 'trade_outpost'
 
-    - id: 'prem_tpl_cultist_fortified_wall'
+    - id: 'tpl_cultist_fortified_wall'
       display_name: 'Cultist Fortified Wall Template'
       item_id: 397
       data: 1
@@ -1786,7 +1780,7 @@ perks:
             template: 'fortified_wall'
 
 # # ===== Atlantean TEMPLATES
-    - id: 'prem_tpl_atlantean_camp'
+    - id: 'tpl_atlantean_camp'
       display_name: 'Atlantean Camp'
       item_id: 169
       data: 0
@@ -1796,7 +1790,7 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'prem_tpl_atlantean_arrow_tower'
+    - id: 'tpl_atlantean_arrow_tower'
       display_name: 'Atlantean Arrow Tower Template'
       item_id: 169
       data: 0
@@ -1805,7 +1799,7 @@ perks:
             theme: 'atlantean'
             template: 'arrow_tower'
 
-    - id: 'prem_tpl_atlantean_bank'
+    - id: 'tpl_atlantean_bank'
       display_name: 'Atlantean Bank Template'
       item_id: 169
       data: 0
@@ -1814,7 +1808,7 @@ perks:
             theme: 'atlantean'
             template: 'bank'
 
-    - id: 'prem_tpl_atlantean_barracks'
+    - id: 'tpl_atlantean_barracks'
       display_name: 'Atlantean Barracks Template'
       item_id: 169
       data: 0
@@ -1823,7 +1817,7 @@ perks:
             theme: 'atlantean'
             template: 'barracks'
 
-    - id: 'prem_tpl_atlantean_cannon_tower'
+    - id: 'tpl_atlantean_cannon_tower'
       display_name: 'Atlantean Cannon Tower Template'
       item_id: 169
       data: 0
@@ -1832,7 +1826,7 @@ perks:
             theme: 'atlantean'
             template: 'cannon_tower'
 
-    - id: 'prem_tpl_atlantean_capitol'
+    - id: 'tpl_atlantean_capitol'
       display_name: 'Atlantean Capitol Template'
       item_id: 169
       data: 0
@@ -1842,7 +1836,7 @@ perks:
             template: 'capitol' 
             id: 's_capitol'
 
-    - id: 'prem_tpl_atlantean_cottage'
+    - id: 'tpl_atlantean_cottage'
       display_name: 'Atlantean Cottage Template'
       item_id: 169
       data: 0
@@ -1851,7 +1845,7 @@ perks:
             theme: 'atlantean'
             template: 'cottage'
 
-    - id: 'prem_tpl_atlantean_granary'
+    - id: 'tpl_atlantean_granary'
       display_name: 'Atlantean Granary Template'
       item_id: 169
       data: 0
@@ -1860,7 +1854,7 @@ perks:
             theme: 'atlantean'
             template: 'granary'
 
-    - id: 'prem_tpl_atlantean_grocer'
+    - id: 'tpl_atlantean_grocer'
       display_name: 'Atlantean Grocer Template'
       item_id: 169
       data: 0
@@ -1869,7 +1863,7 @@ perks:
             theme: 'atlantean'
             template: 'grocer'
 
-    - id: 'prem_tpl_atlantean_library'
+    - id: 'tpl_atlantean_library'
       display_name: 'Atlantean Library Template'
       item_id: 169
       data: 0
@@ -1878,7 +1872,7 @@ perks:
             theme: 'atlantean'
             template: 'library'
 
-    - id: 'prem_tpl_atlantean_market'
+    - id: 'tpl_atlantean_market'
       display_name: 'Atlantean Market Template'
       item_id: 169
       data: 0
@@ -1887,7 +1881,7 @@ perks:
             theme: 'atlantean'
             template: 'market'
 
-    - id: 'prem_tpl_atlantean_mine'
+    - id: 'tpl_atlantean_mine'
       display_name: 'Atlantean Mine Template'
       item_id: 169
       data: 0
@@ -1896,7 +1890,7 @@ perks:
             theme: 'atlantean'
             template: 'mine'
 
-    - id: 'prem_tpl_atlantean_monument'
+    - id: 'tpl_atlantean_monument'
       display_name: 'Atlantean Monument Template'
       item_id: 169
       data: 0
@@ -1905,7 +1899,7 @@ perks:
             theme: 'atlantean'
             template: 'monument'
 
-    - id: 'prem_tpl_atlantean_pasture'
+    - id: 'tpl_atlantean_pasture'
       display_name: 'Atlantean Pasture Template'
       item_id: 169
       data: 0
@@ -1914,7 +1908,7 @@ perks:
             theme: 'atlantean'
             template: 'pasture'
 
-    - id: 'prem_tpl_atlantean_scout_tower'
+    - id: 'tpl_atlantean_scout_tower'
       display_name: 'Atlantean Scout Tower Template'
       item_id: 169
       data: 0
@@ -1923,7 +1917,7 @@ perks:
             theme: 'atlantean'
             template: 'scout_tower'
 
-    - id: 'prem_tpl_atlantean_shipyard'
+    - id: 'tpl_atlantean_shipyard'
       display_name: 'Atlantean Shipyard Template'
       item_id: 169
       data: 0
@@ -1932,7 +1926,7 @@ perks:
             theme: 'atlantean'
             template: 'shipyard'
 
-    - id: 'prem_tpl_atlantean_stable'
+    - id: 'tpl_atlantean_stable'
       display_name: 'Atlantean Stable Template'
       item_id: 169
       data: 0
@@ -1941,7 +1935,7 @@ perks:
             theme: 'atlantean'
             template: 'stable'
 
-    - id: 'prem_tpl_atlantean_temple'
+    - id: 'tpl_atlantean_temple'
       display_name: 'Atlantean Temple Template'
       item_id: 169
       data: 0
@@ -1950,7 +1944,7 @@ perks:
             theme: 'atlantean'
             template: 'temple'
 
-    - id: 'prem_tpl_atlantean_trommel'
+    - id: 'tpl_atlantean_trommel'
       display_name: 'Atlantean Trommel Template'
       item_id: 169
       data: 0
@@ -1959,7 +1953,7 @@ perks:
             theme: 'atlantean'
             template: 'trommel'
 
-    - id: 'prem_tpl_atlantean_town_hall'
+    - id: 'tpl_atlantean_town_hall'
       display_name: 'Atlantean Town Hall Template'
       item_id: 169
       data: 0
@@ -1969,7 +1963,7 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-    - id: 'prem_tpl_atlantean_windmill'
+    - id: 'tpl_atlantean_windmill'
       display_name: 'Atlantean Windmill Template'
       item_id: 169
       data: 3
@@ -1978,7 +1972,7 @@ perks:
             theme: 'atlantean'
             template: 'windmill'
 
-    - id: 'prem_tpl_atlantean_blacksmith'
+    - id: 'tpl_atlantean_blacksmith'
       display_name: 'Atlantean Blacksmith Template'
       item_id: 169
       data: 0
@@ -1987,7 +1981,7 @@ perks:
             theme: 'atlantean'
             template: 'blacksmith'
 
-    - id: 'prem_tpl_atlantean_store'
+    - id: 'tpl_atlantean_store'
       display_name: 'Atlantean Store Template'
       item_id: 169
       data: 0
@@ -1996,7 +1990,7 @@ perks:
             theme: 'atlantean'
             template: 'store'
 
-    - id: 'prem_tpl_atlantean_trade_outpost'
+    - id: 'tpl_atlantean_trade_outpost'
       display_name: 'Atlantean Trade Outpost Template'
       item_id: 169
       data: 0
@@ -2005,7 +1999,7 @@ perks:
             theme: 'atlantean'
             template: 'trade_outpost'
 
-    - id: 'prem_tpl_atlantean_fortified_wall'
+    - id: 'tpl_atlantean_fortified_wall'
       display_name: 'Atlantean Fortified Wall Template'
       item_id: 169
       data: 0
@@ -2026,42 +2020,7 @@ perks:
 
 # # ===== Medieval TEMPLATES
 
-    - id: 'template_medieval'
-      display_name: 'Medieval Template'
-      simple_name: 'medieval'
-      item_id: 267
-      data: 0
-      components:
-          - name: 'CustomTemplate'
-
-    - id: 'prem_tpl_medieval_arrow_tower'
-      display_name: 'Medieval Arrow Tower Template'
-      item_id: 267
-      data: 0
-      components:
-          - name: 'CustomTemplate'
-            theme: 'medieval'
-            template: 'arrow_tower'
-
-    - id: 'prem_tpl_medieval_bank'
-      display_name: 'Medieval Bank Template'
-      item_id: 267
-      data: 0
-      components:
-          - name: 'CustomTemplate'
-            theme: 'medieval'
-            template: 'bank'
-
-    - id: 'prem_tpl_medieval_blacksmith'
-      display_name: 'Medieval Blacksmith Template'
-      item_id: 267
-      data: 0
-      components:
-          - name: 'CustomTemplate'
-            theme: 'medieval'
-            template: 'blacksmith'
-
-    - id: 'prem_tpl_medieval_camp'
+    - id: 'tpl_medieval_camp'
       display_name: 'Medieval Camp'
       item_id: 267
       data: 0
@@ -2071,7 +2030,44 @@ perks:
             template: 'camp'
             id: 'camp'
 
-    - id: 'prem_tpl_medieval_cannon_tower'
+    - id: 'tpl_medieval_arrow_tower'
+      display_name: 'Medieval Arrow Tower Template'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'medieval'
+            template: 'arrow_tower'
+
+    - id: 'tpl_medieval_bank'
+      display_name: 'Medieval Bank Template'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'medieval'
+            template: 'bank'
+
+    - id: 'tpl_medieval_blacksmith'
+      display_name: 'Medieval Blacksmith Template'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomTemplate'
+            theme: 'medieval'
+            template: 'blacksmith'
+
+    - id: 'tpl_medieval_camp'
+      display_name: 'Medieval Camp'
+      item_id: 267
+      data: 0
+      components:
+          - name: 'CustomPersonalTemplate'
+            theme: 'medieval'
+            template: 'camp'
+            id: 'camp'
+
+    - id: 'tpl_medieval_cannon_tower'
       display_name: 'Medieval Cannon Tower Template'
       item_id: 267
       data: 0
@@ -2080,7 +2076,7 @@ perks:
             theme: 'medieval'
             template: 'cannon_tower'
 
-    - id: 'prem_tpl_medieval_capitol'
+    - id: 'tpl_medieval_capitol'
       display_name: 'Medieval Capitol Template'
       item_id: 267
       data: 0
@@ -2090,7 +2086,7 @@ perks:
             template: 'capitol'
             id: 's_capitol'
 
-    - id: 'prem_tpl_medieval_cottage'
+    - id: 'tpl_medieval_cottage'
       display_name: 'Medieval Cottage Template'
       item_id: 267
       data: 0
@@ -2099,7 +2095,7 @@ perks:
             theme: 'medieval'
             template: 'cottage'
 
-    - id: 'prem_tpl_medieval_granary'
+    - id: 'tpl_medieval_granary'
       display_name: 'Medieval Granary Template'
       item_id: 267
       data: 0
@@ -2108,7 +2104,7 @@ perks:
             theme: 'medieval'
             template: 'granary'
 
-    - id: 'prem_tpl_medieval_grocer'
+    - id: 'tpl_medieval_grocer'
       display_name: 'Medieval Grocer Template'
       item_id: 267
       data: 0
@@ -2117,7 +2113,7 @@ perks:
             theme: 'medieval'
             template: 'grocer'
 
-    - id: 'prem_tpl_medieval_library'
+    - id: 'tpl_medieval_library'
       display_name: 'Medieval Library Template'
       item_id: 267
       data: 0
@@ -2126,7 +2122,7 @@ perks:
             theme: 'medieval'
             template: 'library'
 
-    - id: 'prem_tpl_medieval_market'
+    - id: 'tpl_medieval_market'
       display_name: 'Medieval Market Template'
       item_id: 267
       data: 0
@@ -2135,7 +2131,7 @@ perks:
             theme: 'medieval'
             template: 'market'
 
-    - id: 'prem_tpl_medieval_mine'
+    - id: 'tpl_medieval_mine'
       display_name: 'Medieval Mine Template'
       item_id: 267
       data: 0
@@ -2145,7 +2141,7 @@ perks:
             template: 'mine'
 
 
-    - id: 'prem_tpl_medieval_monument'
+    - id: 'tpl_medieval_monument'
       display_name: 'Medieval Monument Template'
       item_id: 267
       data: 0
@@ -2154,7 +2150,7 @@ perks:
             theme: 'medieval'
             template: 'monument'
 
-    - id: 'prem_tpl_medieval_pasture'
+    - id: 'tpl_medieval_pasture'
       display_name: 'Medieval Pasture Template'
       item_id: 267
       data: 0
@@ -2163,7 +2159,7 @@ perks:
             theme: 'medieval'
             template: 'pasture'
 
-    - id: 'prem_tpl_medieval_quarry'
+    - id: 'tpl_medieval_quarry'
       display_name: 'Medieval Quarry Template'
       item_id: 267
       data: 0
@@ -2172,7 +2168,7 @@ perks:
             theme: 'medieval'
             template: 'quarry'
 
-    - id: 'prem_tpl_medieval_scout_tower'
+    - id: 'tpl_medieval_scout_tower'
       display_name: 'Medieval Scout Tower Template'
       item_id: 267
       data: 0
@@ -2181,7 +2177,7 @@ perks:
             theme: 'medieval'
             template: 'scout_tower'
 
-    - id: 'prem_tpl_medieval_shipyard'
+    - id: 'tpl_medieval_shipyard'
       display_name: 'Medieval Shipyard Template'
       item_id: 267
       data: 0
@@ -2190,7 +2186,7 @@ perks:
             theme: 'medieval'
             template: 'shipyard'
 
-    - id: 'prem_tpl_medieval_temple'
+    - id: 'tpl_medieval_temple'
       display_name: 'Medieval Temple Template'
       item_id: 267
       data: 0
@@ -2199,7 +2195,7 @@ perks:
             theme: 'medieval'
             template: 'temple'
 
-    - id: 'prem_tpl_medieval_town_hall'
+    - id: 'tpl_medieval_town_hall'
       display_name: 'Medieval Town Hall Template'
       item_id: 267
       data: 0
@@ -2209,7 +2205,7 @@ perks:
             template: 'town_hall'
             id: 's_townhall'
 
-    - id: 'prem_tpl_medieval_trade_outpost'
+    - id: 'tpl_medieval_trade_outpost'
       display_name: 'Medieval Trade Outpost Template'
       item_id: 267
       data: 0
@@ -2218,7 +2214,7 @@ perks:
             theme: 'medieval'
             template: 'trade_outpost'
 
-    - id: 'prem_tpl_medieval_trommel'
+    - id: 'tpl_medieval_trommel'
       display_name: 'Medieval Trommel Template'
       item_id: 267
       data: 0
@@ -2227,7 +2223,7 @@ perks:
             theme: 'medieval'
             template: 'trommel'
 
-    - id: 'prem_tpl_medieval_windmill'
+    - id: 'tpl_medieval_windmill'
       display_name: 'Medieval Windmill Template'
       item_id: 267
       data: 0
