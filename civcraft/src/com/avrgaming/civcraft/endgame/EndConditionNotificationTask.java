@@ -22,9 +22,12 @@ public class EndConditionNotificationTask implements Runnable {
 			
 			for (SessionEntry entry : entries) {
 				Civilization civ = EndGameCondition.getCivFromSessionData(entry.value);
-				Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
-				CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictoryNew",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
+				if (civ != null)
+				{
+					Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
+					CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictoryNew",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
 						CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White,CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
+				}
 			}
 		}
 		
