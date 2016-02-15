@@ -519,7 +519,7 @@ techs:
       era: 5
 
     - id: 'tech_military_science'
-      name: 'Refrigeration'
+      name: 'Military Science'
       beaker_cost: 250000.0
       cost: 3000000.0
       points: 60000
