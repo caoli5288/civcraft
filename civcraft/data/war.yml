@@ -16,14 +16,19 @@ war:
     time_war_repeat: 166
 
     # Days of the week that war-time will occur
+    # 1 = Sunday
+    # 7 = Saturday
     time_day: 7
+
     # Hour of the day that war-time will start
-    time_hour: 14
+    # 0 = Midnight
+    # 12 = Noon
+    time_hour: 10
 
     # Days of the week that Disable TP-time will occur
     disable_tp_time_day: 7
-    # Hour of the day that TP will be disabled
-    disable_tp_time_hour: 13
+    # Hour of the day that TP will be disabled using the teleportsOff.txt
+    disable_tp_time_hour: 9
 
     # Days before war time that towns are no longer allowed to declare war
     time_declare_days: 3
@@ -32,10 +37,12 @@ war:
     ally_declare_hours: 24
 
     # Number of hours that civs remain a vassal
-    vassal_hours: 168
+    # Unused
+    #vassal_hours: 168
 
     # Percentage of income paid to master as a vassal.
-    vassal_tax: 0.5
+    # Unused
+    #vassal_tax: 0.5
 
     # Amount of hammers a wonder is delayed by each hit
     wonder_hammer_hit: 0.008
@@ -54,13 +61,11 @@ war:
 
     # Control block hitpoints.
     control_block_hitpoints_capitol: 100
-    
     control_block_hitpoints_camp: 100
-
     control_block_hitpoints_townhall: 20
-    
+
     # Penalty of income and hammers taken and given to server when captured.
-    captured_penalty: 0.75
+    captured_penalty: 0.50
 
     # percentage of hitpoints to take away each hour when structures are invalid.
     invalid_hourly_penalty: 0.1
@@ -81,13 +86,13 @@ revolution:
     base_cost: 50000.0
 
     # number of extra coins paid per town in your old civ
-    coins_per_town: 20000.0
+    coins_per_town: 10000.0
 
     # Number of coins paid per point of all of your civ and town scores
     coins_per_point: 0.1
 
-    # Maximum revolution fee you can pay --> 50 Millions
-    maximum_fee: 50000000.0
+    # Maximum revolution fee you can pay --> 1 Million
+    maximum_fee: 1000000.0
 
 
 scout_tower:
@@ -195,7 +200,7 @@ warcamp:
     rebuild_timeout: 30
 
     # maximum number of war camps a civ can have.
-    max: 1
+    max: 3
 
 cannon:
     # template for deployable cannon
@@ -205,22 +210,22 @@ cannon:
     yield: 7.0
 
     # TNT cost, number of TNT blocks it costs per shot.
-    tnt_cost: 5
+    tnt_cost: 3
 
     # Number of seconds between shots.
-    cooldown: 60
+    cooldown: 30
 
     # Amount of HP each cannon has
-    hitpoints: 10
+    hitpoints: 50
 
     # Amount of damage done to PLAYERS when hit by a blast
-    player_damage: 100
+    player_damage: 50
 
     # Amount of damage d one to STRUCTURES when hit by a blast
     structure_damage: 100
 
     # Maximum range a cannon shot will travel.
-    max_range: 192.0
+    max_range: 256.0
 
     control_block_hp: 1
 
@@ -229,7 +234,7 @@ tnt:
     yield: 3
 
     # Amount of damage done to PLAYERS when hit by a blast
-    player_damage: 50
+    player_damage: 20
 
     # Amount of damage d one to STRUCTURES when hit by a blast
-    structure_damage: 10
+    structure_damage: 20

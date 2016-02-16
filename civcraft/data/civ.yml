@@ -7,8 +7,13 @@ global:
    # Hour at which daily upkeep occurs.
    daily_upkeep_hour: 20
 
+   # How often the 'hourly tick' should process in 'seconds'
+   # To speed up the game, you could cut this number in half
    hourly_tick: 3600
 
+   # The Starting kit for all new players
+   # Feel free to customize as you see fit, such as removing the starting 'mat_found_camp' item.
+   # Every item in this list gets soulbound.
    start_kit:
         - '270:1'
         - '271:1'
@@ -18,6 +23,7 @@ global:
         - '366:10'
         - '345:1'
         - 'mat_tutorial_book:1'
+        - 'mat_found_camp:1'
 
    # Amount of mins PvP timer remains active after first login.
    pvp_timer: 120
@@ -56,18 +62,22 @@ global:
 
    # Casual mode, war disabled. Wonders for all. No spies.
    casual_mode: 'false'
-   
+
    # Attempt to validate structures to make sure they're not floating.
    structure_validation: 'true'
 
-   # Have speed checks only on chunk changes. Default: false
-   speed_check_chunks: false
+   # Have speed checks only on chunk changes. Default: true
+   # This means that players on roads need to move across a chunk to gain the movement bonus
+   # This used to be false, but the performance gain was too great to leave it as such.
+   # If this feature annoys your players, turn it off at your own risk of poor performance.
+   speed_check_chunks: true
 
    # Minimum Build Height for Structures, Walls, and Roads. Default: 1
    min_build_height: 1
 
 civ:
     # Amount of coins required to start a civilization
+    # Unused anyways
     # cost: 100000.0
     
     # Amount of static upkeep civ's pay for each new town(minus the capitol)
@@ -99,7 +109,9 @@ civ:
     min_distance: 15
 
     # Number of days after a civilization is conquered that it must wait before declaring revolution
-    revolution_cooldown: 7
+    # This used to be longer. Reducing to help spur actual viability in starting a revolution!
+    # Default: 2
+    revolution_cooldown: 2
 
     # Number of days a leader must be inactive before being able to be reclaimed
     leader_inactive_days: 7

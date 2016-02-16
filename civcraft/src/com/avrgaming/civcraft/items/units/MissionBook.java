@@ -43,6 +43,7 @@ import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.MissionLogger;
 import com.avrgaming.civcraft.object.Resident;
@@ -50,6 +51,7 @@ import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.structure.Buildable;
+import com.avrgaming.civcraft.structure.Capitol;
 import com.avrgaming.civcraft.structure.Cottage;
 import com.avrgaming.civcraft.structure.FishingBoat;
 import com.avrgaming.civcraft.structure.Granary;
@@ -228,6 +230,9 @@ public class MissionBook extends UnitItemMaterial {
 				break;
 			case "spy_sabotage":
 				performSabotage(player, mission);
+				break;
+			case "spy_subvert_government":
+				performSubertGov(player, mission);
 				break;
 			}
 			
@@ -582,6 +587,53 @@ public class MissionBook extends UnitItemMaterial {
 			
 			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("missionBook_investigate_success"));
 		}
+	}
+	
+	private static void performSubertGov(Player player, ConfigMission mission) throws CivException {		
+		Resident resident = CivGlobal.getResident(player);
+		if (resident == null || !resident.hasTown()) {
+			throw new CivException(CivSettings.localize.localizedString("missionBook_errorNotResident"));
+		}
+		
+		// Must be within enemy town borders.
+		ChunkCoord coord = new ChunkCoord(player.getLocation());
+		TownChunk tc = CivGlobal.getTownChunk(coord);
+		
+		if (tc == null || tc.getTown().getCiv() == resident.getTown().getCiv()) {
+			throw new CivException(CivSettings.localize.localizedString("missionBook_errorBorder"));
+		}
+		
+		Town town = tc.getTown();
+		Civilization civ = town.getCiv();
+		
+		if (town.getBuffManager().hasBuff("buff_noanarchy")) {
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_subvert_errorNotreDame",civ.getName()));
+		}
+				
+		// Check that the player is within range of the town hall.
+		Structure capitol = town.getNearestStrucutre(player.getLocation());
+		if (!(capitol instanceof Capitol)) {
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_subvert_errorNotCapitol",capitol.getDisplayName(),civ.getName()));
+		}
+		
+		double distance = player.getLocation().distance(capitol.getCorner().getLocation());
+		if (distance > mission.range) {
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_subvert_errorTooFar", mission.range));
+		}
+		
+		if (civ.getGovernment().id == "gov_anarchy") {
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_subvert_errorInAnarchy",civ.getName()));
+		} else if (civ.getGovernment().id == "gov_tribalism") {
+			throw new CivException(CivSettings.localize.localizedString("var_missionBook_subvert_errorInTribalism",civ.getName()));
+		}
+		
+		if (processMissionResult(player, tc.getTown(), mission)) {
+			civ.changeGovernment(civ, civ.getGovernment(), true);
+			CivMessage.global(CivColor.Yellow+CivSettings.localize.localizedString("missionBook_sabatoge_alert1")+CivColor.White+" "+CivSettings.localize.localizedString("var_missionBook_subvert_alert1",civ.getName()));
+			
+			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_missionBook_subvert_success1",civ.getName()));
+		}
+		
 	}
 	
 	private static void performInciteRiots(Player player, ConfigMission mission) throws CivException {

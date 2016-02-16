@@ -16,19 +16,19 @@ culture_levels:
     - level: 0
       amount: 0
       chunks: 6
- 
+
     - level: 1
       amount: 500
       chunks: 8
-           
+
     - level: 2
       amount: 10000
       chunks: 10
-    
+
     - level: 3
       amount: 20000
       chunks: 13
-    
+
     - level: 4
       amount: 100000
       chunks: 15
@@ -48,11 +48,11 @@ culture_levels:
     - level: 8
       amount: 2000000
       chunks: 26
- 
+
     - level: 9
       amount: 4000000
       chunks: 32
-    
+
     - level: 10
       amount: 5000000
       chunks: 40
@@ -155,7 +155,7 @@ culture_biomes:
       growth: 1.0
       happiness: 0.03
       beakers: 1.0
-    
+
     - name: FOREST
       coins: 0.0
       hammers: 1.0
@@ -204,7 +204,7 @@ culture_biomes:
       growth: 2.0
       happiness: 0.0
       beakers: 0.5
-    
+
     - name: TAIGA
       coins: 0.0
       hammers: 2.0
@@ -337,7 +337,7 @@ culture_biomes:
       growth: 0.10
       happiness: 0.02
       beakers: 0.5
-    
+
     - name: DESERT_MOUNTAINS
       coins: 0.0
       hammers: 3.0
@@ -351,14 +351,14 @@ culture_biomes:
       growth: 0.5
       happiness: 0.015
       beakers: 0.5
-    
+
     - name: MUSHROOM_ISLAND
       coins: 0.0
       hammers: 1.0
       growth: 0.5
       happiness: 0.03
       beakers: 0.5
-    
+
     - name: MUSHROOM_SHORE
       coins: 0.0
       hammers: 0.5
@@ -428,7 +428,7 @@ culture_biomes:
       growth: 0.15
       happiness: 0.02
       beakers: 0.25
-    
+
     - name: EXTREME_HILLS
       coins: 0.0
       hammers: 4.0
@@ -479,11 +479,11 @@ culture_biomes:
       beakers: 1.0
 
     - name: UNKNOWN
-      coins: 0.0
-      hammers: 0.0
-      growth: 0.0
-      happiness: 0.0
-      beakers: 0.0
+      coins: 0.2
+      hammers: 0.2
+      growth: 0.2
+      happiness: 0.01
+      beakers: 0.2
 
 
 

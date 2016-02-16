@@ -64,7 +64,7 @@ missions:
       compromise_chance: 0.01
       intel: 0
       length: 30
-      slot: 7
+      slot: 8
 
     - id: 'spy_steal_treasury'
       name: 'Steal Treasury'
@@ -78,34 +78,34 @@ missions:
       compromise_chance: 0.25
       intel: 2
       length: 140
-      slot: 6
+      slot: 7
 
     - id: 'spy_incite_riots'
       name: 'Incite Riots'
       description: 
           - 'Incites riots in the target town.'
           - 'Causes between 5 to 10 unhappiness for 3 days.'
-      cost: 20000.0
+          - 'Must be within 50 blocks of town hall.'
+      cost: 50000.0
       range: 50.0
       cooldown: 2.0
       fail_chance: 0.3
       compromise_chance: 0.25
       intel: 2
       length: 120
-      slot: 6
+      slot: -s6
 
-#    - id: 'spy_subvert_government'
-#      name: 'Subvert Government'
-#      description: 
-#          - 'Plunges the target civiliztion into Anarchy.'
-#          - 'Emerges in a random government.' 
-#          - 'Must be within 100 blocks of the capitol town hall.'
-#      cost: 300000.0
-#      range: 100.0
-#      cooldown: 2.0
-#      fail_chance: 0.40
-#      compromise_chance: 1.0
-#      slot: 5
+    - id: 'spy_subvert_government'
+      name: 'Subvert Government'
+      description: 
+          - 'Plunges the target civiliztion into Anarchy.'
+          - 'Must be within 100 blocks of the capitol town hall.'
+      cost: 200000.0
+      range: 100.0
+      cooldown: 2.0
+      fail_chance: 0.40
+      compromise_chance: 0.4
+      slot: 5
 
     - id: 'spy_poison_granary'
       name: 'Poison Granary'
@@ -120,17 +120,17 @@ missions:
       intel: 0
       length: 60
       slot: 4
-    
+
     - id: 'spy_pirate'
       name: 'Pirate'
       description: 
           - 'Allows you to take a goodie from an enemy trade outpost.'
           - 'Must be within 10 blocks of the trade outpost.'
       range: 10.0
-      cost: 1000.0
+      cost: 5000.0
       cooldown: 2.0
-      fail_chance: 0.0
-      compromise_chance: 0.00
+      fail_chance: 0.2
+      compromise_chance: 0.1
       intel: 0
       length: 60
       slot: 3
@@ -157,7 +157,7 @@ missions:
       cost: 500000.0
       range: 50.0
       cooldown: 2.0
-      fail_chance: 0.0
+      fail_chance: 0.4
       compromise_chance: 0.5
       intel: 4
       length: 300

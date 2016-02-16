@@ -2873,5 +2873,13 @@ var_cmd_civ_research_eraDiscount: "You are currently receiving a [%0]% discount 
 cmd_civ_research_eraNoDiscount: "You are not receiving a discount on the cost of Technologies you research."
 
 var_cmd_res_paydebtError2: "You are not currently in debt"
+
+var_missionBook_subvert_errorNotreDame: "[%0] is protected by the power of the Church (Notre Dame) and their government cannot be subverted."
+var_missionBook_subvert_errorNotCapitol: "The nearest structure is a [%0], and is not the Capitol of [%1]."
+var_missionBook_subvert_errorTooFar: "You are too far away from the Capitol to subvert their goverment. Must be within [%0] blocks."
+var_missionBook_subvert_errorInAnarchy: "[%0] is in Anarchy and has no government to subvert"
+var_missionBook_subvert_errorInTribalism: "[%0] is in Tribalism and has no government to subvert"
+var_missionBook_subvert_alert1: "[%0] has fallen into Anarchy due to the work of spies"
+var_missionBook_subvert_success1: "Mission Accomplished, [%0] is now in Anarchy"
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
