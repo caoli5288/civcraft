@@ -101,10 +101,10 @@ public class CivMessage {
 				TitleAPI.sendTitle(player, fadeIn, show, fadeOut, title, subTitle);
 			}
 		}
-		send(sender, title);
-		if (subTitle != "") {
-			send(sender, subTitle);
-		}
+//		send(sender, title);
+//		if (subTitle != "") {
+//			send(sender, subTitle);
+//		}
 	}
 	
 	

@@ -59,7 +59,7 @@ public class ConfigTech {
 	}
 	
 	public static double eraRate(Civilization civ) {
-		double rate = 1.0;
+		double rate = 0.0;
 		double era = (CivGlobal.highestCivEra-1) - civ.getCurrentEra();
 		if (era > 0) {
 			rate = (era/10);
