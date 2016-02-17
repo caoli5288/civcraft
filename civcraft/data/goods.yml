@@ -15,7 +15,13 @@ trade_good_multiplier_max: 3
 
 # Number of days before repo. When goodies are
 # repo'd they go back to the trade outpost that spawned them.
+# 1 = Sunday
+# 7 = Saturday
 trade_goodie_repo_days: 7
+# Time of day that the repo will occur
+# 0 = Midnight
+# 12 = Noon
+trade_goodie_repo_hour: 14
 
 
 

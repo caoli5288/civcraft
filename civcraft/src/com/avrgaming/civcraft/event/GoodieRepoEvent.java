@@ -66,10 +66,12 @@ public class GoodieRepoEvent implements EventInterface {
 	@Override
 	public Calendar getNextDate() throws InvalidConfiguration {
 		Calendar cal = EventTimer.getCalendarInServerTimeZone();
-		int repo_days = CivSettings.getInteger(CivSettings.goodsConfig, "trade_goodie_repo_days");
+		int repo_day = CivSettings.getInteger(CivSettings.goodsConfig, "trade_goodie_repo_day");
+		int repo_hour = CivSettings.getInteger(CivSettings.goodsConfig, "trade_goodie_repo_hour");
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MINUTE, 0);
-		cal.add(Calendar.DATE, repo_days);
+		cal.set(Calendar.HOUR_OF_DAY, repo_hour);
+		cal.add(Calendar.DATE, repo_day);
 		return cal;
 	}
 
