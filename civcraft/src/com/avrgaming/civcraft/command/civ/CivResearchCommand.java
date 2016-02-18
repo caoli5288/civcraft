@@ -156,7 +156,7 @@ public class CivResearchCommand extends CommandBase {
 		CivMessage.send(sender, CivColor.White+CivSettings.localize.localizedString("var_cmd_civ_research_highestEra", CivColor.LightBlue+CivGlobal.localizedEraString(CivGlobal.highestCivEra)));
 		
 		double eraRate = ConfigTech.eraRate(civ);
-		if (eraRate == 1.0) {
+		if (eraRate == 0.0) {
 			CivMessage.send(sender, CivColor.Yellow+CivSettings.localize.localizedString("cmd_civ_research_eraNoDiscount"));
 		} else {
 			CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("var_cmd_civ_research_eraDiscount",(eraRate*100),CivSettings.CURRENCY_NAME));
