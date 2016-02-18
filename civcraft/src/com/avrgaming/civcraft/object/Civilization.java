@@ -1898,7 +1898,7 @@ public class Civilization extends SQLObject {
 	public void setCurrentEra(int currentEra) {
 		this.currentEra = currentEra;
 		
-		if (this.currentEra > CivGlobal.highestCivEra)
+		if (this.currentEra > CivGlobal.highestCivEra && !this.isAdminCiv())
 		{
 			CivGlobal.setCurrentEra(this.currentEra, this);
 		}

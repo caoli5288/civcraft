@@ -39,7 +39,6 @@ import com.avrgaming.civcraft.object.Relation;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.sessiondb.SessionEntry;
 import com.avrgaming.civcraft.threading.TaskMaster;
-import com.avrgaming.civcraft.tutorial.CivTutorial;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
@@ -98,7 +97,7 @@ public class PlayerLoginAsyncTask implements Runnable {
 				CivGlobal.addResident(resident);
 				CivLog.info("Added resident:"+resident.getName());
 				resident.setRegistered(System.currentTimeMillis());
-				CivTutorial.showTutorialInventory(getPlayer());
+//				CivTutorial.showTutorialInventory(getPlayer());
 				resident.setisProtected(true);
 				int mins;
 				try {

@@ -436,7 +436,7 @@ public class CivGlobal {
 				try {
 					Civilization civ = new Civilization(rs);
 					
-					if (highestCivEra < civ.getCurrentEra())
+					if (highestCivEra < civ.getCurrentEra() && !civ.isAdminCiv())
 					{
 						highestCivEra = civ.getCurrentEra();
 					}
