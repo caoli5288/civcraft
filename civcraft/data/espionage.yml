@@ -93,7 +93,7 @@ missions:
       compromise_chance: 0.25
       intel: 2
       length: 120
-      slot: -s6
+      slot: -6
 
     - id: 'spy_subvert_government'
       name: 'Subvert Government'

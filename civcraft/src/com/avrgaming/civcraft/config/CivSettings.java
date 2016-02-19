@@ -220,8 +220,9 @@ public class CivSettings {
 	public static String CURRENCY_NAME;
 	
 	public static Localize localize;
-	
+
 	public static boolean hasTitleAPI = false;
+	public static boolean hasITag = false;
 	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;

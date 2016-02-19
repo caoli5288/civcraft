@@ -223,7 +223,8 @@ public final class CivCraft extends JavaPlugin {
 		pluginManager.registerEvents(new PvPListener(), this);
 		pluginManager.registerEvents(new LoreEnhancementArenaItem(), this);
 
-		if (hasPlugin("iTag") || hasPlugin("TagAPI")) {
+		if ((hasPlugin("iTag") || hasPlugin("TagAPI")) && hasPlugin("ProtocolLib")) {
+			CivSettings.hasITag = true;
 			pluginManager.registerEvents(new TagAPIListener(), this);
 			CivLog.debug("TagAPI Registered");
 		} else {

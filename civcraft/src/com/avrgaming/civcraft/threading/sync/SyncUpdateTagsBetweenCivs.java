@@ -25,6 +25,8 @@ import net.md_5.itag.iTag;
 
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
+
 
 public class SyncUpdateTagsBetweenCivs implements Runnable {
 	Set<Player> civList = new HashSet<Player>();
@@ -37,19 +39,19 @@ public class SyncUpdateTagsBetweenCivs implements Runnable {
 
 	@Override
 	public void run() {
-		
-		for (Player player : civList) {
-			if (!otherCivList.isEmpty()) {
-				iTag.instance.refreshPlayer(player, otherCivList);
+		if (CivSettings.hasITag) {
+			for (Player player : civList) {
+				if (!otherCivList.isEmpty()) {
+					iTag.instance.refreshPlayer(player, otherCivList);
+				}
 			}
-		}
-		
-		for (Player player : otherCivList) {
-			if (!civList.isEmpty()) {
-				iTag.instance.refreshPlayer(player, civList);
-			}
-		}
 			
+			for (Player player : otherCivList) {
+				if (!civList.isEmpty()) {
+					iTag.instance.refreshPlayer(player, civList);
+				}
+			}
+		}
 	}
 	
 }
