@@ -262,9 +262,9 @@ public class ConfigTownUpgrade {
 			}
 			break;
 		case "set_quarry_level":
-			if (town.saved_trommel_level < Integer.valueOf(args[1].trim()))
+			if (town.saved_quarry_level < Integer.valueOf(args[1].trim()))
 			{
-				town.saved_trommel_level = Integer.valueOf(args[1].trim());
+				town.saved_quarry_level = Integer.valueOf(args[1].trim());
 			}
 			boolean didUpgradeQuarry = false;
 			for (Structure structure : town.getStructures()) {
