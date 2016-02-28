@@ -4380,7 +4380,7 @@ materials:
               - name: 'AllowBlockPlace'
           ingredients:
               - type_id: 0
-                custom_id: 'mat_carbide_steel_ingot'
+                custom_id: 'mat_steel_ingot'
                 data: 0
                 letter: 's'
               - type_id: 54
