@@ -38,7 +38,7 @@ public class ResidentToggleCommand extends CommandBase {
 		commands.put("showscout", CivSettings.localize.localizedString("cmd_res_toggle_showscoutDesc"));
 		commands.put("combatinfo", CivSettings.localize.localizedString("cmd_res_toggle_combatinfoDesc"));
 		commands.put("itemdrops", CivSettings.localize.localizedString("cmd_res_toggle_itemdropsDesc"));
-		commands.put("titles", CivSettings.localize.localizedString("cmd_res_toggle_itemdropsDesc"));
+		commands.put("titles", CivSettings.localize.localizedString("cmd_res_toggle_titleAPIDesc"));
 		
 	}
 	public void itemdrops_cmd() throws CivException {
