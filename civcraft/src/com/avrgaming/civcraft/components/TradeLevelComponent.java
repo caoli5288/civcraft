@@ -293,7 +293,7 @@ public class TradeLevelComponent extends Component {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_4")));
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_4")));
 						if (itemID.contains("creeper") || itemID.contains("skeleton") || itemID.contains("spider") || itemID.equals("zombie") || itemID.contains("slime") || itemID.contains("enderman")) {
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_sword")));
 						}  else if (itemID.contains("pig") || itemID.contains("cow") || itemID.contains("chicken") || itemID.contains("sheep")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_marksmen_bow")));
 						}
@@ -302,7 +302,7 @@ public class TradeLevelComponent extends Component {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_3")));
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_3")));
 						if (itemID.contains("creeper") || itemID.contains("skeleton") || itemID.contains("spider") || itemID.equals("zombie") || itemID.contains("slime") || itemID.contains("enderman")) {
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_sword")));
 						}  else if (itemID.contains("pig") || itemID.contains("cow") || itemID.contains("chicken") || itemID.contains("sheep")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_longbow")));
 						}
@@ -311,7 +311,7 @@ public class TradeLevelComponent extends Component {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_2")));
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_2")));
 						if (itemID.contains("creeper") || itemID.contains("skeleton") || itemID.contains("spider") || itemID.equals("zombie") || itemID.contains("slime") || itemID.contains("enderman")) {
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_sword")));
 						}  else if (itemID.contains("pig") || itemID.contains("cow") || itemID.contains("chicken") || itemID.contains("sheep")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_recurve_bow")));
 						}
@@ -320,7 +320,7 @@ public class TradeLevelComponent extends Component {
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_metallic_crystal_1")));
 						newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_ionic_crystal_1")));
 						if (itemID.contains("creeper") || itemID.contains("skeleton") || itemID.contains("spider") || itemID.equals("zombie") || itemID.contains("slime") || itemID.contains("enderman")) {
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_sword")));
 						}  else if (itemID.contains("pig") || itemID.contains("cow") || itemID.contains("chicken") || itemID.contains("sheep")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_hunting_bow")));
 						}

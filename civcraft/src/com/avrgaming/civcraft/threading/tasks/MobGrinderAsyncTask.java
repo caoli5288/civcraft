@@ -152,7 +152,7 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 						} else if (itemID.contains("slime")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_sword")));
 						} else if (itemID.contains("enderman")) {
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_sword")));
 						} else if (itemID.contains("pig")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_composite_leather_leggings")));
 						} else if (itemID.contains("cow")) {
@@ -237,7 +237,7 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_sword")));
 						} else if (itemID.contains("enderman")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_enderman_egg_4")));
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_carbide_steel_sword")));
 						} else if (itemID.contains("pig")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_pig_egg_4")));
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_hardened_leather_leggings")));
@@ -327,7 +327,7 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_sword")));
 						} else if (itemID.contains("enderman")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_enderman_egg_3")));
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_steel_sword")));
 						} else if (itemID.contains("pig")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_pig_egg_3")));
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_refined_leather_leggings")));
@@ -417,7 +417,7 @@ public class MobGrinderAsyncTask extends CivAsyncTask {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_sword")));
 						} else if (itemID.contains("enderman")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_enderman_egg_2")));
-							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_axe")));
+							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_iron_sword")));
 						} else if (itemID.contains("pig")) {
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_pig_egg_2")));
 							newItems.add(LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_leather_leggings")));

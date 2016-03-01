@@ -1499,31 +1499,6 @@ materials:
               - " p "
               - " s "
 
-        - id: 'mat_wood_axe'
-          item_id: 271
-          item_data: 0
-          name: 'Training Axe'
-          craftable: true
-          shaped: true
-          category: '<lightgreen>Gear Tier 1'
-          components:
-              - name: 'Attack'
-                value: '5'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 5
-                data: -1
-                letter: 'p'
-              - type_id: 280
-                data: 0
-                letter: 's'
-          shape:
-              - "ppp"
-              - "psp"
-              - " s "
-
         # Checked 10/8/13
         - id: 'mat_leather_helmet'
           item_id: 298
@@ -2102,31 +2077,6 @@ materials:
               - " c "
               - " s "
 
-        - id: 'mat_stone_axe'
-          item_id: 275
-          item_data: 0
-          name: 'Stone Slicer'
-          craftable: true
-          shaped: true
-          category: '<lightgreen>Gear Tier 1'
-          components:
-              - name: 'Attack'
-                value: '6'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 4
-                data: 0
-                letter: 'c'
-              - type_id: 280
-                data: 0
-                letter: 's'
-          shape:
-              - "ccc"
-              - "csc"
-              - " s "
-
 # Iron Gear recipes -------------------------------------------------
 
         # Checked 10/8/13
@@ -2154,33 +2104,6 @@ materials:
           shape:
               - " i "
               - " i "
-              - " s "
-
-              # Checked 10/8/13
-        - id: 'mat_iron_axe'
-          item_id: 258
-          item_data: 0
-          name: 'Iron Cleaver'
-          craftable: true
-          required_techs: 'tech_metal_casting'
-          shaped: true
-          category: '<lightgreen>Gear Tier 1'
-          components:
-              - name: 'Attack'
-                value: '14'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 265
-                data: 0
-                letter: 'i'
-              - type_id: 280
-                data: 0
-                letter: 's'
-          shape:
-              - "iii"
-              - "isi"
               - " s "
 
         # Checked 10/8/13
@@ -2412,35 +2335,6 @@ materials:
               - " b "
               - " h "
 
-        # Checked 10/8/13
-        - id: 'mat_steel_axe'
-          item_id: 258
-          item_data: 0
-          name: 'Steel Double Axe'
-          craftable: true
-          required_techs: 'tech_sword_smithing'
-          shaped: true
-          category: '<lightblue>Gear Tier 2'
-          components:
-              - name: 'Attack'
-                value: '22'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_steel_sword_blade'
-                letter: 'b'
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_steel_sword_hilt'
-                letter: 'h'
-          shape:
-              - "bbb"
-              - "bhb"
-              - " h "
-
 ## Carbide steel - -- -                  -----------------------------------------
 
         # Checked 10/8/13
@@ -2470,35 +2364,6 @@ materials:
           shape:
               - " b "
               - " b "
-              - " h "
-
-        # Checked 10/8/13
-        - id: 'mat_carbide_steel_axe'
-          item_id: 283
-          item_data: 0
-          name: 'Carbide Steel Axe'
-          craftable: true
-          required_techs: 'tech_folded_steel'
-          shaped: true
-          category: '<lightpurple>Gear Tier 3'
-          components:
-              - name: 'Attack'
-                value: '28'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_carbide_steel_sword_blade'
-                letter: 'b'
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_carbide_steel_sword_hilt'
-                letter: 'h'
-          shape:
-              - "bbb"
-              - "bhb"
               - " h "
 
         # Checked 10/8/13
@@ -2631,34 +2496,6 @@ materials:
           shape:
               - " b "
               - " b "
-              - " h "
-          # Checked 10/8/13
-        - id: 'mat_tungsten_axe'
-          item_id: 279
-          item_data: 0
-          name: 'Tungsten Broadaxe'
-          craftable: true
-          required_techs: 'tech_tempering'
-          shaped: true
-          category: '<gold>Gear Tier 4'
-          components:
-              - name: 'Attack'
-                value: '36'
-              - name: 'NoVanillaDurability'
-              - name: 'DurabilityOnDeath'
-                value: '0.1'
-          ingredients:
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_tungsten_sword_blade'
-                letter: 'b'
-              - type_id: 0
-                data: 0
-                custom_id: 'mat_tungsten_sword_hilt'
-                letter: 'h'
-          shape:
-              - "bbb"
-              - "bhb"
               - " h "
 
         # Checked 10/8/13
@@ -4107,7 +3944,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_iron_sword, mat_hunting_bow, mat_iron_axe'
+                allowed_materials: 'mat_iron_sword, mat_hunting_bow'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4171,7 +4008,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_steel_sword, mat_recurve_bow, mat_steel_axe'
+                allowed_materials: 'mat_steel_sword, mat_recurve_bow'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4238,7 +4075,7 @@ materials:
               - name: 'NoRightClick'
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_carbide_steel_sword, mat_longbow, mat_carbide_steel_axe'
+                allowed_materials: 'mat_carbide_steel_sword, mat_longbow'
                 chance: '50'
                 amount: '1'
           ingredients:
@@ -4304,7 +4141,7 @@ materials:
               - name: 'NoRightClick'              
               - name: 'Catalyst'
                 enhancement: 'LoreEnhancementAttack'
-                allowed_materials: 'mat_tungsten_sword, mat_marksmen_bow, mat_tungsten_axe'
+                allowed_materials: 'mat_tungsten_sword, mat_marksmen_bow'
                 chance: '50'
                 amount: '1'
           ingredients:
