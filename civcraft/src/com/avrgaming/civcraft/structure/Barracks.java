@@ -130,13 +130,23 @@ public class Barracks extends Structure {
 		if (this.trainingUnit != null) {
 			throw new CivException(CivSettings.localize.localizedString("var_barracks_inProgress",this.trainingUnit.name));
 		}
-		
+
+		int previousSettlers = 1;
 		if (unit.id.equals("u_settler")) {
 			if (!this.getCiv().getLeaderGroup().hasMember(whoClicked) && !this.getCiv().getAdviserGroup().hasMember(whoClicked)) {
 				throw new CivException(CivSettings.localize.localizedString("barracks_trainSettler_NoPerms"));
 			}
-
-			unit.cost *= this.getCiv().getTownCount();
+			
+			ArrayList<SessionEntry> entries = CivGlobal.getSessionDB().lookup("settlers:"+this.getCiv().getName());
+			if (entries != null && entries.size() != 0) {
+				//No previous trained settlers
+			} else {
+				for (SessionEntry entry : entries) {
+				previousSettlers += Integer.parseInt(entry.value);
+				}
+			}
+			
+			unit.cost *= previousSettlers;
 			unit.hammer_cost *= this.getCiv().getTownCount();
 		}
 		
@@ -152,6 +162,9 @@ public class Barracks extends Structure {
 		this.setTrainingUnit(unit);
 		CivMessage.sendTown(getTown(), CivSettings.localize.localizedString("var_barracks_begin",unit.name));
 		this.updateTraining();
+		if (unit.id.equals("u_settler")) {
+			CivGlobal.getSessionDB().add("settlers:"+this.getCiv().getName(), ""+previousSettlers , this.getCiv().getId(), this.getCiv().getId(), this.getId());
+		}
 	}
 	
 	@Override
