@@ -2008,8 +2008,8 @@ var_civ_gift_tooyoung1: "[%0] cannot participate in gifting/merging civs or town
 
 var_civ_debt_endWar: "[%0] was in debt too long and can no longer maintain it's aggressive war with [%1]."
 
-var_cultureEnterMsg: "Entering the civ borders of [%0]"
-var_cultureLeaveMsg: "Leaving the civ borders of [%0]"
+var_cultureEnterMsg: "Entering civ [%0]. "
+var_cultureLeaveMsg: "Leaving civ [%0]. "
 
 # =========================== Resident.java Messages =========================
 var_resident_debtmsg: "You are in debt by [%0] [%1]!"
@@ -2469,7 +2469,8 @@ var_townHall_dynmap_heading: "Town hall of [%0]"
 townHall_dynmap_cultureLevel: "Culture Level:"
 townHall_dynmap_flatTax: "Flat Tax:"
 townHall_dynmap_propertyTax: "Property Tax:"
-var_townHall_destroyed_isCap: "The Civilization of [%0] has been conquered by [%1]!"
+var_townHall_destroyed_isCap: "[%0] Defeated!"
+var_townHall_destroyed_isCap2: "conquered by [%0]!"
 var_townHall_victoryOverItem: "Victory Over [%0]!"
 var_townHall_victoryOverItem_withCannon: "Victory Over [%0] via Cannons!"
 var_townHall_destroyed: "The Town of [%0] in [%1] has been conquered by [%2]!"
@@ -2570,10 +2571,10 @@ espionage_missionAborted: "You've left the civ borders. Mission Aborted."
 var_FoundTownSync_Success: "The town of [%0] has been founded in the Civilization of [%1]!"
 
 #---- playerChunkNotify ----
-playerChunkNotify_enterWilderness: "Entering Wilderness - "
-var_playerChunkNotify_EnterTown: "Entering the town of [%0] [%1]. "
-var_playerChunkNotify_EnterOutpost: "Entering an Outpost of the town of [%0] [%1]. "
-var_playerChunkNotify_enterCamp: "Entering the camp called [%0] - "
+playerChunkNotify_enterWilderness: "Wilderness - "
+var_playerChunkNotify_EnterTown: "[%0] [%1]. "
+var_playerChunkNotify_EnterOutpost: "Outpost [%0] [%1]. "
+var_playerChunkNotify_enterCamp: "Camp [%0] - "
 var_playerChunkNotify_enteredBorderAlert: "[%0] has entered our borders!"
 
 #---- PlayerLoginAsync ----
@@ -2847,10 +2848,10 @@ war_wartimeBegin_title_length: "War time will last for [%0] hours."
 
 cmd_res_toggle_titleAPIDesc: "Toggles displaying of on screen titles."
 
-var_civ_found_successTitle: "New Civilization of [%0]!"
-var_civ_found_successSubTitle: "Capitol: [%0] - Founded by: [%1]"
+var_civ_found_successTitle: "[%0] Founded!"
+var_civ_found_successSubTitle: "Capitol: [%0] - Leader: [%1]"
 
-general_upkeep_tick: "Starting Daily Upkeep Processing"
+general_upkeep_tick: "Daily Upkeep Started"
 general_upkeep_tick_finish: "Daily Upkeep Finished"
 
 announce_ancientEra: "The Ancient Era"
@@ -2861,7 +2862,7 @@ announce_industrialEra: "The Industrial Era"
 announce_modernEra: "The Modern Era"
 announce_atomicEra: "The Atomic Era"
 announce_informationEra: "The Information Era"
-var_announce_newEraCiv: "Has been achieved by [%0]."
+var_announce_newEraCiv: "Civ: [%0]"
 
 cmd_town_unclaim_errorTownHall: "You cannot unclaim a town chunk containing your town hall."
 stable_missingTech_MilitaryScience: "You need the technology 'Military Science' in order to buy this."
@@ -2883,3 +2884,6 @@ var_missionBook_subvert_alert1: "[%0] has fallen into Anarchy due to the work of
 var_missionBook_subvert_success1: "Mission Accomplished, [%0] is now in Anarchy"
 # =========================== END 1.76 =========================
 # ----------------------------------------------------------------
+
+# 1.76.3
+goodieRepoBroadcastTitle: "Trade Goodie Repo"

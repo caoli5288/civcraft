@@ -207,7 +207,9 @@ public class CivMessage {
 				CivMessage.sendTitle(player, 10, 60, 10, title, subTitle);
 			} else {
 				send(player, buildTitle(title));
-				send(player, subTitle);
+				if (!subTitle.equals("")) {
+					send(player, subTitle);
+				}
 			}
 		}
 	}

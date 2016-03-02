@@ -1,7 +1,7 @@
 name: CivCraft
 main: com.avrgaming.civcraft.main.CivCraft
 softdepends: [TitleAPI]
-version: 1.76.2
+version: 1.76.3
 
 commands:
     town:

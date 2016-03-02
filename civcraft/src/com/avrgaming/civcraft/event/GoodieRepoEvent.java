@@ -60,7 +60,8 @@ public class GoodieRepoEvent implements EventInterface {
 	public void process() {
 		CivLog.info("TimerEvent: GoodieRepo -------------------------------------");
 		repoProcess();
-		CivMessage.globalTitle(CivSettings.localize.localizedString("goodieRepoBroadcast"),"");
+		CivMessage.globalTitle(CivSettings.localize.localizedString("goodieRepoBroadcastTitle"),"");
+		CivMessage.global(CivSettings.localize.localizedString("goodieRepoBroadcast"));
 	}
 
 	@Override

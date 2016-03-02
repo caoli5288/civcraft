@@ -70,7 +70,7 @@ public class ConfigTech {
 	public double getAdjustedBeakerCost(Civilization civ) {
 		double rate = 1.0;
 		rate -= eraRate(civ);
-		return Math.floor(this.beaker_cost*=rate);
+		return Math.floor(this.beaker_cost*Math.max(rate, .01));
 	}
 	
 	public double getAdjustedTechCost(Civilization civ) {
@@ -86,7 +86,7 @@ public class ConfigTech {
 		rate = Math.max(rate, 0.75);
 		rate -= eraRate(civ);
 		
-		return Math.floor(this.cost * rate);
+		return Math.floor(this.cost * Math.max(rate, .01));
 	}
 	
 	

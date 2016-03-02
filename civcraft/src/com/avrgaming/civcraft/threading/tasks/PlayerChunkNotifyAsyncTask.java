@@ -135,13 +135,12 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		//We've entered a camp.
 		if (toCamp != null && toCamp != fromCamp) {
 			title += CivColor.Gold+CivSettings.localize.localizedString("var_playerChunkNotify_enterCamp",toCamp.getName())+" "+CivColor.Rose+"[PvP]";
-		}
-		
-		if (toCamp == null && fromCamp != null) {
+		} else if (toCamp == null && fromCamp != null) {
 			title += getToWildMessage();
-		}
-		
-		// From Wild, to town
+		} else if (fromTc != null && toTc == null) {
+			// From a town... to the wild
+			title += getToWildMessage();
+		} 
 		if (fromTc == null && toTc != null) {			
 			// To Town
 			Town t = toTc.getTown();
@@ -156,27 +155,21 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 			
 		}
 		
-		// From a town... to the wild
-		if (fromTc != null && toTc == null) {
-			title += getToWildMessage();
-		}
 		
-		// To another town(should never happen with culture...)
-		if (fromTc != null && toTc != null && fromTc.getTown() != toTc.getTown()) {
-			title += getToTownMessage(toTc.getTown(), toTc);
-		}
 		
-		if (toTc != null) {
-			subTitle += toTc.getOnEnterString(player, fromTc);
-		}
+//		// To another town(should never happen with culture...)
+//		if (fromTc != null && toTc != null && fromTc.getTown() != toTc.getTown()) {
+//			title += getToTownMessage(toTc.getTown(), toTc);
+//		}
+		
+//		if (toTc != null) {
+//			subTitle += toTc.getOnEnterString(player, fromTc);
+//		}
 		
 		// Leaving culture to the wild.
 		if (fromCc != null && toCc == null) {
-			title += fromCc.getOnLeaveString();
-		}
-		
-		// Leaving wild, entering culture. 
-		if (fromCc == null && toCc != null) {
+			subTitle += fromCc.getOnLeaveString();
+		} else	if (fromCc == null && toCc != null) {	// Leaving wild, entering culture.
 			title += toCc.getOnEnterString();
 			if (civilization != null) {
 				if (civilization == toCc.getCiv()) {
@@ -185,10 +178,9 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
 				}			}
 			onCultureEnter(toCc);
-		}
-		
-		//Leaving one civ's culture, into another. 
-		if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
+		}else if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
+			//Leaving one civ's culture, into another. 
+			
 			title += fromCc.getOnLeaveString() +" | "+ toCc.getOnEnterString();
 			onCultureEnter(toCc);
 			if (civilization != null) {
