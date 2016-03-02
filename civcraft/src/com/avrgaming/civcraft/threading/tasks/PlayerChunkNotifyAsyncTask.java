@@ -168,8 +168,8 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 		
 		// Leaving culture to the wild.
 		if (fromCc != null && toCc == null) {
-			subTitle += fromCc.getOnLeaveString();
-		} else	if (fromCc == null && toCc != null) {	// Leaving wild, entering culture.
+			title += fromCc.getOnLeaveString();
+		} else if (fromCc == null && toCc != null) {	// Leaving wild, entering culture.
 			title += toCc.getOnEnterString();
 			if (civilization != null) {
 				if (civilization == toCc.getCiv()) {
@@ -178,7 +178,7 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
 				}			}
 			onCultureEnter(toCc);
-		}else if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
+		} else if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
 			//Leaving one civ's culture, into another. 
 			
 			title += fromCc.getOnLeaveString() +" | "+ toCc.getOnEnterString();
