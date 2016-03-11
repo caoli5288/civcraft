@@ -57,6 +57,14 @@ public class Farm extends Structure {
 		build_farm(this.getCorner().getLocation());
 	}
 	
+	public void removeFarmChunk() throws SQLException {
+		if (this.getCorner() != null) {
+			ChunkCoord coord = new ChunkCoord(this.getCorner().getLocation());
+			CivGlobal.removeFarmChunk(coord);
+			CivGlobal.getSessionDB().delete_all(getSessionKey());
+		}
+	}
+	
 	@Override
 	public void delete() throws SQLException {
 		if (this.getCorner() != null) {

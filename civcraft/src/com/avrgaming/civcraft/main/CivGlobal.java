@@ -1264,7 +1264,12 @@ public class CivGlobal {
 	}
 
 	public static void removeFarmChunk(ChunkCoord coord) {
-		farmChunks.remove(coord);
+		FarmChunk fc = getFarmChunk(coord);
+		if (fc != null) {
+			CivGlobal.dequeueFarmChunk(fc);
+			farmGrowQueue.remove(fc);
+		}
+		farmChunks.remove(coord);	
 	}
 	
 	public static void addProtectedItemFrame(ItemFrameStorage framestore) {
@@ -2033,6 +2038,10 @@ public class CivGlobal {
 
 	public static Collection<Structure> getStructures() {
 		return structures.values();
+	}
+	
+	public static void dequeueFarmChunk(FarmChunk fc) {
+		farmChunkUpdateQueue.remove(fc);
 	}
 	
 	public static void queueFarmChunk(FarmChunk fc) {

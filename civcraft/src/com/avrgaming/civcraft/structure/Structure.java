@@ -553,6 +553,7 @@ public class Structure extends Buildable {
 			
 			if (!(this instanceof Wall || this instanceof FortifiedWall || this instanceof Road))
 			{
+				CivLog.debug("Delete with Undo! "+this.getDisplayName());
 				/* Remove StructureSigns */
 				for (StructureSign sign : this.getSigns()) {
 					sign.delete();
@@ -566,7 +567,12 @@ public class Structure extends Buildable {
 				CivGlobal.removeStructure(this);
 				this.getTown().removeStructure(this);
 				this.unbindStructureBlocks();
+				if (this instanceof Farm) {
+					Farm farm = (Farm)this;
+					farm.removeFarmChunk();
+				}
 			} else {
+				CivLog.debug("Delete skip Undo! "+this.getDisplayName());
 				CivGlobal.removeStructure(this);
 				this.getTown().removeStructure(this);
 				this.unbindStructureBlocks();
