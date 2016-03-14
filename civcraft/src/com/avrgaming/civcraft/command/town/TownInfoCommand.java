@@ -277,14 +277,16 @@ public class TownInfoCommand extends CommandBase {
 		Town town = getSelectedTown();
 		
 		CivMessage.sendHeading(sender, town.getName()+" "+CivSettings.localize.localizedString("cmd_town_info_ratesHeading"));
+
+		DecimalFormat df = new DecimalFormat("#,###.#");
 		
 		CivMessage.send(sender, 
-				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoGrowth")+" "+CivColor.LightGreen+(town.getGrowthRate().total*100)+
-				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoCulture")+" "+CivColor.LightGreen+(town.getCulture().total*100)+
-				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoCottage")+" "+CivColor.LightGreen+(town.getCottageRate()*100)+
-				CivColor.Green+" "+CivSettings.localize.localizedString("Temple")+" "+CivColor.LightGreen+(town.getTempleRate()*100)+
-				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoTrade")+" "+CivColor.LightGreen+(town.getTradeRate()*100)+		
-				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoBeaker")+" "+CivColor.LightGreen+(town.getBeakerRate().total*100)			
+				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoGrowth")+" "+CivColor.LightGreen+df.format(town.getGrowthRate().total*100)+
+				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoCulture")+" "+CivColor.LightGreen+df.format(town.getCultureRate().total*100)+
+				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoCottage")+" "+CivColor.LightGreen+df.format(town.getCottageRate()*100)+
+				CivColor.Green+" "+CivSettings.localize.localizedString("Temple")+" "+CivColor.LightGreen+df.format(town.getTempleRate()*100)+
+				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoTrade")+" "+CivColor.LightGreen+df.format(town.getTradeRate()*100)+		
+				CivColor.Green+" "+CivSettings.localize.localizedString("cmd_civ_gov_infoBeaker")+" "+CivColor.LightGreen+df.format(town.getBeakerRate().total*100)			
 				);
 		
 	}

@@ -10,7 +10,6 @@ import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Town;
 
 public class ResearchLab extends Structure {
-
 	
 	protected ResearchLab(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
@@ -19,16 +18,33 @@ public class ResearchLab extends Structure {
 	public ResearchLab(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 	}
-
-	@Override
-	public void loadSettings() {
-		super.loadSettings();
-
-	}
 	
 	@Override
 	public String getMarkerIconName() {
 		return "warning";
+	}
+
+	@Override
+	public void loadSettings() {
+		super.loadSettings();
+	}
+	
+	@Override
+	public void onLoad() {
+		if (this.isActive()) {
+			addBuffs();
+		}
+	}
+	
+	@Override
+	public void onComplete() {
+		addBuffs();
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		removeBuffs();
 	}
 	
 	protected void removeBuffs() {

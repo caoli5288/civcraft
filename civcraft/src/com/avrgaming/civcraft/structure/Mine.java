@@ -145,7 +145,11 @@ public class Mine extends Structure {
 	
 	public double getHammersPerTile() {
 		AttributeBiomeRadiusPerLevel attrBiome = (AttributeBiomeRadiusPerLevel)this.getComponent("AttributeBiomeRadiusPerLevel");
-		double base = attrBiome.getBaseValue();
+		double base = 1.0;
+		
+		if (attrBiome != null) {
+			base = attrBiome.getBaseValue();
+		}
 	
 		double rate = 1;
 		rate += this.getTown().getBuffManager().getEffectiveDouble(Buff.ADVANCED_TOOLING);

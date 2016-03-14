@@ -611,10 +611,16 @@ public class Town extends SQLObject {
 		rates.put("Happiness", newRate - rate);
 		rate = newRate;
 		
-		double additional = this.getBuffManager().getEffectiveDouble(Buff.FINE_ART);
-		
+		double structures = 0;
 		if (this.getBuffManager().hasBuff("buff_art_appreciation")) {
-			additional += this.getBuffManager().getEffectiveDouble("buff_art_appreciation");
+			structures += this.getBuffManager().getEffectiveDouble("buff_art_appreciation");
+		}
+		rates.put("Great Works", structures);
+		rate += structures;
+
+		double additional = 0; 
+		if (this.getBuffManager().hasBuff("buff_fine_art")) {
+			additional += this.getBuffManager().getEffectiveDouble(Buff.FINE_ART);
 		}
 		if (this.getBuffManager().hasBuff("buff_pyramid_culture")) {
 			additional += this.getBuffManager().getEffectiveDouble("buff_pyramid_culture");

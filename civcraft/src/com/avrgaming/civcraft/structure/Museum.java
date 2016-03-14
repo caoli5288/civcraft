@@ -6,29 +6,28 @@ import java.sql.SQLException;
 import org.bukkit.Location;
 
 import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Town;
 
 public class Museum extends Structure {
 
-	protected Museum(Location center, String id, Town town)
-			throws CivException {
+	protected Museum(Location center, String id, Town town) throws CivException {
 		super(center, id, town);
 	}
 
 	public Museum(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 	}
-
-	@Override
-	public String getDynmapDescription() {
-		return null;
-	}
 	
 	@Override
 	public String getMarkerIconName() {
 		return "flower";
 	}
+
+	@Override
+	public void loadSettings() {
+		super.loadSettings();
+	}
+	
 	@Override
 	public void onLoad() {
 		if (this.isActive()) {
@@ -64,19 +63,7 @@ public class Museum extends Structure {
 		}
 	}
 	
-	protected void addBuffToCiv(Civilization civ, String id) {
-		for (Town t : civ.getTowns()) {
-			addBuffToTown(t, id);
-		}
-	}
-	
 	protected void removeBuffFromTown(Town town, String id) {
 		town.getBuffManager().removeBuff(id);
-	}
-	
-	protected void removeBuffFromCiv(Civilization civ, String id) {
-		for (Town t : civ.getTowns()) {
-			removeBuffFromTown(t, id);
-		}
 	}
 }

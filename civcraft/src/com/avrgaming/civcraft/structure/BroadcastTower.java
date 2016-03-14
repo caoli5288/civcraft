@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import org.bukkit.Location;
 
 import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Town;
 
 public class BroadcastTower extends Structure {
@@ -66,20 +65,7 @@ public class BroadcastTower extends Structure {
 		}
 	}
 	
-	protected void addBuffToCiv(Civilization civ, String id) {
-		for (Town t : civ.getTowns()) {
-			addBuffToTown(t, id);
-		}
-	}
-	
 	protected void removeBuffFromTown(Town town, String id) {
 		town.getBuffManager().removeBuff(id);
 	}
-	
-	protected void removeBuffFromCiv(Civilization civ, String id) {
-		for (Town t : civ.getTowns()) {
-			removeBuffFromTown(t, id);
-		}
-	}
-
 }

@@ -189,7 +189,7 @@ items:
     - id: 31
       name: 'Mossy Brick'
       type_id: 98
-      data: 0
+      data: 1
       value: 1
 
     - id: 32

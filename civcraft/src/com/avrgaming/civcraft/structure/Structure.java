@@ -160,7 +160,14 @@ public class Structure extends Buildable {
 				struct = (Structure) new Grocer(rs);
 			}
 			break;
-			
+
+		case "s_broadcast_tower":
+			if (rs == null) {
+				struct = (BroadcastTower) new BroadcastTower(center, id, town);
+			} else {
+				struct = (BroadcastTower) new BroadcastTower(rs);
+			}
+			break;
 		case "s_library":
 			if (rs == null) {
 				struct = (Structure) new Library(center, id, town);
@@ -362,6 +369,13 @@ public class Structure extends Buildable {
 				struct = (Structure) new Windmill(center, id, town);
 			} else {
 				struct = (Structure) new Windmill(rs);
+			}
+			break;
+		case "s_museum":
+			if (rs == null) {
+				struct = (Museum) new Museum(center, id, town);
+			} else {
+				struct = (Museum) new Museum(rs);
 			}
 			break;
 		case "s_market":
