@@ -175,7 +175,10 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 				if (civilization == toCc.getCiv()) {
 					subTitle += CivSettings.localize.localizedString("var_civ_border_welcomeBack", player.getName());
 				} else {
-					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
+					String relationship = civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString();
+					if (relationship != null && relationship.length() >= 1) {
+						subTitle = CivSettings.localize.localizedString("var_civ_border_relation",relationship);
+					}
 				}			}
 			onCultureEnter(toCc);
 		} else if (fromCc != null && toCc !=null && fromCc.getCiv() != toCc.getCiv()) {
@@ -187,7 +190,10 @@ public class PlayerChunkNotifyAsyncTask implements Runnable {
 				if (civilization == toCc.getCiv()) {
 					subTitle += CivSettings.localize.localizedString("var_civ_border_welcomeBack", player.getName());
 				} else {
-					subTitle += CivSettings.localize.localizedString("var_civ_border_relation",civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString());
+					String relationship = civilization.getDiplomacyManager().getRelation(toCc.getCiv()).toString();
+					if (relationship != null && relationship.length() >= 1) {
+						subTitle = CivSettings.localize.localizedString("var_civ_border_relation",relationship);
+					}
 				}
 			}
 		}
