@@ -669,6 +669,8 @@ structures:
           type: 'direct'
           attribute: 'UNHAPPINESS'
           value: '-2.0'
+        - name: 'AttributeStatic'
+          type: 'direct'
           attribute: 'HAPPINESS'
           value: '2.0'
 
@@ -877,7 +879,7 @@ structures:
           value: '0.01'
 
   - id: s_research_lab
-    template: school
+    template: research_lab
     template_y_shift: 0
     displayName: Research Lab
     require_upgrade:
@@ -940,7 +942,7 @@ structures:
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'UNHAPPINESS'
-          value: '-3.0'
+          value: '3.0'
         - name: 'AttributeStatic'
           type: 'direct'
           attribute: 'GROWTH'
