@@ -513,10 +513,10 @@ public class TownInfoCommand extends CommandBase {
 			out.add(color+CivSettings.localize.localizedString("cmd_town_info_mineName")+" ("+struct.getCorner()+")");
 			out.add(CivColor.Green+"    "+CivSettings.localize.localizedString("Level")+" "+CivColor.Yellow+mine.getLevel()+
 					CivColor.Green+" "+CivSettings.localize.localizedString("count")+" "+CivColor.Yellow+"("+mine.getCount()+"/"+mine.getMaxCount()+")");
-			out.add(CivColor.Green+"    "+CivSettings.localize.localizedString("hammersPerTile")+" "+CivColor.Yellow+mine.getHammersPerTile()+
-					CivColor.Green+" "+CivSettings.localize.localizedString("LastResult")+" "+CivColor.Yellow+mine.getLastResult().name());
+			out.add(CivColor.Green+"    "+CivSettings.localize.localizedString("hammersPerTile")+" "+CivColor.Yellow+mine.getBonusHammers());
+			out.add(CivColor.Green+"    "+CivSettings.localize.localizedString("LastResult")+" "+CivColor.Yellow+mine.getLastResult().name());
 			
-			total += mine.getHammersPerTile()*9; //XXX estimate based on tile radius of 1.
+			total += mine.getBonusHammers(); //XXX estimate based on tile radius of 1.
 			
 		}
 		out.add(CivColor.Green+"----------------------------");
