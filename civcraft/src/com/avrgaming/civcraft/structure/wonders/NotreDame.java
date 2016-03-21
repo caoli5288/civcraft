@@ -60,14 +60,14 @@ public class NotreDame extends Wonder {
 	
 	@Override
 	protected void removeBuffs() {
-		this.removeBuffFromTown(this.getTown(), "buff_notre_dame_no_anarchy");
+		this.removeBuffFromCiv(this.getCiv(), "buff_notre_dame_no_anarchy");
 		this.removeBuffFromTown(this.getTown(), "buff_notre_dame_coins_from_peace");
 		this.removeBuffFromTown(this.getTown(), "buff_notre_dame_extra_war_penalty");
 	}
 
 	@Override
 	protected void addBuffs() {
-		this.addBuffToTown(this.getTown(), "buff_notre_dame_no_anarchy");
+		this.addBuffToCiv(this.getCiv(), "buff_notre_dame_no_anarchy");
 		this.addBuffToTown(this.getTown(), "buff_notre_dame_coins_from_peace");
 		this.addBuffToTown(this.getTown(), "buff_notre_dame_extra_war_penalty");
 
