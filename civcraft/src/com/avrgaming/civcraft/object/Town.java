@@ -1559,6 +1559,11 @@ public class Town extends SQLObject {
 				count++;
 			}
 		}
+		for (Wonder wonder : this.wonders.values()) {
+			if (wonder.getConfigId().equalsIgnoreCase(id)) {
+				count++;
+			}
+		}
 		return count;
 	}
 	
