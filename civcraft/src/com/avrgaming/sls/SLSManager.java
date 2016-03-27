@@ -41,15 +41,24 @@ public class SLSManager implements Runnable {
 		if (serverName.contains(";")) {
 			throw new CivException("Cannot have a server name with a ';' in it.");
 		}
+		if (serverName.contains("<") && serverName.contains(">")) {
+			serverName = serverName.replaceAll("[<>]", "");
+		}
 		
 		serverDescription = CivSettings.getStringBase("server_description");
 		if (serverDescription.contains(";")) {
 			throw new CivException("Cannot have a server description with a ';' in it.");
 		}
+		if (serverDescription.contains("<") && serverDescription.contains(">")) {
+			serverDescription = serverDescription.replaceAll("[<>]", "");
+		}
 		
 		serverAddress = CivSettings.getStringBase("server_address");
 		if (serverAddress.contains(";")) {
 			throw new CivException("Cannot have a server address with a ';' in it.");
+		}
+		if (serverAddress.contains("<") && serverAddress.contains(">")) {
+			serverAddress = serverAddress.replaceAll("[<>]", "");
 		}
 		
 		serverURL = CivSettings.getStringBase("server_url");
