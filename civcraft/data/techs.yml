@@ -238,7 +238,7 @@ techs:
     - id: 'tech_taxation'
       name: 'Taxation'
       beaker_cost: 5000.0
-      cost: 40000.0
+      cost: 15000.0
       points: 2500
       require_techs: 'tech_sailing'
       era: 2
@@ -532,8 +532,8 @@ techs:
 #Information era
     - id: 'tech_enlightenment'
       name: 'Enlightenment'
-      beaker_cost: 7500000.0
-      cost: 50000000.0
+      beaker_cost: 3500000.0
+      cost: 15000000.0
       points: 375000
       require_techs: 'tech_military_science:tech_refrigeration:tech_plastics'
       era: 7
