@@ -312,7 +312,7 @@ techs:
       beaker_cost: 10000.0
       cost: 40000.0
       points: 2500
-      require_techs: 'tech_commerce:tech_artillery'
+      require_techs: 'tech_commerce:tech_exploration'
       era: 2
 
     - id: 'tech_currency'
