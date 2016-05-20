@@ -307,8 +307,8 @@ buffs:
 #Colosseum Buffs
     - id: 'buff_colosseum_coins_from_towns'
       name: 'Colosseum Coins From Towns'
-      description: 'Grants 1000 coins per day to the civilization for every town in the world.'
-      value: '1000'
+      description: 'Grants 100 coins per day to the civilization for every town in the world.'
+      value: '100'
       stackable: false
       parent:
 
