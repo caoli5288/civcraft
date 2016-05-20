@@ -109,8 +109,8 @@ public class SQL {
 		SQL.max_conns = Integer.valueOf(CivSettings.getStringBase("mysql.max_conns"));
 		SQL.parts = Integer.valueOf(CivSettings.getStringBase("mysql.parts"));
 
-		
-		CivLog.info("\t Using "+SQL.tb_prefix+SQL.db_name+" as database.");
+				CivLog.info("\t Using "+SQL.hostname+":"+SQL.port+" user:"+SQL.username+" DB:"+SQL.db_name);
+
 		CivLog.info("\t Building Connection Pool for GAME database.");
 		gameDatabase = new ConnectionPool(SQL.dsn, SQL.username, SQL.password, SQL.min_conns, SQL.max_conns, SQL.parts);
 		CivLog.info("\t Connected to GAME database");
@@ -127,7 +127,7 @@ public class SQL {
 
 		SQL.global_dsn = "jdbc:mysql://"+ SQL.global_hostname + ":" + SQL.global_port + "/" + SQL.global_db;
 		CivLog.info("\t Using GLOBAL db at:"+SQL.global_hostname+":"+SQL.global_port+" user:"+SQL.global_username+" DB:"+SQL.global_db);
-		CivLog.info("\t Building Connection Pool for GAME database.");
+		CivLog.info("\t Building Connection Pool for GLOBAL database.");
 		globalDatabase = new ConnectionPool(SQL.global_dsn, SQL.global_username, SQL.global_password, SQL.global_min_conns, SQL.global_max_conns, SQL.global_parts);
 		CivLog.info("\t Connected to GLOBAL database");
 		
