@@ -602,14 +602,14 @@ public class DebugCommand extends CommandBase {
 		String hex = getNamedString(1, "color code");
 		long value = Long.decode(hex);
 		
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null || ItemManager.getId(inHand) == CivData.AIR) {
 			throw new CivException("please have an item in your hand.");
 		}
 		
 		AttributeUtil attrs = new AttributeUtil(inHand);
 		attrs.setColor(value);		
-		player.setItemInHand(attrs.getStack());
+		player.getInventory().setItemInMainHand(attrs.getStack());
 		CivMessage.sendSuccess(player, "Set color.");
 	}
 	
@@ -651,14 +651,14 @@ public class DebugCommand extends CommandBase {
 		String key = getNamedString(1, "key");
 		String value = getNamedString(2, "value");
 		
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null) {
 			throw new CivException("You must have an item in hand.");
 		}
 		
 		AttributeUtil attrs = new AttributeUtil(inHand);
 		attrs.setCivCraftProperty(key, value);
-		player.setItemInHand(attrs.getStack());
+		player.getInventory().setItemInMainHand(attrs.getStack());
 		CivMessage.sendSuccess(player, "Set property.");
 		
 	}
@@ -667,7 +667,7 @@ public class DebugCommand extends CommandBase {
 		Player player = getPlayer();
 		String key = getNamedString(1, "key");
 		
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null) {
 			throw new CivException("You must have an item in hand.");
 		}
@@ -679,7 +679,7 @@ public class DebugCommand extends CommandBase {
 	}
 	public void getdura_cmd() throws CivException {
 		Player player = getPlayer();
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		CivMessage.send(player, "Durability:"+inHand.getDurability());
 		CivMessage.send(player, "MaxDura:"+inHand.getType().getMaxDurability());
 		
@@ -689,7 +689,7 @@ public class DebugCommand extends CommandBase {
 		Player player = getPlayer();
 		Integer dura = getNamedInteger(1);
 		
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		inHand.setDurability((short)dura.shortValue());
 		
 		CivMessage.send(player, "Set Durability:"+inHand.getDurability());
@@ -699,7 +699,7 @@ public class DebugCommand extends CommandBase {
 	
 	public void getmid_cmd() throws CivException {
 		Player player = getPlayer();
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null) {
 			throw new CivException("You need an item in your hand.");
 		}
@@ -709,7 +709,7 @@ public class DebugCommand extends CommandBase {
 	
 	public void setspecial_cmd() throws CivException {
 		Player player = getPlayer();
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null) {
 			throw new CivException("You need an item in your hand.");
 		}
@@ -717,13 +717,13 @@ public class DebugCommand extends CommandBase {
 	//	AttributeUtil attrs = new AttributeUtil(inHand);
 	//	attrs.setCivCraftProperty("customId", "testMyCustomId");
 		ItemStack stack = LoreMaterial.addEnhancement(inHand, new LoreEnhancementSoulBound());
-		player.setItemInHand(stack);
+		player.getInventory().setItemInMainHand(stack);
 		CivMessage.send(player, "Set it.");
 	}
 	
 	public void getspecial_cmd() throws CivException {
 		Player player = getPlayer();
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand == null) {
 			throw new CivException("You need an item in your hand.");
 		}
@@ -926,7 +926,7 @@ public class DebugCommand extends CommandBase {
 			throw new CivException("Enter name and first lore line.");
 		}
 		
-		ItemStack inHand = player.getItemInHand();
+		ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand != null) {
 			
 			
@@ -955,7 +955,7 @@ public class DebugCommand extends CommandBase {
 	public void loretest_cmd() throws CivException {
 		Player player = getPlayer();
 		
-		org.bukkit.inventory.ItemStack inHand = player.getItemInHand();
+		org.bukkit.inventory.ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand != null) {
 			ItemMeta meta = inHand.getItemMeta();
 			List<String> newLore = meta.getLore();
@@ -970,7 +970,7 @@ public class DebugCommand extends CommandBase {
 	public void loreset_cmd() throws CivException {
 		Player player = getPlayer();
 		
-		org.bukkit.inventory.ItemStack inHand = player.getItemInHand();
+		org.bukkit.inventory.ItemStack inHand = player.getInventory().getItemInMainHand();
 		if (inHand != null) {
 //			HashMap<String, String> loremap = new HashMap<String, String>();
 //			
@@ -987,7 +987,7 @@ public class DebugCommand extends CommandBase {
 //	public void shownbt_cmd() throws CivException {
 //		Player player = getPlayer();
 //		
-//		org.bukkit.inventory.ItemStack inHand = player.getItemInHand();
+//		org.bukkit.inventory.ItemStack inHand = player.getInventory().getItemInMainHand();
 //		if (inHand != null) {
 //			NBT.debugPrintItemTags(inHand);
 //		}
@@ -996,7 +996,7 @@ public class DebugCommand extends CommandBase {
 //	public void addnbt_cmd() throws CivException {
 //		Player player = getPlayer();
 //		
-//		org.bukkit.inventory.ItemStack inHand = player.getItemInHand();
+//		org.bukkit.inventory.ItemStack inHand = player.getInventory().getItemInMainHand();
 //		if (inHand != null) {
 //			NBT.addCustomTag("RJTEST", 1337, inHand);
 //		}
@@ -1333,12 +1333,12 @@ public class DebugCommand extends CommandBase {
 	public void dupe_cmd() throws CivException {
 		Player player = getPlayer();
 		
-		if (player.getItemInHand() == null || ItemManager.getId(player.getItemInHand()) == 0) {
+		if (player.getInventory().getItemInMainHand() == null || ItemManager.getId(player.getInventory().getItemInMainHand()) == 0) {
 			throw new CivException("No item in hand.");
 		}
 		
-		player.getInventory().addItem(player.getItemInHand());
-		CivMessage.sendSuccess(player, player.getItemInHand().getType().name()+ "duplicated.");
+		player.getInventory().addItem(player.getInventory().getItemInMainHand());
+		CivMessage.sendSuccess(player, player.getInventory().getItemInMainHand().getType().name()+ "duplicated.");
 	}
 	
 	public void makeframe_cmd() throws CivException {

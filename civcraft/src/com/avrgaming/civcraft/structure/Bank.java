@@ -224,7 +224,7 @@ public class Bank extends Structure {
 		
 		try {
 			
-			if (LoreMaterial.isCustom(player.getItemInHand())) {
+			if (LoreMaterial.isCustom(player.getInventory().getItemInMainHand())) {
 				throw new CivException(CivSettings.localize.localizedString("bank_invalidItem"));
 			}
 			

@@ -60,8 +60,8 @@ public class ArenaControlBlock {
 	public void explode() {
 		World world = Bukkit.getWorld(coord.getWorldname());
 		ItemManager.setTypeId(coord.getLocation().getBlock(), CivData.AIR);
-		world.playSound(coord.getLocation(), Sound.ANVIL_BREAK, 1.0f, -1.0f);
-		world.playSound(coord.getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
+		world.playSound(coord.getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, -1.0f);
+		world.playSound(coord.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
 		
 		FireworkEffect effect = FireworkEffect.builder().with(Type.BURST).withColor(Color.YELLOW).withColor(Color.RED).withTrail().withFlicker().build();
 		FireworkEffectPlayer fePlayer = new FireworkEffectPlayer();

@@ -19,7 +19,7 @@
 package com.avrgaming.civcraft.threading.tasks;
 
 import gpl.AttributeUtil;
-import net.minecraft.server.v1_8_R3.Material;
+import net.minecraft.server.v1_10_R1.Material;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;
@@ -69,13 +69,13 @@ public class StructureBlockHitEvent implements Runnable {
 		if (dmgBlock.allowDamageNow(player)) {
 			/* Do our damage. */
 			int damage = 1;
-			LoreMaterial material = LoreMaterial.getMaterial(player.getItemInHand());
+			LoreMaterial material = LoreMaterial.getMaterial(player.getInventory().getItemInMainHand());
 			if (material != null) {
 				damage = material.onStructureBlockBreak(dmgBlock, damage);
 			}
 			
-			if (player.getItemInHand() != null && !player.getItemInHand().getType().equals(Material.AIR)) {
-				AttributeUtil attrs = new AttributeUtil(player.getItemInHand());
+			if (player.getInventory().getItemInMainHand() != null && !player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
+				AttributeUtil attrs = new AttributeUtil(player.getInventory().getItemInMainHand());
 				for (LoreEnhancement enhance : attrs.getEnhancements()) {
 					damage = enhance.onStructureBlockBreak(dmgBlock, damage);
 				}

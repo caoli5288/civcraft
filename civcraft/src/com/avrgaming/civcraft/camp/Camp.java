@@ -157,7 +157,7 @@ public class Camp extends Buildable {
 						throw new CivException("("+name+") "+CivSettings.localize.localizedString("camp_nameTaken"));
 					}
 					
-					ItemStack stack = player.getItemInHand();
+					ItemStack stack = player.getInventory().getItemInMainHand();
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
 					if (craftMat == null || !craftMat.hasComponent("FoundCamp")) {
 						throw new CivException(CivSettings.localize.localizedString("camp_missingItem"));
@@ -171,7 +171,7 @@ public class Camp extends Buildable {
 				
 					CivMessage.sendSuccess(player, CivSettings.localize.localizedString("camp_createSuccess"));
 					ItemStack newStack = new ItemStack(Material.AIR);
-					player.setItemInHand(newStack);
+					player.getInventory().setItemInMainHand(newStack);
 					resident.clearInteractiveMode();
 				} catch (CivException e) {
 					CivMessage.sendError(player, e.getMessage());
@@ -1241,7 +1241,7 @@ public class Camp extends Buildable {
 	}
 
 	public void onControlBlockHit(ControlPoint cp, World world, Player player) {
-		world.playSound(cp.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
+		world.playSound(cp.getCoord().getLocation(), Sound.BLOCK_ANVIL_USE, 0.2f, 1);
 		world.playEffect(cp.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
 		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("camp_hitControlBlock")+"("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");
@@ -1251,8 +1251,8 @@ public class Camp extends Buildable {
 	
 	public void onControlBlockDestroy(ControlPoint cp, World world, Player player) {		
 		ItemManager.setTypeId(cp.getCoord().getLocation().getBlock(), CivData.AIR);
-		world.playSound(cp.getCoord().getLocation(), Sound.ANVIL_BREAK, 1.0f, -1.0f);
-		world.playSound(cp.getCoord().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
+		world.playSound(cp.getCoord().getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, -1.0f);
+		world.playSound(cp.getCoord().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
 		
 		FireworkEffect effect = FireworkEffect.builder().with(org.bukkit.FireworkEffect.Type.BURST).withColor(Color.YELLOW).withColor(Color.RED).withTrail().withFlicker().build();
 		FireworkEffectPlayer fePlayer = new FireworkEffectPlayer();

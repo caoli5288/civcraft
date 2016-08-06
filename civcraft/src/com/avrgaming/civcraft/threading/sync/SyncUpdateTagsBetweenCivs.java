@@ -42,13 +42,13 @@ public class SyncUpdateTagsBetweenCivs implements Runnable {
 		if (CivSettings.hasITag) {
 			for (Player player : civList) {
 				if (!otherCivList.isEmpty()) {
-					iTag.instance.refreshPlayer(player, otherCivList);
+					iTag.getInstance().refreshPlayer(player, otherCivList);
 				}
 			}
 			
 			for (Player player : otherCivList) {
 				if (!civList.isEmpty()) {
-					iTag.instance.refreshPlayer(player, civList);
+					iTag.getInstance().refreshPlayer(player, civList);
 				}
 			}
 		}

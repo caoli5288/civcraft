@@ -94,13 +94,13 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockBreak(BlockBreakEvent event) {
-	//	this.onItemDurabilityChange(event.getPlayer(), event.getPlayer().getItemInHand());
+	//	this.onItemDurabilityChange(event.getPlayer(), event.getPlayer().getInventory().getItemInMainHand());
 	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockBreakSpawnItems(BlockBreakEvent event) {
 		if (event.getBlock().getType().equals(Material.LAPIS_ORE)) {
-			if (event.getPlayer().getItemInHand().containsEnchantment(Enchantment.SILK_TOUCH)) {
+			if (event.getPlayer().getInventory().getItemInMainHand().containsEnchantment(Enchantment.SILK_TOUCH)) {
 				return;
 			}
 			
@@ -113,7 +113,7 @@ public class CustomItemManager implements Listener {
 
 				int min = CivSettings.getInteger(CivSettings.materialsConfig, "tungsten_min_drop");
 				int max;
-				if (event.getPlayer().getItemInHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
+				if (event.getPlayer().getInventory().getItemInMainHand().containsEnchantment(Enchantment.LOOT_BONUS_BLOCKS)) {
 					max = CivSettings.getInteger(CivSettings.materialsConfig, "tungsten_max_drop_with_fortune");
 				} else {
 					max = CivSettings.getInteger(CivSettings.materialsConfig, "tungsten_max_drop");
@@ -139,7 +139,7 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST) 
 	public void onBlockPlace(BlockPlaceEvent event) {
-		ItemStack stack = event.getPlayer().getItemInHand();
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (stack == null || stack.getType().equals(Material.AIR)) {
 			return;
 		}
@@ -155,7 +155,7 @@ public class CustomItemManager implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
 	
-		ItemStack stack = event.getPlayer().getItemInHand();
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (stack == null) {
 			return;
 		}
@@ -172,7 +172,7 @@ public class CustomItemManager implements Listener {
 			return;
 		}
 		
-		ItemStack stack = event.getPlayer().getItemInHand();
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (stack == null) {
 			return;
 		}
@@ -190,7 +190,7 @@ public class CustomItemManager implements Listener {
 			return;
 		}
 		
-		ItemStack stack = event.getPlayer().getItemInHand();
+		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 		if (stack == null) {
 			return;
 		}
@@ -281,7 +281,7 @@ public class CustomItemManager implements Listener {
 			LivingEntity shooter = (LivingEntity) ((Arrow)event.getDamager()).getShooter();
 			
 			if (shooter instanceof Player) {
-				ItemStack inHand = ((Player)shooter).getItemInHand();
+				ItemStack inHand = ((Player)shooter).getInventory().getItemInMainHand();
 				if (LoreMaterial.isCustom(inHand)) {
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(inHand);
 					craftMat.onRangedAttack(event, inHand);
@@ -309,7 +309,7 @@ public class CustomItemManager implements Listener {
 				}
 			}
 		} else if (event.getDamager() instanceof Player) {
-			ItemStack inHand = ((Player)event.getDamager()).getItemInHand();
+			ItemStack inHand = ((Player)event.getDamager()).getInventory().getItemInMainHand();
 			LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(inHand);
 			if (craftMat != null) {
 				craftMat.onAttack(event, inHand);
@@ -756,7 +756,7 @@ public class CustomItemManager implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void OnPlayerInteractEntityEvent (PlayerInteractEntityEvent event) {
 			
-		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getItemInHand());
+		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getInventory().getItemInMainHand());
 		if (craftMat == null) {
 			return;
 		}
@@ -766,7 +766,7 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOW)
 	public void OnPlayerLeashEvent(PlayerLeashEntityEvent event) {
-		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getItemInHand());
+		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getInventory().getItemInMainHand());
 		if (craftMat == null) {
 			return;
 		}

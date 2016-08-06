@@ -539,7 +539,7 @@ public class Cannon extends Buildable {
 		
 		if (this.tntLoaded < tntCost) {
 			if (event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
-				ItemStack stack = event.getPlayer().getItemInHand();
+				ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
 				if (stack != null) {
 					if (ItemManager.getId(stack) == CivData.TNT) {
 						if (ItemManager.removeItemFromPlayer(event.getPlayer(), Material.TNT, 1)) {

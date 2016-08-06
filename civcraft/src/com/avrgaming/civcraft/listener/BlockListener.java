@@ -23,7 +23,7 @@ import gpl.HorseModifier;
 import java.util.HashSet;
 import java.util.Random;
 
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
+import net.minecraft.server.v1_10_R1.NBTTagCompound;
 
 import org.bukkit.Chunk;
 import org.bukkit.Color;
@@ -33,7 +33,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftEntity;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
@@ -970,7 +970,7 @@ public class BlockListener implements Listener {
 		if (event.isCancelled()) {
 			// Fix for bucket bug.
 			if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-				Integer item = ItemManager.getId(event.getPlayer().getItemInHand());
+				Integer item = ItemManager.getId(event.getPlayer().getInventory().getItemInMainHand());
 				// block cheats for placing water/lava/fire/lighter use.
 				if (item == 326 || item == 327 || item == 259 || (item >= 8 && item <= 11) || item == 51) { 
 					event.setCancelled(true);
@@ -1224,7 +1224,7 @@ public class BlockListener implements Listener {
 			}
 		}
 
-		ItemStack inHand = event.getPlayer().getItemInHand();
+		ItemStack inHand = event.getPlayer().getInventory().getItemInMainHand();
 			if (inHand != null) {
 
 				boolean denyBreeding = false;

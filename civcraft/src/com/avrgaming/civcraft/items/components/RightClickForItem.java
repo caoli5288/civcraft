@@ -33,7 +33,7 @@ public class RightClickForItem extends ItemComponent {
 //			stack.setAmount(Integer.valueOf(amount));
 //
 //			int count = 0;
-//			LoreCraftableMaterial sourceMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getItemInHand());
+//			LoreCraftableMaterial sourceMat = LoreCraftableMaterial.getCraftMaterial(event.getPlayer().getInventory().getItemInMainHand());
 //			for (ItemStack s : event.getPlayer().getInventory()) {
 //				LoreCraftableMaterial invMat = LoreCraftableMaterial.getCraftMaterial(s);
 //				if (invMat == null) {
@@ -45,10 +45,10 @@ public class RightClickForItem extends ItemComponent {
 //				}
 //			}
 //			
-//			if (event.getPlayer().getItemInHand().getAmount() <= 1) {
-//				event.getPlayer().getInventory().removeItem(event.getPlayer().getItemInHand());
+//			if (event.getPlayer().getInventory().getItemInMainHand().getAmount() <= 1) {
+//				event.getPlayer().getInventory().removeItem(event.getPlayer().getInventory().getItemInMainHand());
 //			} else {
-//				event.getPlayer().getItemInHand().setAmount(event.getPlayer().getItemInHand().getAmount()-1);
+//				event.getPlayer().getInventory().getItemInMainHand().setAmount(event.getPlayer().getInventory().getItemInMainHand().getAmount()-1);
 //			}
 //
 //			int count2 = 0;

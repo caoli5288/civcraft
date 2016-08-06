@@ -49,7 +49,7 @@ public class MarkerPlacementManager implements Listener {
 	
 	public static void addToPlacementMode(Player player, Structure structure, String markerName) throws CivException {
 
-		if (player.getItemInHand() != null && ItemManager.getId(player.getItemInHand()) != CivData.AIR) {
+		if (player.getInventory().getItemInMainHand() != null && ItemManager.getId(player.getInventory().getItemInMainHand()) != CivData.AIR) {
 			throw new CivException(CivSettings.localize.localizedString("placement_errorHolding"));
 		}
 		
@@ -64,7 +64,7 @@ public class MarkerPlacementManager implements Listener {
 			meta.setDisplayName("Marker");
 		}
 		stack.setItemMeta(meta);
-		player.setItemInHand(stack);
+		player.getInventory().setItemInMainHand(stack);
 		
 		CivMessage.send(player, CivSettings.localize.localizedString("var_placement_enabled",structure.getDisplayName()));
 	}
@@ -77,7 +77,7 @@ public class MarkerPlacementManager implements Listener {
 		}
 		playersInPlacementMode.remove(player.getName());
 		markers.remove(player.getName());
-		player.setItemInHand(ItemManager.createItemStack(CivData.AIR, 1));
+		player.getInventory().setItemInMainHand(ItemManager.createItemStack(CivData.AIR, 1));
 		CivMessage.send(player, CivSettings.localize.localizedString("placement_ended"));
 	}
 	
@@ -93,11 +93,11 @@ public class MarkerPlacementManager implements Listener {
 		ArrayList<Location> locs = markers.get(player.getName());
 
 		Structure struct = playersInPlacementMode.get(player.getName());
-		int amount = player.getItemInHand().getAmount();
+		int amount = player.getInventory().getItemInMainHand().getAmount();
 		if (amount == 1) {
-			player.setItemInHand(null);
+			player.getInventory().setItemInMainHand(null);
 		} else {
-			player.getItemInHand().setAmount((amount -1));
+			player.getInventory().getItemInMainHand().setAmount((amount -1));
 		}
 		
 		locs.add(location);

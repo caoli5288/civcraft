@@ -756,7 +756,7 @@ public abstract class Buildable extends SQLObject {
 		
 		if (this.getConfigId().equals("s_shipyard") || this.getConfigId().equals("s_arrowship") || this.getConfigId().equals("s_scoutship") || this.getConfigId().equals("s_cannonship") || this.getConfigId().equals("ti_tradeship") || this.getConfigId().equals("w_grand_ship_ingermanland")) {
 			if (!centerBlock.getBiome().equals(Biome.OCEAN) && 
-				!centerBlock.getBiome().equals(Biome.BEACH) &&
+				!centerBlock.getBiome().equals(Biome.BEACHES) &&
 				!centerBlock.getBiome().equals(Biome.STONE_BEACH) &&
 				!centerBlock.getBiome().equals(Biome.COLD_BEACH) &&
 				!centerBlock.getBiome().equals(Biome.DEEP_OCEAN) &&
@@ -1190,7 +1190,7 @@ public abstract class Buildable extends SQLObject {
 			
 		this.damage(amount);
 		
-		world.playSound(hit.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
+		world.playSound(hit.getCoord().getLocation(), Sound.BLOCK_ANVIL_USE, 0.2f, 1);
 		world.playEffect(hit.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
 		if ((hit.getOwner().getDamagePercentage() % 10) == 0 && !wasTenPercent) {

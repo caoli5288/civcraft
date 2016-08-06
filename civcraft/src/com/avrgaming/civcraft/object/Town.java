@@ -518,7 +518,7 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.instance.refreshPlayer(player, Bukkit.getOnlinePlayers());
+			iTag.getInstance().refreshPlayer(player, Bukkit.getOnlinePlayers());
 		}
 	}
 	
@@ -995,7 +995,7 @@ public class Town extends SQLObject {
 			
 			if (!free) {
 				ItemStack newStack = new ItemStack(Material.AIR);
-				player.setItemInHand(newStack);	
+				player.getInventory().setItemInMainHand(newStack);	
 				Unit.removeUnit(player);
 			}
 			
@@ -1294,7 +1294,7 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(resident.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.instance.refreshPlayer(player, Bukkit.getOnlinePlayers());
+			iTag.getInstance().refreshPlayer(player, Bukkit.getOnlinePlayers());
 		}
 	}
 

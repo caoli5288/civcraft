@@ -664,7 +664,7 @@ public class Road extends Structure {
 			
 		this.damage(amount);
 		
-		world.playSound(hit.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
+		world.playSound(hit.getCoord().getLocation(), Sound.BLOCK_ANVIL_USE, 0.2f, 1);
 		world.playEffect(hit.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
 		if ((hit.getOwner().getDamagePercentage() % 10) == 0 && !wasTenPercent) {

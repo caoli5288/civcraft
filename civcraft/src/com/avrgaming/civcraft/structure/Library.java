@@ -280,7 +280,7 @@ public class Library extends Structure {
 				
 		// Successful payment, process enchantment.
 		ItemStack newStack = this.addEnchantment(item, ench);
-		player.setItemInHand(newStack);
+		player.getInventory().setItemInMainHand(newStack);
 		CivMessage.send(player, CivColor.LightGreen+CivSettings.localize.localizedString("var_library_enchantment_added",ench.displayName));
 	}
 

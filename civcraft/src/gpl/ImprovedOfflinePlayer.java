@@ -30,34 +30,30 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import net.minecraft.server.v1_8_R3.AttributeMapBase;
-import net.minecraft.server.v1_8_R3.AttributeMapServer;
-import net.minecraft.server.v1_8_R3.GenericAttributes;
-import net.minecraft.server.v1_8_R3.InventoryEnderChest;
-import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagDouble;
-import net.minecraft.server.v1_8_R3.NBTTagFloat;
-import net.minecraft.server.v1_8_R3.NBTTagList;
-import net.minecraft.server.v1_8_R3.PlayerAbilities;
-import net.minecraft.server.v1_8_R3.PlayerInventory;
+import net.minecraft.server.v1_10_R1.AttributeMapBase;
+import net.minecraft.server.v1_10_R1.AttributeMapServer;
+import net.minecraft.server.v1_10_R1.GenericAttributes;
+import net.minecraft.server.v1_10_R1.InventoryEnderChest;
+import net.minecraft.server.v1_10_R1.NBTCompressedStreamTools;
+import net.minecraft.server.v1_10_R1.NBTTagCompound;
+import net.minecraft.server.v1_10_R1.NBTTagDouble;
+import net.minecraft.server.v1_10_R1.NBTTagFloat;
+import net.minecraft.server.v1_10_R1.NBTTagList;
+import net.minecraft.server.v1_10_R1.PlayerAbilities;
+import net.minecraft.server.v1_10_R1.PlayerInventory;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftInventoryPlayer;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftInventory;
+import org.bukkit.craftbukkit.v1_10_R1.inventory.CraftInventoryPlayer;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 
-import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.util.NBTStaticHelper;
-import com.google.common.io.Files;
 
 /**
  * @name ImprovedOfflinePlayer
@@ -117,34 +113,7 @@ public class ImprovedOfflinePlayer {
   public void setAutoSave(boolean autosave) {
     this.autosave = autosave;
   }
-  /**@param Incomplete**/
-public void copyDataTo(String playername) {
-    try {
-      if(!playername.equalsIgnoreCase(this.player)) {
-    	Resident res = CivGlobal.getResident(playername);
-        Player to = Bukkit.getPlayer(res.getUUID());
-        Player from = Bukkit.getPlayer(res.getUUID());
-        if(from != null) {
-          from.saveData();
-        }
-        Files.copy(this.file, new File(this.file.getParentFile(), playername + ".dat"));
-        if(to != null) {
-          to.teleport(from == null ? getLocation() : from.getLocation());
-          to.loadData();
-        }
-      }
-      else {
-      	Resident res = CivGlobal.getResident(playername);
-        Player player = Bukkit.getPlayer(res.getUUID());
-        if(player != null) {
-          player.saveData();
-        }
-      }
-    }
-    catch(Exception e) {
-      e.printStackTrace();
-    }
-  }
+  
   public PlayerAbilities getAbilities() {
     PlayerAbilities pa = new PlayerAbilities();
     pa.a(this.compound);
@@ -310,15 +279,6 @@ public void copyDataTo(String playername) {
     if(this.autosave) savePlayerData();
   }
   
-  public Location getLocation() {
-    NBTTagList position = this.compound.getList("Pos", NBTStaticHelper.TAG_DOUBLE);
-    NBTTagList rotation = this.compound.getList("Rotation", NBTStaticHelper.TAG_FLOAT);
-    
-    return new Location(
-    		Bukkit.getWorld(new UUID(this.compound.getLong("WorldUUIDMost"), this.compound.getLong("WorldUUIDLeast"))),
-    		position.d(0), position.d(1), position.d(2), rotation.e(0), rotation.e(1));
-  }
-  
   public void setLocation(Location location) {
     World w = location.getWorld();
     UUID uuid = w.getUID();
@@ -422,11 +382,6 @@ public void copyDataTo(String playername) {
   public void setTotalExperience(int input) {
     this.compound.setInt("XpTotal", input);
     if(this.autosave) savePlayerData();
-  }
-  
-  public Vector getVelocity() {
-    NBTTagList list = this.compound.getList("Motion", NBTStaticHelper.TAG_DOUBLE);
-    return new Vector(list.d(0), list.d(2), list.d(3));
   }
   
   public void setVelocity(Vector vector) {

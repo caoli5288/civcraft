@@ -101,7 +101,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 						throw new CivException(CivSettings.localize.localizedString("var_warcamp_maxReached",warCampMax));
 					}
 					
-					ItemStack stack = player.getItemInHand();
+					ItemStack stack = player.getInventory().getItemInMainHand();
 					LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
 					if (craftMat == null || !craftMat.hasComponent("FoundWarCamp")) {
 						throw new CivException(CivSettings.localize.localizedString("warcamp_missingItem"));
@@ -114,7 +114,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 					CivMessage.sendSuccess(player, CivSettings.localize.localizedString("warcamp_createSuccess"));
 					camp.setWarCampBuilt();
 					ItemStack newStack = new ItemStack(Material.AIR);
-					player.setItemInHand(newStack);
+					player.getInventory().setItemInMainHand(newStack);
 				} catch (CivException e) {
 					CivMessage.sendError(player, e.getMessage());
 				}
@@ -484,8 +484,8 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 		Resident attacker = CivGlobal.getResident(player);
 		
 		ItemManager.setTypeId(hit.getCoord().getLocation().getBlock(), CivData.AIR);
-		world.playSound(hit.getCoord().getLocation(), Sound.ANVIL_BREAK, 1.0f, -1.0f);
-		world.playSound(hit.getCoord().getLocation(), Sound.EXPLODE, 1.0f, 1.0f);
+		world.playSound(hit.getCoord().getLocation(), Sound.BLOCK_ANVIL_BREAK, 1.0f, -1.0f);
+		world.playSound(hit.getCoord().getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1.0f, 1.0f);
 		
 		FireworkEffect effect = FireworkEffect.builder().with(org.bukkit.FireworkEffect.Type.BURST).withColor(Color.OLIVE).withColor(Color.RED).withTrail().withFlicker().build();
 		FireworkEffectPlayer fePlayer = new FireworkEffectPlayer();
@@ -529,7 +529,7 @@ public class WarCamp extends Buildable implements RespawnLocationHolder {
 	}
 	
 	public void onControlBlockHit(ControlPoint cp, World world, Player player, StructureBlock hit) {
-		world.playSound(hit.getCoord().getLocation(), Sound.ANVIL_USE, 0.2f, 1);
+		world.playSound(hit.getCoord().getLocation(), Sound.BLOCK_ANVIL_USE, 0.2f, 1);
 		world.playEffect(hit.getCoord().getLocation(), Effect.MOBSPAWNER_FLAMES, 0);
 		
 		CivMessage.send(player, CivColor.LightGray+CivSettings.localize.localizedString("warcamp_hitControlBlock")+" ("+cp.getHitpoints()+" / "+cp.getMaxHitpoints()+")");

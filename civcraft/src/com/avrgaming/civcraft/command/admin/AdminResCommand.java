@@ -99,7 +99,7 @@ public class AdminResCommand extends CommandBase {
 		int level = getNamedInteger(2);
 		
 		
-		ItemStack stack = player.getItemInHand();
+		ItemStack stack = player.getInventory().getItemInMainHand();
 		Enchantment ench = Enchantment.getByName(enchant);
 		if (ench == null) {
 			String out ="";

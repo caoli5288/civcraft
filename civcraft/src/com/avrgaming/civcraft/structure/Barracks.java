@@ -221,7 +221,7 @@ public class Barracks extends Structure {
 	
 	private void repairItem(Player player, Resident resident, PlayerInteractEvent event) {
 		try {
-			ItemStack inHand = player.getItemInHand();
+			ItemStack inHand = player.getInventory().getItemInMainHand();
 			if (inHand == null || inHand.getType().equals(Material.AIR)) {
 				throw new CivException(CivSettings.localize.localizedString("barracks_repair_noItem"));
 			}
@@ -286,7 +286,7 @@ public class Barracks extends Structure {
 			return;
 		}
 		
-		LoreCraftableMaterial craftMatInHand = LoreCraftableMaterial.getCraftMaterial(player.getItemInHand());
+		LoreCraftableMaterial craftMatInHand = LoreCraftableMaterial.getCraftMaterial(player.getInventory().getItemInMainHand());
 		
 		if (!craftMatInHand.getConfigId().equals(craftMat.getConfigId())) {
 			CivMessage.sendError(player, CivSettings.localize.localizedString("barracks_repair_DifferentItem"));
@@ -294,7 +294,7 @@ public class Barracks extends Structure {
 		}
 		
 		resident.getTreasury().withdraw(cost);
-		player.getItemInHand().setDurability((short)0);
+		player.getInventory().getItemInMainHand().setDurability((short)0);
 		
 		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_barracks_repair_Success",craftMat.getName(),cost,CivSettings.CURRENCY_NAME));
 		

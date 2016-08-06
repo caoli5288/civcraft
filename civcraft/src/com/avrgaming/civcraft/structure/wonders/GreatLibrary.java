@@ -125,7 +125,7 @@ public class GreatLibrary extends Wonder {
 			return;
 		}
 		
-		ItemStack hand = player.getItemInHand();
+		ItemStack hand = player.getInventory().getItemInMainHand();
 		ConfigEnchant configEnchant;
 		
 		switch (sign.getAction()) {
@@ -200,7 +200,7 @@ public class GreatLibrary extends Wonder {
 				
 				resident.getTreasury().withdraw(configEnchant.cost);
 				ItemStack newItem = LoreMaterial.addEnhancement(hand, LoreEnhancement.enhancements.get(configEnchant.enchant_id));				
-				player.setItemInHand(newItem);
+				player.getInventory().setItemInMainHand(newItem);
 				break;
 			default:
 				CivMessage.sendError(player, CivSettings.localize.localizedString("library_enchant_cannotEnchant"));

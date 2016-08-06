@@ -58,7 +58,7 @@ public class AdminItemCommand extends CommandBase {
 	public void enhance_cmd() throws CivException {
 		Player player = getPlayer();
 		HashMap<String, LoreEnhancement> enhancements = new HashMap<String, LoreEnhancement>();
-		ItemStack inHand = getPlayer().getItemInHand();
+		ItemStack inHand = getPlayer().getInventory().getItemInMainHand();
 		
 		enhancements.put("soulbound", new LoreEnhancementSoulBound());
 		enhancements.put("attack", new LoreEnhancementAttack());
@@ -85,7 +85,7 @@ public class AdminItemCommand extends CommandBase {
 			if (name.equals(str)) {
 				LoreEnhancement enh = enhancements.get(str);
 				ItemStack stack = LoreMaterial.addEnhancement(inHand, enh);
-				player.setItemInHand(stack);
+				player.getInventory().setItemInMainHand(stack);
 				CivMessage.sendSuccess(sender, CivSettings.localize.localizedString("var_adcmd_item_enhanceSuccess",name));
 				return;
 			}
