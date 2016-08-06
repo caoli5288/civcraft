@@ -4,10 +4,10 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/dhutils.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/HeroChat (2).jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/Vault (2).jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/VanishNoPacket (3).jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/WorldBorder.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/NoCheatPlus (3).jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/Vault v1.5.6.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/VanishNoPacket v3.20.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/WorldBorder v1.8.5.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/NoCheatPlus 2016-05-21.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bonecp-0.8.0.RELEASE.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/guava-15.0.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/slf4j-simple-1.7.5.jar"/>
@@ -16,10 +16,10 @@
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/junit-4.11.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/mockito-all-1.9.5.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/json.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.8.7-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.8.7.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.8.7.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TitleAPI.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/iTag-1.1.5-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.10.2-R0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.10.2.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-1.10.2.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TitleAPI-1.7.4.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TagAPI-1.1.9.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
