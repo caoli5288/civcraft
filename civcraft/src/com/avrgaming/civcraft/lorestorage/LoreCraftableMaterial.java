@@ -218,7 +218,7 @@ public class LoreCraftableMaterial extends LoreMaterial {
 			ConfigMaterial configMaterial = loreMat.configMaterial;
 			
 			if (loreMat.isShaped()) {
-				ItemStack[] matrix = new ItemStack[10];
+				ItemStack[] matrix = new ItemStack[9];
 				ShapedRecipe recipe = new ShapedRecipe(stack);
 				recipe.shape(configMaterial.shape[0], configMaterial.shape[1], configMaterial.shape[2]);
 				
