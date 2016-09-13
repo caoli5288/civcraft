@@ -28,7 +28,6 @@ import com.avrgaming.civcraft.main.CivGlobal;
 
 public class ItemDuraSyncTask implements Runnable {
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		

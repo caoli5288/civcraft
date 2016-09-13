@@ -97,7 +97,6 @@ public class Market extends Structure {
 		item.sell(resident, player, bulkCount);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void processSignAction(Player player, StructureSign sign, PlayerInteractEvent event) throws CivException {
 		

@@ -158,7 +158,6 @@ public class ItemManager {
 		return skull;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static boolean removeItemFromPlayer(Player player, Material mat, int amount) {
 		ItemStack m = new ItemStack(mat, amount);
 		if (player.getInventory().contains(mat)) {

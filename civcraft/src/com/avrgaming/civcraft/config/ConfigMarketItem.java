@@ -312,7 +312,6 @@ public class ConfigMarketItem {
 		player.updateInventory();
 	}
 	
-	@SuppressWarnings("deprecation")
 	public void sell(Resident resident, Player player, int amount) throws CivException {
 		int total_coins = 0;
 		int total_items = 0;

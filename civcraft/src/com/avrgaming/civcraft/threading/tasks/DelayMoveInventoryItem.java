@@ -39,7 +39,6 @@ public class DelayMoveInventoryItem implements Runnable {
 	public Inventory inv;
 	public String playerName;
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void run() {
 		

@@ -110,7 +110,6 @@ public abstract class Unit {
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	public static void removeUnit(Player player) {
 		
 		for (ItemStack stack : player.getInventory().getContents()) {

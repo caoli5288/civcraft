@@ -517,7 +517,6 @@ public class MissionBook extends UnitItemMaterial {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	private static void performInvestigateTown(Player player, ConfigMission mission) throws CivException {
 		
 		Resident resident = CivGlobal.getResident(player);

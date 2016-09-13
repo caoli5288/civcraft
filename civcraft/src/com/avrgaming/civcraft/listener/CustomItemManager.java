@@ -534,7 +534,6 @@ public class CustomItemManager implements Listener {
 		event.getDrops().removeAll(removed);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOW)
 	public void onItemPickup(PlayerPickupItemEvent event) {
 

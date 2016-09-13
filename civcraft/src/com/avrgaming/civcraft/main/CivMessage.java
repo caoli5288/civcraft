@@ -28,6 +28,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import com.avrgaming.civcraft.arena.Arena;
 import com.avrgaming.civcraft.arena.ArenaTeam;
@@ -38,7 +39,12 @@ import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.CivColor;
+import com.avrgaming.civcraft.util.Reflection;
 import com.connorlinfoot.titleapi.TitleAPI;
+
+import net.md_5.bungee.api.chat.ComponentBuilder;
+import net.md_5.bungee.api.chat.HoverEvent;
+import net.md_5.bungee.api.chat.TextComponent;
 
 public class CivMessage {
 
@@ -121,6 +127,44 @@ public class CivMessage {
 		else if (sender instanceof Resident) {
 			try {
 				CivGlobal.getPlayer(((Resident) sender)).sendMessage(line);
+			} catch (CivException e) {
+				// No player online
+			}
+		}
+	}
+	
+	public static String itemTooltip(ItemStack itemStack)
+	  {
+	    try
+	    {
+	      Object nmsItem = Reflection.getMethod(Reflection.getOBCClass("inventory.CraftItemStack"), "asNMSCopy", new Class[] { ItemStack.class }).invoke(null, new Object[] { itemStack });
+	      return (Reflection.getMethod(Reflection.getNMSClass("ItemStack"), "save", new Class[] { Reflection.getNMSClass("NBTTagCompound") }).invoke(nmsItem, new Object[] { Reflection.getNMSClass("NBTTagCompound").newInstance() }).toString());
+	    }
+	    catch (Exception e)
+	    {
+	      e.printStackTrace();
+	    }
+	    return null;
+	  }
+	
+	public static void send(Object sender, String line, ItemStack item) {
+		if ((sender instanceof Player)) {
+			Player p = (Player) sender;
+			TextComponent msg = new TextComponent( line );
+			msg.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(itemTooltip(item)).create() ) );
+
+			p.spigot().sendMessage( msg );
+		} else if (sender instanceof CommandSender) {
+			
+			((CommandSender) sender).sendMessage(line);
+		}
+		else if (sender instanceof Resident) {
+			try {				
+				Player p = CivGlobal.getPlayer(((Resident) sender));
+				TextComponent msg = new TextComponent( line );
+				msg.setHoverEvent( new HoverEvent( HoverEvent.Action.SHOW_ITEM, new ComponentBuilder(itemTooltip(item)).create() ) );
+
+				p.spigot().sendMessage( msg );
 			} catch (CivException e) {
 				// No player online
 			}

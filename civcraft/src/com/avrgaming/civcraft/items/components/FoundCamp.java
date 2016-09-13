@@ -94,7 +94,6 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 				this.name = name;
 			}
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				Player player;

@@ -15,7 +15,6 @@ public class NoRightClick extends ItemComponent {
 	}
 
 	
-	@SuppressWarnings("deprecation")
 	public void onInteract(PlayerInteractEvent event) {
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
 			event.getPlayer().updateInventory();

@@ -89,18 +89,19 @@ public class PlayerListener implements Listener {
 		
 		String name;
 		boolean rare = false;
-		if (event.getItem().getItemStack().getItemMeta().hasDisplayName()) {
-			name = event.getItem().getItemStack().getItemMeta().getDisplayName();
+		ItemStack item = event.getItem().getItemStack();
+		if (item.getItemMeta().hasDisplayName()) {
+			name = item.getItemMeta().getDisplayName();
 			rare = true;
 		} else {
-			name = event.getItem().getItemStack().getType().name().replace("_", " ").toLowerCase();
+			name = item.getType().name().replace("_", " ").toLowerCase();
 		}
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 		if (resident.getItemMode().equals("all")) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name));
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name),item);
 		} else if (resident.getItemMode().equals("rare") && rare) {
-			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name));
+			CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_customItem_Pickup",CivColor.LightPurple+event.getItem().getItemStack().getAmount(),name),item);
 		}
 	}
 	

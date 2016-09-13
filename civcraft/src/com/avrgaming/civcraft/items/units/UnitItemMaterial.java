@@ -88,7 +88,6 @@ public class UnitItemMaterial extends LoreMaterial {
 		
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onItemDrop(PlayerDropItemEvent event) {
 		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitItem_cannotDrop"));

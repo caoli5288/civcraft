@@ -31,7 +31,6 @@ public class NoVanillaDurability extends ItemComponent {
 	
 	//private ConcurrentHashMap<String, String> playersToUpdateInventory = new ConcurrentHashMap<String, String>();
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public void onDurabilityChange(PlayerItemDamageEvent event) {
 		event.setDamage(0);

@@ -78,7 +78,6 @@ public class FoundCivilization extends ItemComponent implements CallbackInterfac
 				this.name = name;
 			}
 			
-			@SuppressWarnings("deprecation")
 			@Override
 			public void run() {
 				Player player;

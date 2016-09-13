@@ -262,7 +262,6 @@ public class TradeInventoryListener implements Listener {
 		pair.otherInv.setItem(OTHER_SLOT_BUTTON, guiStack2);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOW)
 	public void onInventoryClickEvent(InventoryClickEvent event) {
 		if (!(event.getWhoClicked() instanceof Player)) {
@@ -544,7 +543,6 @@ public class TradeInventoryListener implements Listener {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@EventHandler(priority = EventPriority.LOW)
 	public void onInventoryClose(InventoryCloseEvent event) {
 		if (!(event.getPlayer() instanceof Player)) {
