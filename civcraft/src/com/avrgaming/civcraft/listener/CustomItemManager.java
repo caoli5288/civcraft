@@ -211,8 +211,27 @@ public class CustomItemManager implements Listener {
 
 		if (LoreMaterial.isCustom(stack)) {
 			LoreMaterial.getMaterial(stack).onItemDrop(event);
+			return;
+		}
+		
+		String custom = isCustomDrop(stack);
+		
+		if (custom != null) {
+			event.setCancelled(true);
 		}
 	}	
+	
+	private static String isCustomDrop(ItemStack stack) {
+		if (stack == null || ItemManager.getId(stack) != 166) {
+			return null;
+		}
+		
+		if(LoreGuiItem.isGUIItem(stack)) {
+			return null;
+		}
+		
+		return stack.getItemMeta().getDisplayName();
+	}
 	
 	/*
 	 * Prevent the player from using goodies in crafting recipies.
@@ -244,6 +263,15 @@ public class CustomItemManager implements Listener {
 
 		if (LoreMaterial.isCustom(stack)) {
 			LoreMaterial.getMaterial(stack).onItemSpawn(event);
+			return;
+		}
+		
+		String custom = isCustomDrop(stack);
+		
+		if (custom != null) {
+			ItemStack newStack = LoreMaterial.spawn(LoreMaterial.materialMap.get(custom), stack.getAmount());
+			event.getEntity().getWorld().dropItemNaturally(event.getLocation(), newStack);
+			event.setCancelled(true);
 			return;
 		}
 		
