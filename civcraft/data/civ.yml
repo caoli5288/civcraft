@@ -75,6 +75,11 @@ global:
    # Minimum Build Height for Structures, Walls, and Roads. Default: 1
    min_build_height: 1
 
+   #Use Experience as currency. Default: true
+   #If true, disables EXP enchanting and repair.
+   use_exp_as_currency: true
+
+
 civ:
     # Amount of coins required to start a civilization
     # Unused anyways

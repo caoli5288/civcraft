@@ -214,7 +214,20 @@ public final class CivCraft extends JavaPlugin {
 		pluginManager.registerEvents(new DebugListener(), this);
 		pluginManager.registerEvents(new LoreCraftableMaterialListener(), this);
 		pluginManager.registerEvents(new LoreGuiItemListener(), this);
-		pluginManager.registerEvents(new DisableXPListener(), this);
+		
+		Boolean useEXPAsCurrency= true;
+		try {
+			useEXPAsCurrency = CivSettings.getBoolean(CivSettings.civConfig, "global.use_exp_as_currency");
+			
+		} catch (InvalidConfiguration e) {
+			useEXPAsCurrency = true;
+			CivLog.error("Unable to check if EXP should be enabled. Disabling.");
+			e.printStackTrace();
+		}
+		
+		if (useEXPAsCurrency) {
+			pluginManager.registerEvents(new DisableXPListener(), this);
+		}
 		pluginManager.registerEvents(new TradeInventoryListener(), this);
 		pluginManager.registerEvents(new ArenaListener(), this);
 		pluginManager.registerEvents(new CannonListener(), this);
