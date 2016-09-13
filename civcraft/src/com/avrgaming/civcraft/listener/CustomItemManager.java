@@ -81,6 +81,7 @@ import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
 
+@SuppressWarnings("deprecation")
 public class CustomItemManager implements Listener {
 	
 	public static HashMap<String, LinkedList<ItemDurabilityEntry>> itemDuraMap = new HashMap<String, LinkedList<ItemDurabilityEntry>>();
@@ -828,7 +829,6 @@ public class CustomItemManager implements Listener {
 		return true;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public static void removeUnwantedVanillaItems(Player player, Inventory inv) {
 		if (player.isOp()) {
 			/* Allow OP to carry vanilla stuff. */
