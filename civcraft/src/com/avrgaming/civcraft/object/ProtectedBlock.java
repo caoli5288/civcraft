@@ -50,6 +50,7 @@ public class ProtectedBlock extends SQLObject {
 		NONE,
 		TRADE_MARKER,
 		PROTECTED_RAILWAY,
+		MOB_SPAWNER_MARKER,
 	}
 	
 	public static final String TABLE_NAME = "PROTECTED_BLOCKS";

@@ -95,7 +95,7 @@ public class TradeGoodPostGenTask implements Runnable {
 		
 		/* Generate Trade Good Pillars. */
 		Queue<TradeGoodPick> picksQueue = new LinkedList<TradeGoodPick>();
-		for (TradeGoodPick pick : CivGlobal.preGenerator.goodPicks.values()) {
+		for (TradeGoodPick pick : CivGlobal.tradeGoodPreGenerator.goodPicks.values()) {
 			picksQueue.add(pick);
 		}
 		

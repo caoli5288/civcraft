@@ -40,6 +40,7 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.object.Civilization;
 import com.avrgaming.civcraft.object.MissionLogger;
+import com.avrgaming.civcraft.object.MobSpawner;
 import com.avrgaming.civcraft.object.NamedObject;
 import com.avrgaming.civcraft.object.ProtectedBlock;
 import com.avrgaming.civcraft.object.Relation;
@@ -170,6 +171,7 @@ public class SQL {
 		RoadBlock.init();
 		PermissionGroup.init();
 		TradeGood.init();
+		MobSpawner.init();
 		ProtectedBlock.init();
 		BonusGoodie.init();
 		MissionLogger.init();

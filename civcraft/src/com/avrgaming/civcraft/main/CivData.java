@@ -117,6 +117,7 @@ public class CivData {
 	public static final byte DATA_WOOL_BLACK = 0xF;
 	public static final int COOKED_FISH = 350;
 	public static final int OBSIDIAN = 49;
+	public static final int NETHER_WART_BLOCK = 214;
 	public static final int FIRE = 51;
 	public static final int FISHING_ROD = 346;
 	public static final int FISH_RAW = 349;

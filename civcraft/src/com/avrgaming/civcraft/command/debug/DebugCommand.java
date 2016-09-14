@@ -57,6 +57,7 @@ import com.avrgaming.civcraft.command.admin.AdminTownCommand;
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigBuff;
 import com.avrgaming.civcraft.config.ConfigBuildableInfo;
+import com.avrgaming.civcraft.config.ConfigMobSpawner;
 import com.avrgaming.civcraft.config.ConfigPerk;
 import com.avrgaming.civcraft.config.ConfigTradeGood;
 import com.avrgaming.civcraft.database.SQL;
@@ -82,6 +83,7 @@ import com.avrgaming.civcraft.object.StructureSign;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.object.TownChunk;
 import com.avrgaming.civcraft.permission.PermissionGroup;
+import com.avrgaming.civcraft.populators.MobSpawnerPopulator;
 import com.avrgaming.civcraft.populators.TradeGoodPopulator;
 import com.avrgaming.civcraft.road.Road;
 import com.avrgaming.civcraft.siege.Cannon;
@@ -100,6 +102,7 @@ import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.threading.tasks.ChunkGenerateTask;
 import com.avrgaming.civcraft.threading.tasks.CultureProcessAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.FisheryAsyncTask;
+import com.avrgaming.civcraft.threading.tasks.MobSpawnerPostGenTask;
 import com.avrgaming.civcraft.threading.tasks.PostBuildSyncTask;
 import com.avrgaming.civcraft.threading.tasks.QuarryAsyncTask;
 import com.avrgaming.civcraft.threading.tasks.TradeGoodPostGenTask;
@@ -150,10 +153,13 @@ public class DebugCommand extends CommandBase {
 		commands.put("unloadchunk", "[x] [z] - unloads this chunk.");
 		commands.put("setspeed", "[speed] - set your speed to this");
 		commands.put("tradegenerate", "generates trade goods at picked locations");
+		commands.put("mobspawnergenerate", "generates mob spawners at picked locations");
 		commands.put("createtradegood", "[good_id] - creates a trade goodie here.");
+		commands.put("createmobspawner", "[spawner_id] - creates a mob spawner here.");
 		commands.put("cleartradesigns", "clears extra trade signs above trade outpots");
 		commands.put("restoresigns", "restores all structure signs");
-		commands.put("regenchunk", "regens every chunk that has a trade good in it");
+		commands.put("regentradegoodchunk", "regens every chunk that has a trade good in it");
+		commands.put("regenmobspawnerchunk", "regens every chunk that has a Mob Spawner in it");
 		commands.put("quickcodereload", "Reloads the quick code plugin");
 		commands.put("loadbans", "Loads bans from ban list into global table");
 		commands.put("setallculture", "[amount] - sets all towns culture in the world to this amount.");
@@ -1042,17 +1048,27 @@ public class DebugCommand extends CommandBase {
 		
 	}
 	
-	public void regenchunk_cmd() {
+	public void regentradegoodchunk_cmd() {
 	
 		World world = Bukkit.getWorld("world");
 
-		for(ChunkCoord coord : CivGlobal.preGenerator.goodPicks.keySet()) {
+		for(ChunkCoord coord : CivGlobal.tradeGoodPreGenerator.goodPicks.keySet()) {
 			
 			world.regenerateChunk(coord.getX(), coord.getZ());
 			CivMessage.send(sender, "Regened:"+coord);
 		}
+	}
+	
+	public void regenmobspawnerchunk_cmd() {
+	
+		World world = Bukkit.getWorld("world");
 		
-		
+		for(ChunkCoord coord : CivGlobal.mobSpawnerPreGenerator.spawnerPicks.keySet()) {
+			
+			world.regenerateChunk(coord.getX(), coord.getZ());
+			CivMessage.send(sender, "Regened:"+coord);
+			
+		}
 	}
 	
 	public void restoresigns_cmd() {
@@ -1108,6 +1124,19 @@ public class DebugCommand extends CommandBase {
 		
 	}
 	
+	public void mobspawnergenerate_cmd() throws CivException {
+		String playerName;
+		
+		if (sender instanceof Player) {
+			playerName = sender.getName();
+		} else {
+			playerName = null;
+		}
+		
+		CivMessage.send(sender, "Starting Mob Spawner Generation task...");
+		TaskMaster.asyncTask(new MobSpawnerPostGenTask(playerName, 0), 0);				
+	}
+	
 	
 	public void tradegenerate_cmd() throws CivException {
 		String playerName;
@@ -1136,6 +1165,21 @@ public class DebugCommand extends CommandBase {
 		BlockCoord coord = new BlockCoord(getPlayer().getLocation());
 		TradeGoodPopulator.buildTradeGoodie(good, coord, getPlayer().getLocation().getWorld(), false);
 		CivMessage.sendSuccess(sender, "Created a "+good.name+" here.");
+	}
+	
+	public void createmobspawner_cmd() throws CivException {
+		if (args.length < 2) {
+			throw new CivException("Enter mob spawner id");
+		}
+		
+		ConfigMobSpawner spawner = CivSettings.spawners.get(args[1]);
+		if (spawner == null) {
+			throw new CivException("Unknown mob spawner id:"+args[1]);
+		}
+		
+		BlockCoord coord = new BlockCoord(getPlayer().getLocation());
+		MobSpawnerPopulator.buildMobSpawner(spawner, coord, getPlayer().getLocation().getWorld(), false);
+		CivMessage.sendSuccess(sender, "Created a "+spawner.name+" here.");
 	}
 	
 	public void generate_cmd() throws CivException {

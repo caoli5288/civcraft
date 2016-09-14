@@ -165,7 +165,7 @@ public class TradeGoodPopulator extends BlockPopulator {
 	public void populate(World world, Random random, Chunk source) {
     	
     	ChunkCoord cCoord = new ChunkCoord(source);
-    	TradeGoodPick pick = CivGlobal.preGenerator.goodPicks.get(cCoord);
+    	TradeGoodPick pick = CivGlobal.tradeGoodPreGenerator.goodPicks.get(cCoord);
     	if (pick != null) {
 			int centerX = (source.getX() << 4) + 8;
 			int centerZ = (source.getZ() << 4) + 8;

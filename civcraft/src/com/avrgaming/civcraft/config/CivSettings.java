@@ -120,6 +120,11 @@ public class CivSettings {
 	public static Map<String, ConfigTech> techs = new HashMap<String, ConfigTech>();
 	public static Map<Integer, ConfigTechItem> techItems = new HashMap<Integer, ConfigTechItem>();
 	public static Map<Integer, ConfigTechPotion> techPotions = new HashMap<Integer, ConfigTechPotion>();
+	
+	public static FileConfiguration spawnersConfig; /* spawners.yml */
+	public static Map<String, ConfigMobSpawner> spawners = new HashMap<String, ConfigMobSpawner>();
+	public static Map<String, ConfigMobSpawner> landSpawners = new HashMap<String, ConfigMobSpawner>();
+	public static Map<String, ConfigMobSpawner> waterSpawners = new HashMap<String, ConfigMobSpawner>();
 
 	public static FileConfiguration goodsConfig; /* goods.yml */
 	public static Map<String, ConfigTradeGood> goods = new HashMap<String, ConfigTradeGood>();
@@ -395,6 +400,7 @@ public class CivSettings {
 		structureConfig = loadCivConfig("structures.yml");
 		techsConfig = loadCivConfig("techs.yml");
 		goodsConfig = loadCivConfig("goods.yml");
+		spawnersConfig = loadCivConfig("spawners.yml");
 		buffConfig = loadCivConfig("buffs.yml");
 		governmentConfig = loadCivConfig("governments.yml");
 		warConfig = loadCivConfig("war.yml");
@@ -439,6 +445,7 @@ public class CivSettings {
 		ConfigBuff.loadConfig(buffConfig, buffs);
 		ConfigWonderBuff.loadConfig(wonderConfig, wonderBuffs);
 		ConfigTradeGood.loadConfig(goodsConfig, goods, landGoods, waterGoods);
+		ConfigMobSpawner.loadConfig(spawnersConfig, spawners, landSpawners, waterSpawners);
 		ConfigGrocerLevel.loadConfig(structureConfig, grocerLevels);
 		ConfigCottageLevel.loadConfig(structureConfig, cottageLevels);
 		ConfigTempleLevel.loadConfig(structureConfig, templeLevels);
@@ -466,7 +473,8 @@ public class CivSettings {
 		ConfigTradeShipLevel.loadConfig(structureConfig, tradeShipLevels);
 	
 		ConfigRemovedRecipes.removeRecipes(materialsConfig, removedRecipies );
-		CivGlobal.preGenerator.preGenerate();
+		CivGlobal.tradeGoodPreGenerator.preGenerate();
+		CivGlobal.mobSpawnerPreGenerator.preGenerate();
 		Wall.init_settings();
 		FortifiedWall.init_settings();
 	}

@@ -220,13 +220,13 @@ public class TradeGoodPreGenerate {
 				}
 				
 				if (nearby.waterPick == pick.waterPick) {
-					if (validLandGoods.size() <= 1) {
+					if (validWaterGoods.size() <= 1) {
 						/* Dont generate anything here. */
 						return;
 					} else {
-						while (nearby.landPick == pick.landPick) {
+						while (nearby.waterPick == pick.waterPick) {
 							rand = random.nextInt(100);
-							pick.landPick = pickFromSet(validLandGoods, rand);
+							pick.waterPick = pickFromSet(validWaterGoods, rand);
 						}
 					}
 				}
