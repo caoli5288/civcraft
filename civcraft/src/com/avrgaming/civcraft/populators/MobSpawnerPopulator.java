@@ -24,6 +24,10 @@ import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.ItemManager;
 
+import de.hellfirepvp.api.CustomMobsAPI;
+import de.hellfirepvp.api.data.ICustomMob;
+import de.hellfirepvp.api.data.ISpawnerEditor;
+
 public class MobSpawnerPopulator extends BlockPopulator {
     
     //private static final int RESOURCE_CHANCE = 400; 
@@ -31,9 +35,9 @@ public class MobSpawnerPopulator extends BlockPopulator {
 //    private static final double MIN_DISTANCE = 400.0;
     
 
-    public static void buildMobSpawner(ConfigMobSpawner good, BlockCoord coord, World world, boolean sync) {
-        MobSpawner new_good = new MobSpawner(good, coord);            
-        CivGlobal.addMobSpawner(new_good);
+    public static void buildMobSpawner(ConfigMobSpawner spawner, BlockCoord coord, World world, boolean sync) {
+        MobSpawner newSpawner = new MobSpawner(spawner, coord);            
+        CivGlobal.addMobSpawner(newSpawner);
 
         BlockFace direction = null;
         Block top = null;
@@ -67,15 +71,39 @@ public class MobSpawnerPopulator extends BlockPopulator {
             try {
                 pb.saveNow();
             } catch (SQLException e) {
-                CivLog.warning("Unable to Protect Mob Spawner Sign");
+                CivLog.warning("Unable to Protect Mob Spawner Block");
                 e.printStackTrace();
             }    
             } else {
                 pb.save();
             }
         }
+        
+        ISpawnerEditor spawnerEditor = CustomMobsAPI.getSpawnerEditor();
+        if (spawnerEditor != null) {
+        	ICustomMob mob = CustomMobsAPI.getCustomMob(spawner.id);
+        	spawnerEditor.setSpawner(mob, top.getLocation(), 60);
+            CivLog.debug("Created Mob Spawner of type: "+spawner.id);
+        } else {
+
+            CivLog.warning("Unable to create Spawner of type: "+spawner.id+" does not exist");
+        }
+        
         top = world.getBlockAt(coord.getX(), coord.getY()+FLAG_HEIGHT-1, coord.getZ());
         top.setType(Material.BEDROCK);
+        
+        ProtectedBlock pb = new ProtectedBlock(new BlockCoord(top), ProtectedBlock.Type.MOB_SPAWNER_MARKER);
+        CivGlobal.addProtectedBlock(pb);
+        if (sync) {
+        try {
+            pb.saveNow();
+        } catch (SQLException e) {
+            CivLog.warning("Unable to Protect Mob Spawner Block");
+            e.printStackTrace();
+        }    
+        } else {
+            pb.save();
+        }
 
         Block signBlock = top.getRelative(direction);
         signBlock.setType(Material.WALL_SIGN);
@@ -92,7 +120,7 @@ public class MobSpawnerPopulator extends BlockPopulator {
             data.setFacingDirection(direction);
             sign.setLine(0, CivSettings.localize.localizedString("MobSpawnerSign_Heading"));
             sign.setLine(1, "----");
-            sign.setLine(2, good.name);
+            sign.setLine(2, spawner.name);
             sign.setLine(3, "");
             sign.update(true);
 
@@ -119,12 +147,12 @@ public class MobSpawnerPopulator extends BlockPopulator {
         
         if (sync) {
             try {
-                new_good.saveNow();
+            	newSpawner.saveNow();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         } else {
-            new_good.save();
+        	newSpawner.save();
         }
     }
 

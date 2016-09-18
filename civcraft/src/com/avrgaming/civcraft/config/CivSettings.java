@@ -228,6 +228,8 @@ public class CivSettings {
 
 	public static boolean hasTitleAPI = false;
 	public static boolean hasITag = false;
+
+	public static boolean hasCustomMobs = false;
 	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;
@@ -311,10 +313,20 @@ public class CivSettings {
 		
 		if (CivSettings.plugin.hasPlugin("VanishNoPacket")) {
 			hasVanishNoPacket = true;
+		} else {
+			CivLog.warning("VanishNoPacket not found, not registering VanishNoPacket hooks. This is fine if you're not using VanishNoPacket.");
 		}
 		
 		if (CivSettings.plugin.hasPlugin("TitleAPI")) {
 			hasTitleAPI = true;
+		} else {
+			CivLog.warning("TitleAPI not found, not registering TitleAPI hooks. This is fine if you're not using TitleAPI.");
+		}
+		
+		if (CivSettings.plugin.hasPlugin("CustomMobs")) {
+			hasCustomMobs = true;
+		} else {
+			CivLog.warning("CustomMobs not found, not registering CustomMob hooks. This is fine if you're not using Custom Mobs.");
 		}
 
 	}
@@ -474,7 +486,9 @@ public class CivSettings {
 	
 		ConfigRemovedRecipes.removeRecipes(materialsConfig, removedRecipies );
 		CivGlobal.tradeGoodPreGenerator.preGenerate();
-		CivGlobal.mobSpawnerPreGenerator.preGenerate();
+		if (CivSettings.hasCustomMobs) {
+			CivGlobal.mobSpawnerPreGenerator.preGenerate();
+		}
 		Wall.init_settings();
 		FortifiedWall.init_settings();
 	}

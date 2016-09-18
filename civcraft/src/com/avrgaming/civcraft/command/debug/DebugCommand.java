@@ -1125,16 +1125,20 @@ public class DebugCommand extends CommandBase {
 	}
 	
 	public void mobspawnergenerate_cmd() throws CivException {
-		String playerName;
-		
-		if (sender instanceof Player) {
-			playerName = sender.getName();
+		if (CivSettings.hasCustomMobs) {
+			String playerName;
+			
+			if (sender instanceof Player) {
+				playerName = sender.getName();
+			} else {
+				playerName = null;
+			}
+			
+			CivMessage.send(sender, "Starting Mob Spawner Generation task...");
+			TaskMaster.asyncTask(new MobSpawnerPostGenTask(playerName, 0), 0);
 		} else {
-			playerName = null;
+			CivMessage.send(sender, "Unable to generate CustomMob spawners, CustomMobs is not enabled.");
 		}
-		
-		CivMessage.send(sender, "Starting Mob Spawner Generation task...");
-		TaskMaster.asyncTask(new MobSpawnerPostGenTask(playerName, 0), 0);				
 	}
 	
 	
@@ -1168,18 +1172,22 @@ public class DebugCommand extends CommandBase {
 	}
 	
 	public void createmobspawner_cmd() throws CivException {
-		if (args.length < 2) {
-			throw new CivException("Enter mob spawner id");
+		if (CivSettings.hasCustomMobs) {
+			if (args.length < 2) {
+				throw new CivException("Enter mob spawner id");
+			}
+			
+			ConfigMobSpawner spawner = CivSettings.spawners.get(args[1]);
+			if (spawner == null) {
+				throw new CivException("Unknown mob spawner id:"+args[1]);
+			}
+			
+			BlockCoord coord = new BlockCoord(getPlayer().getLocation());
+			MobSpawnerPopulator.buildMobSpawner(spawner, coord, getPlayer().getLocation().getWorld(), false);
+			CivMessage.sendSuccess(sender, "Created a "+spawner.name+" Mob Spawner here.");
+		} else {
+			CivMessage.send(sender, "Unable to generate CustomMob spawners, CustomMobs is not enabled.");
 		}
-		
-		ConfigMobSpawner spawner = CivSettings.spawners.get(args[1]);
-		if (spawner == null) {
-			throw new CivException("Unknown mob spawner id:"+args[1]);
-		}
-		
-		BlockCoord coord = new BlockCoord(getPlayer().getLocation());
-		MobSpawnerPopulator.buildMobSpawner(spawner, coord, getPlayer().getLocation().getWorld(), false);
-		CivMessage.sendSuccess(sender, "Created a "+spawner.name+" here.");
 	}
 	
 	public void generate_cmd() throws CivException {
