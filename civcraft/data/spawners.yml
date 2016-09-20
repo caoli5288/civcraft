@@ -64,6 +64,22 @@ land_spawners:
       name: 'Brutal Ruffian'
       rarity: 5.0
 
+    - id: 'savage_lesser'
+      name: 'Lesser Savage'
+      rarity: 1.0
+
+    - id: 'savage_greater'
+      name: 'Greater Savage'
+      rarity: 2.0
+
+    - id: 'savage_elite'
+      name: 'Elite Savage'
+      rarity: 3.0
+
+    - id: 'savage_brutal'
+      name: 'Brutal Savage'
+      rarity: 5.0
+
 water_spawners: 
     - id: 'guardian_base'
       name: guardian
