@@ -32,24 +32,36 @@ generation:
 # rarity - The rarity of the spawner, used during random generation
 #
 land_spawners:
-    - id: 'zombie_base'
-      name: zombie
+    - id: 'yobo_lesser'
+      name: 'Lesser Yobo'
       rarity: 1.0
 
-    - id: 'skeleton_base'
-      name: skeleton
+    - id: 'yobo_greater'
+      name: 'Greater Yobo'
       rarity: 2.0
 
-    - id: 'spider_base'
-      name: spider
+    - id: 'yobo_elite'
+      name: 'Elite Yobo'
       rarity: 3.0
 
-    - id: 'witch_base'
-      name: witch
-      rarity: 4.0
+    - id: 'yobo_brutal'
+      name: 'Brutal Yobo'
+      rarity: 5.0
 
-    - id: 'creeper_base'
-      name: creeper
+    - id: 'ruffian_lesser'
+      name: 'Lesser Ruffian'
+      rarity: 1.0
+
+    - id: 'ruffian_greater'
+      name: 'Greater Ruffian'
+      rarity: 2.0
+
+    - id: 'ruffian_elite'
+      name: 'Elite Ruffian'
+      rarity: 3.0
+
+    - id: 'ruffian_brutal'
+      name: 'Brutal Ruffian'
       rarity: 5.0
 
 water_spawners: 
