@@ -541,7 +541,7 @@ public class PlayerListener implements Listener {
 			Resident defenderResident = CivGlobal.getResident(defender);
 			if (defenderResident.isCombatInfo()) {	
 				if (attacker != null) {
-					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_combatDefend",CivColor.LightPurple+attacker.getName()+CivColor.LightGray,CivColor.Rose+damage+CivColor.LightGray));				
+					CivMessage.send(defender, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_combatDefend",CivColor.Rose+attacker.getName()+CivColor.LightGray,CivColor.Rose+damage+CivColor.LightGray));				
 				} else {
 					String entityName = null;
 					
@@ -562,16 +562,16 @@ public class PlayerListener implements Listener {
 			Resident attackerResident = CivGlobal.getResident(attacker);
 			if (attackerResident.isCombatInfo()) {
 				if (defender != null) {
-					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_attack",CivColor.LightPurple+defender.getName()+CivColor.LightGray,CivColor.LightGreen+damage+CivColor.LightGray));
+					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_attack",CivColor.Rose+defender.getName()+CivColor.LightGray,CivColor.LightGreen+damage+CivColor.LightGray));
 				} else {
 					String entityName = null;
 					
-					if (event.getDamager() instanceof LivingEntity) {
-						entityName = ((LivingEntity)event.getDamager()).getCustomName();
+					if (event.getEntity() instanceof LivingEntity) {
+						entityName = ((LivingEntity)event.getEntity()).getCustomName();
 					}
 					
 					if (entityName == null) {
-						entityName = event.getDamager().getType().toString();
+						entityName = event.getEntity().getType().toString();
 					}
 					
 					CivMessage.send(attacker, CivColor.LightGray+"   "+CivSettings.localize.localizedString("playerListen_combatHeading")+" "+CivSettings.localize.localizedString("var_playerListen_attack",CivColor.LightPurple+entityName+CivColor.LightGray,CivColor.LightGreen+damage+CivColor.LightGray));
