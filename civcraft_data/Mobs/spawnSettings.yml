@@ -27,7 +27,7 @@ yobo_elite:
   worlds: []
   biomes:
   - EXTREME_HILLS
-  - EXTREME_HILLS_PLUS
+  - MUTATED_EXTREME_HILLS
   - ROOFED_FOREST
   - MUTATED_ROOFED_FOREST
   regions: []
@@ -93,9 +93,8 @@ ruffian_lesser:
   worlds: []
   biomes:
   - JUNGLE
-  - MEGA_TAIGA
   - JUNGLE_EDGE
-  - JUNGLE_EDGE_MOUNTAINS
+  - MUTATED_JUNGLE_EDGE
   - SWAMPLAND
   regions: []
 ruffian_greater:
@@ -104,7 +103,7 @@ ruffian_greater:
   spawnRate: 1.0
   worlds: []
   biomes:
-  - MEGA_SPRUCE_TAIGA_HILLS
+  - REDWOOD_TAIGA_HILLS
   - JUNGLE_HILLS
   regions: []
 ruffian_elite:
@@ -113,8 +112,8 @@ ruffian_elite:
   spawnRate: 1.0
   worlds: []
   biomes:
-  - BIRCH_FOREST_HILLS_MOUNTAINS
-  - ROOFED_FOREST_MOUNTAINS
+  - MUTATED_BIRCH_FOREST_HILLS
+  - MUTATED_ROOFED_FOREST
   - MUSHROOM_ISLAND
   - MUTATED_JUNGLE_EDGE
   regions: []
@@ -137,7 +136,7 @@ behemoth_lesser:
   - FROZEN_RIVER
   - FROZEN_OCEAN
   - COLD_BEACH
-  - COLD_TAIGA
+  - TAIGA_COLD
   regions: []
 behemoth_greater:
   groupSpawn: false
