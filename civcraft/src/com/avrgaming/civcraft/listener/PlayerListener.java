@@ -28,6 +28,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.ThrownPotion;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -442,6 +443,11 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOW) 
 	public void onPotionSplash(PotionSplashEvent event) {
+		ThrownPotion potion = event.getPotion();
+
+		if (!(potion.getShooter() instanceof Player)) {
+			return;
+		} 
 		for (PotionEffect effect : event.getPotion().getEffects()) {
 			if (isPotionDisabled(effect)) {
 				event.setCancelled(true);

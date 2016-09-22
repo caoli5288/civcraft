@@ -21,10 +21,19 @@ package com.avrgaming.civcraft.listener;
 import gpl.HorseModifier;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Random;
 
+import net.minecraft.server.v1_10_R1.AttributeInstance;
+import net.minecraft.server.v1_10_R1.AxisAlignedBB;
+import net.minecraft.server.v1_10_R1.DamageSource;
+import net.minecraft.server.v1_10_R1.Entity;
+import net.minecraft.server.v1_10_R1.EntityInsentient;
+import net.minecraft.server.v1_10_R1.EntityPlayer;
+import net.minecraft.server.v1_10_R1.GenericAttributes;
 import net.minecraft.server.v1_10_R1.NBTTagCompound;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
@@ -33,7 +42,9 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_10_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Fireball;
@@ -44,6 +55,7 @@ import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.entity.ThrownPotion;
+import org.bukkit.entity.Witch;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -65,11 +77,13 @@ import org.bukkit.event.entity.EntityBreakDoorEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityCreatePortalEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -80,6 +94,7 @@ import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import com.avrgaming.civcraft.cache.ArrowFiredCache;
 import com.avrgaming.civcraft.cache.CannonFiredCache;
@@ -1440,27 +1455,6 @@ public class BlockListener implements Listener {
 			battledome.onEntityDeath(event.getEntity());
 		}
 		return;
-
-
-//		if (!ConfigTempleSacrifice.isValidEntity(event.getEntityType())) {
-//			return;
-//		}
-//
-//		/* Check if we're 'inside' a temple. */
-//		bcoord.setFromLocation(event.getEntity().getLocation());
-//		HashSet<Buildable> buildables = CivGlobal.getBuildablesAt(bcoord);
-//		if (buildables == null) {
-//			return;
-//		}
-
-//		for (Buildable buildable : buildables) {
-//			if (buildable instanceof Temple) {
-//				if (buildable.getCorner().getY() <= event.getEntity().getLocation().getBlockY()) {
-//					/* We're 'above' the temple. Good enough. */
-//					((Temple)buildable).onEntitySacrifice(event.getEntityType());
-//				}
-//			}
-//		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
@@ -1659,9 +1653,179 @@ public class BlockListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST) 
+	public void onProjectileLaunchEvent(ProjectileLaunchEvent event) {
+		if (!(event.getEntity() instanceof ThrownPotion)) {
+			return;
+		}
+		ThrownPotion potion = (ThrownPotion) event.getEntity();
+		if (!(potion.getShooter() instanceof Player)) {
+			//Get Ruffian type here and change damage type based on the potion thrown
+			//Also change effect based on ruffian type
+			String entityName = null;
+			LivingEntity shooter = (LivingEntity) potion.getShooter();
+			Witch witch = (Witch) shooter;
+			
+			if (!(witch.getTarget() instanceof Player)) {
+				return;
+			}
+			if (potion.getShooter() instanceof LivingEntity) {
+				entityName = shooter.getCustomName();
+			}
+			if (entityName != null && entityName.endsWith(" Ruffian")) {
+				EntityInsentient nmsEntity = (EntityInsentient) ((CraftLivingEntity) shooter).getHandle();
+		    	AttributeInstance attribute = nmsEntity.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE);
+		    	Double damage = attribute.getValue();
+				
+				class RuffianProjectile {
+					Location loc;
+					Location target;
+					org.bukkit.entity.Entity attacker;
+					int speed = 1;
+					double damage;
+					int splash = 6;
+					
+					public RuffianProjectile(Location loc, Location target, org.bukkit.entity.Entity attacker, double damage) {
+						this.loc = loc;
+						this.target = target;
+						this.attacker = attacker;
+						this.damage = damage;
+					}
+
+					public Vector getVectorBetween(Location to, Location from) {
+						Vector dir = new Vector();
+						
+						dir.setX(to.getX() - from.getX());
+						dir.setY(to.getY() - from.getY());
+						dir.setZ(to.getZ() - from.getZ());
+					
+						return dir;
+					}
+					
+					public boolean advance() {
+						Vector dir = getVectorBetween(target, loc).normalize();
+						double distance = loc.distanceSquared(target);		
+						dir.multiply(speed);
+						
+						loc.add(dir);
+						loc.getWorld().createExplosion(loc, 0.0f, false);
+						distance = loc.distanceSquared(target);
+						
+						if (distance < speed*1.5) {
+							loc.setX(target.getX());
+							loc.setY(target.getY());
+							loc.setZ(target.getZ());
+							this.onHit();
+							return true;
+						}
+						
+						return false;
+					}
+					
+					public void onHit() {				
+						int spread = 3;
+						int[][] offset = { { -1, 0 }, { 1, 0 }, { 0, -1 }, { 0, 1 } };
+						for (int i = 0; i < 4; i++) {
+							int x = offset[i][0]*spread;
+							int y = 0;
+							int z = offset[i][1]*spread;
+							
+							Location location = new Location(loc.getWorld(), loc.getX(),loc.getY(), loc.getZ());
+							location = location.add(x, y, z);
+							
+							launchExplodeFirework(location);
+							//loc.getWorld().createExplosion(location, 1.0f, true);
+							//setFireAt(location, spread);
+						}
+						
+						launchExplodeFirework(loc);
+						//loc.getWorld().createExplosion(loc, 1.0f, true);
+						damagePlayers(loc, splash);
+						//setFireAt(loc, spread);		
+					}
+					
+					@SuppressWarnings("deprecation")
+					private void damagePlayers(Location loc, int radius) {
+						double x = loc.getX()+0.5;
+						double y = loc.getY()+0.5;
+						double z = loc.getZ()+0.5;
+						double r = (double)radius;
+						
+						CraftWorld craftWorld = (CraftWorld)attacker.getWorld();
+						
+						AxisAlignedBB bb = AxisAlignedBB(x-r, y-r, z-r, x+r, y+r, z+r);
+						
+						List<Entity> entities = craftWorld.getHandle().getEntities(((CraftEntity)attacker).getHandle(), bb);
+						
+						for (Entity e : entities) {
+							if (e instanceof EntityPlayer) {
+								EntityDamageByEntityEvent event = new EntityDamageByEntityEvent(attacker, ((EntityPlayer)e).getBukkitEntity(), DamageCause.ENTITY_ATTACK, damage);
+								Bukkit.getServer().getPluginManager().callEvent(event);
+								e.damageEntity(DamageSource.GENERIC, (float) event.getDamage());
+							}
+						}
+						
+					}
+					
+					
+//					private void setFireAt(Location loc, int radius) {
+//						//Set the entire area on fire.
+//						for (int x = -radius; x < radius; x++) {
+//							for (int y = -3; y < 3; y++) {
+//								for (int z = -radius; z < radius; z++) {
+//									Block block = loc.getWorld().getBlockAt(loc.getBlockX()+x, loc.getBlockY()+y, loc.getBlockZ()+z);
+//									if (ItemManager.getId(block) == CivData.AIR) {
+//										ItemManager.setTypeId(block, CivData.FIRE);
+//										ItemManager.setData(block, 0, true);
+//									}
+//								}
+//							}
+//						}
+//					}
+
+					private AxisAlignedBB AxisAlignedBB(double d, double e,
+							double f, double g, double h, double i) {
+						 return new AxisAlignedBB(d, e, f, g, h, i);
+//						return null;
+					}
+
+					private void launchExplodeFirework(Location loc) {
+						FireworkEffect fe = FireworkEffect.builder().withColor(Color.ORANGE).withColor(Color.YELLOW).flicker(true).with(Type.BURST).build();		
+						TaskMaster.syncTask(new FireWorkTask(fe, loc.getWorld(), loc, 3), 0);
+					}
+				}
+				
+				
+				class SyncFollow implements Runnable {
+					public RuffianProjectile proj;
+					
+					@Override
+					public void run() {
+						
+						if (proj.advance()) {
+							proj = null;
+							return;
+						}
+						TaskMaster.syncTask(this, 1);
+					}
+				}
+				
+				SyncFollow follow = new SyncFollow();
+				RuffianProjectile proj = new RuffianProjectile(shooter.getLocation(), 
+						witch.getTarget().getLocation(), (org.bukkit.entity.Entity) potion.getShooter(), damage);
+				follow.proj = proj;
+				TaskMaster.syncTask(follow);
+				
+
+				event.setCancelled(true);
+			}
+			return;
+		} 
+	}
+	
+
+	@EventHandler(priority = EventPriority.HIGHEST) 
 	public void onPotionSplashEvent(PotionSplashEvent event) {
 		ThrownPotion potion = event.getPotion();
-
 		if (!(potion.getShooter() instanceof Player)) {
 			return;
 		} 
