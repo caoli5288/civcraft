@@ -82,7 +82,115 @@ land_spawners:
       name: 'Brutal Savage'
       rarity: 5.0
 
-water_spawners: 
-    - id: 'guardian_base'
-      name: guardian
+    - id: 'behemoth_lesser'
+      name: 'Lesser Behemoth'
       rarity: 1.0
+
+    - id: 'behemoth_greater'
+      name: 'Greater Behemoth'
+      rarity: 2.0
+
+    - id: 'behemoth_elite'
+      name: 'Elite Behemoth'
+      rarity: 3.0
+
+    - id: 'behemoth_brutal'
+      name: 'Brutal Behemoth'
+      rarity: 5.0
+
+    - id: 'undead_lesser'
+      name: 'Lesser Undead'
+      rarity: 1.0
+
+    - id: 'undead_greater'
+      name: 'Greater Undead'
+      rarity: 2.0
+
+    - id: 'undead_elite'
+      name: 'Elite Undead'
+      rarity: 3.0
+
+    - id: 'undead_brutal'
+      name: 'Brutal Undead'
+      rarity: 5.0
+
+    - id: 'kodiac_lesser'
+      name: 'Lesser Kodiac'
+      rarity: 1.0
+
+    - id: 'kodiac_greater'
+      name: 'Greater Kodiac'
+      rarity: 2.0
+
+    - id: 'kodiac_elite'
+      name: 'Elite Kodiac'
+      rarity: 3.0
+
+    - id: 'kodiac_brutal'
+      name: 'Brutal Kodiac'
+      rarity: 5.0
+
+    - id: 'gelatinous_cube_lesser'
+      name: 'Lesser Gelatinous Cube'
+      rarity: 1.0
+
+    - id: 'gelatinous_cube_greater'
+      name: 'Greater Gelatinous Cube'
+      rarity: 2.0
+
+    - id: 'gelatinous_cube_elite'
+      name: 'Elite Gelatinous Cube'
+      rarity: 3.0
+
+    - id: 'gelatinous_cube_brutal'
+      name: 'Brutal Gelatinous Cube'
+      rarity: 5.0
+
+    - id: 'arachne_lesser'
+      name: 'Lesser Arachne'
+      rarity: 1.0
+
+    - id: 'arachne_greater'
+      name: 'Greater Arachne'
+      rarity: 2.0
+
+    - id: 'arachne_elite'
+      name: 'Elite Arachne'
+      rarity: 3.0
+
+    - id: 'arachne_brutal'
+      name: 'Brutal Arachne'
+      rarity: 5.0
+
+    - id: 'direwolf_lesser'
+      name: 'Lesser Direwolf'
+      rarity: 1.0
+
+    - id: 'direwolf_greater'
+      name: 'Greater Direwolf'
+      rarity: 2.0
+
+    - id: 'direwolf_elite'
+      name: 'Elite Direwolf'
+      rarity: 3.0
+
+    - id: 'direwolf_brutal'
+      name: 'Brutal Direwolf'
+      rarity: 5.0
+
+water_spawners:
+    - id: 'kraken_lesser'
+      name: 'Lesser Kraken'
+      rarity: 1.0
+
+    - id: 'kraken_greater'
+      name: 'Greater Kraken'
+      rarity: 2.0
+
+    - id: 'kraken_elite'
+      name: 'Elite Kraken'
+      rarity: 3.0
+
+    - id: 'kraken_brutal'
+      name: 'Brutal Kraken'
+      rarity: 5.0

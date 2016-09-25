@@ -1,7 +1,8 @@
 name: CivCraft
 main: com.avrgaming.civcraft.main.CivCraft
-softdepends: [TitleAPI,CustomMobs]
+softdepends: [TitleAPI]
 version: 1.8.0
+depends: [CustomMobs]
 
 commands:
     town:

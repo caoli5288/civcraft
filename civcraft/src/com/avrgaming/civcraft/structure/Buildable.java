@@ -197,7 +197,12 @@ public abstract class Buildable extends SQLObject {
 		spawner.setCiv(this.getTown().getCiv());
 		
 		/* Save the spawner *afterwards* so the structure id is properly set. */
-		spawner.save();
+		try {
+			spawner.saveNow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void enableMobSpawner() {
@@ -210,7 +215,12 @@ public abstract class Buildable extends SQLObject {
 		spawner.setBuildable(0);
 		spawner.setCiv(null);
 		/* Save the spawner *afterwards* so the structure id is properly set. */
-		spawner.save();
+		try {
+			spawner.saveNow();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/* True when the corner has been repositioned during the build process. */
