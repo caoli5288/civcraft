@@ -233,7 +233,6 @@ public class CivGlobal {
 		loadWallBlocks();
 		loadRoadBlocks();
 		loadTradeGoods();
-		loadMobSpawners();
 		loadTradeGoodies();
 		loadRandomEvents();
 		loadProtectedBlocks();
