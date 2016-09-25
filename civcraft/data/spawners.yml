@@ -7,6 +7,8 @@
 #
 #
 #
+#Master Flag. If this is false, custom mobs are disabled
+enable: true
 
 ########### Mob Spawner Generation Options #######
 generation:

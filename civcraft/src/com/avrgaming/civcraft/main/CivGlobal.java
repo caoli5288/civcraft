@@ -226,6 +226,9 @@ public class CivGlobal {
 		loadPermissionGroups();
 		loadTownChunks();
 		loadWonders();
+		if (CivSettings.hasCustomMobs) {
+			loadMobSpawners();
+		}
 		loadStructures();
 		loadWallBlocks();
 		loadRoadBlocks();
@@ -369,7 +372,7 @@ public class CivGlobal {
 				}
 			}
 	
-			CivLog.info("Loaded "+tradeGoods.size()+" Mob Spawners");
+			CivLog.info("Loaded "+mobSpawners.size()+" Mob Spawners");
 		} finally {
 			SQL.close(rs, ps, context);
 		}
@@ -1180,8 +1183,8 @@ public class CivGlobal {
 		return structures.entrySet().iterator();
 	}
 	
-	public static void addMobSpawner(MobSpawner good) {
-        mobSpawners.put(good.getCoord(), good);
+	public static void addMobSpawner(MobSpawner spawner) {
+        mobSpawners.put(spawner.getCoord(), spawner);
     }
     
     public static MobSpawner getMobSpawner(BlockCoord coord) {

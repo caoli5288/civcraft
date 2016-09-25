@@ -9,33 +9,31 @@ import com.avrgaming.civcraft.config.ConfigMobSpawner;
 import com.avrgaming.civcraft.database.SQL;
 import com.avrgaming.civcraft.database.SQLUpdate;
 import com.avrgaming.civcraft.exception.InvalidNameException;
-import com.avrgaming.civcraft.items.BonusGoodie;
-import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.structure.Structure;
 import com.avrgaming.civcraft.util.BlockCoord;
+
+import de.hellfirepvp.api.CustomMobsAPI;
+import de.hellfirepvp.api.data.ICustomMob;
+import de.hellfirepvp.api.data.ISpawnerEditor;
 
 public class MobSpawner extends SQLObject {
 
-    private ConfigMobSpawner info;
-    private Town town;
+    private ConfigMobSpawner spawner;
     private Civilization civ;
     private BlockCoord coord;
-    private Structure struct;
+    private int buildable = 0;
     private Boolean active;
     
-    public MobSpawner(ConfigMobSpawner spanwer, BlockCoord coord) {
-        this.info = spanwer;
-        this.coord = coord;
-        this.active = true;
+    public MobSpawner(ConfigMobSpawner spawner, BlockCoord coord) {
+        this.setSpawner(spawner);
+        this.setCoord(coord);
         try {
-            this.setName(spanwer.id);
+            this.setName(this.getSpawner().id);
         } catch (InvalidNameException e) {
             e.printStackTrace();
         }
-        
-        town = null;
-        civ = null;
+        this.setCiv(null);
+        this.setActive(true);
     }
 
     public MobSpawner(ResultSet rs) throws SQLException, InvalidNameException {
@@ -48,8 +46,7 @@ public class MobSpawner extends SQLObject {
             String table_create = "CREATE TABLE " + SQL.tb_prefix + TABLE_NAME+" (" + 
                     "`id` int(11) unsigned NOT NULL auto_increment," +
                     "`name` VARCHAR(64) NOT NULL," + 
-                    "`town_id` int(11)," +
-                    "`structure_id` int(11), " +
+                    "`buildable_id` int(11), " +
                     "`coord` mediumtext DEFAULT NULL,"+
 					"`active` boolean DEFAULT true,"+
                     "PRIMARY KEY (`id`)" + ")";
@@ -65,37 +62,12 @@ public class MobSpawner extends SQLObject {
     @Override
     public void load(ResultSet rs) throws SQLException, InvalidNameException {
         this.setId(rs.getInt("id"));
+        this.setSpawner(CivSettings.spawners.get(this.getName()));
         this.setName(rs.getString("name"));
-        this.setActive(rs.getBoolean("active"));
-        setInfo(CivSettings.spawners.get(this.getName()));
-        this.setTown(CivGlobal.getTownFromId(rs.getInt("town_id")));        
-        this.coord = new BlockCoord(rs.getString("coord"));
-        this.addProtectedBlocks(this.coord);
-        this.setStruct(CivGlobal.getStructureById(rs.getInt("structure_id")));
+        this.setCoord(new BlockCoord(rs.getString("coord")));
+        this.setBuildable(rs.getInt("buildable_id"));
         
-        if (this.getStruct() != null) {
-        	//Replace with some other structure
-//            if (struct instanceof TradeOutpost) {
-//                TradeOutpost outpost = (TradeOutpost)this.struct;
-//                outpost.setGood(this);
-//            }
-        }
-        
-        if (this.getTown() != null) {
-            this.civ = this.getTown().getCiv();
-        }
-        
-    }
-    private void addProtectedBlocks(BlockCoord coord2) {
-//      CivLog.debug("Protecting TRADE GOOD:"+coord2);
-//      for (int i = 0; i < 3; i++) {
-//          BlockCoord bcoord = new BlockCoord(coord2);
-//          
-//            ProtectedBlock pb = new ProtectedBlock(bcoord, ProtectedBlock.Type.TRADE_MARKER);
-//            CivGlobal.addProtectedBlock(pb);
-//            
-//            bcoord.setY(bcoord.getY()+1);
-//      }
+        this.setActive(this.getBuildable() == 0);
     }
 
     @Override
@@ -110,15 +82,10 @@ public class MobSpawner extends SQLObject {
         hashmap.put("name", this.getName());
         hashmap.put("coord", this.coord.toString());
         hashmap.put("active", this.active);
-        if (this.getTown() != null) {
-            hashmap.put("town_id", this.getTown().getId());
+        if (this.getBuildable() == 0) {
+            hashmap.put("buildable_id", null);
         } else {
-            hashmap.put("town_id", null);
-        }
-        if (this.getStruct() == null) {
-            hashmap.put("structure_id", null);
-        } else {
-            hashmap.put("structure_id", this.getStruct().getId());
+            hashmap.put("buildable_id", this.getBuildable());
         }
         
         SQL.updateNamedObject(this, hashmap, TABLE_NAME);
@@ -127,17 +94,6 @@ public class MobSpawner extends SQLObject {
     @Override
     public void delete() throws SQLException {      
     }
-
-
-    public Town getTown() {
-        return town;
-    }
-
-
-    public void setTown(Town town) {
-        this.town = town;
-    }
-
 
     public Civilization getCiv() {
         return civ;
@@ -149,13 +105,13 @@ public class MobSpawner extends SQLObject {
     }
 
 
-    public ConfigMobSpawner getInfo() {
-        return info;
+    public ConfigMobSpawner getSpawner() {
+        return spawner;
     }
 
 
-    public void setInfo(ConfigMobSpawner info) {
-        this.info = info;
+    public void setSpawner(ConfigMobSpawner spawner) {
+        this.spawner = spawner;
     }
 
 
@@ -168,35 +124,12 @@ public class MobSpawner extends SQLObject {
         this.coord = coord;
     }
     
-    public static int getMobSpawnerCount(BonusGoodie goodie, Town town) {
-        int amount = 0;
-        
-        for (BonusGoodie g : town.getBonusGoodies()) {
-            if (goodie.getDisplayName().equals(g.getDisplayName())) {
-                amount++;
-            }
-        }
-        
-        /*for (MobSpawner g : town.getMobSpawners()) {
-            if ((g.getInfo().id.equals(good.getInfo().id))) {
-
-                if (g.getStruct() != null) {
-                    CultureChunk cc = CivGlobal.getCultureChunk(g.getCoord().getLocation());
-                    if (cc != null && cc.getTown() == town) {
-                        amount++;
-                    }
-                }
-            }
-        }*/
-        return amount;
+    public int getBuildable() {
+        return buildable;
     }
 
-    public Structure getStruct() {
-        return struct;
-    }
-
-    public void setStruct(Structure struct) {
-        this.struct = struct;
+    public void setBuildable(int buildable) {
+        this.buildable = buildable;
     }
 
 	public Boolean getActive() {
@@ -205,6 +138,28 @@ public class MobSpawner extends SQLObject {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+		ISpawnerEditor spawnerEditor = CustomMobsAPI.getSpawnerEditor();
+		 if (spawnerEditor != null) {
+			if (this.active) {
+				if (spawnerEditor.getSpawner(this.getCoord().getLocation()) != null) {
+					spawnerEditor.resetSpawner(this.getCoord().getLocation());
+				}
+		        ICustomMob mob = CustomMobsAPI.getCustomMob(this.getName());
+		        if (mob == null) {
+
+		            CivLog.warning("Unable to create Spawner; " + this.getName() + " does not exist");
+		            return;
+		        }
+		        spawnerEditor.setSpawner(mob, this.getCoord().getLocation(), 60);
+			} else {
+				if (spawnerEditor.getSpawner(this.getCoord().getLocation()) != null) {
+					spawnerEditor.resetSpawner(this.getCoord().getLocation());
+				}
+			}
+		} else {
+
+            CivLog.warning("Unable to create Spawners; CustomMobsAPI does not exist");
+        }
 	}
     
     

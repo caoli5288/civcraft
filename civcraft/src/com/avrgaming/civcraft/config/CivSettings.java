@@ -323,10 +323,10 @@ public class CivSettings {
 			CivLog.warning("TitleAPI not found, not registering TitleAPI hooks. This is fine if you're not using TitleAPI.");
 		}
 		
-		if (CivSettings.plugin.hasPlugin("CustomMobs")) {
+		if (CivSettings.plugin.hasPlugin("CustomMobs") && CivSettings.getBoolean(spawnersConfig, "enable")) {
 			hasCustomMobs = true;
 		} else {
-			CivLog.warning("CustomMobs not found, not registering CustomMob hooks. This is fine if you're not using Custom Mobs.");
+			CivLog.warning("CustomMobs not found or disabled, not registering CustomMob hooks. This is fine if you're not using Custom Mobs.");
 		}
 
 	}
@@ -456,8 +456,8 @@ public class CivSettings {
 		ConfigHemisphere.loadConfig(goodsConfig, hemispheres);
 		ConfigBuff.loadConfig(buffConfig, buffs);
 		ConfigWonderBuff.loadConfig(wonderConfig, wonderBuffs);
-		ConfigTradeGood.loadConfig(goodsConfig, goods, landGoods, waterGoods);
 		ConfigMobSpawner.loadConfig(spawnersConfig, spawners, landSpawners, waterSpawners);
+		ConfigTradeGood.loadConfig(goodsConfig, goods, landGoods, waterGoods);
 		ConfigGrocerLevel.loadConfig(structureConfig, grocerLevels);
 		ConfigCottageLevel.loadConfig(structureConfig, cottageLevels);
 		ConfigTempleLevel.loadConfig(structureConfig, templeLevels);

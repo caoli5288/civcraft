@@ -24,10 +24,6 @@ import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.ItemManager;
 
-import de.hellfirepvp.api.CustomMobsAPI;
-import de.hellfirepvp.api.data.ICustomMob;
-import de.hellfirepvp.api.data.ISpawnerEditor;
-
 public class MobSpawnerPopulator extends BlockPopulator {
     
     //private static final int RESOURCE_CHANCE = 400; 
@@ -77,16 +73,6 @@ public class MobSpawnerPopulator extends BlockPopulator {
             } else {
                 pb.save();
             }
-        }
-        
-        ISpawnerEditor spawnerEditor = CustomMobsAPI.getSpawnerEditor();
-        if (spawnerEditor != null) {
-        	ICustomMob mob = CustomMobsAPI.getCustomMob(spawner.id);
-        	spawnerEditor.setSpawner(mob, top.getLocation(), 60);
-            CivLog.debug("Created Mob Spawner of type: "+spawner.id);
-        } else {
-
-            CivLog.warning("Unable to create Spawner of type: "+spawner.id+" does not exist");
         }
         
         top = world.getBlockAt(coord.getX(), coord.getY()+FLAG_HEIGHT-1, coord.getZ());
