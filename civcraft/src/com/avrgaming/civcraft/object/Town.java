@@ -1851,7 +1851,6 @@ public class Town extends SQLObject {
 		
 		try {
 			struct.onDemolish();
-			struct.unbindStructureBlocks();
 			this.removeStructure(struct);
 			struct.deleteSkipUndo();
 		} catch (SQLException e) {
