@@ -54,8 +54,10 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Painting;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
+import org.bukkit.entity.Slime;
 import org.bukkit.entity.ThrownPotion;
 import org.bukkit.entity.Witch;
+import org.bukkit.entity.Wolf;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -81,9 +83,11 @@ import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityInteractEvent;
+import org.bukkit.event.entity.EntityTameEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
+import org.bukkit.event.entity.SlimeSplitEvent;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.bukkit.event.player.PlayerBedEnterEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
@@ -146,6 +150,30 @@ public class BlockListener implements Listener {
 	/* Experimental, reuse the same object because it is single threaded. */
 	public static ChunkCoord coord = new ChunkCoord("", 0, 0);
 	public static BlockCoord bcoord = new BlockCoord("", 0,0,0);
+
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onEntityTameEvent(EntityTameEvent event) {
+		if (event.getEntity() instanceof Wolf) {
+			Wolf wolf = (Wolf) event.getEntity();
+			if (wolf.getName().contains("Direwolf")) {
+				event.setCancelled(true);
+			}
+		}
+	}
+	
+	@EventHandler(priority = EventPriority.NORMAL)
+	public void onSlimeSplitEvent(SlimeSplitEvent event) {
+		if (event.getEntity() instanceof Slime) {
+			Slime slime = (Slime) event.getEntity();
+			if (slime.getName().contains("Brutal") ||
+					slime.getName().contains("Elite") ||
+					slime.getName().contains("Greater") ||
+					slime.getName().contains("Lesser")) {
+				slime.setSize(0);
+				event.setCancelled(true);
+			}
+		}
+	}	
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockIgniteEvent(BlockIgniteEvent event) {

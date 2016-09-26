@@ -130,19 +130,19 @@ land_spawners:
       name: 'Brutal Kodiac'
       rarity: 5.0
 
-    - id: 'gelatinous_cube_lesser'
+    - id: 'cube_lesser'
       name: 'Lesser Gelatinous Cube'
       rarity: 1.0
 
-    - id: 'gelatinous_cube_greater'
+    - id: 'cube_greater'
       name: 'Greater Gelatinous Cube'
       rarity: 2.0
 
-    - id: 'gelatinous_cube_elite'
+    - id: 'cube_elite'
       name: 'Elite Gelatinous Cube'
       rarity: 3.0
 
-    - id: 'gelatinous_cube_brutal'
+    - id: 'cube_brutal'
       name: 'Brutal Gelatinous Cube'
       rarity: 5.0
 
