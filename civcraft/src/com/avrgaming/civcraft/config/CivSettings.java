@@ -486,9 +486,7 @@ public class CivSettings {
 	
 		ConfigRemovedRecipes.removeRecipes(materialsConfig, removedRecipies );
 		CivGlobal.tradeGoodPreGenerator.preGenerate();
-		if (CivSettings.hasCustomMobs) {
-			CivGlobal.mobSpawnerPreGenerator.preGenerate();
-		}
+		CivGlobal.mobSpawnerPreGenerator.preGenerate();
 		Wall.init_settings();
 		FortifiedWall.init_settings();
 	}
