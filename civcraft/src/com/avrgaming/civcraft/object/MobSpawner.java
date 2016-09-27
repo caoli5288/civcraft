@@ -142,7 +142,7 @@ public class MobSpawner extends SQLObject {
 		 if (spawnerEditor != null) {
 			if (this.active) {
 				if (spawnerEditor.getSpawner(this.getCoord().getLocation()) != null) {
-					spawnerEditor.resetSpawner(this.getCoord().getLocation());
+					return;
 				}
 		        ICustomMob mob = CustomMobsAPI.getCustomMob(this.getName());
 		        if (mob == null) {

@@ -40,15 +40,15 @@ land_spawners:
 
     - id: 'yobo_greater'
       name: 'Greater Yobo'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'yobo_elite'
       name: 'Elite Yobo'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'yobo_brutal'
       name: 'Brutal Yobo'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'ruffian_lesser'
       name: 'Lesser Ruffian'
@@ -56,15 +56,15 @@ land_spawners:
 
     - id: 'ruffian_greater'
       name: 'Greater Ruffian'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'ruffian_elite'
       name: 'Elite Ruffian'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'ruffian_brutal'
       name: 'Brutal Ruffian'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'savage_lesser'
       name: 'Lesser Savage'
@@ -72,15 +72,15 @@ land_spawners:
 
     - id: 'savage_greater'
       name: 'Greater Savage'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'savage_elite'
       name: 'Elite Savage'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'savage_brutal'
       name: 'Brutal Savage'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'behemoth_lesser'
       name: 'Lesser Behemoth'
@@ -88,15 +88,15 @@ land_spawners:
 
     - id: 'behemoth_greater'
       name: 'Greater Behemoth'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'behemoth_elite'
       name: 'Elite Behemoth'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'behemoth_brutal'
       name: 'Brutal Behemoth'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'undead_lesser'
       name: 'Lesser Undead'
@@ -104,15 +104,15 @@ land_spawners:
 
     - id: 'undead_greater'
       name: 'Greater Undead'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'undead_elite'
       name: 'Elite Undead'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'undead_brutal'
       name: 'Brutal Undead'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'kodiac_lesser'
       name: 'Lesser Kodiac'
@@ -120,15 +120,15 @@ land_spawners:
 
     - id: 'kodiac_greater'
       name: 'Greater Kodiac'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'kodiac_elite'
       name: 'Elite Kodiac'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'kodiac_brutal'
       name: 'Brutal Kodiac'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'cube_lesser'
       name: 'Lesser Gelatinous Cube'
@@ -136,15 +136,15 @@ land_spawners:
 
     - id: 'cube_greater'
       name: 'Greater Gelatinous Cube'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'cube_elite'
       name: 'Elite Gelatinous Cube'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'cube_brutal'
       name: 'Brutal Gelatinous Cube'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'arachne_lesser'
       name: 'Lesser Arachne'
@@ -152,15 +152,15 @@ land_spawners:
 
     - id: 'arachne_greater'
       name: 'Greater Arachne'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'arachne_elite'
       name: 'Elite Arachne'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'arachne_brutal'
       name: 'Brutal Arachne'
-      rarity: 5.0
+      rarity: 0.05
 
     - id: 'direwolf_lesser'
       name: 'Lesser Direwolf'
@@ -168,29 +168,29 @@ land_spawners:
 
     - id: 'direwolf_greater'
       name: 'Greater Direwolf'
-      rarity: 2.0
+      rarity: 0.3
 
     - id: 'direwolf_elite'
       name: 'Elite Direwolf'
-      rarity: 3.0
+      rarity: 0.1
 
     - id: 'direwolf_brutal'
       name: 'Brutal Direwolf'
-      rarity: 5.0
+      rarity: 0.05
 
 water_spawners:
     - id: 'kraken_lesser'
-      name: 'Lesser Kraken'
+      name: 'Lesser Leviathan'
       rarity: 1.0
 
     - id: 'kraken_greater'
-      name: 'Greater Kraken'
-      rarity: 2.0
+      name: 'Greater Leviathan'
+      rarity: 0.3
 
     - id: 'kraken_elite'
-      name: 'Elite Kraken'
-      rarity: 3.0
+      name: 'Elite Leviathan'
+      rarity: 0.1
 
     - id: 'kraken_brutal'
-      name: 'Brutal Kraken'
-      rarity: 5.0
+      name: 'Brutal Leviathan'
+      rarity: 0.05
