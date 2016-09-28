@@ -15,6 +15,7 @@ import com.avrgaming.civcraft.util.BlockCoord;
 import de.hellfirepvp.api.CustomMobsAPI;
 import de.hellfirepvp.api.data.ICustomMob;
 import de.hellfirepvp.api.data.ISpawnerEditor;
+import de.hellfirepvp.api.data.ISpawnerEditor.SpawnerInfo;
 
 public class MobSpawner extends SQLObject {
 
@@ -141,7 +142,9 @@ public class MobSpawner extends SQLObject {
 		ISpawnerEditor spawnerEditor = CustomMobsAPI.getSpawnerEditor();
 		 if (spawnerEditor != null) {
 			if (this.active) {
-				if (spawnerEditor.getSpawner(this.getCoord().getLocation()) != null) {
+				SpawnerInfo spawner = spawnerEditor.getSpawner(this.getCoord().getLocation());
+				if (spawner.getSpawner() != null) {
+		            CivLog.warning("Unable to create Spawner; " + spawner.toString() + " spawner exists.");
 					return;
 				}
 		        ICustomMob mob = CustomMobsAPI.getCustomMob(this.getName());
@@ -152,7 +155,8 @@ public class MobSpawner extends SQLObject {
 		        }
 		        spawnerEditor.setSpawner(mob, this.getCoord().getLocation(), 60);
 			} else {
-				if (spawnerEditor.getSpawner(this.getCoord().getLocation()) != null) {
+				SpawnerInfo spawner = spawnerEditor.getSpawner(this.getCoord().getLocation());
+				if (spawner.getSpawner() != null) {
 					spawnerEditor.resetSpawner(this.getCoord().getLocation());
 				}
 			}
