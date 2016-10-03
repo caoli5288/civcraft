@@ -144,7 +144,7 @@ public class MobSpawner extends SQLObject {
 			if (this.active) {
 				SpawnerInfo spawner = spawnerEditor.getSpawner(this.getCoord().getLocation());
 				if (spawner.getSpawner() != null) {
-		            CivLog.warning("Unable to create Spawner; " + spawner.toString() + " spawner exists.");
+//		            CivLog.warning("Unable to create Spawner; " + spawner.toString() + " spawner exists.");
 					return;
 				}
 		        ICustomMob mob = CustomMobsAPI.getCustomMob(this.getName());
