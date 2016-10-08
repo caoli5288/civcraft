@@ -101,13 +101,22 @@ public class Mine extends Structure {
 		}
 		getConsumeComponent().setSource(multiInv);
 		getConsumeComponent().setConsumeRate(1.0);
-		Result result = getConsumeComponent().processConsumption();
-		getConsumeComponent().onSave();		
-		return result;
+		try {
+			Result result = getConsumeComponent().processConsumption();
+			getConsumeComponent().onSave();		
+			return result;
+		} catch (IllegalStateException e) {
+			return Result.STAGNATE;
+		}
 	}
 	
-	public void process_mine(CivAsyncTask task) throws InterruptedException {	
-		Result result = this.consume(task);
+	public void process_mine(CivAsyncTask task) throws InterruptedException {
+		Result result = null;
+		try {
+			result = this.consume(task);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		switch (result) {
 		case STARVE:
 			CivMessage.sendTown(getTown(), CivColor.Rose+CivSettings.localize.localizedString("var_mine_productionFell",getConsumeComponent().getLevel(),CivColor.LightGreen+getConsumeComponent().getCountString()));
