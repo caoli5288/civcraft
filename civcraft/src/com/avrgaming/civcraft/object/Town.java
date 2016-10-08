@@ -808,6 +808,7 @@ public class Town extends SQLObject {
 			}
 		}
 
+		total += mines;
 		sources.put("Mines", mines);
 
 		total += structures;
