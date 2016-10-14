@@ -2888,3 +2888,4 @@ var_missionBook_subvert_success1: "Mission Accomplished, [%0] is now in Anarchy"
 
 # 1.76.3
 goodieRepoBroadcastTitle: "Trade Goodie Repo"
+cmd_res_exchangeNoTradeGoods: "You Cannot Exchange Trade Goods"

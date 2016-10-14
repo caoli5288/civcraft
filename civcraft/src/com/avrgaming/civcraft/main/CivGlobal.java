@@ -1362,27 +1362,38 @@ public class CivGlobal {
 		return null;
 	}
 	
-	public static BonusGoodie getBonusGoodie(ItemStack item) {
+	public static boolean isBonusGoodie(ItemStack item) {
 		if (item == null) {
-			return null;
+			return false;
 		}
 		
 		if (ItemManager.getId(item) == CivData.AIR) {
-			return null;
+			return false;
 		}
 		
 		ItemMeta meta = item.getItemMeta();
 		if (meta == null) {
-			return null;
+			return false;
 		}
-		
+
 		if (!meta.hasLore() || meta.getLore().size() < BonusGoodie.LoreIndex.values().length) {
-			return null;
+			return false;
 		}
 		
 		if (!meta.getLore().get(BonusGoodie.LoreIndex.TYPE.ordinal()).equals(BonusGoodie.LORE_TYPE)) {
+			return false;
+		}
+		
+		return true;
+		
+	}
+	
+	public static BonusGoodie getBonusGoodie(ItemStack item) {
+		if (!isBonusGoodie(item)) {
 			return null;
 		}
+
+		ItemMeta meta = item.getItemMeta();
 		
 		String outpostLocation = meta.getLore().get(BonusGoodie.LoreIndex.OUTPOSTLOCATION.ordinal());	
 		BlockCoord bcoord = new BlockCoord(outpostLocation);

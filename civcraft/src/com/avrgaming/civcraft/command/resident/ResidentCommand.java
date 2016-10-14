@@ -34,6 +34,7 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.util.CivColor;
@@ -239,8 +240,13 @@ public class ResidentCommand extends CommandBase {
 				continue;
 			}
 			
+			if (CivGlobal.isBonusGoodie(is)) {
+				throw new CivException(CivSettings.localize.localizedString("cmd_res_exchangeNoTradeGoods"));
+			}
+			
 			if (ItemManager.getId(is) == exchangeID) {
 				total += is.getAmount();
+				break;
 			}
 		}
 		

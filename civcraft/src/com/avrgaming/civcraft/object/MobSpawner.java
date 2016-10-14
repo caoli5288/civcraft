@@ -157,6 +157,7 @@ public class MobSpawner extends SQLObject {
 			} else {
 				SpawnerInfo spawner = spawnerEditor.getSpawner(this.getCoord().getLocation());
 				if (spawner.getSpawner() != null) {
+		            CivLog.debug("Spawner Disabled at "+this.getCoord().getLocation());
 					spawnerEditor.resetSpawner(this.getCoord().getLocation());
 				}
 			}
