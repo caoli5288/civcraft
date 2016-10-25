@@ -34,6 +34,7 @@ import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivData;
 import com.avrgaming.civcraft.main.CivGlobal;
+import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.StructureChest;
@@ -175,9 +176,15 @@ public class Cottage extends Structure {
 		}
 		
 		getConsumeComponent().setConsumeRate(cottage_consume_mod);
-		Result result = getConsumeComponent().processConsumption();
-		getConsumeComponent().onSave();
-		getConsumeComponent().clearEquivExchanges();
+
+		Result result = Result.STAGNATE;
+		try {
+			result = getConsumeComponent().processConsumption();
+			getConsumeComponent().onSave();
+			getConsumeComponent().clearEquivExchanges();
+		} catch (IllegalStateException e) {
+			CivLog.exception(this.getDisplayName()+" Process Error in town: "+this.getTown().getName()+" and Location: "+this.getCorner(), e);
+		}	
 		
 		/* Bail early for results that do not generate coins. */
 		switch (result) {

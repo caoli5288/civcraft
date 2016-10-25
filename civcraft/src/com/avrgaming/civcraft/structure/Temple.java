@@ -31,6 +31,7 @@ import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigTempleLevel;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
+import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.StructureChest;
 import com.avrgaming.civcraft.object.Town;
@@ -112,9 +113,14 @@ public class Temple extends Structure {
 		}
 		getConsumeComponent().setSource(multiInv);
 		getConsumeComponent().setConsumeRate(1.0);
-		Result result = getConsumeComponent().processConsumption();
-		getConsumeComponent().onSave();		
-		return result;
+		try {
+			Result result = getConsumeComponent().processConsumption();
+			getConsumeComponent().onSave();		
+			return result;
+		} catch (IllegalStateException e) {
+			CivLog.exception(this.getDisplayName()+" Process Error in town: "+this.getTown().getName()+" and Location: "+this.getCorner(), e);
+			return Result.STAGNATE;
+		}	
 	}
 	
 	public void templeCulture(CivAsyncTask task) throws InterruptedException {

@@ -22,6 +22,7 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Buff;
 import com.avrgaming.civcraft.object.Town;
@@ -274,8 +275,16 @@ public class TradeShip extends WaterStructure {
 		}
 		getConsumeComponent().setSource(mInv);
 		getConsumeComponent().setConsumeRate(1.0);
-		tradeResult = getConsumeComponent().processConsumption(this.getUpgradeLvl()-1);
-		getConsumeComponent().onSave();		
+		
+		try {
+			tradeResult = getConsumeComponent().processConsumption(this.getUpgradeLvl()-1);
+			getConsumeComponent().onSave();	
+		} catch (IllegalStateException e) {
+			tradeResult = new TradeShipResults();
+			tradeResult.setResult(Result.STAGNATE);
+			CivLog.exception(this.getDisplayName()+" Process Error in town: "+this.getTown().getName()+" and Location: "+this.getCorner(), e);
+			return tradeResult;
+		}	
 		return tradeResult;
 	}
 	
