@@ -54,6 +54,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
@@ -155,8 +156,12 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerInteract(PlayerInteractEvent event) {
-	
-		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
+		ItemStack stack = null;
+		if (event.getHand() == EquipmentSlot.OFF_HAND) {
+			 stack = event.getPlayer().getInventory().getItemInOffHand();
+		} else {
+			 stack = event.getPlayer().getInventory().getItemInMainHand();
+		}
 		if (stack == null) {
 			return;
 		}
