@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
@@ -12,19 +13,22 @@ import com.avrgaming.civcraft.object.Resident;
 
 public class ConfigTechPotion {
 	public String name;
-	public int data;
+	public PotionEffectType effect;
+	public Integer amp;
 	public String require_tech;
 	
-	public static void loadConfig(FileConfiguration cfg, Map<Integer, ConfigTechPotion> techPotions) {
+	public static void loadConfig(FileConfiguration cfg, Map<String, ConfigTechPotion> techPotions) {
 		techPotions.clear();
 		List<Map<?, ?>> techs = cfg.getMapList("potions");
 		for (Map<?, ?> confTech : techs) {
 			ConfigTechPotion tech = new ConfigTechPotion();
 			
 			tech.name = (String)confTech.get("name");
-			tech.data = (Integer)confTech.get("data");
+			String effect = (String)confTech.get("effect");
+			tech.effect = PotionEffectType.getByName(effect);
+			tech.amp = (Integer)confTech.get("amp");
 			tech.require_tech = (String)confTech.get("require_tech");			
-			techPotions.put(Integer.valueOf(tech.data), tech);
+			techPotions.put(""+effect+tech.amp, tech);
 		}
 		CivLog.info("Loaded "+techPotions.size()+" tech potions.");		
 	}

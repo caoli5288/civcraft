@@ -54,6 +54,7 @@ import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.event.world.PortalCreateEvent;
 import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -465,20 +466,30 @@ public class PlayerListener implements Listener {
 		}
 		
 		if (event.getItem().getType().equals(Material.POTION)) {
-			ConfigTechPotion pot = CivSettings.techPotions.get(Integer.valueOf(event.getItem().getDurability()));
-			if (pot != null) {
-				if (!pot.hasTechnology(event.getPlayer())) {
-					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("var_playerListen_potionNoTech",pot.name));
+			PotionMeta meta = (PotionMeta) event.getItem().getItemMeta();
+			for (PotionEffect effect : meta.getCustomEffects()) {
+				String name = effect.getType().getName();
+				Integer amp = effect.getAmplifier();
+				ConfigTechPotion pot = CivSettings.techPotions.get(""+name+amp);
+				if (pot != null) {
+					if (!pot.hasTechnology(event.getPlayer())) {
+						CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("var_playerListen_potionNoTech",pot.name));
+						event.setCancelled(true);
+						return;
+					}
+					if (pot.hasTechnology(event.getPlayer())) {
+						event.setCancelled(false);
+						return;
+					}
+				} else {
+					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_denyUse"));
 					event.setCancelled(true);
 					return;
 				}
-				if (pot.hasTechnology(event.getPlayer())) {
-					event.setCancelled(false);
-				}
-			} else {
-				CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_denyUse"));
-				event.setCancelled(true);
 			}
+			
+			
+			
 		}
 	}
 	

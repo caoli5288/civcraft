@@ -19,19 +19,23 @@ items:
 
 potions:
    - name: 'Fire Resist'
-     data: 8195
+     effect: 'FIRE_RESISTANCE'
+     amp: 1
      require_tech: 'tech_alchemy'
 
    - name: 'Swiftness'
-     data: 8194
+     effect: 'SPEED'
+     amp: 1
      require_tech: 'tech_malting' 
 
    - name: 'Healing I'
-     data: 8197
+     effect: 'HEAL'
+     amp: 1
      require_tech: 'tech_brewing'
 
    - name: 'Healing II'
-     data: 8229
+     effect: 'HEAL'
+     amp: 2
      require_tech: 'tech_fermentation'
 
 # ------------------------------------------

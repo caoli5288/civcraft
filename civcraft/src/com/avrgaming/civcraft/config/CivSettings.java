@@ -119,7 +119,7 @@ public class CivSettings {
 	public static FileConfiguration techsConfig; /* techs.yml */
 	public static Map<String, ConfigTech> techs = new HashMap<String, ConfigTech>();
 	public static Map<Integer, ConfigTechItem> techItems = new HashMap<Integer, ConfigTechItem>();
-	public static Map<Integer, ConfigTechPotion> techPotions = new HashMap<Integer, ConfigTechPotion>();
+	public static Map<String, ConfigTechPotion> techPotions = new HashMap<String, ConfigTechPotion>();
 	
 	public static FileConfiguration spawnersConfig; /* spawners.yml */
 	public static Map<String, ConfigMobSpawner> spawners = new HashMap<String, ConfigMobSpawner>();
