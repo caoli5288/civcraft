@@ -37,7 +37,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
@@ -87,12 +86,6 @@ public class CustomItemManager implements Listener {
 	
 	public static HashMap<String, LinkedList<ItemDurabilityEntry>> itemDuraMap = new HashMap<String, LinkedList<ItemDurabilityEntry>>();
 	public static boolean duraTaskScheduled = false;
-	
-	@EventHandler(priority = EventPriority.NORMAL)
-	public void onEnchantItemEvent(EnchantItemEvent event) {
-		CivMessage.sendError(event.getEnchanter(), CivSettings.localize.localizedString("customItem_NoEnchanting"));
-		event.setCancelled(true);
-	}
 	
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void onBlockBreak(BlockBreakEvent event) {

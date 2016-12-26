@@ -6,6 +6,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.enchantment.EnchantItemEvent;
 import org.bukkit.event.entity.ExpBottleEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.player.PlayerExpChangeEvent;
@@ -24,6 +25,12 @@ public class DisableXPListener implements Listener {
 	@EventHandler(priority = EventPriority.LOW)
 	public void onExpBottleEvent(ExpBottleEvent event) {
 		event.setExperience(0);
+	}
+	
+	@EventHandler(priority = EventPriority.LOW)
+	public void onEnchantItemEvent(EnchantItemEvent event) {
+		CivMessage.sendError(event.getEnchanter(), CivSettings.localize.localizedString("customItem_NoEnchanting"));
+		event.setCancelled(true);
 	}
 	
 	@EventHandler(priority = EventPriority.LOW)
