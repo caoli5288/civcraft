@@ -19,7 +19,7 @@
 package com.avrgaming.civcraft.threading.tasks;
 
 import gpl.AttributeUtil;
-import net.minecraft.server.v1_10_R1.Material;
+import net.minecraft.server.v1_11_R1.Material;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;

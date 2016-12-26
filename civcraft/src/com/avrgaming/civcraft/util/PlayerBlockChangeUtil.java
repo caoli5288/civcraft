@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_10_R1.PacketPlayOutMultiBlockChange;
+import net.minecraft.server.v1_11_R1.PacketPlayOutMultiBlockChange;
 
 import org.bukkit.entity.Player;
 

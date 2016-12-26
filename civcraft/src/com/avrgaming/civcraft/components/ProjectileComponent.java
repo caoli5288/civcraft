@@ -20,10 +20,10 @@ package com.avrgaming.civcraft.components;
 
 import java.util.HashSet;
 
-import net.minecraft.server.v1_10_R1.Vec3D;
+import net.minecraft.server.v1_11_R1.Vec3D;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_10_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;

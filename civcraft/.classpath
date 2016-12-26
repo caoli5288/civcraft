@@ -18,9 +18,7 @@
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/json.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TitleAPI-1.7.4.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/TagAPI-1.1.9.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/spigot-api-1.10.2-R0.1-SNAPSHOT-shaded.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.10.2-R0.1-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/craftbukkit-1.10.2.jar"/>
+	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/bukkit-1.11.2-R0.1-SNAPSHOT.jar"/>
 	<classpathentry kind="lib" path="D:/civcraftsvn/trunk/lib/CustomMobs-4.16.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -41,6 +41,7 @@ import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Biome;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -298,7 +299,8 @@ public class DebugCommand extends CommandBase {
 	
 	public void heal_cmd() throws CivException {
 		Player player = getPlayer();
-		player.setHealth(player.getMaxHealth());
+		Double maxHP = player.getAttribute(Attribute.GENERIC_MAX_HEALTH).getBaseValue();
+		player.setHealth(maxHP);
 		player.setFoodLevel(50);
 		CivMessage.send(player, "Healed....");
 	}

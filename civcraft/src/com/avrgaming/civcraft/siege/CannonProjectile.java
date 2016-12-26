@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
 
-import net.minecraft.server.v1_10_R1.EntityPlayer;
+import net.minecraft.server.v1_11_R1.EntityPlayer;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
