@@ -248,7 +248,9 @@ public class FarmChunk {
 			if (comp instanceof ActivateOnBiome) {
 				ActivateOnBiome ab = (ActivateOnBiome)comp;
 				if (ab.isValidBiome(biomeName)) {
-					effectiveGrowthRate += ab.getValue();
+					Double val = ab.getValue();
+					effectiveGrowthRate *= val;
+					break;
 				}
 			}
 		}

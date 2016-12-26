@@ -1205,7 +1205,7 @@ structures:
           effect: 'THIS'
           attribute: 'GROWTH'
           biomes: 'PLAINS'
-          value: '15'
+          value: '1.5'
   
   - id: ti_pasture
     template: pasture
