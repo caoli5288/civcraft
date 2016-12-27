@@ -22,6 +22,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Arrow;
@@ -292,29 +293,31 @@ public class PlayerListener implements Listener {
 	public void onEntityDeath(EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
 			//Unit.removeUnit(((Player)event.getEntity()));
-			
-			ArrayList<ItemStack> stacksToRemove = new ArrayList<ItemStack>();
-			for (ItemStack stack : event.getDrops()) {
-				if (stack != null) {
-					//CustomItemStack is = new CustomItemStack(stack);
-					LoreMaterial material = LoreMaterial.getMaterial(stack);
-					if (material != null) {
-						material.onPlayerDeath(event, stack);
-						if (material instanceof UnitMaterial) {
-							stacksToRemove.add(stack);
-							continue;
-						}
-						
-						if (material instanceof UnitItemMaterial) {
-							stacksToRemove.add(stack);
-							continue;
+			Boolean keepInventory = Boolean.valueOf(Bukkit.getWorld("world").getGameRuleValue("keepInventory"));
+				if (!keepInventory) {
+				ArrayList<ItemStack> stacksToRemove = new ArrayList<ItemStack>();
+				for (ItemStack stack : event.getDrops()) {
+					if (stack != null) {
+						//CustomItemStack is = new CustomItemStack(stack);
+						LoreMaterial material = LoreMaterial.getMaterial(stack);
+						if (material != null) {
+							material.onPlayerDeath(event, stack);
+							if (material instanceof UnitMaterial) {
+								stacksToRemove.add(stack);
+								continue;
+							}
+							
+							if (material instanceof UnitItemMaterial) {
+								stacksToRemove.add(stack);
+								continue;
+							}
 						}
 					}
 				}
-			}
-			
-			for (ItemStack stack : stacksToRemove) {
-				event.getDrops().remove(stack);
+				
+				for (ItemStack stack : stacksToRemove) {
+					event.getDrops().remove(stack);
+				}
 			}
 		}
 	}

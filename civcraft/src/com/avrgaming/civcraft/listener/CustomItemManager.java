@@ -25,6 +25,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Arrow;
@@ -67,6 +68,7 @@ import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.items.ItemDurabilityEntry;
 import com.avrgaming.civcraft.items.components.Catalyst;
+import com.avrgaming.civcraft.listener.armor.ArmorType;
 import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.lorestorage.ItemChangeResult;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
@@ -447,6 +449,43 @@ public class CustomItemManager implements Listener {
 		return true;
 	}
 	
+	private boolean processArmorDurabilityChanges(PlayerDeathEvent event, ItemStack stack, int i) {
+		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterial(stack);
+		if (craftMat != null) {
+			ItemChangeResult result = craftMat.onDurabilityDeath(event, stack);
+			if (result != null) {
+				if (!result.destroyItem) {
+					replaceItem(event, stack, result.stack);
+				} else {
+					replaceItem(event, stack, new ItemStack(Material.AIR));
+					event.getDrops().remove(stack);
+					return false;
+				}
+			}
+		}
+		
+		return true;
+	}
+	
+	private void replaceItem(PlayerDeathEvent event, ItemStack oldItem, ItemStack newItem) {
+		ArmorType type = ArmorType.matchType(oldItem);
+		switch (type) {
+		case HELMET:{
+			event.getEntity().getInventory().setHelmet(newItem);
+			break;}
+		case CHESTPLATE: {
+			event.getEntity().getInventory().setChestplate(newItem);
+			break;}
+		case LEGGINGS: {
+			event.getEntity().getInventory().setLeggings(newItem);
+			break;}
+		case BOOTS: {
+			event.getEntity().getInventory().setBoots(newItem);
+			break;}
+		}
+	
+	}
+	
 	@EventHandler(priority = EventPriority.LOW) 
 	public void onPlayerDeathEvent(PlayerDeathEvent event) {
 		HashMap<Integer, ItemStack> noDrop = new HashMap<Integer, ItemStack>();
@@ -485,7 +524,7 @@ public class CustomItemManager implements Listener {
 				continue;
 			}
 
-			if(!processDurabilityChanges(event, stack, i)) {
+			if(!processArmorDurabilityChanges(event, stack, i)) {
 				/* Don't process anymore more enhancements on items after its been destroyed. */
 				continue;
 			}
@@ -535,7 +574,10 @@ public class CustomItemManager implements Listener {
 			}
 			
 		}
-		TaskMaster.syncTask(new SyncRestoreItemsTask(noDrop, armorNoDrop, event.getEntity().getName()));
+		Boolean keepInventory = Boolean.valueOf(Bukkit.getWorld("world").getGameRuleValue("keepInventory"));
+		if (!keepInventory) {
+			TaskMaster.syncTask(new SyncRestoreItemsTask(noDrop, armorNoDrop, event.getEntity().getName()));
+		}
 		
 		
 	}
