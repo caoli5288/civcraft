@@ -2889,3 +2889,7 @@ var_missionBook_subvert_success1: "Mission Accomplished, [%0] is now in Anarchy"
 # 1.76.3
 goodieRepoBroadcastTitle: "Trade Goodie Repo"
 cmd_res_exchangeNoTradeGoods: "You Cannot Exchange Trade Goods"
+
+# 1.8
+
+var_cmd_civ_info_victory: "The Civilization of [%0] has won with a [%1] victory!"

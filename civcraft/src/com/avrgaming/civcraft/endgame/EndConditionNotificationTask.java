@@ -25,8 +25,14 @@ public class EndConditionNotificationTask implements Runnable {
 				if (civ != null)
 				{
 					Integer daysLeft = endCond.getDaysToHold() - endCond.getDaysHeldFromSessionData(entry.value);
-					CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictoryNew",CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White,
-						CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White,CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
+					if (daysLeft == 0) {
+						CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_info_victory",
+								CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White, CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
+						break;
+					} else {
+						CivMessage.global(CivSettings.localize.localizedString("var_cmd_civ_info_daysTillVictoryNew",
+								CivColor.LightBlue+CivColor.BOLD+civ.getName()+CivColor.White, CivColor.Yellow+CivColor.BOLD+daysLeft+CivColor.White,CivColor.LightPurple+CivColor.BOLD+endCond.getVictoryName()+CivColor.White));
+					}
 				}
 			}
 		}
