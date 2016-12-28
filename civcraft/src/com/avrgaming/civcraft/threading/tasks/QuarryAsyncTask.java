@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Random;
 
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.avrgaming.civcraft.exception.CivTaskAbortException;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
@@ -34,6 +36,34 @@ public class QuarryAsyncTask extends CivAsyncTask {
 	
 	public QuarryAsyncTask(Structure quarry) {
 		this.quarry = (Quarry)quarry;
+	}
+	
+//	private Boolean hasSilkTouch(ItemStack stack) {
+//
+//		if (stack.hasItemMeta()) {
+//			ItemMeta testEnchantMeta = stack.getItemMeta();
+//			if (testEnchantMeta.hasEnchant(Enchantment.SILK_TOUCH)) {
+//
+//				debug(quarry, "Pickaxe has SILK_TOUCH");
+//				return true;
+//				
+//			}
+//		}
+//		return false;
+//	}
+	
+	private int checkDigSpeed(ItemStack stack) {
+
+		if (stack.hasItemMeta()) {
+			ItemMeta testEnchantMeta = stack.getItemMeta();
+			if (testEnchantMeta.hasEnchant(Enchantment.DIG_SPEED)) {
+
+				debug(quarry, "Pickaxe has DIG_SPEED lvl: "+testEnchantMeta.getEnchantLevel(Enchantment.DIG_SPEED));
+				return testEnchantMeta.getEnchantLevel(Enchantment.DIG_SPEED)+1;
+				
+			}
+		}
+		return 1;
 	}
 	
 	public void processQuarryUpdate() {
@@ -116,15 +146,16 @@ public class QuarryAsyncTask extends CivAsyncTask {
 				if (stack == null) {
 					continue;
 				}
+				int modifier = checkDigSpeed(stack);
 				
 				if (ItemManager.getId(stack) == CivData.WOOD_PICKAXE) {
 					try {
 						short damage = ItemManager.getData(stack);
 						this.updateInventory(Action.REMOVE, source_inv, stack);
-						damage++;
+						damage+= modifier;
 						stack.setDurability(damage);
 						if (damage < 59) {
-						this.updateInventory(Action.ADD, source_inv, stack);
+							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
 						return;
@@ -137,13 +168,13 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					ItemStack newItem;
 					
 					if (rand1 < ((int)((quarry.getChance(Mineral.COAL)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COAL, 1);
+						newItem = ItemManager.createItemStack(CivData.COAL, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.OTHER)/2)*randMax))) {
-						newItem = getOther();
+						newItem = getOther(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COBBLESTONE)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, 1);
+						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, modifier);
 					} else {
-						newItem = getJunk();
+						newItem = getJunk(modifier);
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
@@ -159,7 +190,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					try {
 						short damage = ItemManager.getData(stack);
 						this.updateInventory(Action.REMOVE, source_inv, stack);
-						damage++;
+						damage+= modifier;
 						stack.setDurability(damage);
 						if (damage < 131) {
 							this.updateInventory(Action.ADD, source_inv, stack);
@@ -175,17 +206,17 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					ItemStack newItem;
 					
 					if (rand1 < ((int)((quarry.getChance(Mineral.GOLD))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.IRON))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COAL))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COAL, 1);
+						newItem = ItemManager.createItemStack(CivData.COAL, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.OTHER))*randMax))) {
-						newItem = getOther();
+						newItem = getOther(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COBBLESTONE)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, 1);
+						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, modifier);
 					} else {
-						newItem = getJunk();
+						newItem = getJunk(modifier);
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
@@ -201,7 +232,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					try {
 						short damage = ItemManager.getData(stack);
 						this.updateInventory(Action.REMOVE, source_inv, stack);
-						damage++;
+						damage+= modifier;
 						stack.setDurability(damage);
 						if (damage < 250) {
 							this.updateInventory(Action.ADD, source_inv, stack);
@@ -217,24 +248,24 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					ItemStack newItem;
 					
 					if (rand1 < ((int)((quarry.getChance(Mineral.RARE))*randMax))) {
-						newItem = getRare();
+						newItem = getRare(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.TUNGSTEN))*randMax))) {
-						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_ore"));
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_ore"), modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.GOLD))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.REDSTONE))*randMax))) {
 						int itemRand = rand.nextInt(5)+1;
-						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand);
+						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand*modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.IRON))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COAL))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COAL, 1);
+						newItem = ItemManager.createItemStack(CivData.COAL, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.OTHER))*randMax))) {
-						newItem = getOther();
+						newItem = getOther(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COBBLESTONE)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, 1);
+						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, modifier);
 					} else {
-						newItem = getJunk();
+						newItem = getJunk(modifier);
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
@@ -250,7 +281,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					try {
 						short damage = ItemManager.getData(stack);
 						this.updateInventory(Action.REMOVE, source_inv, stack);
-						damage++;
+						damage+= modifier;
 						stack.setDurability(damage);
 						if (damage < 32) {
 							this.updateInventory(Action.ADD, source_inv, stack);
@@ -266,11 +297,11 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					ItemStack newItem;
 					
 					if (rand1 < ((int)((quarry.getChance(Mineral.COAL)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COAL, 1);
+						newItem = ItemManager.createItemStack(CivData.COAL, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.OTHER)/2)*randMax))) {
-						newItem = getOther();
+						newItem = getOther(modifier);
 					} else {
-						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, 1);
+						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, modifier);
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
@@ -286,7 +317,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					try {
 						short damage = ItemManager.getData(stack);
 						this.updateInventory(Action.REMOVE, source_inv, stack);
-						damage++;
+						damage+= modifier;
 						stack.setDurability(damage);
 						if (damage < 1561) {
 							this.updateInventory(Action.ADD, source_inv, stack);
@@ -302,24 +333,24 @@ public class QuarryAsyncTask extends CivAsyncTask {
 					ItemStack newItem;
 					
 					if (rand1 < ((int)((quarry.getChance(Mineral.RARE))*randMax))) {
-						newItem = getRare();
+						newItem = getRare(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.TUNGSTEN))*randMax))) {
-						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_ore"));
+						newItem = LoreMaterial.spawn(LoreMaterial.materialMap.get("mat_tungsten_ore"), modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.GOLD))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.GOLD_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.REDSTONE))*randMax))) {
 						int itemRand = rand.nextInt(5)+1;
-						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand);
+						newItem = ItemManager.createItemStack(CivData.REDSTONE_DUST, itemRand*modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.IRON))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, 1);
+						newItem = ItemManager.createItemStack(CivData.IRON_INGOT, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COAL))*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COAL, 1);
+						newItem = ItemManager.createItemStack(CivData.COAL, modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.OTHER))*randMax))) {
-						newItem = getOther();
+						newItem = getOther(modifier);
 					} else if (rand1 < ((int)((quarry.getChance(Mineral.COBBLESTONE)/2)*randMax))) {
-						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, 1);
+						newItem = ItemManager.createItemStack(CivData.COBBLESTONE, modifier);
 					} else {
-						newItem = getJunk();
+						newItem = getJunk(modifier);
 					}
 					
 					//Try to add the new item to the dest chest, if we cant, oh well.
@@ -336,40 +367,40 @@ public class QuarryAsyncTask extends CivAsyncTask {
 	quarry.skippedCounter = 0;
 	}
 	
-	private ItemStack getJunk() {
+	private ItemStack getJunk(int modifier) {
 		int randMax = 10;
 		Random rand = new Random();
 		int rand2 = rand.nextInt(randMax);
 		if (rand2 < (2)) {
-			return ItemManager.createItemStack(CivData.DIRT, 1, (short) CivData.PODZOL);
+			return ItemManager.createItemStack(CivData.DIRT, modifier, (short) CivData.PODZOL);
 		} else if (rand2 < (5)) {
-			return ItemManager.createItemStack(CivData.DIRT, 1, (short) CivData.COARSE_DIRT);
+			return ItemManager.createItemStack(CivData.DIRT, modifier, (short) CivData.COARSE_DIRT);
 		} else {
-			return ItemManager.createItemStack(CivData.DIRT, 1);
+			return ItemManager.createItemStack(CivData.DIRT, modifier);
 		}
 	}
 	
-	private ItemStack getOther() {
+	private ItemStack getOther(int modifier) {
 		int randMax = Quarry.MAX_CHANCE;
 		Random rand = new Random();
 		int rand2 = rand.nextInt(randMax);
 		if (rand2 < (randMax/8)) {
-			return ItemManager.createItemStack(CivData.STONE, 1, (short) CivData.ANDESITE);
+			return ItemManager.createItemStack(CivData.STONE, modifier, (short) CivData.ANDESITE);
 		} else if (rand2 < (randMax/5)) {
-			return ItemManager.createItemStack(CivData.STONE, 1, (short) CivData.DIORITE);
+			return ItemManager.createItemStack(CivData.STONE, modifier, (short) CivData.DIORITE);
 		} else {
-			return ItemManager.createItemStack(CivData.STONE, 1, (short) CivData.GRANITE);
+			return ItemManager.createItemStack(CivData.STONE, modifier, (short) CivData.GRANITE);
 		}
 	}
 	
-	private ItemStack getRare() {
+	private ItemStack getRare(int modifier) {
 		int randMax = Quarry.MAX_CHANCE;
 		Random rand = new Random();
 		int rand2 = rand.nextInt(randMax);
 		if (rand2 < (randMax/5)) {
-			return ItemManager.createItemStack(CivData.EMERALD, 1);
+			return ItemManager.createItemStack(CivData.EMERALD, modifier);
 		} else {
-			return ItemManager.createItemStack(CivData.DIAMOND, 1);
+			return ItemManager.createItemStack(CivData.DIAMOND, modifier);
 		}
 	}
 	
