@@ -162,7 +162,7 @@ public abstract class CivAsyncTask implements Runnable {
 		UpdateInventoryRequest request = new UpdateInventoryRequest(SyncUpdateInventory.lock);
 		request.action = action;
 		request.stack = itemStack;
-		request.inv = inv;
+		request.multiInv = inv;
 		
 		this.finished = false;
 		

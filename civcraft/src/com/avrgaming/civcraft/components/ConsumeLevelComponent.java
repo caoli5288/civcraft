@@ -362,7 +362,7 @@ public class ConsumeLevelComponent extends Component {
 					} else {
 						if (totalBaseConsumed != 0) {
 							/* If the total amount consumed is negative, add it to the inventory. */
-							source.addItem(ItemManager.createItemStack(ee.baseType, (-1*totalBaseConsumed)));
+							source.addItemStack(ItemManager.createItemStack(ee.baseType, (-1*totalBaseConsumed)));
 						}
 					}
 				}

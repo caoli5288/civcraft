@@ -749,7 +749,7 @@ public class Camp extends Buildable {
 			attrs.addLore(CivColor.LightGray+res.getName());
 			token = attrs.getStack();
 			
-			mInv.addItem(token);
+			mInv.addItemStack(token);
 		}
 		
 		String stateMessage = "";

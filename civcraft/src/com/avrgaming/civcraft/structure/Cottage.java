@@ -122,7 +122,7 @@ public class Cottage extends Structure {
 	
 			// Add some rotten flesh to the chest lol
 			CivMessage.sendTown(this.getTown(), CivColor.Rose+CivSettings.localize.localizedString("cottage_poisoned"));
-			inv.addItem(ItemManager.createItemStack(CivData.ROTTEN_FLESH, 4));
+			inv.addItemStack(ItemManager.createItemStack(CivData.ROTTEN_FLESH, 4));
 			return true;
 		}
 		return false;

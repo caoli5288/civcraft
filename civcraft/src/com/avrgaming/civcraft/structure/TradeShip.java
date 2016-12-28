@@ -358,7 +358,7 @@ public class TradeShip extends WaterStructure {
 			}
 			
 			for (ItemStack item :tradeResult.getReturnCargo()) {
-				multiInv.addItem(item);
+				multiInv.addItemStack(item);
 			}
 			CivMessage.sendTown(getTown(), CivColor.LightGreen+CivSettings.localize.localizedString("tradeship_successSpecail"));
 		}

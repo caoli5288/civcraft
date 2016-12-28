@@ -20,6 +20,7 @@ package com.avrgaming.civcraft.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import org.bukkit.inventory.DoubleChestInventory;
 import org.bukkit.inventory.Inventory;
@@ -28,6 +29,11 @@ import org.bukkit.inventory.ItemStack;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
 import com.avrgaming.civcraft.lorestorage.LoreMaterial;
+import com.avrgaming.civcraft.main.CivLog;
+import com.avrgaming.civcraft.threading.CivAsyncTask;
+import com.avrgaming.civcraft.threading.sync.SyncUpdateInventory;
+import com.avrgaming.civcraft.threading.sync.request.UpdateInventoryRequest;
+import com.avrgaming.civcraft.threading.sync.request.UpdateInventoryRequest.Action;
 
 public class MultiInventory {
 	
@@ -106,9 +112,53 @@ public class MultiInventory {
 				break;
 			}
 		}
-		
-		inv.setContents(contents);
+		this.updateInventory(inv, contents, Action.SET);
+
 		return removed;
+		
+	}
+	
+	private void updateInventory(Inventory inv, ItemStack[] contents, Action action) {
+		UpdateInventoryRequest request = new UpdateInventoryRequest(SyncUpdateInventory.lock);
+		request.cont = contents;
+		request.inv = inv;
+		request.action = action;
+		this.doSyncUpdateInventory(request);
+	}
+	
+	private void updateInventory(ItemStack stack, Action action) {
+		UpdateInventoryRequest request = new UpdateInventoryRequest(SyncUpdateInventory.lock);
+		request.stack = stack;
+		request.multiInv = this;
+		request.action = action;
+		this.doSyncUpdateInventory(request);
+	}
+	
+	private void doSyncUpdateInventory(UpdateInventoryRequest request) {
+		SyncUpdateInventory.lock.lock();
+		try {
+			SyncUpdateInventory.requestQueue.add(request);
+			while(!request.finished) {
+				/* 
+				 * We await for the finished flag to be set, at this
+				 * time the await function will give up the lock above
+				 * and automagically re-lock when its finished.
+				 */
+				try {
+					request.condition.await(CivAsyncTask.TIMEOUT, TimeUnit.MILLISECONDS);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				if (!request.finished) {
+					CivLog.warning("Couldn't update inventory in "+CivAsyncTask.TIMEOUT+" milliseconds! Retrying.");
+				}
+			}
+
+			
+			
+		} finally {
+			SyncUpdateInventory.lock.unlock();
+		}
 	}
 	
 	
@@ -119,6 +169,10 @@ public class MultiInventory {
 	public void addInventory (DoubleChestInventory inv) {
 		invs.add(inv.getLeftSide());
 		invs.add(inv.getRightSide());
+	}
+	
+	public void addItemStack(ItemStack items) {
+		this.updateInventory(items, Action.ADD);
 	}
 		
 	public int addItem(ItemStack items) {

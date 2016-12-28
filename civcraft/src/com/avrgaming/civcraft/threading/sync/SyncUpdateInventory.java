@@ -55,15 +55,19 @@ public class SyncUpdateInventory implements Runnable {
 					
 					switch(request.action) {
 					case ADD:
-						int leftovers = request.inv.addItem(request.stack);
+						int leftovers = request.multiInv.addItem(request.stack);
 						retBool = !(leftovers > 0);
 						break;
 					case REMOVE:
 						try {
-							retBool = request.inv.removeItem(request.stack);
+							retBool = request.multiInv.removeItem(request.stack);
 						} catch (CivException e) {
 							e.printStackTrace();
 						}
+						break;
+					case SET:
+						retBool = true;
+						request.inv.setContents(request.cont);
 						break;
 					}
 					
