@@ -22,6 +22,7 @@ import java.util.HashSet;
 
 import net.minecraft.server.v1_11_R1.Vec3D;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.craftbukkit.v1_11_R1.CraftWorld;
 import org.bukkit.entity.Entity;
@@ -215,6 +216,10 @@ public abstract class ProjectileComponent extends Component {
 			try {
 				player = CivGlobal.getPlayer(pc.getName());
 			} catch (CivException e) {
+				return;
+			}
+			
+			if (player.getGameMode() != GameMode.SURVIVAL) {
 				return;
 			}
 			

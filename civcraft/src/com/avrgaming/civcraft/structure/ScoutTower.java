@@ -22,6 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashSet;
 
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -124,7 +125,7 @@ public class ScoutTower extends Structure {
 				return;
 			}
 			
-			if (player.isOp()) {
+			if (player.isOp() || player.getGameMode() != GameMode.SURVIVAL) {
 				scoutDebug(CivSettings.localize.localizedString("scoutTower_debug_isOP"));
 				continue;
 			}
