@@ -330,7 +330,7 @@ public class ConfigMarketItem {
 			decrement();
 		}
 		
-		if (!inv.removeItem(this.custom_id, this.type_id, (short)this.data, amount)) {
+		if (!inv.removeItem(this.custom_id, this.type_id, (short)this.data, amount, true)) {
 			throw new CivException(CivSettings.localize.localizedString("var_market_sell_notEnough",amount,this.name));
 		}
 		

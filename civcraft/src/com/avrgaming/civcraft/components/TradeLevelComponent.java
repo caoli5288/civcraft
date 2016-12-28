@@ -438,7 +438,7 @@ public class TradeLevelComponent extends Component {
 						stacksToConsume--;
 						/* Consume what we can */
 						try {
-							source.removeItem(stack);
+							source.removeItem(stack, false);
 						} catch (CivException e) {
 							e.printStackTrace();
 							return 0;

@@ -177,7 +177,7 @@ public abstract class CivAsyncTask implements Runnable {
 				 */
 				request.condition.await(TIMEOUT, TimeUnit.MILLISECONDS);
 				if (!request.finished) {
-					CivLog.warning("Couldn't update inventory in "+TIMEOUT+" milliseconds! Retrying.");
+					CivLog.warning("Couldn't async update inventory in "+TIMEOUT+" milliseconds! Retrying.");
 				}
 			}
 			
