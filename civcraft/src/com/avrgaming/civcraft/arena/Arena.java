@@ -1,3 +1,6 @@
+// changelog:
+// https://github.com/ataranlen/civcraft/pull/73/commits/a34dd3a5bbc71b503f8dcc386fce3801abd25900
+
 package com.avrgaming.civcraft.arena;
 
 
@@ -100,18 +103,11 @@ public class Arena {
 			team.setTeamColor(CivColor.Gold);
 		}
 		
-		//team.getScoreboardTeam().setPrefix(team.getTeamColor()+"["+team.getName()+"]");
-		
 		for (Resident resident : team.teamMembers) {
 			try {
 			CivGlobal.getPlayer(resident);
 			} catch (CivException e) {
 				continue;
-			}
-			
-			if (!resident.isUsesAntiCheat()) {
-				throw new CivException(resident.getName()+" must be using anti-cheat in order to join the arena.");
-                                throw new CivException(admin.getName()+" getName() does not using anticheat and tried connect to arena.");
 			}
 			
 			try {
@@ -168,12 +164,14 @@ public class Arena {
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
+        stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementSoulBound"));
 		inv.addItem(stack);
 	}
 	
 	private void addItemToInventory(Material mat, Inventory inv, int amount) {
 		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
+        stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementSoulBound"));
 		inv.addItem(stack);
 	}
 	
@@ -200,14 +198,14 @@ public class Arena {
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-                stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
+        stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
 		inv.addItem(stack);
 	}
 	
 	private void addItemToInventory(Material mat, Inventory inv, int amount) {
 		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-                stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
+        stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
 		inv.addItem(stack);
 	}
 	
@@ -383,4 +381,3 @@ public class Arena {
 	}
 	
 }
-.
