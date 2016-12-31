@@ -68,10 +68,11 @@ public class FishingListener implements Listener {
 							 CivMessage.send(event.getPlayer(), CivColor.LightGreen+CivSettings.localize.localizedString("var_fishing_success",CivColor.LightPurple+craftMat.getName()));
 						 }
 					 }
-					 
-					 HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(stack);
-					 for (ItemStack is : leftovers.values()) {
-						 player.getWorld().dropItem(player.getLocation(), is);
+					 if (stack != null) {
+						 HashMap<Integer, ItemStack> leftovers = player.getInventory().addItem(stack);
+						 for (ItemStack is : leftovers.values()) {
+							 player.getWorld().dropItem(player.getLocation(), is);
+						 }
 					 }
 				 }
 			 }

@@ -60,7 +60,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 				if (breadCount > 0) {
 					/* bread seed */
 					try {
-						source_inv.removeItem(CivData.BREAD_SEED, 1);
+						source_inv.removeItem(CivData.BREAD_SEED, 1, true);
 					} catch (CivException e) {
 						e.printStackTrace();
 					}
@@ -73,7 +73,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 				if (carrotCount > 0) {
 					/* carrots */
 					try {
-						source_inv.removeItem(CivData.CARROT_ITEM, 1);
+						source_inv.removeItem(CivData.CARROT_ITEM, 1, true);
 					} catch (CivException e) {
 						e.printStackTrace();
 					}
@@ -88,7 +88,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 				if (potatoCount > 0) {
 					/* potatoes */
 					try {
-						source_inv.removeItem(CivData.POTATO_ITEM, 1);
+						source_inv.removeItem(CivData.POTATO_ITEM, 1, true);
 					} catch (CivException e) {
 						e.printStackTrace();
 					}
@@ -104,7 +104,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 			if (breadCount > 0) {
 				/* bread seed */
 				try {
-					source_inv.removeItem(CivData.BREAD_SEED, 1);
+					source_inv.removeItem(CivData.BREAD_SEED, 1, true);
 				} catch (CivException e) {
 					e.printStackTrace();
 				}
@@ -117,7 +117,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 			if (carrotCount > 0) {
 				/* carrots */
 				try {
-					source_inv.removeItem(CivData.CARROT_ITEM, 1);
+					source_inv.removeItem(CivData.CARROT_ITEM, 1, true);
 				} catch (CivException e) {
 					e.printStackTrace();
 				}
@@ -130,7 +130,7 @@ public class WindmillPostProcessSyncTask implements Runnable {
 			if (potatoCount > 0) {
 				/* potatoes */
 				try {
-					source_inv.removeItem(CivData.POTATO_ITEM, 1);
+					source_inv.removeItem(CivData.POTATO_ITEM, 1, true);
 				} catch (CivException e) {
 					e.printStackTrace();
 				}

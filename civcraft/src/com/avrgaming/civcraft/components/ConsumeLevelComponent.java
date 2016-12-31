@@ -294,7 +294,7 @@ public class ConsumeLevelComponent extends Component {
 		return found;
 	}
 	
-	private void consumeFromInventory() {
+	private void consumeFromInventory(Boolean sync) {
 		if (foundCounts == null) {
 			return;
 		}
@@ -349,35 +349,37 @@ public class ConsumeLevelComponent extends Component {
 					int totalBaseConsumed = totalBase - leftOverBase;
 										
 					try {
-						source.removeItem(ee.altType, totalAltConsumed);
+						source.removeItem(ee.altType, totalAltConsumed, sync);
 					} catch (CivException e) {
 						e.printStackTrace();
 					}
 					if (totalBaseConsumed > 0) {
 						try {
-							source.removeItem(ee.baseType, totalBaseConsumed);
+							source.removeItem(ee.baseType, totalBaseConsumed, sync);
 						} catch (CivException e) {
 							e.printStackTrace();
 						}
 					} else {
 						if (totalBaseConsumed != 0) {
 							/* If the total amount consumed is negative, add it to the inventory. */
-							source.addItemStack(ItemManager.createItemStack(ee.baseType, (-1*totalBaseConsumed)));
+							source.addItems(ItemManager.createItemStack(ee.baseType, (-1*totalBaseConsumed)), sync);
 						}
 					}
 				}
 			} else {
 				/* We had enough of our base item, consume it. */
 				try {
-					source.removeItem(typeID, getConsumedAmount(amount));
+					source.removeItem(typeID, getConsumedAmount(amount), sync);
 				} catch (CivException e) {
 					e.printStackTrace();
 				}
 			}
 		}
 	}
-	
 	public Result processConsumption() {
+		return processConsumption(false);
+	}
+	public Result processConsumption(Boolean sync) {
 		
 		Integer currentCountMax = levelCounts.get(this.level);
 		if (currentCountMax == null) {
@@ -387,7 +389,7 @@ public class ConsumeLevelComponent extends Component {
 		}
 		
 		if (hasEnoughToConsume()) {
-			consumeFromInventory();
+			consumeFromInventory(sync);
 			
 			if ((this.count+1) >= currentCountMax) {
 				// Level up?

@@ -173,6 +173,14 @@ public class MultiInventory {
 		invs.add(inv.getRightSide());
 	}
 	
+	public void addItems(ItemStack items, Boolean sync) {
+		if (sync) {
+			addItem(items);
+		} else {
+			addItemStack(items);
+		}
+	}
+	
 	public void addItemStack(ItemStack items) {
 		this.updateInventory(items, Action.ADD);
 	}
@@ -272,6 +280,10 @@ public class MultiInventory {
 			return removeItem(null, ItemManager.getId(item), ItemManager.getData(item), item.getAmount(), direct);
 		}
 	}
+	
+	public boolean removeItem(int typeid, int amount, Boolean sync) throws CivException {
+		return removeItem(null, typeid, (short)0, amount, sync);
+	}	
 	
 	public boolean removeItem(int typeid, int amount) throws CivException {
 		return removeItem(null, typeid, (short)0, amount, false);
