@@ -207,7 +207,7 @@ public class Arena {
 	private void addItemToInventory(Material mat, Inventory inv, int amount) {
 		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-                stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIF_SPEED"));
+                stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
 		inv.addItem(stack);
 	}
 	
