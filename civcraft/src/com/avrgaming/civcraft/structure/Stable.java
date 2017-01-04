@@ -52,7 +52,6 @@ import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
 
-@SuppressWarnings("deprecation")
 public class Stable extends Structure {
 
 	public static Integer FEE_MIN = 5;
