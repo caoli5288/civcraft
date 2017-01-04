@@ -659,7 +659,7 @@ public class Camp extends Buildable {
 
 		if (mInv.contains(null, CivData.COAL, (short)0, coal_per_firepoint)) {
 			try {
-				mInv.removeItem(CivData.COAL, coal_per_firepoint);
+				mInv.removeItem(CivData.COAL, coal_per_firepoint, true);
 			} catch (CivException e) {
 				e.printStackTrace();
 			}
@@ -706,7 +706,7 @@ public class Camp extends Buildable {
 		}
 		
 		this.consumeComponent.setSource(mInv);
-		Result result = this.consumeComponent.processConsumption();
+		Result result = this.consumeComponent.processConsumption(true);
 		this.consumeComponent.onSave();
 		
 		switch (result) {
@@ -749,7 +749,7 @@ public class Camp extends Buildable {
 			attrs.addLore(CivColor.LightGray+res.getName());
 			token = attrs.getStack();
 			
-			mInv.addItemStack(token);
+			mInv.addItems(token, true);
 		}
 		
 		String stateMessage = "";
