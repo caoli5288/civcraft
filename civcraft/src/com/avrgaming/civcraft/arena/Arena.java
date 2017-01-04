@@ -10,14 +10,12 @@ import java.util.Random;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.enchantments.enchantment
 
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.config.ConfigArena;
@@ -31,7 +29,6 @@ import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.CivColor;
-import com.avrgaming.civcraft.util.ItemManager;
 
 public class Arena {
 	public ConfigArena config;
@@ -123,23 +120,11 @@ public class Arena {
 		teamCount++;
 	}
 	
-	private void addCivCraftItemToInventory(String id, Inventory inv) {
-		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
-		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
-		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-		inv.addItem(stack);
-	}
-	
-	private void addItemToInventory(Material mat, Inventory inv, int amount) {
-		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
-		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-		inv.addItem(stack);
-	}
-	
 	private void createInventory(Resident resident) {
 		Player player;
-		try {
-			player = CivGlobal.getPlayer(resident);
+			try {
+				player = CivGlobal.getPlayer(resident);
+			
 			Inventory inv = Bukkit.createInventory(player, 9*6, resident.getName()+"'s Gear");
 
 			for (int i = 0; i < 3; i++) {
@@ -158,70 +143,18 @@ public class Arena {
 
 			
 			playerInvs.put(resident.getName(), inv);
-		}
+			} catch (CivException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
         
-        	private void addCivCraftItemToInventory(String id, Inventory inv) {
+    private void addCivCraftItemToInventory(String id, Inventory inv) {
 		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
 		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
 		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
         stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementSoulBound"));
 		inv.addItem(stack);
-	}
-	
-	private void addItemToInventory(Material mat, Inventory inv, int amount) {
-		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
-		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-        stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementSoulBound"));
-		inv.addItem(stack);
-	}
-	
-	private void createInventory(Resident resident) {
-		Player player;
-		try {
-			player = CivGlobal.getPlayer(resident);
-			Inventory inv = Bukkit.createInventory(player, 9*6, resident.getName()+"'s Gear");
-
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.ARROW, inv, 64);
-			addItemToInventory(Material.PUMPKIN_PIE, inv, 64);
-			addItemToInventory(Material.PUMPKIN_PIE, inv, 64);
-
-			
-			playerInvs.put(resident.getName(), inv);
-		}  
-
-     private void addCivCraftItemToInventory(String id, Inventory inv) {
-		LoreCraftableMaterial craftMat = LoreCraftableMaterial.getCraftMaterialFromId(id);
-		ItemStack stack = LoreCraftableMaterial.spawn(craftMat);
-		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-        stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
-		inv.addItem(stack);
-	}
-	
-	private void addItemToInventory(Material mat, Inventory inv, int amount) {
-		ItemStack stack = ItemManager.createItemStack(ItemManager.getId(mat), amount);
-		stack = LoreCraftableMaterial.addEnhancement(stack, LoreEnhancement.enhancements.get("LoreEnhancementArenaItem"));
-        stack = LoreCraftableMaterial.addEnhancement(stack, enhancements.get("DIG_SPEED"));
-		inv.addItem(stack);
-	}
-	
-	private void createInventory(Resident resident) {
-		Player player;
-		try {
-			player = CivGlobal.getPlayer(resident);
-			Inventory inv = Bukkit.createInventory(player, 9*6, resident.getName()+"'s Gear");
-						
-			addCivCraftItemToInventory("mat_vanilla_diamond_pickaxe", inv);
-			
-			playerInvs.put(resident.getName(), inv);
-		}   catch (CivException e) {
-			e.printStackTrace();
-		}
-		
 	}
 	
 	private ConfigArenaTeam getConfigTeam(int id) throws CivException {

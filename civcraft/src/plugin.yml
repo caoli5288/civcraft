@@ -1,7 +1,6 @@
 name: CivCraft
 main: com.avrgaming.civcraft.main.CivCraft
-softdepends: [TitleAPI]
-version: 1.8.0-Beta4
+version: 1.8.0-Beta5
 depend: [CustomMobs]
 
 commands:
