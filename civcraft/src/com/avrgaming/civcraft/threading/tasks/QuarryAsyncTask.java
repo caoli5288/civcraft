@@ -154,7 +154,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 						this.updateInventory(Action.REMOVE, source_inv, stack);
 						damage+= modifier;
 						stack.setDurability(damage);
-						if (damage < 59) {
+						if (damage < 59 && stack.getAmount() == 1) {
 							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
@@ -192,7 +192,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 						this.updateInventory(Action.REMOVE, source_inv, stack);
 						damage+= modifier;
 						stack.setDurability(damage);
-						if (damage < 131) {
+						if (damage < 131 && stack.getAmount() == 1) {
 							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
@@ -234,7 +234,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 						this.updateInventory(Action.REMOVE, source_inv, stack);
 						damage+= modifier;
 						stack.setDurability(damage);
-						if (damage < 250) {
+						if (damage < 250 && stack.getAmount() == 1) {
 							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
@@ -283,7 +283,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 						this.updateInventory(Action.REMOVE, source_inv, stack);
 						damage+= modifier;
 						stack.setDurability(damage);
-						if (damage < 32) {
+						if (damage < 32 && stack.getAmount() == 1) {
 							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
@@ -319,7 +319,7 @@ public class QuarryAsyncTask extends CivAsyncTask {
 						this.updateInventory(Action.REMOVE, source_inv, stack);
 						damage+= modifier;
 						stack.setDurability(damage);
-						if (damage < 1561) {
+						if (damage < 1561 && stack.getAmount() == 1) {
 							this.updateInventory(Action.ADD, source_inv, stack);
 						}
 					} catch (InterruptedException e) {
