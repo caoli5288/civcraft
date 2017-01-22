@@ -780,9 +780,6 @@ public class Template {
 				for (int z = 0; z < tpl.size_z; z++) {
 					Block b = centerBlock.getRelative(x, y, z);
 
-					if (CivSettings.restrictedUndoBlocks.contains(b.getType())) {
-						continue;
-					}
 						SimpleBlock sb = tpl.blocks[x][y][z];
 						if (CivSettings.restrictedUndoBlocks.contains(sb.getMaterial())) {
 							continue;
