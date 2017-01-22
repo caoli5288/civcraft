@@ -347,6 +347,22 @@ public class CivSettings {
 		restrictedUndoBlocks.add(Material.STRING);
 		restrictedUndoBlocks.add(Material.TRIPWIRE);
 		restrictedUndoBlocks.add(Material.SUGAR_CANE_BLOCK);
+		restrictedUndoBlocks.add(Material.BEETROOT_SEEDS);
+		restrictedUndoBlocks.add(Material.LONG_GRASS);
+		restrictedUndoBlocks.add(Material.RED_ROSE);
+		restrictedUndoBlocks.add(Material.RED_MUSHROOM);
+		restrictedUndoBlocks.add(Material.DOUBLE_PLANT);
+		restrictedUndoBlocks.add(Material.CAKE_BLOCK);
+		restrictedUndoBlocks.add(Material.CACTUS);
+		restrictedUndoBlocks.add(Material.PISTON_BASE);
+		restrictedUndoBlocks.add(Material.PISTON_EXTENSION);
+		restrictedUndoBlocks.add(Material.PISTON_MOVING_PIECE);
+		restrictedUndoBlocks.add(Material.PISTON_STICKY_BASE);
+		restrictedUndoBlocks.add(Material.TRIPWIRE_HOOK);
+		restrictedUndoBlocks.add(Material.SAPLING);
+		restrictedUndoBlocks.add(Material.PUMPKIN_STEM);
+		restrictedUndoBlocks.add(Material.MELON_STEM);
+		
 	}
 
 	private static void initPlayerEntityWeapons() {

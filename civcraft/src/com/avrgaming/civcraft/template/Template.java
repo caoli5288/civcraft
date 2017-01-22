@@ -779,11 +779,14 @@ public class Template {
 			for (int y = 0; y < tpl.size_y; y++) {
 				for (int z = 0; z < tpl.size_z; z++) {
 					Block b = centerBlock.getRelative(x, y, z);
-						if (CivSettings.restrictedUndoBlocks.contains(ItemManager.getId(b))) {
+
+					if (CivSettings.restrictedUndoBlocks.contains(b.getType())) {
+						continue;
+					}
+						SimpleBlock sb = tpl.blocks[x][y][z];
+						if (CivSettings.restrictedUndoBlocks.contains(sb.getMaterial())) {
 							continue;
 						}
-						SimpleBlock sb = tpl.blocks[x][y][z];
-						
 						// Convert relative x,y,z to real x,y,z in world.
 						sb.x = x+centerBlock.getX();
 						sb.y = y+centerBlock.getY();

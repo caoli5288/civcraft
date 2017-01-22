@@ -23,6 +23,7 @@ import java.util.Map;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.block.Block;
 
 import com.avrgaming.civcraft.structure.Buildable;
@@ -106,6 +107,11 @@ public class SimpleBlock {
 	 */
 	public int getType() {
 	    return (int) type;
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Material getMaterial() {
+		return Material.getMaterial(type);
 	}
 	
 	/**
