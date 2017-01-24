@@ -5276,6 +5276,10 @@ removed_recipes:
     # Armor stand
     - type_id: 416
       data: 0
+      
+    #Nether Wart Block
+    - type_id: 214
+      data: 0
 
       
 # Amount of tungston to drop
