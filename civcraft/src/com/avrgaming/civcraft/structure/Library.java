@@ -211,7 +211,7 @@ public class Library extends Structure {
 				throw new CivException(CivSettings.localize.localizedString("library_enchant_cannotEnchant"));
 			}
 			
-			if (item.containsEnchantment(ench.enchant) && item.getEnchantmentLevel(ench.enchant) > ench.level) {
+			if (item.containsEnchantment(ench.enchant) && item.getEnchantmentLevel(ench.enchant) >= ench.level) {
 				throw new CivException(CivSettings.localize.localizedString("library_enchant_hasEnchant"));
 			}
 			
