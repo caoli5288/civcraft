@@ -546,7 +546,7 @@ public abstract class Buildable extends SQLObject {
 		CivMessage.send(player, CivColor.LightGreen+ChatColor.BOLD+CivSettings.localize.localizedString("buildable_preview_prompt2"));
 		Resident resident = CivGlobal.getResident(player);
 		
-		if (!War.isWarTime())
+		if (!War.isWarTime() && CivSettings.showPreview)
 		{
 			resident.startPreviewTask(tpl, centerLoc.getBlock(), player.getUniqueId());
 		}

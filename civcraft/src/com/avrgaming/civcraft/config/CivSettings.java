@@ -230,6 +230,9 @@ public class CivSettings {
 	public static boolean hasITag = false;
 
 	public static boolean hasCustomMobs = false;
+
+	public static Material previewMaterial = Material.GLASS;
+	public static Boolean showPreview = true;
 	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;
@@ -327,6 +330,19 @@ public class CivSettings {
 			hasCustomMobs = true;
 		} else {
 			CivLog.warning("CustomMobs not found or disabled, not registering CustomMob hooks. This is fine if you're not using Custom Mobs.");
+		}
+		
+		try {
+			String materialName = CivSettings.getString(structureConfig, "previewBlock");
+			previewMaterial = Material.getMaterial(materialName);
+		} catch (InvalidConfiguration e) {
+			CivLog.warning("Unable to change Preview Block. Defaulting to Glass.");
+		}
+
+		try {
+			showPreview = CivSettings.getBoolean(structureConfig, "shouldShowPreview");
+		} catch (InvalidConfiguration e) {
+			CivLog.warning("Unable to change Structure Preview Settings. Defaulting to True.");
 		}
 
 	}

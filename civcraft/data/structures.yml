@@ -3,8 +3,9 @@
 # structures as well as some specific structure related configuration options.
 #
 
-################ Bank Settings ################
-#TODO add bank config options
+################ General Settings ################
+shouldShowPreview: true
+previewBlock: GLASS
 
 ################# Quarry Settings #################
 quarry:

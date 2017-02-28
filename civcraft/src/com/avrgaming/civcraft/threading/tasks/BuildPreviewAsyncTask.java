@@ -23,10 +23,10 @@ import java.util.UUID;
 import java.util.concurrent.locks.ReentrantLock;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
+import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.object.Resident;
@@ -94,7 +94,7 @@ public class BuildPreviewAsyncTask extends CivAsyncTask {
 								return;
 							}
 							
-							ItemManager.sendBlockChange(getPlayer(), b.getLocation(), ItemManager.getId(Material.GLASS), 5);
+							ItemManager.sendBlockChange(getPlayer(), b.getLocation(), ItemManager.getId(CivSettings.previewMaterial), 5);
 							resident.previewUndo.put(new BlockCoord(b.getLocation()),
 									new SimpleBlock(ItemManager.getId(b), ItemManager.getData(b)));
 							count++;			
