@@ -492,7 +492,7 @@ stable_horses:
     - id: 2
       speed: 0.05
       jump: 0.8
-      health: 30.0
+      health: 20.0
       variant: 'BLACK'
       name: "Trusty Steed"
 
@@ -500,7 +500,7 @@ stable_horses:
     - id: 3
       speed: 0.08
       jump: 0.8
-      health: 45.0
+      health: 20.0
       variant: 'WHITE'
       name: "Thoroughbred"
 
@@ -517,7 +517,7 @@ stable_horses:
     - id: 5
       speed: 0.1
       jump: 1.0
-      health: 53.0
+      health: 22.0
       variant: 'CHESTNUT'
       name: "War Horse"
 
