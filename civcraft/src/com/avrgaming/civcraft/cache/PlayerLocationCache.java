@@ -23,6 +23,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.config.CivSettings;
@@ -49,6 +50,11 @@ public class PlayerLocationCache {
 	public static void add(Player player) {
 		
 		if (cache.containsKey(player.getName())) {
+			return;
+		}
+		
+		//Do not add creative of spectator players into the location cache
+		if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
 			return;
 		}
 		

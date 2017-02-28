@@ -21,6 +21,7 @@ package com.avrgaming.civcraft.threading.timers;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.cache.PlayerLocationCache;
@@ -45,6 +46,11 @@ public class PlayerLocationCacheUpdate implements Runnable {
 					
 					try {
 						Player player = CivGlobal.getPlayer(playerName);
+						if (player.getGameMode() == GameMode.CREATIVE || player.getGameMode() == GameMode.SPECTATOR) {
+							//Don't leave creative or Spectator players in the cache.
+							PlayerLocationCache.remove(playerName);
+							continue;
+						}
 						PlayerLocationCache.updateLocation(player);
 						playerQueue.add(playerName);
 						
