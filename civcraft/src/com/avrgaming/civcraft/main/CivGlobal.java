@@ -208,17 +208,6 @@ public class CivGlobal {
 		 Must be loaded before residents are loaded
 		  */
 		useEconomy = CivSettings.civConfig.getBoolean("global.use_vault");
-		if (useEconomy) {
-			try {
-				econ = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
-				if (econ == null) {
-					CivLog.warning("global use_vault config option was set to true but no economy provider was found!");
-					useEconomy = false;
-				}
-			} catch (NoClassDefFoundError ex) {
-				useEconomy = false;
-			}
-		}
 		
 		CivLog.heading("Loading CivCraft Objects From Database");
 			
