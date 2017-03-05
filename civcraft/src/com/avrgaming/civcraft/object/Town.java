@@ -275,7 +275,7 @@ public class Town extends SQLObject {
 		mayorGroupName = "mayors";
 		assistantGroupName = "assistants";
 
-		this.setTreasury(new EconObject(this));
+		this.setTreasury(CivGlobal.createEconObject(this));
 		this.getTreasury().setBalance(rs.getDouble("coins"), false);
 		this.setDebt(rs.getDouble("debt"));
 		
@@ -417,7 +417,7 @@ public class Town extends SQLObject {
 		this.setHammerRate(1.0);
 		this.setExtraHammers(0);	
 		this.setAccumulatedCulture(0);
-		this.setTreasury(new EconObject(this));	
+		this.setTreasury(CivGlobal.createEconObject(this));
 		this.getTreasury().setBalance(0, false);
 		this.created_date = new Date();
 
@@ -518,7 +518,7 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.getInstance().refreshPlayer(player, Bukkit.getOnlinePlayers());
+			iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers()));
 		}
 	}
 	
@@ -1295,7 +1295,7 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(resident.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.getInstance().refreshPlayer(player, Bukkit.getOnlinePlayers());
+			iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers()));
 		}
 	}
 
