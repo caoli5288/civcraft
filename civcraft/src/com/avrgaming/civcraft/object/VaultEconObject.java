@@ -1,22 +1,42 @@
 package com.avrgaming.civcraft.object;
 
+import com.avrgaming.civcraft.main.CivGlobal;
 import net.milkbowl.vault.economy.Economy;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
+
+import java.util.UUID;
 
 public class VaultEconObject extends EconObject {
 
-    private final Economy econ;
-    private final OfflinePlayer player;
+    private final UUID uuid;
+    private boolean shouldUpdate = false;
 
-    public VaultEconObject(Economy econ, SQLObject holder, OfflinePlayer player) {
+    public VaultEconObject(SQLObject holder, UUID uuid) {
         super(holder);
 
-        this.econ = econ;
-        this.player = player;
+        this.uuid = uuid;
+    }
+
+    private Player getPlayer() {
+        return Bukkit.getPlayer(uuid);
     }
 
     public double getBalance() {
-        return Math.floor(econ.getBalance(player));
+        Player player = getPlayer();
+        Economy econ = CivGlobal.getEconomy();
+
+        if (player != null && econ != null) {
+            if (shouldUpdate) {
+                setBalance(super.getBalance(), false);
+                shouldUpdate = false;
+            }
+            return Math.floor(econ.getBalance(player));
+        }
+        shouldUpdate = true;
+
+        return super.getBalance();
     }
 
 
@@ -25,6 +45,15 @@ public class VaultEconObject extends EconObject {
     }
 
     public void setBalance(double amount, boolean save) {
+        Player player = getPlayer();
+        Economy econ = CivGlobal.getEconomy();
+
+        if (player == null || econ == null) {
+            super.setBalance(amount, save);
+            shouldUpdate = true;
+            return;
+        }
+
         amount = amount < 0 ? 0 : Math.floor(amount);
 
         double current = econ.getBalance(player);
@@ -41,6 +70,20 @@ public class VaultEconObject extends EconObject {
     }
 
     public void deposit(double amount, boolean save) {
+        Player player = getPlayer();
+        Economy econ = CivGlobal.getEconomy();
+
+        if (player == null || econ == null) {
+            super.deposit(amount, save);
+            shouldUpdate = true;
+            return;
+        }
+
+        if (shouldUpdate) {
+            setBalance(super.getBalance(), false);
+            shouldUpdate = false;
+        }
+
         if (amount < 0) return;
 
         econ.depositPlayer(player, Math.floor(amount));
@@ -55,6 +98,20 @@ public class VaultEconObject extends EconObject {
     }
 
     public void withdraw(double amount, boolean save) {
+        Player player = getPlayer();
+        Economy econ = CivGlobal.getEconomy();
+
+        if (player == null || econ == null) {
+            super.withdraw(amount, save);
+            shouldUpdate = true;
+            return;
+        }
+
+        if (shouldUpdate) {
+            setBalance(super.getBalance(), false);
+            shouldUpdate = false;
+        }
+
         if (amount < 0) return;
         amount = Math.floor(amount);
 
@@ -82,6 +139,7 @@ public class VaultEconObject extends EconObject {
         }
 
 
+
 //		EconomyResponse resp;
 //		resp = CivGlobal.econ.withdrawPlayer(getEconomyName(), amount);
 //		if (resp.type == EconomyResponse.ResponseType.FAILURE) {
@@ -90,6 +148,10 @@ public class VaultEconObject extends EconObject {
     }
 
     public boolean hasEnough(double amount) {
+        Player player = getPlayer();
+        Economy econ = CivGlobal.getEconomy();
+        if (player == null || econ == null) return super.hasEnough(amount);
+
         return econ.has(player, Math.floor(amount));
         //	return CivGlobal.econ.has(getEconomyName(), amount);
     }

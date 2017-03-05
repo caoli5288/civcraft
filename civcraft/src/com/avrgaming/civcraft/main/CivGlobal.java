@@ -202,6 +202,23 @@ public class CivGlobal {
 	public static int highestCivEra = 0;
 		
 	public static void loadGlobals() throws SQLException, CivException {
+
+		/*
+		 Don't use CivSettings.getBoolean() to prevent error when using old config
+		 Must be loaded before residents are loaded
+		  */
+		useEconomy = CivSettings.civConfig.getBoolean("global.use_vault");
+		if (useEconomy) {
+			try {
+				econ = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
+				if (econ == null) {
+					CivLog.warning("global use_vault config option was set to true but no economy provider was found!");
+					useEconomy = false;
+				}
+			} catch (NoClassDefFoundError ex) {
+				useEconomy = false;
+			}
+		}
 		
 		CivLog.heading("Loading CivCraft Objects From Database");
 			
@@ -289,20 +306,6 @@ public class CivGlobal {
 		}
 		
 		loadCompleted = true;
-
-		// Don't use CivSettings.getBoolean() to prevent error when using old config
-		useEconomy = CivSettings.civConfig.getBoolean("global.use_vault");
-		if (useEconomy) {
-			try {
-				econ = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider();
-				if (econ == null) {
-					CivLog.warning("global use_vault config option was set to true but no economy provider was found!");
-					useEconomy = false;
-				}
-			} catch (NoClassDefFoundError ex) {
-				useEconomy = false;
-			}
-		}
 	}
 	
 	public static void checkForInvalidStructures() {
@@ -2180,12 +2183,13 @@ public class CivGlobal {
 		}
 	}
 
+	public static Economy getEconomy() {
+		return econ == null ? (econ = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider()) : econ;
+	}
+
 	public static EconObject createEconObject(SQLObject holder) {
 		if (useEconomy && holder instanceof Resident) {
-			Player player = Bukkit.getPlayer(((Resident) holder).getUUID());
-			if (player != null) {
-				return new VaultEconObject(econ, holder, player);
-			}
+			return new VaultEconObject(holder, ((Resident) holder).getUUID());
 		}
 		return new EconObject(holder);
 	}
