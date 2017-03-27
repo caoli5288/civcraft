@@ -33,7 +33,7 @@ public class ConfigEndCondition {
 			
 			endconditionMap.put(p.id, p);
 		}
-		CivLog.info("Loaded "+endconditionMap.size()+" Perks.");		
+		CivLog.info("Loaded "+endconditionMap.size()+" End Conditions.");		
 	}
 	
 }
