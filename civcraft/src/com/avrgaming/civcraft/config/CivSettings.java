@@ -384,9 +384,12 @@ public class CivSettings {
 	private static void initPlayerEntityWeapons() {
 		playerEntityWeapons.add(EntityType.PLAYER);
 		playerEntityWeapons.add(EntityType.ARROW);
+		playerEntityWeapons.add(EntityType.SPECTRAL_ARROW);
+		playerEntityWeapons.add(EntityType.TIPPED_ARROW);
 		playerEntityWeapons.add(EntityType.EGG);
 		playerEntityWeapons.add(EntityType.SNOWBALL);
 		playerEntityWeapons.add(EntityType.SPLASH_POTION);
+		playerEntityWeapons.add(EntityType.LINGERING_POTION);
 		playerEntityWeapons.add(EntityType.FISHING_HOOK);
 	}
 	
@@ -542,6 +545,12 @@ public class CivSettings {
 		restrictedSpawns.put(EntityType.WITCH, 0);
 		restrictedSpawns.put(EntityType.WITHER, 0);
 		restrictedSpawns.put(EntityType.ZOMBIE, 0);
+		restrictedSpawns.put(EntityType.BAT, 0);
+		restrictedSpawns.put(EntityType.ENDERMITE, 0);
+		restrictedSpawns.put(EntityType.GUARDIAN, 0);
+		restrictedSpawns.put(EntityType.HUSK, 0);
+		restrictedSpawns.put(EntityType.STRAY, 0);
+		restrictedSpawns.put(EntityType.ZOMBIE_VILLAGER, 0);
 	}
 	
 	private static void initRestrictedItems() {
