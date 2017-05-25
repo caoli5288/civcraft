@@ -1532,18 +1532,20 @@ public class CivGlobal {
 		double lowest_distance = Double.MAX_VALUE;
 		
 		for (Buildable struct : structures.values()) {
-			double distance = struct.getCorner().getLocation().distance(location);
-			if (distance < lowest_distance ) {
+			Location loc = new Location(Bukkit.getWorld("world"), struct.getCenterLocation().getX(), struct.getCorner().getLocation().getY(), struct.getCenterLocation().getZ());
+			double distance = loc.distance(location);
+			if (distance < lowest_distance) {
 				lowest_distance = distance;
 				nearest = struct;
 			}
 		}
 		
-		for (Buildable struct : wonders.values()) {
-			double distance = struct.getCorner().getLocation().distance(location);
-			if (distance < lowest_distance ) {
+		for (Buildable wonder : wonders.values()) {
+			Location loc = new Location(Bukkit.getWorld("world"), wonder.getCenterLocation().getX(), wonder.getCorner().getLocation().getY(), wonder.getCenterLocation().getZ());
+			double distance = loc.distance(location);
+			if (distance < lowest_distance) {
 				lowest_distance = distance;
-				nearest = struct;
+				nearest = wonder;
 			}
 		}
 		
