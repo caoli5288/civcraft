@@ -453,11 +453,17 @@ public class BlockListener implements Listener {
 		}
 
 		if (event.getEntityType() == EntityType.HORSE) {
+			ChunkCoord coord = new ChunkCoord(event.getEntity().getLocation());
+			Stable stable = Stable.stableChunks.get(coord);
+			if (stable != null) {
+				return;
+			}
+			
 			if (event.getSpawnReason().equals(SpawnReason.DEFAULT)) {
 				TaskMaster.syncTask(new SyncTask(event.getEntity()));
 				return;
 			}
-
+			
 			CivLog.warning("Canceling horse spawn reason:"+event.getSpawnReason().name());
 			event.setCancelled(true);
 		}
