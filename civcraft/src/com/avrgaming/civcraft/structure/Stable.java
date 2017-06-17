@@ -61,6 +61,9 @@ public class Stable extends Structure {
 	private BlockCoord muleSpawnCoord;
 	private NonMemberFeeComponent nonMemberFeeComponent;
 	
+	public HashSet<ChunkCoord> chunks = new HashSet<ChunkCoord>();
+	public static Map<ChunkCoord, Stable> stableChunks = new ConcurrentHashMap<ChunkCoord, Stable>();
+	
 	public Stable(ResultSet rs) throws SQLException, CivException {
 		super(rs);
 		nonMemberFeeComponent = new NonMemberFeeComponent(this);
@@ -71,6 +74,37 @@ public class Stable extends Structure {
 		super(center, id, town);
 		nonMemberFeeComponent = new NonMemberFeeComponent(this);
 		nonMemberFeeComponent.onSave();
+	}
+	
+	public void bindStableChunks() {
+		for (BlockCoord bcoord : this.structureBlocks.keySet()) {
+			ChunkCoord coord = new ChunkCoord(bcoord);
+			this.chunks.add(coord);
+			stableChunks.put(coord, this);
+		}
+	}
+	
+	public void unbindStableChunks() {
+		for (ChunkCoord coord : this.chunks) {
+			stableChunks.remove(coord);
+		}
+		this.chunks.clear();
+	}
+	
+	@Override
+	public void onComplete() {
+		bindStableChunks();
+	}
+	
+	@Override
+	public void onLoad() throws CivException {
+		bindStableChunks();
+	}
+	
+	@Override
+	public void delete() throws SQLException {
+		super.delete();
+		unbindStableChunks();
 	}
 	
 	public void loadSettings() {
