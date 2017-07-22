@@ -40,6 +40,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
+import com.avrgaming.civcraft.object.*;
 import net.milkbowl.vault.economy.Economy;
 
 import org.bukkit.Bukkit;
@@ -67,21 +68,7 @@ import com.avrgaming.civcraft.exception.InvalidConfiguration;
 import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.exception.InvalidObjectException;
 import com.avrgaming.civcraft.items.BonusGoodie;
-import com.avrgaming.civcraft.object.Civilization;
-import com.avrgaming.civcraft.object.CultureChunk;
-import com.avrgaming.civcraft.object.CustomMapMarker;
-import com.avrgaming.civcraft.object.MobSpawner;
-import com.avrgaming.civcraft.object.ProtectedBlock;
-import com.avrgaming.civcraft.object.Relation;
 import com.avrgaming.civcraft.object.Relation.Status;
-import com.avrgaming.civcraft.object.Resident;
-import com.avrgaming.civcraft.object.StructureBlock;
-import com.avrgaming.civcraft.object.StructureChest;
-import com.avrgaming.civcraft.object.StructureSign;
-import com.avrgaming.civcraft.object.Town;
-import com.avrgaming.civcraft.object.TownChunk;
-import com.avrgaming.civcraft.object.TradeGood;
-import com.avrgaming.civcraft.object.WallBlock;
 import com.avrgaming.civcraft.permission.PermissionGroup;
 import com.avrgaming.civcraft.populators.MobSpawnerPreGenerate;
 import com.avrgaming.civcraft.populators.TradeGoodPreGenerate;
@@ -123,7 +110,8 @@ public class CivGlobal {
 	
 	public static double LIGHTHOUSE_WATER_PLAYER_SPEED = 1.5;
 	public static double LIGHTHOUSE_WATER_BOAT_SPEED = 1.1;
-	
+
+	private static boolean useEconomy;
 	public static Economy econ;
 	
 	private static Map<String, QuestionBaseTask> questions = new ConcurrentHashMap<String, QuestionBaseTask>();
@@ -214,6 +202,12 @@ public class CivGlobal {
 	public static int highestCivEra = 0;
 		
 	public static void loadGlobals() throws SQLException, CivException {
+
+		/*
+		 Don't use CivSettings.getBoolean() to prevent error when using old config
+		 Must be loaded before residents are loaded
+		  */
+		useEconomy = CivSettings.civConfig.getBoolean("global.use_vault");
 		
 		CivLog.heading("Loading CivCraft Objects From Database");
 			
@@ -265,7 +259,6 @@ public class CivGlobal {
 			}
 			
 		}
-		
 	/*	ScoreboardManager manager = Bukkit.getScoreboardManager();
 		CivGlobal.globalBoard = manager.getNewScoreboard();
 		Team team = globalBoard.registerNewTeam("everybody");
@@ -2180,5 +2173,15 @@ public class CivGlobal {
 			return false;
 		}
 	}
-	
+
+	public static Economy getEconomy() {
+		return econ == null ? (econ = Bukkit.getServicesManager().getRegistration(Economy.class).getProvider()) : econ;
+	}
+
+	public static EconObject createEconObject(SQLObject holder) {
+		if (useEconomy && holder instanceof Resident) {
+			return new VaultEconObject(holder, ((Resident) holder).getUUID());
+		}
+		return new EconObject(holder);
+	}
 }

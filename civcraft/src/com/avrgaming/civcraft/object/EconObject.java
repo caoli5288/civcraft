@@ -23,9 +23,9 @@ public class EconObject {
 
 	private String econName;
 	private Double coins = 0.0;
-	private Double debt = 0.0;
-	private Double principalAmount = 0.0;
-	private SQLObject holder;
+	protected Double debt = 0.0;
+	protected Double principalAmount = 0.0;
+	protected SQLObject holder;
 	
 	public EconObject(SQLObject holder) {
 		this.holder = holder;

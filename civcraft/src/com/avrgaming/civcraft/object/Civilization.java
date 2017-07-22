@@ -128,7 +128,7 @@ public class Civilization extends SQLObject {
 		
 		this.government = CivSettings.governments.get("gov_tribalism");		
 		this.color = this.pickCivColor();		
-		this.setTreasury(new EconObject(this));
+		this.setTreasury(CivGlobal.createEconObject(this));
 		this.getTreasury().setBalance(0, false);
 		this.created_date = new Date();
 		loadSettings();
@@ -240,7 +240,7 @@ public class Civilization extends SQLObject {
 			this.created_date = new Date(ctime);
 		}
 		
-		this.setTreasury(new EconObject(this));
+		this.setTreasury(CivGlobal.createEconObject(this));
 		this.getTreasury().setBalance(rs.getDouble("coins"), false);
 		this.getTreasury().setDebt(rs.getDouble("debt"));
 

@@ -183,7 +183,7 @@ public class Resident extends SQLObject {
 	public Resident(UUID uid, String name) throws InvalidNameException {
 		this.setName(name);
 		this.uid = uid;		
-		this.treasury = new EconObject(this);
+		this.treasury = CivGlobal.createEconObject(this);
 		setTimezoneToServerDefault();
 		loadSettings();
 	}
@@ -299,7 +299,7 @@ public class Resident extends SQLObject {
 			this.uid = UUID.fromString(rs.getString("uuid"));
 		}
 		
-		this.treasury = new EconObject(this);
+		this.treasury = CivGlobal.createEconObject(this);
 		this.getTreasury().setBalance(rs.getDouble("coins"), false);
 		this.setGivenKit(rs.getBoolean("givenKit"));
 		this.setTimezone(rs.getString("timezone"));
