@@ -31,6 +31,7 @@ public class HorseModifier {
     private Object entityHorse;
     private Object nbtTagCompound;
     
+    public static String HORSE_META = "civcrafthorse";
     private static final UUID movementSpeedUID = UUID.fromString("206a89dc-ae78-4c4d-b42c-3b31db3f5a7c");
  
     /**
@@ -84,7 +85,7 @@ public class HorseModifier {
         try {
             Object entityLiving = ReflectionUtil.getMethod("getHandle", le.getClass(), 0).invoke(le);
             Object nbtTagCompound = NBTUtil.getNBTTagCompound(entityLiving);
-            return NBTUtil.hasKeys(nbtTagCompound, new String[] { "EatingHaystack", "ChestedHorse", "HasReproduced", "Bred", "Type", "Variant", "Temper", "Tame" });
+            return NBTUtil.hasKeys(nbtTagCompound, new String[] { "Bred", "EatingHaystack", "Tame" , "Temper", "Variant" });
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -106,8 +107,19 @@ public class HorseModifier {
     	//done??
     }
     
+    public static void setCivCraftHorse(LivingEntity entity) {
+    	entity.setMetadata(HorseModifier.HORSE_META, new FixedMetadataValue(CivCraft.getPlugin(), HorseModifier.HORSE_META));
+    }
+    
     public static boolean isCivCraftHorse(LivingEntity entity) {
+    	if (!entity.hasMetadata(HORSE_META)) {
+    		CivLog.debug("Player tried using Horse without meta: "+HORSE_META);
+    		CivMessage.global(HORSE_META);
+    		return false;
+    	}
+    	
     	if (!isHorse(entity)) {
+    		CivLog.debug("Player tried using Horse that isn't a Horse? Error in HorseModifier.java.");
     		return false;
     	}
     	
