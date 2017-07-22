@@ -3,7 +3,6 @@ package com.avrgaming.civcraft.object;
 import com.avrgaming.civcraft.main.CivGlobal;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

@@ -25,10 +25,13 @@ import gpl.HorseModifier.HorseVariant;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
+import org.bukkit.craftbukkit.v1_11_R1.util.HashTreeSet;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -49,6 +52,7 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.StructureSign;
 import com.avrgaming.civcraft.object.Town;
 import com.avrgaming.civcraft.util.BlockCoord;
+import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
@@ -62,7 +66,7 @@ public class Stable extends Structure {
 	private BlockCoord muleSpawnCoord;
 	private NonMemberFeeComponent nonMemberFeeComponent;
 	
-	public HashSet<ChunkCoord> chunks = new HashSet<ChunkCoord>();
+	public HashTreeSet<ChunkCoord> chunks = new HashTreeSet<ChunkCoord>();
 	public static Map<ChunkCoord, Stable> stableChunks = new ConcurrentHashMap<ChunkCoord, Stable>();
 	
 	public Stable(ResultSet rs) throws SQLException, CivException {

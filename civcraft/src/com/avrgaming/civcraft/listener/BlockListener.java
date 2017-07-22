@@ -128,6 +128,7 @@ import com.avrgaming.civcraft.structure.CannonShip;
 import com.avrgaming.civcraft.structure.CannonTower;
 import com.avrgaming.civcraft.structure.Farm;
 import com.avrgaming.civcraft.structure.Pasture;
+import com.avrgaming.civcraft.structure.Stable;
 //import com.avrgaming.civcraft.structure.Temple;
 import com.avrgaming.civcraft.structure.Wall;
 import com.avrgaming.civcraft.structure.farm.FarmChunk;
