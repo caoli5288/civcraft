@@ -23,7 +23,6 @@ import org.bukkit.metadata.FixedMetadataValue;
 
 import com.avrgaming.civcraft.main.CivCraft;
 import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.main.CivMessage;
  
 /**
 * HorseModifier v1.1
@@ -119,7 +118,6 @@ public class HorseModifier {
     public static boolean isCivCraftHorse(LivingEntity entity) {
     	if (!entity.hasMetadata(HORSE_META)) {
     		CivLog.debug("Player tried using Horse without meta: "+HORSE_META);
-    		CivMessage.global(HORSE_META);
     		return false;
     	}
     	
