@@ -5,16 +5,18 @@ import java.util.Random;
 
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
+import org.bukkit.FireworkEffect.Type;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.FireworkEffect.Type;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.util.Vector;
 
@@ -104,11 +106,13 @@ public class WarListener implements Listener {
             
             resident = (event.getDamager() instanceof Player ? CivGlobal.getResident((Player) event.getEntity()) : null);
             
-            if (resident == null)
+            if (resident == null) {
+                event.setCancelled(true);
                 return;
+            }
             
             if (resident.isProtected())
-                event.setCancelled(false);
+                event.setCancelled(true);
         }
     }
     
@@ -288,7 +292,5 @@ public class WarListener implements Listener {
             }
             event.setCancelled(true);
         }
-        
     }
-    
 }
