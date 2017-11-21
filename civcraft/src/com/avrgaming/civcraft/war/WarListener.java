@@ -98,23 +98,19 @@ public class WarListener implements Listener {
         event.setCancelled(true);
     }
     
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("static-access")
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerDamage(EntityDamageByEntityEvent event) {
         if (War.isWarTime()) {
             Resident resident;
-    
-            if (!(event.getDamager() instanceof Player))
-                return;
-    
-    
-            resident = (event.getDamager() instanceof Player ? CivGlobal.getResident((Player) event.getDamager()) : null);
-
+            
+            resident = (event.getDamager() instanceof Player ? CivGlobal.getResident((Player) event.getEntity()) : null);
+            
             if (resident == null) {
                 event.setCancelled(true);
                 return;
             }
-
+            
             if (resident.isProtected())
                 event.setCancelled(true);
         }
