@@ -236,11 +236,9 @@ public class CivSettings {
 	
 	public static void init(JavaPlugin plugin) throws FileNotFoundException, IOException, InvalidConfigurationException, InvalidConfiguration {
 		CivSettings.plugin = (CivCraft)plugin;
-		
 
 		String languageFile = CivSettings.getStringBase("localization_file");
 		localize = new Localize(plugin, languageFile);
-
 
 		CivLog.debug(localize.localizedString("welcome_string","test",1337,100.50));
 		CURRENCY_NAME = localize.localizedString("civ_currencyName");
@@ -316,18 +314,21 @@ public class CivSettings {
 		
 		if (CivSettings.plugin.hasPlugin("VanishNoPacket")) {
 			hasVanishNoPacket = true;
+			CivLog.info("VanishNoPacket hooks enabled");
 		} else {
 			CivLog.warning("VanishNoPacket not found, not registering VanishNoPacket hooks. This is fine if you're not using VanishNoPacket.");
 		}
 		
 		if (CivSettings.plugin.hasPlugin("TitleAPI")) {
 			hasTitleAPI = true;
+			CivLog.info("TitleAPI hooks enabled");
 		} else {
 			CivLog.warning("TitleAPI not found, not registering TitleAPI hooks. This is fine if you're not using TitleAPI.");
 		}
 		
 		if (CivSettings.plugin.hasPlugin("CustomMobs") && CivSettings.getBoolean(spawnersConfig, "enable")) {
 			hasCustomMobs = true;
+			CivLog.info("CustomMobs hooks enabled");
 		} else {
 			CivLog.warning("CustomMobs not found or disabled, not registering CustomMob hooks. This is fine if you're not using Custom Mobs.");
 		}

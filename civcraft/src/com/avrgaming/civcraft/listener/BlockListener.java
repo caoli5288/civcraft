@@ -113,6 +113,7 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.ControlPoint;
+import com.avrgaming.civcraft.object.CultureChunk;
 import com.avrgaming.civcraft.object.ProtectedBlock;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.object.StructureBlock;
@@ -690,6 +691,21 @@ public class BlockListener implements Listener {
 		Resident resident = CivGlobal.getResident(event.getPlayer());
 
 		if (resident == null) {
+			event.setCancelled(true);
+			return;
+		}
+		
+		if (event.getPlayer().hasPermission(CivSettings.MODERATOR) && !event.getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
+			ChunkCoord coord = new ChunkCoord(event.getBlockPlaced().getLocation());
+			CultureChunk cc = CivGlobal.getCultureChunk(coord);
+			if (cc != null) {
+				if (!cc.getCiv().isAdminCiv()) {
+					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_modBuildDenied"));
+					event.setCancelled(true);
+					return;
+				}
+			}
+			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_modBuildDenied"));
 			event.setCancelled(true);
 			return;
 		}

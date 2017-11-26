@@ -42,6 +42,7 @@ import org.bukkit.event.inventory.BrewEvent;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
+import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -598,9 +599,17 @@ public class PlayerListener implements Listener {
 				}
 			}
 		}
-		
-		
-		
-		
 	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST)
+	public void RestrictModDrops(PlayerDropItemEvent event) {
+		if (event.isCancelled()) {
+			return;
+		}
+		Player player = event.getPlayer();
+		if (player.hasPermission(CivSettings.MODERATOR) && !player.hasPermission(CivSettings.MINI_ADMIN)) {
+			event.setCancelled(true);
+				return;
+		}
+	}	
 }
