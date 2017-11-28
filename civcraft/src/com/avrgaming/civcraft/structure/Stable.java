@@ -18,10 +18,6 @@
  */
 package com.avrgaming.civcraft.structure;
 
-import gpl.HorseModifier;
-import gpl.HorseModifier.HorseType;
-import gpl.HorseModifier.HorseVariant;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -31,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.attribute.Attribute;
-import org.bukkit.craftbukkit.v1_11_R1.util.HashTreeSet;
+import org.bukkit.craftbukkit.v1_12_R1.util.HashTreeSet;
 import org.bukkit.entity.Horse;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -56,6 +52,10 @@ import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
 import com.avrgaming.civcraft.util.SimpleBlock;
+
+import gpl.HorseModifier;
+import gpl.HorseModifier.HorseType;
+import gpl.HorseModifier.HorseVariant;
 
 public class Stable extends Structure {
 

@@ -128,8 +128,7 @@ public class Market extends Structure {
 			processBuy(player, resident, BULK_AMOUNT, item);
 			break;
 		}
-	
-		player.updateInventory();
+		
 		Market.globalSignUpdate(id);
 	}
 	

@@ -31,8 +31,6 @@ import java.util.LinkedList;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-import net.md_5.itag.iTag;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -88,10 +86,11 @@ import com.avrgaming.civcraft.util.ChunkCoord;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.DateUtil;
 import com.avrgaming.civcraft.util.ItemFrameStorage;
-import com.avrgaming.civcraft.util.WorldCord;
 import com.avrgaming.civcraft.war.War;
 import com.avrgaming.global.perks.Perk;
 import com.avrgaming.global.perks.components.CustomTemplate;
+
+import net.md_5.itag.iTag;
 
 public class Town extends SQLObject {
 
@@ -539,8 +538,8 @@ public class Town extends SQLObject {
 		return null;
 	}
 	
-	public Structure findStructureByLocation(WorldCord wc) {
-		return structures.get(wc);
+	public Structure findStructureByLocation(BlockCoord bc) {
+		return structures.get(bc);
 	}
 
 	public int getLevel() {

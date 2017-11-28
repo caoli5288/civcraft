@@ -77,7 +77,6 @@ public class Settler extends UnitMaterial implements CallbackInterface {
 	public void onInteract(PlayerInteractEvent event) {
 		event.setCancelled(true);
 		Player player = event.getPlayer();
-		player.updateInventory();
 		Resident resident = CivGlobal.getResident(player);
 		
 		if (resident == null || !resident.hasTown()) {

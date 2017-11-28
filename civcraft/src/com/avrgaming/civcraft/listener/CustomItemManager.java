@@ -18,9 +18,6 @@
  */
 package com.avrgaming.civcraft.listener;
 
-import gpl.AttributeUtil;
-import gpl.HorseModifier;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Random;
@@ -40,6 +37,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
@@ -82,6 +80,9 @@ import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
+
+import gpl.AttributeUtil;
+import gpl.HorseModifier;
 
 @SuppressWarnings("deprecation")
 public class CustomItemManager implements Listener {
@@ -249,11 +250,13 @@ public class CustomItemManager implements Listener {
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
-	public void OnPlayerItemPickup(PlayerPickupItemEvent event) {
-		ItemStack stack = event.getItem().getItemStack();
+	public void OnPlayerItemPickup(EntityPickupItemEvent event) {
+		if (event.getEntity() instanceof Player) {
+			ItemStack stack = event.getItem().getItemStack();
 
-		if (LoreMaterial.isCustom(stack)) {
-			LoreMaterial.getMaterial(stack).onItemPickup(event);
+			if (LoreMaterial.isCustom(stack)) {
+				LoreMaterial.getMaterial(stack).onItemPickup(event);
+			}
 		}
 	}
 	

@@ -1,12 +1,12 @@
 package com.avrgaming.civcraft.items.components;
 
-import gpl.AttributeUtil;
-
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.PlayerLeashEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+
+import gpl.AttributeUtil;
 
 public class NoRightClick extends ItemComponent {
 
@@ -17,7 +17,6 @@ public class NoRightClick extends ItemComponent {
 	
 	public void onInteract(PlayerInteractEvent event) {
 		if (event.getAction().equals(Action.RIGHT_CLICK_AIR)) {
-			event.getPlayer().updateInventory();
 			event.setCancelled(true);
 			return;
 		}
@@ -25,7 +24,6 @@ public class NoRightClick extends ItemComponent {
 		{
 			if (event.getClickedBlock().getType() != Material.CHEST)
 			{
-				event.getPlayer().updateInventory();
 				event.setCancelled(true);
 				return;
 			}

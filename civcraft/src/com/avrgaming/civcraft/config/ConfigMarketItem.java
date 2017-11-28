@@ -336,7 +336,6 @@ public class ConfigMarketItem {
 		
 		resident.getTreasury().deposit(total_coins);	
 		CivMessage.sendSuccess(player, CivSettings.localize.localizedString("var_market_sell",total_items,this.name,total_coins,CivSettings.CURRENCY_NAME));
-		player.updateInventory();
 	}
 	
 	

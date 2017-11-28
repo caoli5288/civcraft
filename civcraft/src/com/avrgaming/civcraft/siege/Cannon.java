@@ -555,7 +555,6 @@ public class Cannon extends Buildable {
 				return;
 			} else {
 				event.setCancelled(true);
-				event.getPlayer().updateInventory();
 				return;
 			}
 		} else {
@@ -599,7 +598,6 @@ public class Cannon extends Buildable {
 			TaskMaster.syncTask(new SyncTask(this), TimeTools.toTicks(1));
 		}
 		
-		event.getPlayer().updateInventory();
 		updateFireSign(fireSignLocation.getBlock());
 
 	}
@@ -642,7 +640,6 @@ public class Cannon extends Buildable {
 			direction.setX(a / 100);
 		}
 		
-		event.getPlayer().updateInventory();
 		updateAngleSign(this.angleSignLocation.getBlock());
 	}
 
@@ -662,7 +659,6 @@ public class Cannon extends Buildable {
 		}
 			
 		direction.setY(this.power / 100);
-		event.getPlayer().updateInventory();
 		updatePowerSign(this.powerSignLocation.getBlock());	
 	}
 

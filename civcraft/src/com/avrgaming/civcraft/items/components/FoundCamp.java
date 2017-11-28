@@ -18,8 +18,6 @@
  */
 package com.avrgaming.civcraft.items.components;
 
-import gpl.AttributeUtil;
-
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
@@ -33,9 +31,10 @@ import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.structure.Buildable;
-import com.avrgaming.civcraft.threading.TaskMaster;
 import com.avrgaming.civcraft.util.CallbackInterface;
 import com.avrgaming.civcraft.util.CivColor;
+
+import gpl.AttributeUtil;
 
 public class FoundCamp extends ItemComponent implements CallbackInterface {
 
@@ -74,7 +73,6 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 	}
 	
 	public void onInteract(PlayerInteractEvent event) {
-		
 		event.setCancelled(true);
 		if (!event.getAction().equals(Action.RIGHT_CLICK_AIR) &&
 				!event.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
@@ -86,29 +84,7 @@ public class FoundCamp extends ItemComponent implements CallbackInterface {
 		} catch (CivException e) {
 			CivMessage.sendError(event.getPlayer(), e.getMessage());
 		}
-		
-		class SyncTask implements Runnable {
-			String name;
-				
-			public SyncTask(String name) {
-				this.name = name;
-			}
-			
-			@Override
-			public void run() {
-				Player player;
-				try {
-					player = CivGlobal.getPlayer(name);
-				} catch (CivException e) {
-					return;
-				}
-				player.updateInventory();
-			}
-		}
-		TaskMaster.syncTask(new SyncTask(event.getPlayer().getName()));
-		
 		return;
-		
 	}
 
 	@Override

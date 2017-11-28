@@ -1,13 +1,13 @@
 package com.avrgaming.civcraft.items.components;
 
-import gpl.AttributeUtil;
-
 import org.bukkit.Material;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import com.avrgaming.civcraft.util.BlockCoord;
 import com.avrgaming.civcraft.util.ItemManager;
+
+import gpl.AttributeUtil;
 
 public class NoCauldronWash extends ItemComponent {
 
@@ -24,8 +24,7 @@ public class NoCauldronWash extends ItemComponent {
 						
 			BlockCoord bcoord = new BlockCoord(event.getClickedBlock());
 						
-			if (ItemManager.getId(bcoord.getBlock()) == ItemManager.getId(Material.CAULDRON)) {			
-				event.getPlayer().updateInventory();
+			if (ItemManager.getId(bcoord.getBlock()) == ItemManager.getId(Material.CAULDRON)) {
 				event.setCancelled(true);
 				return;
 			}

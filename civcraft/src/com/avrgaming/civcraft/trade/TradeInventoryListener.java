@@ -339,13 +339,7 @@ public class TradeInventoryListener implements Listener {
 		if (pair.valid || otherPair.valid) {
 			/* We're changing the inventory. Cant be valid anymore. */
 			markTradeInvalid(pair);
-			player.updateInventory();
 			markTradeInvalid(otherPair);
-			try {
-				Player otherPlayer = CivGlobal.getPlayer(pair.otherResident);
-				otherPlayer.updateInventory();
-			} catch (CivException e) {
-			}
 			event.setCancelled(true);
 			return;
 		} 
@@ -582,26 +576,6 @@ public class TradeInventoryListener implements Listener {
 				player.getWorld().dropItem(player.getLocation(), left);
 			}
 		}
-		
-		class SyncTask implements Runnable {
-			String playerName;
-			
-			public SyncTask(String name) {
-				this.playerName = name;
-			}
-			
-			@Override
-			public void run() {
-				Player player;
-				try {
-					player = CivGlobal.getPlayer(playerName);
-					player.updateInventory();	
-				} catch (CivException e) {
-				}	
-			}
-			
-		}
-		TaskMaster.syncTask(new SyncTask(player.getName()));
 	
 		tradeInventories.remove(getTradeInventoryKey(resident));
 		
@@ -615,10 +589,6 @@ public class TradeInventoryListener implements Listener {
 				otherPair.inv.setItem(i, guiStack);
 			}
 		}
-	
-		
-		
-		
 	}
 	
 }

@@ -18,9 +18,9 @@
  */
 package com.avrgaming.civcraft.items.components;
 
-import gpl.AttributeUtil;
-
 import org.bukkit.event.player.PlayerItemDamageEvent;
+
+import gpl.AttributeUtil;
 
 public class NoVanillaDurability extends ItemComponent {
 
@@ -34,9 +34,6 @@ public class NoVanillaDurability extends ItemComponent {
 	@Override
 	public void onDurabilityChange(PlayerItemDamageEvent event) {
 		event.setDamage(0);
-		event.getPlayer().updateInventory();
-		
-		
 		
 //		LinkedList<ItemDurabilityEntry> entries = CustomItemManager.itemDuraMap.get(player.getName());
 //		
