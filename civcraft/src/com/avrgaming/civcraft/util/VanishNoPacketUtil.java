@@ -1,16 +1,21 @@
 package com.avrgaming.civcraft.util;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
-import org.kitteh.vanish.staticaccess.VanishNoPacket;
-import org.kitteh.vanish.staticaccess.VanishNotLoadedException;
+import org.kitteh.vanish.VanishPlugin;
 
-@SuppressWarnings("deprecation")
 public class VanishNoPacketUtil {
 
 	public static boolean isVanished(Player player) {
 		try {
-			return VanishNoPacket.isVanished(player.getName());
-		} catch (VanishNotLoadedException | NoClassDefFoundError e ) {
+
+			VanishPlugin vnp = (VanishPlugin) Bukkit.getPluginManager().getPlugin("VanishNoPacket");
+			if (vnp != null) {
+				return vnp.getManager().isVanished(player);
+			} else {
+				return false;
+			}
+		} catch (NoClassDefFoundError e ) {
 			return false;
 		}
 	}

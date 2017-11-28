@@ -582,8 +582,6 @@ public class MissionBook extends UnitItemMaterial {
 				player.getWorld().dropItem(player.getLocation(), stack);
 			}
 			
-			player.updateInventory();
-			
 			CivMessage.sendSuccess(player, CivSettings.localize.localizedString("missionBook_investigate_success"));
 		}
 	}

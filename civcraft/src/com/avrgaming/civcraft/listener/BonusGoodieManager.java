@@ -33,6 +33,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityCombustEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
@@ -42,7 +43,6 @@ import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.inventory.Inventory;
@@ -268,19 +268,22 @@ public class BonusGoodieManager implements Listener {
 	 * Track the location of the goodie if a player picks it up.
 	 */
 	@EventHandler(priority = EventPriority.MONITOR) 
-	public void OnPlayerPickupItem(PlayerPickupItemEvent event) {
-		BonusGoodie goodie = CivGlobal.getBonusGoodie(event.getItem().getItemStack());
-		
-		if (goodie == null) {
-			return;
-		}
-		
-		try {
-			goodie.setHolder(event.getPlayer());
-			goodie.update(false);
-			goodie.updateLore(event.getItem().getItemStack());
-		} catch (CivException e) {
-			e.printStackTrace();
+	public void OnPlayerPickupItem(EntityPickupItemEvent event) {
+		if (event.getEntity() instanceof Player) {
+			BonusGoodie goodie = CivGlobal.getBonusGoodie(event.getItem().getItemStack());
+			
+			if (goodie == null) {
+				return;
+			}
+			
+			try {
+				Player player = (Player) event.getEntity();
+				goodie.setHolder(player);
+				goodie.update(false);
+				goodie.updateLore(event.getItem().getItemStack());
+			} catch (CivException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	

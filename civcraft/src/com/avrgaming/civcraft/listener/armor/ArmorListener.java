@@ -47,7 +47,7 @@ public class ArmorListener implements Listener{
 			numberkey = true;
 		}
 		if(e.getSlotType() != SlotType.ARMOR && e.getSlotType() != SlotType.QUICKBAR && e.getSlotType() != SlotType.CONTAINER) return;
-		if(e.getClickedInventory() != null && !e.getClickedInventory().getType().equals(InventoryType.PLAYER)) return;
+		if(e.getInventory() != null && !e.getInventory().getType().equals(InventoryType.PLAYER)) return;
 		if (!e.getInventory().getType().equals(InventoryType.CRAFTING) && !e.getInventory().getType().equals(InventoryType.PLAYER)) return;
 		if(!(e.getWhoClicked() instanceof Player)) return;
 		if(e.getCurrentItem() == null) return;
@@ -75,16 +75,16 @@ public class ArmorListener implements Listener{
 			ItemStack newArmorPiece = e.getCursor();
 			ItemStack oldArmorPiece = e.getCurrentItem();
 			if(numberkey){
-				if(e.getClickedInventory().getType().equals(InventoryType.PLAYER)){// Prevents shit in the 2by2 crafting
+				if(e.getInventory().getType().equals(InventoryType.PLAYER)){// Prevents shit in the 2by2 crafting
 					// e.getClickedInventory() == The players inventory
 					// e.getHotBarButton() == key people are pressing to equip or unequip the item to or from.
 					// e.getRawSlot() == The slot the item is going to.
 					// e.getSlot() == Armor slot, can't use e.getRawSlot() as that gives a hotbar slot ;-;
-					ItemStack hotbarItem = e.getClickedInventory().getItem(e.getHotbarButton());
+					ItemStack hotbarItem = e.getInventory().getItem(e.getHotbarButton());
 					if(hotbarItem != null){// Equipping
 						newArmorType = ArmorType.matchType(hotbarItem);
 						newArmorPiece = hotbarItem;
-						oldArmorPiece = e.getClickedInventory().getItem(e.getSlot());
+						oldArmorPiece = e.getInventory().getItem(e.getSlot());
 					}else{// Unequipping
 						newArmorType = ArmorType.matchType(e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR ? e.getCurrentItem() : e.getCursor());
 					}
@@ -110,7 +110,6 @@ public class ArmorListener implements Listener{
 	public void playerInteractEvent(PlayerInteractEvent e){
 		if(e.getAction() == Action.PHYSICAL) return;
 		if(e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK){
-			final Player player = e.getPlayer();
 			if(e.getClickedBlock() != null && e.getAction() == Action.RIGHT_CLICK_BLOCK){// Having both of these checks is useless, might as well do it though.
 				// Some blocks have actions when you right click them which stops the client from equipping the armor in hand.
 				Material mat = e.getClickedBlock().getType();
@@ -125,7 +124,6 @@ public class ArmorListener implements Listener{
 					Bukkit.getServer().getPluginManager().callEvent(armorEquipEvent);
 					if(armorEquipEvent.isCancelled()){
 						e.setCancelled(true);
-						player.updateInventory();
 					}
 				}
 			}

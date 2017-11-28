@@ -4,12 +4,12 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.TreeMap;
 
-import net.minecraft.server.v1_11_R1.PacketPlayOutMultiBlockChange;
-
 import org.bukkit.entity.Player;
 
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
+
+import net.minecraft.server.v1_12_R1.PacketPlayOutMultiBlockChange;
 
 public class PlayerBlockChangeUtil {
 	/*

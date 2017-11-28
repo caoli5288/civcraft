@@ -18,8 +18,6 @@
  */
 package com.avrgaming.civcraft.lorestorage;
 
-import gpl.AttributeUtil;
-
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
@@ -31,6 +29,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -40,7 +39,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -50,6 +48,8 @@ import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
 import com.avrgaming.civcraft.object.BuildableDamageBlock;
 import com.avrgaming.civcraft.util.CivColor;
 import com.avrgaming.civcraft.util.ItemManager;
+
+import gpl.AttributeUtil;
 
 public abstract class LoreMaterial {
 
@@ -292,7 +292,7 @@ public abstract class LoreMaterial {
 	public abstract void onDrop(PlayerDropItemEvent event);
 	public abstract void onItemDrop(PlayerDropItemEvent event);
 	public abstract void onItemCraft(CraftItemEvent event);
-	public abstract void onItemPickup(PlayerPickupItemEvent event);
+	public abstract void onItemPickup(EntityPickupItemEvent event);
 	public abstract void onItemSpawn(ItemSpawnEvent event);
 	public abstract boolean onAttack(EntityDamageByEntityEvent event, ItemStack stack); /* Called when this item is in inventory. */
 	public abstract void onInvItemPickup(InventoryClickEvent event, Inventory fromInv, ItemStack stack);

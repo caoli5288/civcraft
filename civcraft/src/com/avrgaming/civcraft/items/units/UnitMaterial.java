@@ -28,6 +28,7 @@ import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.ItemSpawnEvent;
 import org.bukkit.event.inventory.CraftItemEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -36,7 +37,6 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemHeldEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -98,7 +98,6 @@ public class UnitMaterial extends LoreMaterial {
 	public void onBlockPlaced(BlockPlaceEvent event) {
 		event.setCancelled(true);
 		CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_cannotPlace"));
-		event.getPlayer().updateInventory();
 	}
 
 	@Override
@@ -215,38 +214,39 @@ public class UnitMaterial extends LoreMaterial {
 	}
 
 	@Override
-	public void onItemPickup(PlayerPickupItemEvent event) {
-				
-		if(!validateUnitUse(event.getPlayer(), event.getItem().getItemStack())) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
-			event.setCancelled(true);
-			return;
-		}
-		
-		ConfigUnit unit = Unit.getPlayerUnit(event.getPlayer());
-		if (unit != null) {
-			CivMessage.sendErrorNoRepeat(event.getPlayer(), CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
-			event.setCancelled(true);
-		} else {
-			// Reposition item to the last quickbar slot
-			
-			// Check that the inventory is not full, clear out the
-			// the required slot, and then re-add what was in there.
-			Inventory inv = event.getPlayer().getInventory();
-			
-			ItemStack lastSlot = inv.getItem(LAST_SLOT);
-			if (lastSlot != null) {
-				inv.setItem(LAST_SLOT, event.getItem().getItemStack());
-				inv.addItem(lastSlot);
-				event.getPlayer().updateInventory();
-			} else {
-				inv.setItem(LAST_SLOT, event.getItem().getItemStack());
+	public void onItemPickup(EntityPickupItemEvent event) {
+		if (event.getEntity() instanceof Player) {
+			Player player = (Player)event.getEntity();
+			if(!validateUnitUse(player, event.getItem().getItemStack())) {
+				CivMessage.sendErrorNoRepeat(player, CivSettings.localize.localizedString("unitMaterial_errorWrongCiv"));
+				event.setCancelled(true);
+				return;
 			}
 			
-			
-			this.onItemToPlayer(event.getPlayer(), event.getItem().getItemStack());
-			event.getItem().remove();
-			event.setCancelled(true);
+			ConfigUnit unit = Unit.getPlayerUnit(player);
+			if (unit != null) {
+				CivMessage.sendErrorNoRepeat(player, CivSettings.localize.localizedString("var_unitMaterial_errorHave1",unit.name));
+				event.setCancelled(true);
+			} else {
+				// Reposition item to the last quickbar slot
+				
+				// Check that the inventory is not full, clear out the
+				// the required slot, and then re-add what was in there.
+				Inventory inv = player.getInventory();
+				
+				ItemStack lastSlot = inv.getItem(LAST_SLOT);
+				if (lastSlot != null) {
+					inv.setItem(LAST_SLOT, event.getItem().getItemStack());
+					inv.addItem(lastSlot);
+				} else {
+					inv.setItem(LAST_SLOT, event.getItem().getItemStack());
+				}
+				
+				
+				this.onItemToPlayer(player, event.getItem().getItemStack());
+				event.getItem().remove();
+				event.setCancelled(true);
+			}
 		}
 	}
 
@@ -323,7 +323,6 @@ public class UnitMaterial extends LoreMaterial {
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
-				player.updateInventory();
 				return;
 			}
 			
@@ -371,7 +370,6 @@ public class UnitMaterial extends LoreMaterial {
 				event.setCancelled(true);
 				event.setResult(Result.DENY);
 				event.getView().close();
-				player.updateInventory();
 				return;
 			}
 

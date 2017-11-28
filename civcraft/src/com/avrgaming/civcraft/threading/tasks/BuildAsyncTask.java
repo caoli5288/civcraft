@@ -330,6 +330,7 @@ public class BuildAsyncTask extends CivAsyncTask {
 	private void abortWonder() {
 		class SyncTask implements Runnable {
 
+			@SuppressWarnings("unlikely-arg-type")
 			@Override
 			public void run() {
 				//Remove build task from town..

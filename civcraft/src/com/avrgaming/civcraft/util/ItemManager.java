@@ -149,6 +149,7 @@ public class ItemManager {
 		block.setTypeIdAndData(type, (byte)data, update);
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static ItemStack spawnPlayerHead(String playerName, String itemDisplayName) {		
 		ItemStack skull = ItemManager.createItemStack(ItemManager.getId(Material.SKULL_ITEM), 1, (short)3);
 		SkullMeta meta = (SkullMeta) skull.getItemMeta();
@@ -162,7 +163,6 @@ public class ItemManager {
 		ItemStack m = new ItemStack(mat, amount);
 		if (player.getInventory().contains(mat)) {
 			player.getInventory().removeItem(m);
-			player.updateInventory();
 			return true;
 		}
 		return false;

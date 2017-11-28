@@ -76,8 +76,6 @@ public class FishingListener implements Listener {
 					 }
 				 }
 			 }
-			 
-			 player.updateInventory();
 		 }
 	 }
 }

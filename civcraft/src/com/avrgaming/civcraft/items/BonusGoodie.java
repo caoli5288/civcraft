@@ -748,7 +748,7 @@ public class BonusGoodie extends LoreItem {
 	public boolean equals(Object other) {
 		if (other instanceof BonusGoodie) {
 			BonusGoodie otherCoord = (BonusGoodie)other;
-			if (otherCoord.getOutpost().getCorner().equals(this.getOutpost().getCorner().toString())) {
+			if (otherCoord.getOutpost().getCorner().equals(this.getOutpost().getCorner())) {
 				return true;
 			}
 		}

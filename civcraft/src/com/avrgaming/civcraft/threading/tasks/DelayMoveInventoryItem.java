@@ -18,12 +18,8 @@
  */
 package com.avrgaming.civcraft.threading.tasks;
 
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-
-import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.main.CivGlobal;
 
 public class DelayMoveInventoryItem implements Runnable {
 
@@ -48,16 +44,6 @@ public class DelayMoveInventoryItem implements Runnable {
 		if (fromStack != null) {
 			inv.setItem(toSlot, fromStack);
 			inv.setItem(fromSlot, toStack);
-			if (playerName != null) {
-				Player player;
-				try {
-					player = CivGlobal.getPlayer(playerName);
-					player.updateInventory();
-				} catch (CivException e) {
-				}
-			}
 		}
 	}
-	
-	
 }

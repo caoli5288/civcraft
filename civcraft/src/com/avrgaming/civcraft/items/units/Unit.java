@@ -129,7 +129,6 @@ public abstract class Unit {
 				}
 			}
 		}
-		player.updateInventory();
 	}
 
 	public static boolean isWearingFullLeather(Player player) {
