@@ -2893,3 +2893,4 @@ cmd_res_exchangeNoTradeGoods: "You Cannot Exchange Trade Goods"
 # 1.8
 
 var_cmd_civ_info_victory: "The Civilization of [%0] has won with a [%1] victory!"
+playerListen_modBuildDenied: "You are only allowed to build within an Admin Civ"

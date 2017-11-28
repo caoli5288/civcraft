@@ -694,21 +694,6 @@ public class BlockListener implements Listener {
 			event.setCancelled(true);
 			return;
 		}
-		
-		if (event.getPlayer().hasPermission(CivSettings.MODERATOR) && !event.getPlayer().hasPermission(CivSettings.MINI_ADMIN)) {
-			ChunkCoord coord = new ChunkCoord(event.getBlockPlaced().getLocation());
-			CultureChunk cc = CivGlobal.getCultureChunk(coord);
-			if (cc != null) {
-				if (!cc.getCiv().isAdminCiv()) {
-					CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_modBuildDenied"));
-					event.setCancelled(true);
-					return;
-				}
-			}
-			CivMessage.sendError(event.getPlayer(), CivSettings.localize.localizedString("playerListen_modBuildDenied"));
-			event.setCancelled(true);
-			return;
-		}
 
 		if(resident.isSBPermOverride()) {
 			return;

@@ -23,6 +23,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -345,6 +346,11 @@ public class ResidentCommand extends CommandBase {
 		
 		CivMessage.send(sender, CivColor.Green+CivSettings.localize.localizedString("Groups")+" "+resident.getGroupsString());
 		
+		Player player = Bukkit.getPlayer(resident.getUUID());
+		if (player.hasPermission(CivSettings.MODERATOR) || player.hasPermission(CivSettings.MINI_ADMIN)) {
+			CivMessage.send(sender, CivColor.Rose+CivSettings.localize.localizedString("cmd_res_showModerator"));
+			return;
+		}
 		try {
 			if (resident.isUsesAntiCheat()) {
 				CivMessage.send(sender, CivColor.LightGreen+CivSettings.localize.localizedString("cmd_res_showAC1"));
