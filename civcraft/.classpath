@@ -21,6 +21,6 @@
 	<classpathentry kind="lib" path="C:/Projects/lib/spigot-api-1.12.2-R0.1-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="lib" path="C:/Projects/lib/bukkit-1.12.2-R0.1-SNAPSHOT-shaded.jar"/>
 	<classpathentry kind="lib" path="C:/Projects/lib/craftbukkit-1.12.2.jar"/>
-	<classpathentry kind="lib" path="C:/Projects/lib/CustomMobs-4.17.jar"/>
+	<classpathentry kind="lib" path="C:/Projects/lib/CustomMobs-4.0-INDEV.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

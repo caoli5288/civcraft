@@ -186,6 +186,12 @@ public class CivData {
 	public static final int DIAMOND_AXE = 279;
 	public static final int GOLD_AXE = 286;
 	
+	public static final int WOOD_SHOVEL = 269;
+	public static final int STONE_SHOVEL = 273;
+	public static final int IRON_SHOVEL = 256;
+	public static final int DIAMOND_SHOVEL = 277;
+	public static final int GOLD_SHOVEL = 284;
+	
 	public static final int WOOD_PICKAXE = 270;
 	public static final int STONE_PICKAXE = 274;
 	public static final int IRON_PICKAXE = 257;
