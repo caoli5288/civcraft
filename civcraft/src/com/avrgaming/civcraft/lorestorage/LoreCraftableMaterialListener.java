@@ -229,7 +229,11 @@ public class LoreCraftableMaterialListener implements Listener {
 				if(!LoreCraftableMaterial.isCustom(event.getRecipe().getResult())) {
 					/* Result is not custom, but recipie is. Set to blank. */
 					if (!loreMat.isVanilla()) {
-						event.getInventory().setResult(new ItemStack(CivData.AIR));
+						/* A Minecraft 1.12 Fix */
+						if (!LoreEnhancement.isTool(event.getRecipe().getResult())) {
+							event.getInventory().setResult(new ItemStack(Material.AIR));
+							return;
+						}
 						return;
 					}
 				}
@@ -254,7 +258,7 @@ public class LoreCraftableMaterialListener implements Listener {
 			
 			event.getInventory().setResult(newStack);
 			
-		} else {
+		} else if (event.getRecipe() instanceof ShapelessRecipe) {
 			String key = LoreCraftableMaterial.getShapelessRecipeKey(event.getInventory().getMatrix());
 			LoreCraftableMaterial loreMat = LoreCraftableMaterial.shapelessKeys.get(key);
 						
