@@ -569,22 +569,21 @@ public class BlockListener implements Listener {
 		            BlockFace.UP
 	  };
 
-    public BlockCoord generatesCobble(int id, Block b)
-    {
-        int mirrorID1 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA_RUNNING : CivData.WATER_RUNNING);
-        int mirrorID2 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA : CivData.WATER);
-        for(BlockFace face : faces)
-        {
-            Block r = b.getRelative(face, 1);
-            if(ItemManager.getId(r) == mirrorID1 || ItemManager.getId(r) == mirrorID2)
-            {
-            	
-            	return new BlockCoord(r);
-            }
-        }
-        
-        return null;
-    }
+	public BlockCoord generatesCobble(int id, Block b) {
+		int mirrorID1 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_RUNNING : CivData.WATER_RUNNING);
+		int mirrorID2 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_STILL : CivData.WATER_STILL);
+		int mirrorID3 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_RUNNING : CivData.WATER_STILL);
+		int mirrorID4 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_STILL : CivData.WATER_RUNNING);
+		for(BlockFace face : faces) {
+			Block r = b.getRelative(face, 1);
+			if(ItemManager.getId(r) == mirrorID1 || ItemManager.getId(r) == mirrorID2 ||
+					ItemManager.getId(r) == mirrorID3 || ItemManager.getId(r) == mirrorID4) {
+				return new BlockCoord(r);
+			}
+		}
+		
+		return null;
+	}
 
 //    private static void destroyLiquidRecursive(Block source) {
 //    	//source.setTypeIdAndData(CivData.AIR, (byte)0, false);
@@ -608,61 +607,30 @@ public class BlockListener implements Listener {
 //    private static boolean isLiquid(int id) {
 //    	return (id >= CivData.WATER && id <= CivData.LAVA);
 //    }
-    
-    private static HashSet<BlockCoord> stopCobbleTasks = new HashSet<BlockCoord>();
+
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void OnBlockFromToEvent(BlockFromToEvent event) {
 		/* Disable cobblestone generators. */
 		int id = ItemManager.getId(event.getBlock());
-	    if(id >= CivData.WATER && id <= CivData.LAVA)
-	    {
-	        Block b = event.getToBlock();
-	        bcoord.setFromLocation(b.getLocation());
+		if(id >= CivData.WATER_STILL && id <= CivData.LAVA_STILL) {
+			Block b = event.getToBlock();
+			bcoord.setFromLocation(b.getLocation());
 
-	        int toid = ItemManager.getId(b);
-	        if(toid == 0)
-	        {
-	            BlockCoord other = generatesCobble(id, b);
-	        	if(other != null)
-	            {
-	            	//BlockCoord d = new BlockCoord(event.getToBlock());
-//	            	BlockCoord fromCoord = new BlockCoord(event.getBlock());
-	            	event.setCancelled(true);
-
-	            	class SyncTask implements Runnable {
-	            		BlockCoord block;
-
-	            		public SyncTask(BlockCoord block) {
-	            			this.block = block;
-	            		}
-
-						@Override
-						public void run() {
-							ItemManager.setTypeIdAndData(block.getBlock(), CivData.NETHERRACK, (byte)0, true);
-							stopCobbleTasks.remove(block);
-						}
-	            	}
-
-	            	if (!stopCobbleTasks.contains(other)) {
-	            		stopCobbleTasks.add(other);
-	            		TaskMaster.syncTask(new SyncTask(other), 2);
-	            	}
-
-//	            	if (!stopCobbleTasks.contains(fromCoord)) {
-//	            		stopCobbleTasks.add(fromCoord);
-//	            		TaskMaster.syncTask(new SyncTask(fromCoord));
-//	            	}
-	            }
-	        }
-	    }
+			int toid = ItemManager.getId(b);
+			if(toid == CivData.COBBLESTONE || toid == CivData.OBSIDIAN) {
+				BlockCoord other = generatesCobble(id, b);
+				if(other != null && other.getBlock().getType() != Material.AIR) {
+					other.getBlock().setType(Material.NETHERRACK);
+				}
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.NORMAL)
 	public void OnBlockFormEvent (BlockFormEvent event) {
-
 		/* Disable cobblestone generators. */
-		if (ItemManager.getId(event.getNewState()) == CivData.COBBLESTONE) {
-			ItemManager.setTypeId(event.getNewState(), CivData.GRAVEL);
+		if (ItemManager.getId(event.getNewState()) == CivData.COBBLESTONE || ItemManager.getId(event.getNewState()) == CivData.OBSIDIAN) {
+			ItemManager.setTypeId(event.getNewState(), CivData.NETHERRACK);
 			return;
 		}
 
