@@ -18,10 +18,58 @@
  */
 package com.avrgaming.civcraft.listener;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Random;
-
+import com.avrgaming.civcraft.cache.ArrowFiredCache;
+import com.avrgaming.civcraft.cache.CannonFiredCache;
+import com.avrgaming.civcraft.cache.CivCache;
+import com.avrgaming.civcraft.camp.Camp;
+import com.avrgaming.civcraft.camp.CampBlock;
+import com.avrgaming.civcraft.config.CivSettings;
+import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.exception.InvalidConfiguration;
+import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivGlobal;
+import com.avrgaming.civcraft.main.CivLog;
+import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.ControlPoint;
+import com.avrgaming.civcraft.object.ProtectedBlock;
+import com.avrgaming.civcraft.object.Resident;
+import com.avrgaming.civcraft.object.StructureBlock;
+import com.avrgaming.civcraft.object.StructureChest;
+import com.avrgaming.civcraft.object.StructureSign;
+import com.avrgaming.civcraft.object.TownChunk;
+import com.avrgaming.civcraft.permission.PlotPermissions;
+import com.avrgaming.civcraft.road.Road;
+import com.avrgaming.civcraft.road.RoadBlock;
+import com.avrgaming.civcraft.structure.Buildable;
+import com.avrgaming.civcraft.structure.BuildableLayer;
+import com.avrgaming.civcraft.structure.CannonShip;
+import com.avrgaming.civcraft.structure.CannonTower;
+import com.avrgaming.civcraft.structure.Farm;
+import com.avrgaming.civcraft.structure.Pasture;
+import com.avrgaming.civcraft.structure.Stable;
+import com.avrgaming.civcraft.structure.Wall;
+import com.avrgaming.civcraft.structure.farm.FarmChunk;
+import com.avrgaming.civcraft.structure.wonders.Battledome;
+import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
+import com.avrgaming.civcraft.threading.CivAsyncTask;
+import com.avrgaming.civcraft.threading.TaskMaster;
+import com.avrgaming.civcraft.threading.tasks.FireWorkTask;
+import com.avrgaming.civcraft.threading.tasks.StructureBlockHitEvent;
+import com.avrgaming.civcraft.util.BlockCoord;
+import com.avrgaming.civcraft.util.ChunkCoord;
+import com.avrgaming.civcraft.util.CivColor;
+import com.avrgaming.civcraft.util.ItemFrameStorage;
+import com.avrgaming.civcraft.util.ItemManager;
+import com.avrgaming.civcraft.war.War;
+import com.avrgaming.civcraft.war.WarRegen;
+import gpl.HorseModifier;
+import net.minecraft.server.v1_12_R1.AttributeInstance;
+import net.minecraft.server.v1_12_R1.AxisAlignedBB;
+import net.minecraft.server.v1_12_R1.DamageSource;
+import net.minecraft.server.v1_12_R1.EntityInsentient;
+import net.minecraft.server.v1_12_R1.EntityPlayer;
+import net.minecraft.server.v1_12_R1.GenericAttributes;
+import net.minecraft.server.v1_12_R1.NBTTagCompound;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Color;
@@ -89,60 +137,11 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
-import com.avrgaming.civcraft.cache.ArrowFiredCache;
-import com.avrgaming.civcraft.cache.CannonFiredCache;
-import com.avrgaming.civcraft.cache.CivCache;
-import com.avrgaming.civcraft.camp.Camp;
-import com.avrgaming.civcraft.camp.CampBlock;
-import com.avrgaming.civcraft.config.CivSettings;
-import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.exception.InvalidConfiguration;
-import com.avrgaming.civcraft.main.CivData;
-import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.object.ControlPoint;
-import com.avrgaming.civcraft.object.ProtectedBlock;
-import com.avrgaming.civcraft.object.Resident;
-import com.avrgaming.civcraft.object.StructureBlock;
-import com.avrgaming.civcraft.object.StructureChest;
-import com.avrgaming.civcraft.object.StructureSign;
-import com.avrgaming.civcraft.object.TownChunk;
-import com.avrgaming.civcraft.permission.PlotPermissions;
-import com.avrgaming.civcraft.road.Road;
-import com.avrgaming.civcraft.road.RoadBlock;
-import com.avrgaming.civcraft.structure.Buildable;
-import com.avrgaming.civcraft.structure.BuildableLayer;
-import com.avrgaming.civcraft.structure.CannonShip;
-import com.avrgaming.civcraft.structure.CannonTower;
-import com.avrgaming.civcraft.structure.Farm;
-import com.avrgaming.civcraft.structure.Pasture;
-import com.avrgaming.civcraft.structure.Stable;
-//import com.avrgaming.civcraft.structure.Temple;
-import com.avrgaming.civcraft.structure.Wall;
-import com.avrgaming.civcraft.structure.farm.FarmChunk;
-import com.avrgaming.civcraft.structure.wonders.Battledome;
-import com.avrgaming.civcraft.structure.wonders.GrandShipIngermanland;
-import com.avrgaming.civcraft.threading.CivAsyncTask;
-import com.avrgaming.civcraft.threading.TaskMaster;
-import com.avrgaming.civcraft.threading.tasks.FireWorkTask;
-import com.avrgaming.civcraft.threading.tasks.StructureBlockHitEvent;
-import com.avrgaming.civcraft.util.BlockCoord;
-import com.avrgaming.civcraft.util.ChunkCoord;
-import com.avrgaming.civcraft.util.CivColor;
-import com.avrgaming.civcraft.util.ItemFrameStorage;
-import com.avrgaming.civcraft.util.ItemManager;
-import com.avrgaming.civcraft.war.War;
-import com.avrgaming.civcraft.war.WarRegen;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Random;
 
-import gpl.HorseModifier;
-import net.minecraft.server.v1_12_R1.AttributeInstance;
-import net.minecraft.server.v1_12_R1.AxisAlignedBB;
-import net.minecraft.server.v1_12_R1.DamageSource;
-import net.minecraft.server.v1_12_R1.EntityInsentient;
-import net.minecraft.server.v1_12_R1.EntityPlayer;
-import net.minecraft.server.v1_12_R1.GenericAttributes;
-import net.minecraft.server.v1_12_R1.NBTTagCompound;
+//import com.avrgaming.civcraft.structure.Temple;
 
 public class BlockListener implements Listener {
 
@@ -570,10 +569,10 @@ public class BlockListener implements Listener {
 	  };
 
 	public BlockCoord generatesCobble(int id, Block b) {
-		int mirrorID1 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_RUNNING : CivData.WATER_RUNNING);
-		int mirrorID2 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_STILL : CivData.WATER_STILL);
-		int mirrorID3 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_RUNNING : CivData.WATER_STILL);
-		int mirrorID4 = (id == CivData.WATER_RUNNING || id == CivData.WATER_STILL ? CivData.LAVA_STILL : CivData.WATER_RUNNING);
+        int mirrorID1 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA_RUNNING : CivData.WATER_RUNNING);
+        int mirrorID2 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA : CivData.WATER);
+        int mirrorID3 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA_RUNNING : CivData.WATER);
+        int mirrorID4 = (id == CivData.WATER_RUNNING || id == CivData.WATER ? CivData.LAVA : CivData.WATER_RUNNING);
 		for(BlockFace face : faces) {
 			Block r = b.getRelative(face, 1);
 			if(ItemManager.getId(r) == mirrorID1 || ItemManager.getId(r) == mirrorID2 ||
@@ -612,7 +611,7 @@ public class BlockListener implements Listener {
 	public void OnBlockFromToEvent(BlockFromToEvent event) {
 		/* Disable cobblestone generators. */
 		int id = ItemManager.getId(event.getBlock());
-		if(id >= CivData.WATER_STILL && id <= CivData.LAVA_STILL) {
+        if (id >= CivData.WATER && id <= CivData.LAVA) {
 			Block b = event.getToBlock();
 			bcoord.setFromLocation(b.getLocation());
 

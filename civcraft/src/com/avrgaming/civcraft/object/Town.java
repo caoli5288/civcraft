@@ -18,25 +18,6 @@
  */
 package com.avrgaming.civcraft.object;
 
-import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-
 import com.avrgaming.civcraft.components.AttributeBase;
 import com.avrgaming.civcraft.components.AttributeRate;
 import com.avrgaming.civcraft.components.AttributeWarUnhappiness;
@@ -59,6 +40,7 @@ import com.avrgaming.civcraft.exception.InvalidNameException;
 import com.avrgaming.civcraft.interactive.InteractiveBuildableRefresh;
 import com.avrgaming.civcraft.items.BonusGoodie;
 import com.avrgaming.civcraft.items.units.Unit;
+import com.avrgaming.civcraft.main.CivCraft;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivLog;
 import com.avrgaming.civcraft.main.CivMessage;
@@ -89,8 +71,25 @@ import com.avrgaming.civcraft.util.ItemFrameStorage;
 import com.avrgaming.civcraft.war.War;
 import com.avrgaming.global.perks.Perk;
 import com.avrgaming.global.perks.components.CustomTemplate;
-
 import net.md_5.itag.iTag;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Town extends SQLObject {
 
@@ -517,7 +516,8 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(res.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers()));
+			Bukkit.getScheduler().runTask(CivCraft.getPlugin(), () ->
+					iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers())));
 		}
 	}
 	

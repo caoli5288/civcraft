@@ -18,16 +18,14 @@
  */
 package com.avrgaming.civcraft.interactive;
 
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
 import com.avrgaming.civcraft.config.CivSettings;
 import com.avrgaming.civcraft.exception.CivException;
 import com.avrgaming.civcraft.main.CivGlobal;
 import com.avrgaming.civcraft.main.CivMessage;
 import com.avrgaming.civcraft.object.Resident;
 import com.avrgaming.civcraft.util.CivColor;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 
 public class InteractiveCivName implements InteractiveResponse {
 
@@ -46,7 +44,7 @@ public class InteractiveCivName implements InteractiveResponse {
 			return;
 		}
 
-		if (!StringUtils.isAlpha(message) || !StringUtils.isAsciiPrintable(message)) {
+		if (!InteractiveCampName.valid(message)) {
 			CivMessage.send(player, CivColor.Rose+ChatColor.BOLD+CivSettings.localize.localizedString("interactive_civ_invalid"));
 			return;
 		}

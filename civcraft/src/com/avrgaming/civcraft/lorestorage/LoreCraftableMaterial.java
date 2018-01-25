@@ -1,10 +1,16 @@
 package com.avrgaming.civcraft.lorestorage;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-
+import com.avrgaming.civcraft.config.CivSettings;
+import com.avrgaming.civcraft.config.ConfigIngredient;
+import com.avrgaming.civcraft.config.ConfigMaterial;
+import com.avrgaming.civcraft.items.components.ItemComponent;
+import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
+import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivLog;
+import com.avrgaming.civcraft.object.BuildableDamageBlock;
+import com.avrgaming.civcraft.util.ItemManager;
+import com.mysql.jdbc.StringUtils;
+import gpl.AttributeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -31,18 +37,10 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 
-import com.avrgaming.civcraft.config.CivSettings;
-import com.avrgaming.civcraft.config.ConfigIngredient;
-import com.avrgaming.civcraft.config.ConfigMaterial;
-import com.avrgaming.civcraft.items.components.ItemComponent;
-import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
-import com.avrgaming.civcraft.main.CivData;
-import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.object.BuildableDamageBlock;
-import com.avrgaming.civcraft.util.ItemManager;
-import com.mysql.jdbc.StringUtils;
-
-import gpl.AttributeUtil;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 
 public class LoreCraftableMaterial extends LoreMaterial {
 
@@ -84,27 +82,26 @@ public class LoreCraftableMaterial extends LoreMaterial {
 		
 	
 	public static String getShapedRecipeKey(ItemStack[] matrix) {
-		String key = "";
+        StringBuilder key = new StringBuilder();
 		for (int i = 0; i < matrix.length; i++) {
-			key += i+":";
+            key.append(i).append(":");
 			
 			ItemStack stack = matrix[i];
 			if (stack == null) {
-				key += "null,";
-				continue;
+                stack = new ItemStack(Material.AIR);
 			}
 			
 			if (LoreMaterial.isCustom(stack)) {
 				LoreMaterial loreMat = LoreMaterial.getMaterial(stack);
-				key += loreMat.getId()+",";
+                key.append(loreMat.getId()).append(",");
 			} else {
 	//			key += "mc_"+stack.getTypeId()+"_"+stack.getDurability()+",";
-				key += "mc_"+ItemManager.getId(stack)+",";
+                key.append("mc_").append(ItemManager.getId(stack)).append(",");
 
 			}
 		}
-		
-		return key;
+
+        return key.toString();
 	}
 	
 	public static String getShapelessRecipeKey(ItemStack[] matrix) {
@@ -263,7 +260,8 @@ public class LoreCraftableMaterial extends LoreMaterial {
 				
 				shapedRecipes.put(loreMat, matrix);
 				String key = getShapedRecipeKey(matrix);
-				shapedKeys.put(key, loreMat);
+
+                shapedKeys.put(key, loreMat);
 				
 
 				/* Register recipe with server. */

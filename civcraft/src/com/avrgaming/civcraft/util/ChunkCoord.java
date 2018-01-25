@@ -18,14 +18,14 @@
  */
 package com.avrgaming.civcraft.util;
 
-import java.util.concurrent.ConcurrentHashMap;
-
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-public class ChunkCoord {
+import java.util.concurrent.ConcurrentHashMap;
+
+public class ChunkCoord implements Comparable<ChunkCoord> {
 	
 	private String worldname;
 	private int x;
@@ -184,4 +184,15 @@ public class ChunkCoord {
 	public Chunk getChunk() {
 		return Bukkit.getWorld(this.worldname).getChunkAt(this.x, this.z);
 	}
+
+    public int compareTo(ChunkCoord o) {
+        int i = worldname.hashCode() - o.hashCode();
+        if (i == 0) {
+            i = x - o.x;
+            if (i == 0) {
+                i = z - o.z;
+            }
+        }
+        return i;
+    }
 }
