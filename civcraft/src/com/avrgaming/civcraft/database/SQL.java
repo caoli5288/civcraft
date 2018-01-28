@@ -18,16 +18,6 @@
  */
 package com.avrgaming.civcraft.database;
 
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-
 import com.avrgaming.civcraft.arena.ArenaTeam;
 import com.avrgaming.civcraft.camp.Camp;
 import com.avrgaming.civcraft.config.CivSettings;
@@ -64,6 +54,16 @@ import com.avrgaming.global.perks.PerkManagerSimple;
 import com.avrgaming.global.reports.ReportManager;
 import com.avrgaming.global.scores.ScoreManager;
 import com.jolbox.bonecp.Statistics;
+
+import java.sql.Connection;
+import java.sql.DatabaseMetaData;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class SQL {
 	
@@ -105,7 +105,7 @@ public class SQL {
 		SQL.username = CivSettings.getStringBase("mysql.username");
 		SQL.password = CivSettings.getStringBase("mysql.password");
 		SQL.tb_prefix = CivSettings.getStringBase("mysql.table_prefix");
-		SQL.dsn = "jdbc:mysql://" + hostname + ":" + port + "/" + tb_prefix+db_name;
+		SQL.dsn = "jdbc:mysql://" + hostname + ":" + port + "/" + db_name;
 		SQL.min_conns = Integer.valueOf(CivSettings.getStringBase("mysql.min_conns"));
 		SQL.max_conns = Integer.valueOf(CivSettings.getStringBase("mysql.max_conns"));
 		SQL.parts = Integer.valueOf(CivSettings.getStringBase("mysql.parts"));
