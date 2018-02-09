@@ -18,19 +18,18 @@
  */
 package com.avrgaming.civcraft.listener;
 
+import com.avrgaming.civcraft.main.CivGlobal;
+import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Civilization;
+import com.avrgaming.civcraft.object.Resident;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
-import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.object.Civilization;
-import com.avrgaming.civcraft.object.Resident;
-
 public class ChatListener implements Listener {
 
-	@EventHandler(priority = EventPriority.HIGHEST)
+	@EventHandler(priority = EventPriority.LOW)
 	void OnPlayerAsyncChatEvent(AsyncPlayerChatEvent event) {
 		
 		Resident resident = CivGlobal.getResident(event.getPlayer());
