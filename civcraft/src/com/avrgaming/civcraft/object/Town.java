@@ -1294,7 +1294,8 @@ public class Town extends SQLObject {
 		Player player = Bukkit.getPlayer(resident.getUUID());
 		if (player != null && CivSettings.hasITag)
 		{
-			iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers()));
+			Bukkit.getScheduler().runTask(CivCraft.getPlugin(), () ->
+					iTag.getInstance().refreshPlayer(player, new HashSet<>(Bukkit.getOnlinePlayers())));
 		}
 	}
 
