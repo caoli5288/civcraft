@@ -18,10 +18,30 @@
  */
 package com.avrgaming.civcraft.listener;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Random;
-
+import com.avrgaming.civcraft.cache.ArrowFiredCache;
+import com.avrgaming.civcraft.cache.CivCache;
+import com.avrgaming.civcraft.config.CivSettings;
+import com.avrgaming.civcraft.config.ConfigRemovedRecipes;
+import com.avrgaming.civcraft.exception.CivException;
+import com.avrgaming.civcraft.exception.InvalidConfiguration;
+import com.avrgaming.civcraft.items.ItemDurabilityEntry;
+import com.avrgaming.civcraft.items.components.Catalyst;
+import com.avrgaming.civcraft.listener.armor.ArmorType;
+import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
+import com.avrgaming.civcraft.lorestorage.ItemChangeResult;
+import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
+import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
+import com.avrgaming.civcraft.lorestorage.LoreMaterial;
+import com.avrgaming.civcraft.main.CivData;
+import com.avrgaming.civcraft.main.CivGlobal;
+import com.avrgaming.civcraft.main.CivLog;
+import com.avrgaming.civcraft.main.CivMessage;
+import com.avrgaming.civcraft.object.Resident;
+import com.avrgaming.civcraft.threading.TaskMaster;
+import com.avrgaming.civcraft.util.CivColor;
+import com.avrgaming.civcraft.util.ItemManager;
+import gpl.AttributeUtil;
+import gpl.HorseModifier;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -58,31 +78,9 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.avrgaming.civcraft.cache.ArrowFiredCache;
-import com.avrgaming.civcraft.cache.CivCache;
-import com.avrgaming.civcraft.config.CivSettings;
-import com.avrgaming.civcraft.config.ConfigRemovedRecipes;
-import com.avrgaming.civcraft.exception.CivException;
-import com.avrgaming.civcraft.exception.InvalidConfiguration;
-import com.avrgaming.civcraft.items.ItemDurabilityEntry;
-import com.avrgaming.civcraft.items.components.Catalyst;
-import com.avrgaming.civcraft.listener.armor.ArmorType;
-import com.avrgaming.civcraft.loreenhancements.LoreEnhancement;
-import com.avrgaming.civcraft.lorestorage.ItemChangeResult;
-import com.avrgaming.civcraft.lorestorage.LoreCraftableMaterial;
-import com.avrgaming.civcraft.lorestorage.LoreGuiItem;
-import com.avrgaming.civcraft.lorestorage.LoreMaterial;
-import com.avrgaming.civcraft.main.CivData;
-import com.avrgaming.civcraft.main.CivGlobal;
-import com.avrgaming.civcraft.main.CivLog;
-import com.avrgaming.civcraft.main.CivMessage;
-import com.avrgaming.civcraft.object.Resident;
-import com.avrgaming.civcraft.threading.TaskMaster;
-import com.avrgaming.civcraft.util.CivColor;
-import com.avrgaming.civcraft.util.ItemManager;
-
-import gpl.AttributeUtil;
-import gpl.HorseModifier;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.Random;
 
 @SuppressWarnings("deprecation")
 public class CustomItemManager implements Listener {
@@ -137,7 +135,7 @@ public class CustomItemManager implements Listener {
 	
 	@EventHandler(priority = EventPriority.LOWEST) 
 	public void onBlockPlace(BlockPlaceEvent event) {
-		ItemStack stack = event.getPlayer().getInventory().getItemInMainHand();
+		ItemStack stack = event.getItemInHand();
 		if (stack == null || stack.getType().equals(Material.AIR)) {
 			return;
 		}
